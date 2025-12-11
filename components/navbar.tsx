@@ -1,14 +1,15 @@
 import { Button } from "@/components/ui/button"
 import { Database } from "lucide-react"
+import Link from "next/link"
 
 export function Navbar() {
   return (
     <header className="flex h-16 shrink-0 items-center justify-between border-b border-gray-100 px-6">
       {/* Left: Logo */}
-      <div className="flex items-center gap-2">
+      <Link href="/" className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
         <Database className="size-6 text-blue-600" />
         <span className="text-lg font-semibold text-gray-900">Schedule Builder</span>
-      </div>
+      </Link>
 
       {/* Center: Navigation Links */}
       <nav className="flex items-center gap-8">

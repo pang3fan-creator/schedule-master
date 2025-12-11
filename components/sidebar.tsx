@@ -1,10 +1,27 @@
 "use client"
 
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { PlusCircle, Download, Settings, RotateCcw, Sparkles } from "lucide-react"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 
-export function Sidebar() {
+interface SidebarProps {
+  onReset: () => void
+  viewMode: "day" | "week"
+  onViewModeChange: (mode: "day" | "week") => void
+}
+
+export function Sidebar({ onReset, viewMode, onViewModeChange }: SidebarProps) {
+  const [showResetDialog, setShowResetDialog] = useState(false)
   return (
     <aside className="flex w-[230px] shrink-0 flex-col border-r border-gray-100 p-4">
       {/* Add New Item Button */}
@@ -14,7 +31,7 @@ export function Sidebar() {
       </Button>
 
       {/* Day/Week Toggle */}
-      <Tabs defaultValue="week" className="mb-6">
+      <Tabs value={viewMode} onValueChange={(value) => onViewModeChange(value as "day" | "week")} className="mb-6">
         <TabsList className="w-full grid grid-cols-2 bg-gray-100">
           <TabsTrigger value="day" className="data-[state=active]:bg-white">
             Day
@@ -35,10 +52,36 @@ export function Sidebar() {
           <Settings className="size-5" />
           Settings
         </Button>
-        <Button variant="ghost" className="justify-start gap-3 text-gray-600 hover:text-gray-900">
-          <RotateCcw className="size-5" />
-          Reset
-        </Button>
+        <Dialog open={showResetDialog} onOpenChange={setShowResetDialog}>
+          <DialogTrigger asChild>
+            <Button variant="ghost" className="justify-start gap-3 text-gray-600 hover:text-gray-900">
+              <RotateCcw className="size-5" />
+              Reset
+            </Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Reset Schedule</DialogTitle>
+              <DialogDescription>
+                Are you sure you want to delete all events from the calendar? This action cannot be undone.
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter className="gap-2 sm:gap-2">
+              <Button variant="outline" onClick={() => setShowResetDialog(false)}>
+                Cancel
+              </Button>
+              <Button
+                className="bg-blue-600 hover:bg-blue-700 text-white"
+                onClick={() => {
+                  onReset()
+                  setShowResetDialog(false)
+                }}
+              >
+                Yes, Reset
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </nav>
 
       {/* Spacer */}
