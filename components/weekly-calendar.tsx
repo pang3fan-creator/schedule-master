@@ -10,6 +10,7 @@ export interface Event {
   id: string
   title: string
   code: string
+  description: string
   day: number
   date: string // YYYY-MM-DD format for specific date filtering
   startHour: number
@@ -86,15 +87,11 @@ function formatDateRange(monday: Date, sunday: Date): string {
 }
 
 function formatHour(hour: number): string {
-  if (hour === 12) return "12 PM"
-  if (hour > 12) return `${hour - 12} PM`
-  return `${hour} AM`
+  return `${hour.toString().padStart(2, "0")}:00`
 }
 
 function formatTime(hour: number, minute: number): string {
-  const h = hour > 12 ? hour - 12 : hour
-  const m = minute === 0 ? ":00" : `:${minute.toString().padStart(2, "0")}`
-  return `${h}${m}`
+  return `${hour.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")}`
 }
 
 // Calculate event position using actual row height in pixels
@@ -406,7 +403,7 @@ export function WeeklyCalendar({ events, onEventUpdate }: WeeklyCalendarProps) {
                         return (
                           <div
                             key={event.id}
-                            className={`absolute left-1 right-1 z-10 rounded-md border-l-4 border-blue-500 bg-blue-100 p-2 overflow-hidden text-center ${isDragging ? 'cursor-grabbing shadow-lg ring-2 ring-blue-400' : 'cursor-grab'}`}
+                            className={`absolute left-1 right-1 z-10 rounded-md border-l-4 border-blue-500 bg-blue-100 p-2 overflow-hidden text-center flex flex-col justify-between ${isDragging ? 'cursor-grabbing shadow-lg ring-2 ring-blue-400' : 'cursor-grab'}`}
                             style={{
                               top: position.top,
                               height: position.height,
@@ -416,8 +413,8 @@ export function WeeklyCalendar({ events, onEventUpdate }: WeeklyCalendarProps) {
                             onMouseDown={(e) => handleMouseDown(e, event)}
                           >
                             <p className="text-sm font-semibold text-blue-700">{event.title}</p>
-                            <p className="text-xs text-blue-600">{event.code}</p>
-                            <p className="absolute bottom-2 left-0 right-0 text-xs text-blue-600">
+                            <p className="text-xs text-blue-600">{event.description}</p>
+                            <p className="text-xs text-blue-600">
                               {formatTime(displayTime.startHour, displayTime.startMinute)} -{" "}
                               {formatTime(displayTime.endHour, displayTime.endMinute)}
                             </p>

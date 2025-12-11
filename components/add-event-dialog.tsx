@@ -91,7 +91,8 @@ export function AddEventDialog({
             const eventDate = weekDates[day]
             onAddEvent({
                 title: title.trim(),
-                code: code.trim() || "N/A",
+                code: code.trim() || "",
+                description: description.trim(),
                 day,
                 date: formatDateString(eventDate),
                 startHour: start.hour,
