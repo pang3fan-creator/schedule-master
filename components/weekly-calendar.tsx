@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { useRef, useState, useEffect, useMemo } from "react"
+import { useRef, useState, useEffect, useMemo, useCallback } from "react"
 
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -11,6 +11,7 @@ export interface Event {
   title: string
   code: string
   day: number
+  date: string // YYYY-MM-DD format for specific date filtering
   startHour: number
   startMinute: number
   endHour: number
@@ -19,11 +20,16 @@ export interface Event {
 
 interface WeeklyCalendarProps {
   events: Event[]
+  onEventUpdate?: (updatedEvent: Event) => void
 }
 
 const dayNames = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"]
 
 const hours = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
+
+// Time constraints
+const MIN_HOUR = 8  // 8 AM
+const MAX_HOUR = 17 // 5 PM
 
 // Get the Monday of the week containing the given date
 function getMonday(date: Date): Date {
@@ -46,6 +52,14 @@ function getWeekDates(monday: Date): Date[] {
     dates.push(date)
   }
   return dates
+}
+
+// Format date to YYYY-MM-DD string for event matching
+export function formatDateString(date: Date): string {
+  const year = date.getFullYear()
+  const month = (date.getMonth() + 1).toString().padStart(2, '0')
+  const day = date.getDate().toString().padStart(2, '0')
+  return `${year}-${month}-${day}`
 }
 
 // Format date range for header (e.g., "October 21 - 27, 2025" or "October 28 - November 3, 2025")
@@ -95,12 +109,68 @@ function getEventPosition(event: Event, rowHeight: number) {
   }
 }
 
-export function WeeklyCalendar({ events }: WeeklyCalendarProps) {
+// Calculate new time based on drag offset
+function calculateDraggedTime(
+  originalStartHour: number,
+  originalStartMinute: number,
+  originalEndHour: number,
+  originalEndMinute: number,
+  offsetPx: number,
+  rowHeight: number
+): { startHour: number; startMinute: number; endHour: number; endMinute: number } {
+  const hourOffset = offsetPx / rowHeight
+
+  // Calculate new start time
+  let newStartTotalMinutes = (originalStartHour * 60 + originalStartMinute) + (hourOffset * 60)
+  const duration = (originalEndHour * 60 + originalEndMinute) - (originalStartHour * 60 + originalStartMinute)
+
+  // Round to nearest 5 minutes for cleaner times (do this first)
+  newStartTotalMinutes = Math.round(newStartTotalMinutes / 5) * 5
+  let newEndTotalMinutes = newStartTotalMinutes + duration
+
+  // Constrain to boundaries (apply after rounding)
+  const minMinutes = MIN_HOUR * 60 // 8:00 AM = 480 minutes
+  const maxMinutes = MAX_HOUR * 60 // 5:00 PM = 1020 minutes
+
+  // Ensure start time doesn't go before MIN_HOUR
+  if (newStartTotalMinutes < minMinutes) {
+    newStartTotalMinutes = minMinutes
+    newEndTotalMinutes = minMinutes + duration
+  }
+
+  // Ensure end time doesn't go after MAX_HOUR
+  if (newEndTotalMinutes > maxMinutes) {
+    newEndTotalMinutes = maxMinutes
+    newStartTotalMinutes = maxMinutes - duration
+  }
+
+  return {
+    startHour: Math.floor(newStartTotalMinutes / 60),
+    startMinute: Math.round(newStartTotalMinutes % 60),
+    endHour: Math.floor(newEndTotalMinutes / 60),
+    endMinute: Math.round(newEndTotalMinutes % 60),
+  }
+}
+
+export function WeeklyCalendar({ events, onEventUpdate }: WeeklyCalendarProps) {
   const gridRef = useRef<HTMLDivElement>(null)
   const [rowHeight, setRowHeight] = useState(58) // Default fallback height
 
   // State for current week's Monday - initialize to current week
   const [currentMonday, setCurrentMonday] = useState(() => getMonday(new Date()))
+
+  // Drag state
+  const [dragState, setDragState] = useState<{
+    eventId: string | null
+    startY: number
+    originalEvent: Event | null
+    currentOffset: number
+  }>({
+    eventId: null,
+    startY: 0,
+    originalEvent: null,
+    currentOffset: 0,
+  })
 
   // Calculate the week's dates based on current Monday
   const weekDates = useMemo(() => getWeekDates(currentMonday), [currentMonday])
@@ -160,16 +230,135 @@ export function WeeklyCalendar({ events }: WeeklyCalendarProps) {
     return () => window.removeEventListener('resize', updateRowHeight)
   }, [])
 
+  // Handle mouse down on event card
+  const handleMouseDown = useCallback((e: React.MouseEvent, event: Event) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setDragState({
+      eventId: event.id,
+      startY: e.clientY,
+      originalEvent: { ...event },
+      currentOffset: 0,
+    })
+  }, [])
+
+  // Handle mouse move (global)
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (dragState.eventId && dragState.originalEvent) {
+        const offset = e.clientY - dragState.startY
+        setDragState(prev => ({ ...prev, currentOffset: offset }))
+      }
+    }
+
+    const handleMouseUp = () => {
+      if (dragState.eventId && dragState.originalEvent && onEventUpdate) {
+        const newTimes = calculateDraggedTime(
+          dragState.originalEvent.startHour,
+          dragState.originalEvent.startMinute,
+          dragState.originalEvent.endHour,
+          dragState.originalEvent.endMinute,
+          dragState.currentOffset,
+          rowHeight
+        )
+
+        onEventUpdate({
+          ...dragState.originalEvent,
+          ...newTimes,
+        })
+      }
+
+      setDragState({
+        eventId: null,
+        startY: 0,
+        originalEvent: null,
+        currentOffset: 0,
+      })
+    }
+
+    if (dragState.eventId) {
+      window.addEventListener('mousemove', handleMouseMove)
+      window.addEventListener('mouseup', handleMouseUp)
+      return () => {
+        window.removeEventListener('mousemove', handleMouseMove)
+        window.removeEventListener('mouseup', handleMouseUp)
+      }
+    }
+  }, [dragState.eventId, dragState.originalEvent, dragState.startY, dragState.currentOffset, rowHeight, onEventUpdate])
+
+  // Get display time for an event (considering drag state)
+  const getDisplayTime = useCallback((event: Event) => {
+    if (dragState.eventId === event.id && dragState.originalEvent) {
+      const newTimes = calculateDraggedTime(
+        dragState.originalEvent.startHour,
+        dragState.originalEvent.startMinute,
+        dragState.originalEvent.endHour,
+        dragState.originalEvent.endMinute,
+        dragState.currentOffset,
+        rowHeight
+      )
+      return {
+        startHour: newTimes.startHour,
+        startMinute: newTimes.startMinute,
+        endHour: newTimes.endHour,
+        endMinute: newTimes.endMinute,
+      }
+    }
+    return {
+      startHour: event.startHour,
+      startMinute: event.startMinute,
+      endHour: event.endHour,
+      endMinute: event.endMinute,
+    }
+  }, [dragState, rowHeight])
+
+  // Get visual position for an event (considering drag state)
+  const getVisualPosition = useCallback((event: Event) => {
+    if (dragState.eventId === event.id && dragState.originalEvent) {
+      const newTimes = calculateDraggedTime(
+        dragState.originalEvent.startHour,
+        dragState.originalEvent.startMinute,
+        dragState.originalEvent.endHour,
+        dragState.originalEvent.endMinute,
+        dragState.currentOffset,
+        rowHeight
+      )
+      const tempEvent = { ...event, ...newTimes }
+      return getEventPosition(tempEvent, rowHeight)
+    }
+    return getEventPosition(event, rowHeight)
+  }, [dragState, rowHeight])
+
+  // Navigate to current week (today)
+  const goToToday = () => {
+    setCurrentMonday(getMonday(new Date()))
+  }
+
   return (
     <div className="flex h-full flex-col p-6 bg-gray-100">
       {/* Header with navigation */}
-      <div className="mb-4 flex items-center justify-center flex-shrink-0">
-        <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToPreviousWeek}>
-          <ChevronLeft className="size-6" />
-        </Button>
-        <h2 className="text-xl font-semibold text-gray-900 min-w-[280px] text-center">{dateRangeString}</h2>
-        <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToNextWeek}>
-          <ChevronRight className="size-6" />
+      <div className="mb-4 flex items-center justify-between flex-shrink-0">
+        {/* Spacer for layout balance */}
+        <div className="w-20"></div>
+
+        {/* Center navigation */}
+        <div className="flex items-center">
+          <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToPreviousWeek}>
+            <ChevronLeft className="size-6" />
+          </Button>
+          <h2 className="text-xl font-semibold text-gray-900 min-w-[280px] text-center">{dateRangeString}</h2>
+          <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToNextWeek}>
+            <ChevronRight className="size-6" />
+          </Button>
+        </div>
+
+        {/* Today button */}
+        <Button
+          variant="outline"
+          className="w-20 border-blue-500 text-blue-600 hover:bg-blue-50 hover:text-blue-700 font-medium"
+          onClick={goToToday}
+        >
+          Today
         </Button>
       </div>
 
@@ -209,23 +398,28 @@ export function WeeklyCalendar({ events }: WeeklyCalendarProps) {
                   {/* Render events for this cell - events are positioned relative to the first cell of each column */}
                   {hour === 8 &&
                     events
-                      .filter((event) => event.day === dayIndex)
+                      .filter((event) => event.date === formatDateString(weekDates[dayIndex]))
                       .map((event) => {
-                        const position = getEventPosition(event, rowHeight)
+                        const position = getVisualPosition(event)
+                        const displayTime = getDisplayTime(event)
+                        const isDragging = dragState.eventId === event.id
                         return (
                           <div
                             key={event.id}
-                            className="absolute left-1 right-1 z-10 rounded-md border-l-4 border-blue-500 bg-blue-100 p-2 overflow-hidden"
+                            className={`absolute left-1 right-1 z-10 rounded-md border-l-4 border-blue-500 bg-blue-100 p-2 overflow-hidden text-center ${isDragging ? 'cursor-grabbing shadow-lg ring-2 ring-blue-400' : 'cursor-grab'}`}
                             style={{
                               top: position.top,
                               height: position.height,
+                              transition: isDragging ? 'none' : 'top 0.1s ease-out, height 0.1s ease-out',
+                              userSelect: 'none',
                             }}
+                            onMouseDown={(e) => handleMouseDown(e, event)}
                           >
                             <p className="text-sm font-semibold text-blue-700">{event.title}</p>
                             <p className="text-xs text-blue-600">{event.code}</p>
-                            <p className="absolute bottom-2 left-2 text-xs text-blue-600">
-                              {formatTime(event.startHour, event.startMinute)} -{" "}
-                              {formatTime(event.endHour, event.endMinute)}
+                            <p className="absolute bottom-2 left-0 right-0 text-xs text-blue-600">
+                              {formatTime(displayTime.startHour, displayTime.startMinute)} -{" "}
+                              {formatTime(displayTime.endHour, displayTime.endMinute)}
                             </p>
                           </div>
                         )

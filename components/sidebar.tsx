@@ -13,22 +13,38 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import { AddEventDialog } from "@/components/add-event-dialog"
+import type { Event } from "@/components/weekly-calendar"
 
 interface SidebarProps {
   onReset: () => void
   viewMode: "day" | "week"
   onViewModeChange: (mode: "day" | "week") => void
+  onAddEvent: (event: Omit<Event, "id">) => void
+  currentMonday: Date
 }
 
-export function Sidebar({ onReset, viewMode, onViewModeChange }: SidebarProps) {
+export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, currentMonday }: SidebarProps) {
   const [showResetDialog, setShowResetDialog] = useState(false)
+  const [showAddEventDialog, setShowAddEventDialog] = useState(false)
   return (
     <aside className="flex w-[230px] shrink-0 flex-col border-r border-gray-100 p-4">
       {/* Add New Item Button */}
-      <Button className="mb-4 w-full bg-blue-600 hover:bg-blue-700 text-white gap-2">
+      <Button
+        className="mb-4 w-full bg-blue-600 hover:bg-blue-700 text-white gap-2"
+        onClick={() => setShowAddEventDialog(true)}
+      >
         <PlusCircle className="size-5" />
         Add New Item
       </Button>
+
+      {/* Add Event Dialog */}
+      <AddEventDialog
+        open={showAddEventDialog}
+        onOpenChange={setShowAddEventDialog}
+        onAddEvent={onAddEvent}
+        currentMonday={currentMonday}
+      />
 
       {/* Day/Week Toggle */}
       <Tabs value={viewMode} onValueChange={(value) => onViewModeChange(value as "day" | "week")} className="mb-6">
