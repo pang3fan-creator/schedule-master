@@ -27,7 +27,7 @@ export function Navbar() {
       {/* Right: Auth Buttons */}
       <div className="flex items-center gap-3">
         <Button variant="ghost" className="text-gray-700">
-          Log In
+          Sign In
         </Button>
         <Button className="bg-blue-600 hover:bg-blue-700 text-white">Sign Up</Button>
       </div>
