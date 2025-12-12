@@ -1,6 +1,13 @@
 import { Button } from "@/components/ui/button"
 import { Database } from "lucide-react"
 import Link from "next/link"
+import {
+  SignInButton,
+  SignUpButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from "@clerk/nextjs"
 
 export function Navbar() {
   return (
@@ -26,10 +33,26 @@ export function Navbar() {
 
       {/* Right: Auth Buttons */}
       <div className="flex items-center gap-3">
-        <Button variant="ghost" className="text-gray-700">
-          Sign In
-        </Button>
-        <Button className="bg-blue-600 hover:bg-blue-700 text-white">Sign Up</Button>
+        <SignedOut>
+          <SignInButton mode="modal">
+            <Button variant="ghost" className="text-gray-700">
+              Sign In
+            </Button>
+          </SignInButton>
+          <SignUpButton mode="modal">
+            <Button className="bg-blue-600 hover:bg-blue-700 text-white">Sign Up</Button>
+          </SignUpButton>
+        </SignedOut>
+        <SignedIn>
+          <UserButton
+            afterSignOutUrl="/"
+            appearance={{
+              elements: {
+                avatarBox: "w-9 h-9",
+              },
+            }}
+          />
+        </SignedIn>
       </div>
     </header>
   )
