@@ -1,6 +1,10 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import { Database } from "lucide-react"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { cn } from "@/lib/utils"
 import {
   SignInButton,
   SignUpButton,
@@ -9,7 +13,15 @@ import {
   UserButton,
 } from "@clerk/nextjs"
 
+const navLinks = [
+  { href: "/", label: "Product" },
+  { href: "/pricing", label: "Pricing" },
+  { href: "/blog", label: "Blog" },
+]
+
 export function Navbar() {
+  const pathname = usePathname()
+
   return (
     <header className="flex h-16 shrink-0 items-center justify-between border-b border-gray-100 px-6">
       {/* Left: Logo */}
@@ -20,15 +32,23 @@ export function Navbar() {
 
       {/* Center: Navigation Links */}
       <nav className="flex items-center gap-8">
-        <a href="#" className="text-sm font-medium text-gray-600 hover:text-gray-900">
-          Product
-        </a>
-        <a href="#" className="text-sm font-medium text-gray-600 hover:text-gray-900">
-          Pricing
-        </a>
-        <a href="#" className="text-sm font-medium text-gray-600 hover:text-gray-900">
-          Blog
-        </a>
+        {navLinks.map((link) => {
+          const isActive = pathname === link.href
+          return (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={cn(
+                "text-sm font-medium transition-colors",
+                isActive
+                  ? "text-blue-600 border-b-2 border-blue-600 pb-0.5"
+                  : "text-gray-600 hover:text-gray-900"
+              )}
+            >
+              {link.label}
+            </Link>
+          )
+        })}
       </nav>
 
       {/* Right: Auth Buttons */}
@@ -57,3 +77,4 @@ export function Navbar() {
     </header>
   )
 }
+
