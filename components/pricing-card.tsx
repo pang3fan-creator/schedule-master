@@ -1,11 +1,13 @@
 "use client";
 
+import { useState } from "react";
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { CreemCheckout } from "@creem_io/nextjs";
-import { useUser, SignInButton } from "@clerk/nextjs";
+import { useUser } from "@clerk/nextjs";
 import { useSubscription } from "@/components/SubscriptionContext";
+import { AuthModal } from "@/components/auth-modal";
 import Link from "next/link";
 
 /**
@@ -91,6 +93,7 @@ export function PricingCard({
 }: PricingCardProps) {
     const { user, isSignedIn } = useUser();
     const { plan: currentPlan, isLoading } = useSubscription();
+    const [authModalOpen, setAuthModalOpen] = useState(false);
 
     const targetPlan = titleToPlanKey(title);
     const purchaseCheck = canPurchase(currentPlan, targetPlan);
@@ -126,17 +129,23 @@ export function PricingCard({
             );
         }
 
-        // 用户未登录时，使用 Clerk SignInButton 弹出模态框
+        // 用户未登录时，显示按钮并触发自定义 AuthModal
         if (!isSignedIn) {
             return (
-                <SignInButton mode="modal">
+                <>
                     <Button
                         variant={buttonVariant}
                         className={cn("w-full mb-2", popular && "bg-blue-600 hover:bg-blue-700")}
+                        onClick={() => setAuthModalOpen(true)}
                     >
                         {buttonText}
                     </Button>
-                </SignInButton>
+                    <AuthModal
+                        open={authModalOpen}
+                        onOpenChange={setAuthModalOpen}
+                        defaultMode="sign-in"
+                    />
+                </>
             );
         }
 
