@@ -1,9 +1,35 @@
-import { PricingCard } from "@/components/pricing-card"
-import { FAQAccordion } from "@/components/faq-accordion"
-import { Navbar } from "@/components/navbar"
-import { Footer } from "@/components/footer"
-import { Check, X } from "lucide-react"
-import { cn } from "@/lib/utils"
+"use client";
+
+import { PricingCard } from "@/components/pricing-card";
+import { FAQAccordion } from "@/components/faq-accordion";
+import { Navbar } from "@/components/navbar";
+import { Footer } from "@/components/footer";
+import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
+
+// Creem Product IDs - 需要在 Creem Dashboard 创建产品后替换
+const PRODUCT_IDS = {
+    "7day": process.env.NEXT_PUBLIC_CREEM_PRODUCT_7DAY || "prod_7day_placeholder",
+    monthly: process.env.NEXT_PUBLIC_CREEM_PRODUCT_MONTHLY || "prod_monthly_placeholder",
+    lifetime: process.env.NEXT_PUBLIC_CREEM_PRODUCT_LIFETIME || "prod_lifetime_placeholder",
+};
+
+function SuccessBanner() {
+    const searchParams = useSearchParams();
+    const isSuccess = searchParams.get("success") === "true";
+
+    if (!isSuccess) return null;
+
+    return (
+        <div className="container mx-auto px-4 mb-8">
+            <div className="bg-green-50 border border-green-200 rounded-xl p-4 text-center">
+                <p className="text-green-800 font-medium">
+                    🎉 Payment successful! Your Pro features are now active.
+                </p>
+            </div>
+        </div>
+    );
+}
 
 export default function PricingPage() {
     const plans = [
@@ -14,15 +40,17 @@ export default function PricingPage() {
             features: ["Basic scheduling", "Limited templates", "Watermarked exports"],
             buttonText: "Get Started",
             buttonVariant: "secondary" as const,
+            isFree: true,
         },
         {
             title: "7-Day Pass",
-            price: "$2.99",
+            price: "$4.99",
             priceDetail: "/ week",
             description: "Perfect for one-time scheduling or temporary needs.",
             features: ["All Free features", "Watermark-free exports", "Premium templates"],
             buttonText: "Choose Pass",
             buttonVariant: "secondary" as const,
+            productId: PRODUCT_IDS["7day"],
         },
         {
             title: "Monthly",
@@ -38,6 +66,7 @@ export default function PricingPage() {
             buttonText: "Upgrade Now",
             buttonVariant: "default" as const,
             popular: true,
+            productId: PRODUCT_IDS.monthly,
         },
         {
             title: "Lifetime",
@@ -51,8 +80,9 @@ export default function PricingPage() {
             ],
             buttonText: "Buy Once",
             buttonVariant: "secondary" as const,
+            productId: PRODUCT_IDS.lifetime,
         },
-    ]
+    ];
 
     const faqs = [
         {
@@ -70,7 +100,7 @@ export default function PricingPage() {
             answer:
                 "If you downgrade, you will retain access to Pro features until the end of your billing cycle. After that, your account will revert to the Free plan, and you will lose access to premium features like cloud sync and AI suggestions.",
         },
-    ]
+    ];
 
     const comparisonTable = [
         { feature: "AI Features", free: false, pass: true, pro: true, lifetime: true },
@@ -78,13 +108,18 @@ export default function PricingPage() {
         { feature: "Cloud Save", free: false, pass: true, pro: true, lifetime: true },
         { feature: "Unlimited Schedules", free: true, pass: true, pro: true, lifetime: true },
         { feature: "Priority Support", free: false, pass: false, pro: true, lifetime: true },
-    ]
+    ];
 
     return (
         <div className="min-h-screen flex flex-col bg-gray-50/50">
             <Navbar />
 
             <main className="flex-1 py-16 md:py-24">
+                {/* Success Banner */}
+                <Suspense fallback={null}>
+                    <SuccessBanner />
+                </Suspense>
+
                 {/* Hero Section */}
                 <div className="container mx-auto px-4 text-center mb-16">
                     <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl mb-4">
@@ -124,18 +159,10 @@ export default function PricingPage() {
                                 {comparisonTable.map((row) => (
                                     <tr key={row.feature} className="hover:bg-gray-50/50">
                                         <td className="px-6 py-4 font-medium text-gray-900">{row.feature}</td>
-                                        <td className="px-6 py-4">
-                                            {renderStatus(row.free)}
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            {renderStatus(row.pass)}
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            {renderStatus(row.pro)}
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            {renderStatus(row.lifetime)}
-                                        </td>
+                                        <td className="px-6 py-4">{renderStatus(row.free)}</td>
+                                        <td className="px-6 py-4">{renderStatus(row.pass)}</td>
+                                        <td className="px-6 py-4">{renderStatus(row.pro)}</td>
+                                        <td className="px-6 py-4">{renderStatus(row.lifetime)}</td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -156,7 +183,7 @@ export default function PricingPage() {
 
             <Footer />
         </div>
-    )
+    );
 }
 
 function renderStatus(value: boolean) {
@@ -164,5 +191,5 @@ function renderStatus(value: boolean) {
         <span className="text-blue-600 font-medium">Yes</span>
     ) : (
         <span className="text-gray-400">No</span>
-    )
+    );
 }

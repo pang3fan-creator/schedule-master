@@ -2,6 +2,7 @@ import type React from "react"
 import type { Metadata } from "next"
 import { ClerkProvider } from "@clerk/nextjs"
 import { Analytics } from "@vercel/analytics/next"
+import { SubscriptionProvider } from "@/components/SubscriptionContext"
 import "./globals.css"
 
 export const metadata: Metadata = {
@@ -36,7 +37,9 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={`font-sans antialiased`}>
-          {children}
+          <SubscriptionProvider>
+            {children}
+          </SubscriptionProvider>
           <Analytics />
         </body>
       </html>

@@ -14,6 +14,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { AddEventDialog } from "@/components/add-event-dialog"
+import { UpgradeModal } from "@/components/UpgradeModal"
+import { useSubscription } from "@/components/SubscriptionContext"
 import type { Event } from "@/components/weekly-calendar"
 
 interface SidebarProps {
@@ -27,6 +29,37 @@ interface SidebarProps {
 export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, currentMonday }: SidebarProps) {
   const [showResetDialog, setShowResetDialog] = useState(false)
   const [showAddEventDialog, setShowAddEventDialog] = useState(false)
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false)
+  const [upgradeFeature, setUpgradeFeature] = useState("")
+
+  const { isPro, isLoading } = useSubscription()
+
+  const handleExportClick = () => {
+    if (isLoading) return
+
+    if (!isPro) {
+      setUpgradeFeature("High-res PDF export")
+      setShowUpgradeModal(true)
+      return
+    }
+
+    // TODO: Implement actual export functionality for Pro users
+    console.log("Exporting for Pro user...")
+  }
+
+  const handleAIAutofillClick = () => {
+    if (isLoading) return
+
+    if (!isPro) {
+      setUpgradeFeature("AI Autofill")
+      setShowUpgradeModal(true)
+      return
+    }
+
+    // TODO: Implement actual AI autofill functionality for Pro users
+    console.log("AI Autofill for Pro user...")
+  }
+
   return (
     <aside className="flex w-[230px] shrink-0 flex-col border-r border-gray-100 p-4">
       {/* Add New Item Button */}
@@ -46,6 +79,13 @@ export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, curre
         currentMonday={currentMonday}
       />
 
+      {/* Upgrade Modal */}
+      <UpgradeModal
+        open={showUpgradeModal}
+        onOpenChange={setShowUpgradeModal}
+        feature={upgradeFeature}
+      />
+
       {/* Day/Week Toggle */}
       <Tabs value={viewMode} onValueChange={(value) => onViewModeChange(value as "day" | "week")} className="mb-6">
         <TabsList className="w-full grid grid-cols-2 bg-gray-100">
@@ -60,7 +100,11 @@ export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, curre
 
       {/* Menu Items */}
       <nav className="flex flex-col gap-1">
-        <Button variant="ghost" className="justify-start gap-3 text-gray-600 hover:text-gray-900">
+        <Button
+          variant="ghost"
+          className="justify-start gap-3 text-gray-600 hover:text-gray-900"
+          onClick={handleExportClick}
+        >
           <Download className="size-5" />
           Export/Download
         </Button>
@@ -104,7 +148,10 @@ export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, curre
       <div className="flex-1" />
 
       {/* AI Autofill Button */}
-      <Button className="w-full bg-gradient-to-r from-violet-500 to-blue-500 hover:from-violet-600 hover:to-blue-600 text-white gap-2">
+      <Button
+        className="w-full bg-gradient-to-r from-violet-500 to-blue-500 hover:from-violet-600 hover:to-blue-600 text-white gap-2"
+        onClick={handleAIAutofillClick}
+      >
         <Sparkles className="size-5" />
         AI Autofill
       </Button>
