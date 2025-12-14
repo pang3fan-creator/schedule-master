@@ -171,7 +171,7 @@ export default function PricingPage() {
                 </div>
 
                 {/* FAQ Section */}
-                <div className="container mx-auto px-4 max-w-3xl">
+                <div className="container mx-auto px-4 max-w-5xl">
                     <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
                         Frequently Asked Questions
                     </h2>
