@@ -14,7 +14,7 @@ import {
 import { AuthModal } from "@/components/auth-modal"
 
 const navLinks = [
-  { href: "/", label: "Product" },
+  { href: "/templates", label: "Templates" },
   { href: "/pricing", label: "Pricing" },
   { href: "/blog", label: "Blog" },
 ]
@@ -39,7 +39,7 @@ export function Navbar() {
         </Link>
 
         {/* Center: Navigation Links */}
-        <nav className="flex items-center gap-8">
+        <nav className="absolute left-1/2 -translate-x-1/2 flex items-center gap-8">
           {navLinks.map((link) => {
             const isActive = pathname === link.href
             return (

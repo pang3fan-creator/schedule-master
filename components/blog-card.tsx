@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 
 interface BlogCardProps {
     slug: string
@@ -22,6 +23,21 @@ function ImagePlaceholder({ size = "normal" }: { size?: "normal" | "large" }) {
     )
 }
 
+function CoverImage({ src, alt, size = "normal" }: { src?: string; alt: string; size?: "normal" | "large" }) {
+    if (!src) {
+        return <ImagePlaceholder size={size} />
+    }
+    return (
+        <Image
+            src={src}
+            alt={alt}
+            fill
+            className="object-cover"
+            sizes={size === "large" ? "(max-width: 768px) 100vw, 50vw" : "(max-width: 768px) 100vw, 33vw"}
+        />
+    )
+}
+
 export function BlogCard({
     slug,
     title,
@@ -29,6 +45,7 @@ export function BlogCard({
     category,
     date,
     readTime,
+    coverImage,
     featured = false,
 }: BlogCardProps) {
     if (featured) {
@@ -39,7 +56,7 @@ export function BlogCard({
             >
                 <div className="grid md:grid-cols-2 gap-0">
                     <div className="relative aspect-[4/3] md:aspect-auto md:min-h-[280px]">
-                        <ImagePlaceholder size="large" />
+                        <CoverImage src={coverImage} alt={title} size="large" />
                     </div>
                     <div className="p-6 md:p-8 flex flex-col justify-center">
                         <span className="text-sm font-medium text-blue-600 mb-2">Featured Article</span>
@@ -62,7 +79,7 @@ export function BlogCard({
             className="group block rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden hover:shadow-md transition-shadow"
         >
             <div className="relative aspect-[16/10]">
-                <ImagePlaceholder />
+                <CoverImage src={coverImage} alt={title} />
             </div>
             <div className="p-5">
                 <span className="text-sm font-medium text-blue-600">{category}</span>
@@ -76,3 +93,4 @@ export function BlogCard({
         </Link>
     )
 }
+

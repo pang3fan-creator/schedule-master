@@ -50,11 +50,13 @@ function canPurchase(currentPlan: string, targetPlan: string): { allowed: boolea
         return { allowed: true };
     }
 
-    // 不允许重复购买相同计划
+    // 7-Day Pass 允许叠加购买
+    if (currentPlan === "7day" && targetPlan === "7day") {
+        return { allowed: true, message: "Add 7 more days" };
+    }
+
+    // 其他相同计划不允许重复购买
     if (currentPlan === targetPlan) {
-        if (targetPlan === "7day") {
-            return { allowed: false, message: "Wait for your pass to expire" };
-        }
         return { allowed: false, message: "You're already on this plan" };
     }
 
@@ -176,6 +178,8 @@ export function PricingCard({
         }
 
         // 允许购买，使用 CreemCheckout
+        // 如果有特殊消息（如 7-Day 叠加），显示该消息作为按钮文案
+        const displayText = purchaseCheck.message || buttonText;
         return (
             <CreemCheckout
                 productId={productId}
@@ -190,7 +194,7 @@ export function PricingCard({
                     variant={buttonVariant}
                     className={cn("w-full mb-2", popular && "bg-blue-600 hover:bg-blue-700")}
                 >
-                    {buttonText}
+                    {displayText}
                 </Button>
             </CreemCheckout>
         );

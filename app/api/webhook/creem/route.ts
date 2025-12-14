@@ -57,7 +57,7 @@ async function getCurrentPlan(userId: string): Promise<string> {
 /**
  * 检查是否允许购买新计划（防止降级和重复购买）
  */
-function canUpgrade(currentPlan: string, newPlan: string): { allowed: boolean; reason?: string } {
+function canUpgrade(currentPlan: string, newPlan: string): { allowed: boolean; reason?: string; isStacking?: boolean } {
     const currentPriority = PLAN_PRIORITY[currentPlan] ?? 0;
     const newPriority = PLAN_PRIORITY[newPlan] ?? 0;
 
@@ -66,7 +66,12 @@ function canUpgrade(currentPlan: string, newPlan: string): { allowed: boolean; r
         return { allowed: false, reason: "User already has lifetime subscription" };
     }
 
-    // 不允许重复购买相同计划
+    // 7-Day Pass 允许叠加购买
+    if (currentPlan === "7day" && newPlan === "7day") {
+        return { allowed: true, isStacking: true };
+    }
+
+    // 其他相同计划不允许重复购买（Monthly 自动续订由 Creem 处理）
     if (currentPlan === newPlan) {
         return { allowed: false, reason: `User already has ${currentPlan} plan` };
     }
@@ -81,20 +86,46 @@ function canUpgrade(currentPlan: string, newPlan: string): { allowed: boolean; r
 
 /**
  * 保存订阅信息到 Supabase
+ * @param isStacking - 是否为 7-Day Pass 叠加购买
  */
 async function saveSubscription(
     userId: string,
     customerId: string,
-    plan: "7day" | "monthly" | "lifetime"
+    plan: "7day" | "monthly" | "lifetime",
+    isStacking: boolean = false
 ) {
     const supabase = createAdminClient();
 
-    // 计算过期时间 (仅 7day pass 有过期时间)
-    const expiresAt = plan === "7day"
-        ? new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString()
-        : null;
+    // 获取当前订阅信息，用于计算叠加/升级逻辑
+    const { data: current } = await supabase
+        .from("subscriptions")
+        .select("plan, expires_at")
+        .eq("clerk_user_id", userId)
+        .single();
 
-    console.log(`Saving subscription for user ${userId}, plan: ${plan}`);
+    let expiresAt: string | null = null;
+    let bonusDays = 0;
+
+    if (plan === "7day") {
+        // 7-Day 叠加逻辑：从当前过期时间或现在开始 +7天
+        if (isStacking && current?.plan === "7day" && current.expires_at) {
+            const currentExpiry = new Date(current.expires_at);
+            // 如果当前订阅尚未过期，从过期时间开始叠加
+            const baseDate = currentExpiry > new Date() ? currentExpiry : new Date();
+            expiresAt = new Date(baseDate.getTime() + 7 * 24 * 60 * 60 * 1000).toISOString();
+            console.log(`7-Day stacking: extending from ${current.expires_at} to ${expiresAt}`);
+        } else {
+            // 新购买，从现在开始 +7天
+            expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString();
+        }
+    } else if (plan === "monthly" && current?.plan === "7day" && current.expires_at) {
+        // 升级 Monthly 时，计算剩余 7-Day 天数作为 bonus
+        const remaining = new Date(current.expires_at).getTime() - Date.now();
+        bonusDays = Math.max(0, Math.ceil(remaining / (24 * 60 * 60 * 1000)));
+        console.log(`Upgrade from 7-Day to Monthly: ${bonusDays} bonus days granted`);
+    }
+
+    console.log(`Saving subscription for user ${userId}, plan: ${plan}, expires: ${expiresAt}, bonusDays: ${bonusDays}`);
 
     const { data, error } = await supabase.from("subscriptions").upsert(
         {
@@ -103,6 +134,7 @@ async function saveSubscription(
             plan,
             status: "active",
             expires_at: expiresAt,
+            bonus_days: bonusDays > 0 ? bonusDays : null,
             updated_at: new Date().toISOString(),
         },
         { onConflict: "clerk_user_id" }
@@ -138,7 +170,7 @@ export const POST = Webhook({
         console.log(`User ${userId}: current plan = ${currentPlan}, new plan = ${newPlan}`);
 
         // 检查是否允许购买
-        const { allowed, reason } = canUpgrade(currentPlan, newPlan);
+        const { allowed, reason, isStacking } = canUpgrade(currentPlan, newPlan);
         if (!allowed) {
             console.log(`Purchase blocked: ${reason}`);
             // 注意：此时 Creem 已经收款，但我们不更新数据库
@@ -146,7 +178,7 @@ export const POST = Webhook({
             return;
         }
 
-        await saveSubscription(userId, customer?.id || "", newPlan);
+        await saveSubscription(userId, customer?.id || "", newPlan, isStacking);
     },
 
     /**
@@ -169,13 +201,13 @@ export const POST = Webhook({
         console.log(`User ${userId}: current plan = ${currentPlan}, new plan = ${newPlan}`);
 
         // 检查是否允许购买
-        const { allowed, reason } = canUpgrade(currentPlan, newPlan);
+        const { allowed, reason, isStacking } = canUpgrade(currentPlan, newPlan);
         if (!allowed) {
             console.log(`Purchase blocked: ${reason}`);
             return;
         }
 
-        await saveSubscription(userId, customer.id, newPlan);
+        await saveSubscription(userId, customer.id, newPlan, isStacking);
     },
 
     /**
