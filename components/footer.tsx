@@ -8,12 +8,12 @@ export function Footer() {
                 <div className="flex items-center gap-2">
                     <Database className="size-4 text-blue-600" />
                     <span className="font-semibold text-gray-900">Schedule Builder</span>
-                    <span>© 2024 ScheduleApp, Inc. All rights reserved.</span>
+                    <span>© 2025 ScheduleApp, Inc. All rights reserved.</span>
                 </div>
                 <div className="flex gap-6">
-                    <Link href="#" className="hover:text-gray-900">Terms</Link>
-                    <Link href="#" className="hover:text-gray-900">Privacy</Link>
-                    <Link href="#" className="hover:text-gray-900">Contact</Link>
+                    <Link href="/terms" className="hover:text-gray-900">Terms</Link>
+                    <Link href="/privacy" className="hover:text-gray-900">Privacy</Link>
+                    <Link href="/contact" className="hover:text-gray-900">Contact</Link>
                 </div>
             </div>
         </footer>
