@@ -56,7 +56,7 @@ export function UpgradeModal({ open, onOpenChange, feature = "this feature" }: U
                 </div>
 
                 <p className="text-center text-xs text-gray-500 mt-2">
-                    Starting at just $4.99 for a 7-day pass
+                    Starting at just $4.9 for a 7-day pass
                 </p>
             </DialogContent>
         </Dialog>

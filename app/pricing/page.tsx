@@ -44,7 +44,7 @@ export default function PricingPage() {
         },
         {
             title: "7-Day Pass",
-            price: "$4.99",
+            price: "$4.9",
             priceDetail: "/ week",
             description: "Perfect for one-time scheduling or temporary needs.",
             features: ["All Free features", "Watermark-free exports", "Premium templates"],
@@ -54,7 +54,7 @@ export default function PricingPage() {
         },
         {
             title: "Monthly",
-            price: "$9",
+            price: "$9.9",
             priceDetail: "/ month",
             description: "Ideal for managers, HR, and frequent schedulers.",
             features: [
@@ -70,7 +70,7 @@ export default function PricingPage() {
         },
         {
             title: "Lifetime",
-            price: "$49",
+            price: "$49.9",
             priceDetail: "/ one-time",
             description: "Pay once and get all pro features forever.",
             features: [

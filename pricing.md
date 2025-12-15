@@ -78,9 +78,9 @@
 >
 > 针对 Schedule Builder 这种工具，用户分为“一次性用户”和“长期用户”。
 >
-> - **7-Day Pass ($2.99):** 针对只要做一次排班的学生/临时需求。转化率通常最高。
->- **Monthly Subscription ($9/mo):** 针对经理/HR。
-> - **Lifetime Deal ($49):** 针对不想订阅的人。
+> - **7-Day Pass ($4.9):** 针对只要做一次排班的学生/临时需求。转化率通常最高。
+>- **Monthly Subscription ($9.9/mo):** 针对经理/HR。
+> - **Lifetime Deal ($49.9):** 针对不想订阅的人。
 > 
 > ------
 >
@@ -154,7 +154,7 @@
 >
 > - **Tag:** ✨ **Most Popular** (高亮标签)
 > - **Title:** **Pro**
-> - **Price:** **$9** / month (or $49 Lifetime Deal)
+> - **Price:** **$9.9** / month (or $49.9 Lifetime Deal)
 > - **Target Audience:** For managers, teams & power users
 > - **Button:** [ Upgrade to Pro ] (Primary color, big button)
 > - **Features List (Everything in Free, plus):**

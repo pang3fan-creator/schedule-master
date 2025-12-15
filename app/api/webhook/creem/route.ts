@@ -12,6 +12,42 @@ const PLAN_PRIORITY: Record<string, number> = {
 };
 
 /**
+ * Creem API 基础配置
+ */
+const CREEM_API_BASE = "https://api.creem.io/v1";
+const CREEM_API_KEY = process.env.CREEM_API_KEY || "";
+
+/**
+ * 调用 Creem API 取消订阅
+ * @param subscriptionId - Creem 订阅 ID
+ */
+async function cancelCreemSubscription(subscriptionId: string): Promise<boolean> {
+    try {
+        console.log(`Cancelling Creem subscription: ${subscriptionId}`);
+
+        const response = await fetch(`${CREEM_API_BASE}/subscriptions/${subscriptionId}/cancel`, {
+            method: "POST",
+            headers: {
+                "x-api-key": CREEM_API_KEY,
+                "Content-Type": "application/json",
+            },
+        });
+
+        if (!response.ok) {
+            const error = await response.text();
+            console.error(`Failed to cancel subscription: ${response.status} - ${error}`);
+            return false;
+        }
+
+        console.log(`Successfully cancelled Creem subscription: ${subscriptionId}`);
+        return true;
+    } catch (error) {
+        console.error("Error cancelling Creem subscription:", error);
+        return false;
+    }
+}
+
+/**
  * 根据产品信息确定订阅计划类型
  */
 function determinePlan(product: { billing_type?: string; name: string }): "7day" | "monthly" | "lifetime" {
@@ -87,19 +123,21 @@ function canUpgrade(currentPlan: string, newPlan: string): { allowed: boolean; r
 /**
  * 保存订阅信息到 Supabase
  * @param isStacking - 是否为 7-Day Pass 叠加购买
+ * @param subscriptionId - Creem 订阅 ID (仅 Monthly 有)
  */
 async function saveSubscription(
     userId: string,
     customerId: string,
     plan: "7day" | "monthly" | "lifetime",
-    isStacking: boolean = false
+    isStacking: boolean = false,
+    subscriptionId?: string
 ) {
     const supabase = createAdminClient();
 
     // 获取当前订阅信息，用于计算叠加/升级逻辑
     const { data: current } = await supabase
         .from("subscriptions")
-        .select("plan, expires_at")
+        .select("plan, expires_at, creem_subscription_id")
         .eq("clerk_user_id", userId)
         .single();
 
@@ -123,6 +161,13 @@ async function saveSubscription(
         const remaining = new Date(current.expires_at).getTime() - Date.now();
         bonusDays = Math.max(0, Math.ceil(remaining / (24 * 60 * 60 * 1000)));
         console.log(`Upgrade from 7-Day to Monthly: ${bonusDays} bonus days granted`);
+    } else if (plan === "lifetime" && current?.plan === "monthly" && current.creem_subscription_id) {
+        // 升级到 Lifetime 时，取消现有的 Monthly 订阅
+        console.log(`Upgrading from Monthly to Lifetime, cancelling subscription: ${current.creem_subscription_id}`);
+        const cancelled = await cancelCreemSubscription(current.creem_subscription_id);
+        if (!cancelled) {
+            console.warn(`Failed to cancel subscription ${current.creem_subscription_id}, but proceeding with upgrade`);
+        }
     }
 
     console.log(`Saving subscription for user ${userId}, plan: ${plan}, expires: ${expiresAt}, bonusDays: ${bonusDays}`);
@@ -131,6 +176,7 @@ async function saveSubscription(
         {
             clerk_user_id: userId,
             creem_customer_id: customerId,
+            creem_subscription_id: plan === "monthly" ? subscriptionId : null,
             plan,
             status: "active",
             expires_at: expiresAt,
@@ -154,9 +200,10 @@ export const POST = Webhook({
      * onCheckoutCompleted - 处理所有类型的结账完成事件
      * 包括一次性付款（7-day pass, lifetime）和订阅首次付款
      */
-    onCheckoutCompleted: async ({ customer, product, metadata }) => {
+    onCheckoutCompleted: async ({ customer, product, metadata, subscription }) => {
         console.log("=== Webhook onCheckoutCompleted triggered ===");
         console.log("Product:", product.name, "Type:", product.billing_type);
+        console.log("Subscription ID:", subscription?.id);
 
         const userId = metadata?.referenceId as string;
         if (!userId) {
@@ -178,16 +225,19 @@ export const POST = Webhook({
             return;
         }
 
-        await saveSubscription(userId, customer?.id || "", newPlan, isStacking);
+        await saveSubscription(userId, customer?.id || "", newPlan, isStacking, subscription?.id);
     },
 
     /**
      * onGrantAccess - 处理订阅激活事件（订阅续费时也会触发）
      * 主要用于订阅型产品
+     * 注意：此事件的参数结构是 NormalizedSubscriptionEntity，包含 id 字段
      */
-    onGrantAccess: async ({ customer, product, metadata }) => {
+    onGrantAccess: async (event) => {
+        const { customer, product, metadata, id: subscriptionId } = event;
         console.log("=== Webhook onGrantAccess triggered ===");
         console.log("Product:", product.name, "Type:", product.billing_type);
+        console.log("Subscription ID:", subscriptionId);
 
         const userId = metadata?.referenceId as string;
         if (!userId) {
@@ -207,7 +257,7 @@ export const POST = Webhook({
             return;
         }
 
-        await saveSubscription(userId, customer.id, newPlan, isStacking);
+        await saveSubscription(userId, customer.id, newPlan, isStacking, subscriptionId);
     },
 
     /**
