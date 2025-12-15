@@ -7,6 +7,8 @@ interface SubscriptionState {
     isPro: boolean;
     isLoading: boolean;
     customerId: string | null;
+    expiresAt: string | null;
+    status: string;
     refresh: () => Promise<void>;
 }
 
@@ -15,6 +17,8 @@ const SubscriptionContext = createContext<SubscriptionState>({
     isPro: false,
     isLoading: true,
     customerId: null,
+    expiresAt: null,
+    status: "active",
     refresh: async () => { },
 });
 
@@ -24,6 +28,8 @@ export function SubscriptionProvider({ children }: { children: React.ReactNode }
         isPro: false,
         isLoading: true,
         customerId: null,
+        expiresAt: null,
+        status: "active",
     });
 
     const fetchSubscription = useCallback(async () => {
@@ -36,6 +42,8 @@ export function SubscriptionProvider({ children }: { children: React.ReactNode }
                     isPro: data.plan !== "free" && data.status === "active",
                     isLoading: false,
                     customerId: data.customerId,
+                    expiresAt: data.expiresAt,
+                    status: data.status,
                 });
             } else {
                 setState((prev) => ({ ...prev, isLoading: false }));

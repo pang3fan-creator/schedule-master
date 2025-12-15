@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Database } from "lucide-react"
+import { Database, Crown } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
@@ -12,6 +12,7 @@ import {
   UserButton,
 } from "@clerk/nextjs"
 import { AuthModal } from "@/components/auth-modal"
+import { SubscriptionModal } from "@/components/SubscriptionModal"
 
 const navLinks = [
   { href: "/templates", label: "Templates" },
@@ -23,6 +24,7 @@ export function Navbar() {
   const pathname = usePathname()
   const [authModalOpen, setAuthModalOpen] = useState(false)
   const [authMode, setAuthMode] = useState<"sign-in" | "sign-up">("sign-in")
+  const [subscriptionModalOpen, setSubscriptionModalOpen] = useState(false)
 
   const openAuthModal = (mode: "sign-in" | "sign-up") => {
     setAuthMode(mode)
@@ -84,7 +86,15 @@ export function Navbar() {
                   avatarBox: "w-9 h-9",
                 },
               }}
-            />
+            >
+              <UserButton.MenuItems>
+                <UserButton.Action
+                  label="My Subscription"
+                  labelIcon={<Crown className="h-4 w-4" />}
+                  onClick={() => setSubscriptionModalOpen(true)}
+                />
+              </UserButton.MenuItems>
+            </UserButton>
           </SignedIn>
         </div>
       </header>
@@ -94,6 +104,12 @@ export function Navbar() {
         open={authModalOpen}
         onOpenChange={setAuthModalOpen}
         defaultMode={authMode}
+      />
+
+      {/* Subscription Modal */}
+      <SubscriptionModal
+        open={subscriptionModalOpen}
+        onOpenChange={setSubscriptionModalOpen}
       />
     </>
   )
