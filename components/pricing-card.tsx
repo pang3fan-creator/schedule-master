@@ -75,10 +75,11 @@ interface PricingCardProps {
     description: string;
     features: string[];
     buttonText: string;
-    buttonVariant?: "default" | "outline" | "secondary";
+    buttonVariant?: "default" | "outline" | "secondary" | "ghost";
     popular?: boolean;
     productId?: string;
     isFree?: boolean;
+    isLifetime?: boolean;
 }
 
 export function PricingCard({
@@ -92,6 +93,7 @@ export function PricingCard({
     popular = false,
     productId,
     isFree = false,
+    isLifetime = false,
 }: PricingCardProps) {
     const { user, isSignedIn } = useUser();
     const { plan: currentPlan, isLoading } = useSubscription();
@@ -103,31 +105,61 @@ export function PricingCard({
     // 当前计划的标记
     const isCurrentPlan = currentPlan === targetPlan && currentPlan !== "free";
 
+    // 根据计划类型决定按钮样式（统一函数）
+    const getButtonClassName = () => {
+        if (isFree) {
+            return "w-full mb-2 border-gray-300 text-gray-600 hover:bg-gray-50";
+        }
+        if (isLifetime) {
+            // Lifetime: 渐变色
+            return "w-full mb-2 bg-gradient-to-r from-violet-500 to-blue-500 hover:from-violet-600 hover:to-blue-600 text-white shadow-lg";
+        }
+        if (popular) {
+            // Monthly: 高饱和度蓝色 + 明显的阴影浮起效果
+            return "w-full mb-2 bg-blue-600 hover:bg-blue-700 text-white shadow-xl hover:shadow-2xl hover:-translate-y-0.5 transition-all duration-200";
+        }
+        // 7-Day Pass: 中饱和度蓝色
+        return "w-full mb-2 bg-blue-500 hover:bg-blue-600 text-white";
+    };
+
+    const buttonClassName = getButtonClassName();
+
     const renderButton = () => {
         // Free 计划直接跳转到主页
         if (isFree) {
             return (
-                <Link href="/">
-                    <Button
-                        variant={buttonVariant}
-                        className={cn("w-full mb-2", popular && "bg-blue-600 hover:bg-blue-700")}
-                    >
-                        {buttonText}
-                    </Button>
-                </Link>
+                <>
+                    <Link href="/">
+                        <Button
+                            variant="outline"
+                            className={buttonClassName}
+                        >
+                            {buttonText}
+                        </Button>
+                    </Link>
+                    {/* Invisible placeholder to align with paid buttons */}
+                    <p className="text-center text-xs text-transparent mt-1 select-none" aria-hidden="true">
+                        &nbsp;
+                    </p>
+                </>
             );
         }
 
         // 付费计划需要 productId
         if (!productId) {
             return (
-                <Button
-                    variant={buttonVariant}
-                    className={cn("w-full mb-2", popular && "bg-blue-600 hover:bg-blue-700")}
-                    disabled
-                >
-                    {buttonText}
-                </Button>
+                <>
+                    <Button
+                        variant="default"
+                        className={buttonClassName}
+                        disabled
+                    >
+                        {buttonText}
+                    </Button>
+                    <p className="text-center text-xs text-gray-500 mt-1">
+                        30-day money-back guarantee
+                    </p>
+                </>
             );
         }
 
@@ -136,12 +168,15 @@ export function PricingCard({
             return (
                 <>
                     <Button
-                        variant={buttonVariant}
-                        className={cn("w-full mb-2", popular && "bg-blue-600 hover:bg-blue-700")}
+                        variant="default"
+                        className={buttonClassName}
                         onClick={() => setAuthModalOpen(true)}
                     >
                         {buttonText}
                     </Button>
+                    <p className="text-center text-xs text-gray-500 mt-1">
+                        30-day money-back guarantee
+                    </p>
                     <AuthModal
                         open={authModalOpen}
                         onOpenChange={setAuthModalOpen}
@@ -154,13 +189,18 @@ export function PricingCard({
         // 加载中
         if (isLoading) {
             return (
-                <Button
-                    variant={buttonVariant}
-                    className={cn("w-full mb-2", popular && "bg-blue-600 hover:bg-blue-700")}
-                    disabled
-                >
-                    Loading...
-                </Button>
+                <>
+                    <Button
+                        variant="default"
+                        className={buttonClassName}
+                        disabled
+                    >
+                        Loading...
+                    </Button>
+                    <p className="text-center text-xs text-gray-500 mt-1">
+                        30-day money-back guarantee
+                    </p>
+                </>
             );
         }
 
@@ -180,23 +220,29 @@ export function PricingCard({
         // 允许购买，使用 CreemCheckout
         // 如果有特殊消息（如 7-Day 叠加），显示该消息作为按钮文案
         const displayText = purchaseCheck.message || buttonText;
+
         return (
-            <CreemCheckout
-                productId={productId}
-                successUrl="/pricing?success=true"
-                referenceId={user?.id}
-                customer={user?.emailAddresses?.[0]?.emailAddress ? {
-                    email: user.emailAddresses[0].emailAddress,
-                    name: user.fullName || undefined,
-                } : undefined}
-            >
-                <Button
-                    variant={buttonVariant}
-                    className={cn("w-full mb-2", popular && "bg-blue-600 hover:bg-blue-700")}
+            <>
+                <CreemCheckout
+                    productId={productId}
+                    successUrl="/pricing?success=true"
+                    referenceId={user?.id}
+                    customer={user?.emailAddresses?.[0]?.emailAddress ? {
+                        email: user.emailAddresses[0].emailAddress,
+                        name: user.fullName || undefined,
+                    } : undefined}
                 >
-                    {displayText}
-                </Button>
-            </CreemCheckout>
+                    <Button
+                        variant="default"
+                        className={buttonClassName}
+                    >
+                        {displayText}
+                    </Button>
+                </CreemCheckout>
+                <p className="text-center text-xs text-gray-500 mt-1">
+                    30-day money-back guarantee
+                </p>
+            </>
         );
     };
 

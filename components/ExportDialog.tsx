@@ -11,20 +11,39 @@ import {
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
-import { Download, Image, FileText, Loader2, Crown } from "lucide-react"
+import { Download, Image, FileText, Loader2, Crown, Table } from "lucide-react"
 import { useSubscription } from "@/components/SubscriptionContext"
-import { exportScheduleToImage, generateFilename } from "@/lib/export"
+import { exportScheduleToImage, exportScheduleToPdf, exportScheduleToCsv, generateFilename, PdfEvent, PdfExportSettings } from "@/lib/export"
 import Link from "next/link"
 
 interface ExportDialogProps {
     open: boolean
     onOpenChange: (open: boolean) => void
     calendarRef: React.RefObject<HTMLDivElement | null>
+    onExportStart?: () => void
+    onExportEnd?: () => void
+    // Data for vector PDF export
+    events?: PdfEvent[]
+    settings?: PdfExportSettings
+    currentWeekStart?: Date
+    viewMode?: 'week' | 'day'
+    selectedDate?: Date
 }
 
-type ExportFormat = "png" | "jpg" | "pdf"
+type ExportFormat = "png" | "jpg" | "pdf" | "excel"
 
-export function ExportDialog({ open, onOpenChange, calendarRef }: ExportDialogProps) {
+export function ExportDialog({
+    open,
+    onOpenChange,
+    calendarRef,
+    onExportStart,
+    onExportEnd,
+    events = [],
+    settings,
+    currentWeekStart,
+    viewMode = 'week',
+    selectedDate
+}: ExportDialogProps) {
     const [selectedFormat, setSelectedFormat] = useState<ExportFormat>("png")
     const [isExporting, setIsExporting] = useState(false)
     const { isPro } = useSubscription()
@@ -37,14 +56,47 @@ export function ExportDialog({ open, onOpenChange, calendarRef }: ExportDialogPr
 
         setIsExporting(true)
 
+        // Trigger export mode in parent to re-render calendar without scroll constraints
+        onExportStart?.()
+
+        // Wait for React to re-render with export mode (needs time for rowHeight to update)
+        await new Promise(resolve => setTimeout(resolve, 300))
+
         try {
             if (selectedFormat === "pdf") {
-                // PDF export for Pro users
+                // PDF export for Pro users only - Vector format
                 if (!isPro) {
                     return
                 }
-                // TODO: Implement PDF export
-                console.log("PDF export coming soon for Pro users")
+
+                // Use vector PDF export with events data
+                if (settings && currentWeekStart) {
+                    await exportScheduleToPdf({
+                        filename: generateFilename("schedule"),
+                        events,
+                        settings,
+                        currentWeekStart,
+                        viewMode,
+                        selectedDate,
+                    })
+                } else {
+                    console.error("Missing settings or currentWeekStart for PDF export")
+                }
+            } else if (selectedFormat === "excel") {
+                // CSV/Excel export for Pro users only
+                if (!isPro) {
+                    return
+                }
+
+                if (settings) {
+                    exportScheduleToCsv({
+                        filename: generateFilename("schedule"),
+                        events,
+                        settings,
+                    })
+                } else {
+                    console.error("Missing settings for CSV export")
+                }
             } else {
                 // PNG/JPG export for everyone (with watermark for free users)
                 await exportScheduleToImage({
@@ -56,10 +108,17 @@ export function ExportDialog({ open, onOpenChange, calendarRef }: ExportDialogPr
                 })
             }
             onOpenChange(false)
+
+            // Refresh page after successful export
+            setTimeout(() => {
+                window.location.reload()
+            }, 500)
         } catch (error) {
             console.error("Export failed:", error)
         } finally {
             setIsExporting(false)
+            // Restore normal mode
+            onExportEnd?.()
         }
     }
 
@@ -86,6 +145,14 @@ export function ExportDialog({ open, onOpenChange, calendarRef }: ExportDialogPr
             available: isPro,
             proOnly: true,
         },
+        {
+            format: "excel" as ExportFormat,
+            label: "Excel/CSV",
+            description: "Spreadsheet format for data analysis",
+            icon: Table,
+            available: isPro,
+            proOnly: true,
+        },
     ]
 
     return (
@@ -102,72 +169,66 @@ export function ExportDialog({ open, onOpenChange, calendarRef }: ExportDialogPr
                 </DialogHeader>
 
                 <div className="space-y-4 py-4">
-                    {/* Format selection */}
-                    <div className="space-y-3">
-                        <Label className="text-sm font-medium">Format</Label>
-                        <div className="grid gap-2">
-                            {formatOptions.map((option) => {
-                                const Icon = option.icon
-                                const isSelected = selectedFormat === option.format
-                                const isDisabled = !option.available
-
-                                return (
-                                    <button
-                                        key={option.format}
-                                        type="button"
-                                        className={`flex items-center gap-3 p-3 rounded-lg border text-left transition-all ${isSelected
-                                                ? "border-blue-500 bg-blue-50"
-                                                : isDisabled
-                                                    ? "border-gray-200 bg-gray-50 opacity-60 cursor-not-allowed"
-                                                    : "border-gray-200 hover:border-gray-300 hover:bg-gray-50"
-                                            }`}
-                                        onClick={() => !isDisabled && setSelectedFormat(option.format)}
-                                        disabled={isDisabled}
-                                    >
-                                        <div className={`p-2 rounded-md ${isSelected ? "bg-blue-100" : "bg-gray-100"}`}>
-                                            <Icon className={`size-5 ${isSelected ? "text-blue-600" : "text-gray-500"}`} />
-                                        </div>
-                                        <div className="flex-1">
-                                            <div className="flex items-center gap-2">
-                                                <span className={`font-medium ${isSelected ? "text-blue-900" : "text-gray-900"}`}>
-                                                    {option.label}
-                                                </span>
-                                                {option.proOnly && (
-                                                    <span className="inline-flex items-center gap-1 text-xs bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded">
-                                                        <Crown className="size-3" />
-                                                        Pro
-                                                    </span>
-                                                )}
-                                            </div>
-                                            <p className="text-xs text-gray-500">{option.description}</p>
-                                        </div>
-                                    </button>
-                                )
-                            })}
-                        </div>
+                    <Label>Format</Label>
+                    <div className="space-y-2">
+                        {formatOptions.map((option) => (
+                            <div
+                                key={option.format}
+                                className={`flex items-center gap-3 rounded-lg border p-3 transition-colors cursor-pointer ${selectedFormat === option.format
+                                    ? "border-blue-500 bg-blue-50"
+                                    : "border-gray-200 hover:border-gray-300"
+                                    }`}
+                                onClick={() => setSelectedFormat(option.format)}
+                            >
+                                <option.icon className={`size-5 ${selectedFormat === option.format ? "text-blue-600" : "text-gray-500"
+                                    }`} />
+                                <div className="flex-1">
+                                    <div className="flex items-center gap-2">
+                                        <span className={`font-medium ${selectedFormat === option.format ? "text-blue-900" : "text-gray-900"
+                                            }`}>
+                                            {option.label}
+                                        </span>
+                                        {option.proOnly && (
+                                            <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-700">
+                                                <Crown className="size-3" />
+                                                Pro
+                                            </span>
+                                        )}
+                                    </div>
+                                    <span className="text-sm text-gray-500">{option.description}</span>
+                                </div>
+                            </div>
+                        ))}
                     </div>
 
-                    {/* Watermark notice for free users */}
-                    {!isPro && selectedFormat !== "pdf" && (
-                        <div className="p-3 bg-gray-50 rounded-lg border border-gray-200">
-                            <p className="text-sm text-gray-600">
-                                Free exports include a small watermark.{" "}
-                                <Link href="/pricing" className="text-blue-600 hover:underline">
-                                    Upgrade to Pro
-                                </Link>{" "}
-                                for watermark-free exports and PDF support.
-                            </p>
+                    {/* Pro upgrade prompt for non-pro users */}
+                    {!isPro && (selectedFormat === "pdf" || selectedFormat === "excel") && (
+                        <div className="rounded-lg bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 p-4">
+                            <div className="flex items-start gap-3">
+                                <Crown className="size-5 text-amber-600 mt-0.5" />
+                                <div>
+                                    <p className="font-medium text-amber-900">Upgrade to Pro</p>
+                                    <p className="text-sm text-amber-700 mt-1">
+                                        Unlock PDF and Excel exports, plus remove watermarks from images.
+                                    </p>
+                                    <Link href="/pricing">
+                                        <Button size="sm" className="mt-2 bg-amber-600 hover:bg-amber-700">
+                                            View Plans
+                                        </Button>
+                                    </Link>
+                                </div>
+                            </div>
                         </div>
                     )}
                 </div>
 
-                <DialogFooter>
+                <DialogFooter className="gap-2 sm:gap-0">
                     <Button variant="outline" onClick={() => onOpenChange(false)}>
                         Cancel
                     </Button>
                     <Button
                         onClick={handleExport}
-                        disabled={isExporting || (selectedFormat === "pdf" && !isPro)}
+                        disabled={isExporting || (!isPro && (selectedFormat === "pdf" || selectedFormat === "excel"))}
                         className="gap-2"
                     >
                         {isExporting ? (

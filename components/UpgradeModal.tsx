@@ -31,7 +31,7 @@ export function UpgradeModal({ open, onOpenChange, feature = "this feature" }: U
                     <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-blue-100">
                         <Lock className="h-6 w-6 text-blue-600" />
                     </div>
-                    <DialogTitle className="text-xl">Upgrade to Pro</DialogTitle>
+                    <DialogTitle className="text-xl text-center">Upgrade to Pro</DialogTitle>
                     <DialogDescription className="text-center">
                         {feature} is available on Pro plans. Upgrade now to unlock all premium features.
                     </DialogDescription>

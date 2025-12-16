@@ -11,6 +11,7 @@ import { DeleteConfirmDialog } from "@/components/DeleteConfirmDialog"
 import { ConflictDialog } from "@/components/ConflictDialog"
 import { EditEventDialog } from "@/components/EditEventDialog"
 import { findConflictingEvents } from "@/lib/event-conflict"
+import { useSettings } from "@/components/SettingsContext"
 
 // LocalStorage key for events
 const EVENTS_STORAGE_KEY = "schedule-builder-events"
@@ -73,6 +74,10 @@ export default function ScheduleBuilderPage() {
   const [selectedDate, setSelectedDate] = useState<Date>(() => new Date())
   const [currentMonday, setCurrentMonday] = useState<Date>(() => getMonday(new Date()))
   const [showExportDialog, setShowExportDialog] = useState(false)
+  const [isExporting, setIsExporting] = useState(false)  // Export mode for calendar rendering
+
+  // Get settings from context for PDF export
+  const { settings } = useSettings()
 
   // Context menu state
   const [contextMenu, setContextMenu] = useState<{
@@ -269,20 +274,22 @@ export default function ScheduleBuilderPage() {
   }, [])
 
   return (
-    <div className="flex h-screen flex-col bg-white">
-      <Navbar />
-      <div className="flex flex-1 overflow-hidden">
-        <Sidebar
-          onReset={handleReset}
-          viewMode={viewMode}
-          onViewModeChange={setViewMode}
-          onAddEvent={handleAddEvent}
-          currentMonday={currentMonday}
-          onExport={handleExport}
-          showAddDialog={showAddDialog}
-          onAddDialogClose={() => setShowAddDialog(false)}
-        />
-        <main className="flex-1 overflow-auto" ref={calendarRef}>
+    <div className={`flex flex-col bg-white ${isExporting ? '' : 'h-screen'}`}>
+      {!isExporting && <Navbar />}
+      <div className={`flex flex-1 ${isExporting ? '' : 'overflow-hidden'}`}>
+        {!isExporting && (
+          <Sidebar
+            onReset={handleReset}
+            viewMode={viewMode}
+            onViewModeChange={setViewMode}
+            onAddEvent={handleAddEvent}
+            currentMonday={currentMonday}
+            onExport={handleExport}
+            showAddDialog={showAddDialog}
+            onAddDialogClose={() => setShowAddDialog(false)}
+          />
+        )}
+        <main className={`flex-1 ${isExporting ? '' : 'overflow-auto'}`} ref={calendarRef}>
           {viewMode === "week" ? (
             <WeeklyCalendar
               events={events}
@@ -290,6 +297,7 @@ export default function ScheduleBuilderPage() {
               onEventDelete={handleEventDelete}
               onEventDoubleClick={handleEventDoubleClick}
               onEventContextMenu={handleEventContextMenu}
+              exportMode={isExporting}
             />
           ) : (
             <DailyCalendar
@@ -300,6 +308,7 @@ export default function ScheduleBuilderPage() {
               onEventDelete={handleEventDelete}
               onEventDoubleClick={handleEventDoubleClick}
               onEventContextMenu={handleEventContextMenu}
+              exportMode={isExporting}
             />
           )}
         </main>
@@ -310,6 +319,18 @@ export default function ScheduleBuilderPage() {
         open={showExportDialog}
         onOpenChange={setShowExportDialog}
         calendarRef={calendarRef}
+        onExportStart={() => setIsExporting(true)}
+        onExportEnd={() => setIsExporting(false)}
+        events={events}
+        settings={{
+          workingHoursStart: settings.workingHoursStart,
+          workingHoursEnd: settings.workingHoursEnd,
+          weekStartsOnSunday: settings.weekStartsOnSunday,
+          use12HourFormat: settings.use12HourFormat,
+        }}
+        currentWeekStart={currentMonday}
+        viewMode={viewMode}
+        selectedDate={selectedDate}
       />
 
       {/* Context Menu */}

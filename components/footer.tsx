@@ -11,6 +11,7 @@ export function Footer() {
                     <span>© 2025 ScheduleApp, Inc. All rights reserved.</span>
                 </div>
                 <div className="flex gap-6">
+                    <Link href="/pricing" className="hover:text-gray-900">Pricing</Link>
                     <Link href="/terms" className="hover:text-gray-900">Terms</Link>
                     <Link href="/privacy" className="hover:text-gray-900">Privacy</Link>
                     <Link href="/contact" className="hover:text-gray-900">Contact</Link>

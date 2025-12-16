@@ -79,8 +79,9 @@ export default function PricingPage() {
                 "Future updates included",
             ],
             buttonText: "Buy Once",
-            buttonVariant: "secondary" as const,
+            buttonVariant: "default" as const,
             productId: PRODUCT_IDS.lifetime,
+            isLifetime: true,
         },
     ];
 

@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { PlusCircle, Download, Settings, RotateCcw, Sparkles } from "lucide-react"
+import { PlusCircle, Download, Settings, RotateCcw, Sparkles, Cloud, Calendar } from "lucide-react"
 import {
   Dialog,
   DialogContent,
@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/dialog"
 import { AddEventDialog } from "@/components/add-event-dialog"
 import { UpgradeModal } from "@/components/UpgradeModal"
+import { FeatureComingSoonModal } from "@/components/FeatureComingSoonModal"
 import { SettingsDialog } from "@/components/SettingsDialog"
 import { useSubscription } from "@/components/SubscriptionContext"
 import type { Event } from "@/components/weekly-calendar"
@@ -35,7 +36,9 @@ export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, curre
   const [showAddEventDialog, setShowAddEventDialog] = useState(false)
   const [showUpgradeModal, setShowUpgradeModal] = useState(false)
   const [showSettingsDialog, setShowSettingsDialog] = useState(false)
+  const [showComingSoonModal, setShowComingSoonModal] = useState(false)
   const [upgradeFeature, setUpgradeFeature] = useState("")
+  const [comingSoonFeature, setComingSoonFeature] = useState("")
 
   const { isPro, isLoading } = useSubscription()
 
@@ -47,14 +50,25 @@ export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, curre
   const handleAIAutofillClick = () => {
     if (isLoading) return
 
-    if (!isPro) {
-      setUpgradeFeature("AI Autofill")
-      setShowUpgradeModal(true)
-      return
-    }
+    // Painted Door Test - show coming soon modal for all users
+    setComingSoonFeature("AI Autofill")
+    setShowComingSoonModal(true)
+  }
 
-    // TODO: Implement actual AI autofill functionality for Pro users
-    console.log("AI Autofill for Pro user...")
+  const handleCloudSaveClick = () => {
+    if (isLoading) return
+
+    // Painted Door Test - show coming soon modal for all users
+    setComingSoonFeature("Cloud Save")
+    setShowComingSoonModal(true)
+  }
+
+  const handleCalendarSyncClick = () => {
+    if (isLoading) return
+
+    // Painted Door Test - show coming soon modal for all users
+    setComingSoonFeature("Calendar Sync")
+    setShowComingSoonModal(true)
   }
 
   return (
@@ -88,6 +102,13 @@ export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, curre
         feature={upgradeFeature}
       />
 
+      {/* Feature Coming Soon Modal - Painted Door Test */}
+      <FeatureComingSoonModal
+        open={showComingSoonModal}
+        onOpenChange={setShowComingSoonModal}
+        featureName={comingSoonFeature}
+      />
+
       {/* Day/Week Toggle */}
       <Tabs value={viewMode} onValueChange={(value) => onViewModeChange(value as "day" | "week")} className="mb-6">
         <TabsList className="w-full grid grid-cols-2 bg-gray-100">
@@ -102,28 +123,7 @@ export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, curre
 
       {/* Menu Items */}
       <nav className="flex flex-col gap-1">
-        <Button
-          variant="ghost"
-          className="justify-start gap-3 text-gray-600 hover:text-gray-900"
-          onClick={handleExportClick}
-        >
-          <Download className="size-5" />
-          Export/Download
-        </Button>
-        <Button
-          variant="ghost"
-          className="justify-start gap-3 text-gray-600 hover:text-gray-900"
-          onClick={() => setShowSettingsDialog(true)}
-        >
-          <Settings className="size-5" />
-          Settings
-        </Button>
-
-        {/* Settings Dialog */}
-        <SettingsDialog
-          open={showSettingsDialog}
-          onOpenChange={setShowSettingsDialog}
-        />
+        {/* Reset Dialog */}
         <Dialog open={showResetDialog} onOpenChange={setShowResetDialog}>
           <DialogTrigger asChild>
             <Button variant="ghost" className="justify-start gap-3 text-gray-600 hover:text-gray-900">
@@ -154,6 +154,52 @@ export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, curre
             </DialogFooter>
           </DialogContent>
         </Dialog>
+
+        {/* Settings */}
+        <Button
+          variant="ghost"
+          className="justify-start gap-3 text-gray-600 hover:text-gray-900"
+          onClick={() => setShowSettingsDialog(true)}
+        >
+          <Settings className="size-5" />
+          Settings
+        </Button>
+
+        {/* Settings Dialog */}
+        <SettingsDialog
+          open={showSettingsDialog}
+          onOpenChange={setShowSettingsDialog}
+        />
+
+        {/* Cloud Save */}
+        <Button
+          variant="ghost"
+          className="justify-start gap-3 text-gray-600 hover:text-gray-900"
+          onClick={handleCloudSaveClick}
+        >
+          <Cloud className="size-5" />
+          Cloud Save
+        </Button>
+
+        {/* Calendar Sync */}
+        <Button
+          variant="ghost"
+          className="justify-start gap-3 text-gray-600 hover:text-gray-900"
+          onClick={handleCalendarSyncClick}
+        >
+          <Calendar className="size-5" />
+          Calendar Sync
+        </Button>
+
+        {/* Export/Download */}
+        <Button
+          variant="ghost"
+          className="justify-start gap-3 text-gray-600 hover:text-gray-900"
+          onClick={handleExportClick}
+        >
+          <Download className="size-5" />
+          Export/Download
+        </Button>
       </nav>
 
       {/* Spacer */}

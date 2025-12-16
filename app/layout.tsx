@@ -1,5 +1,6 @@
 import type React from "react"
-import { Inter } from "next/font/google"
+// Temporarily disabled Google Fonts due to network issues
+// import { Inter } from "next/font/google"
 import type { Metadata } from "next"
 import { ClerkProvider } from "@clerk/nextjs"
 import { Analytics } from "@vercel/analytics/next"
@@ -30,7 +31,8 @@ export const metadata: Metadata = {
   },
 }
 
-const inter = Inter({ subsets: ["latin"] })
+// Google Fonts disabled - using system fonts from globals.css
+// const inter = Inter({ subsets: ["latin"] })
 
 export default function RootLayout({
   children,
@@ -40,7 +42,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={`${inter.className} antialiased`}>
+        <body className="antialiased">
           <SettingsProvider>
             <SubscriptionProvider>
               {children}

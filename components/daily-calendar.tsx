@@ -18,6 +18,7 @@ interface DailyCalendarProps {
     onEventDelete?: (eventId: string) => void
     onEventDoubleClick?: (event: Event) => void
     onEventContextMenu?: (event: Event, x: number, y: number) => void
+    exportMode?: boolean  // When true, renders for export (no scroll, fixed heights)
 }
 
 const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
@@ -86,9 +87,19 @@ function getEventPosition(event: Event, rowHeight: number) {
     }
 }
 
-export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdate, onEventDelete, onEventDoubleClick, onEventContextMenu }: DailyCalendarProps) {
+export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdate, onEventDelete, onEventDoubleClick, onEventContextMenu, exportMode = false }: DailyCalendarProps) {
     const gridRef = useRef<HTMLDivElement>(null)
-    const [rowHeight, setRowHeight] = useState(58)
+    // In export mode, use fixed row height
+    const EXPORT_ROW_HEIGHT = 80
+    const [rowHeight, setRowHeight] = useState(exportMode ? EXPORT_ROW_HEIGHT : 58)
+
+    // Update rowHeight when exportMode changes
+    useEffect(() => {
+        if (exportMode) {
+            setRowHeight(EXPORT_ROW_HEIGHT)
+        }
+        // When returning to normal mode, the resize handler will recalculate
+    }, [exportMode])
 
     // Get settings from context
     const { settings } = useSettings()
@@ -179,46 +190,54 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
     }
 
     return (
-        <div className="flex h-full flex-col p-6 bg-muted/20">
+        <div className={`flex flex-col p-6 bg-muted/20 ${exportMode ? '' : 'h-full'}`}>
             {/* Header with navigation */}
             <div className="mb-4 flex items-center justify-between flex-shrink-0">
-                {/* Spacer for layout balance */}
-                <div className="w-20"></div>
+                {/* Spacer for layout balance - hidden in export mode */}
+                {!exportMode && <div className="w-20"></div>}
 
-                {/* Center navigation - offset by half sidebar width (115px) to align with navbar center */}
-                <div className="flex items-center" style={{ marginLeft: '-115px' }}>
-                    <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToPreviousDay}>
-                        <ChevronLeft className="size-6" />
-                    </Button>
+                {/* Center navigation - in export mode, no offset and no nav buttons */}
+                <div className={`flex items-center ${exportMode ? 'flex-1 justify-center' : ''}`} style={exportMode ? {} : { marginLeft: '-115px' }}>
+                    {!exportMode && (
+                        <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToPreviousDay}>
+                            <ChevronLeft className="size-6" />
+                        </Button>
+                    )}
                     <h2 className="text-xl font-semibold text-gray-900 min-w-[320px] text-center">{formatDate(selectedDate)}</h2>
-                    <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToNextDay}>
-                        <ChevronRight className="size-6" />
-                    </Button>
+                    {!exportMode && (
+                        <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToNextDay}>
+                            <ChevronRight className="size-6" />
+                        </Button>
+                    )}
                 </div>
 
-                {/* Today button */}
-                <Button
-                    variant="outline"
-                    className="w-20 border-blue-500 text-blue-600 hover:bg-blue-50 hover:text-blue-700 font-medium"
-                    onClick={goToToday}
-                >
-                    Today
-                </Button>
+                {/* Today button - hidden in export mode */}
+                {!exportMode && (
+                    <Button
+                        variant="outline"
+                        className="w-20 border-blue-500 text-blue-600 hover:bg-blue-50 hover:text-blue-700 font-medium"
+                        onClick={goToToday}
+                    >
+                        Today
+                    </Button>
+                )}
             </div>
 
-            {/* Calendar Grid - single day view */}
-            <div className="flex-1 min-h-0 overflow-auto">
+            {/* Calendar Grid - in export mode, no overflow/scroll constraints */}
+            <div className={exportMode ? '' : 'flex-1 min-h-0 overflow-auto'}>
                 <div
                     ref={gridRef}
-                    className="grid min-w-[400px] h-full"
+                    className={`grid min-w-[400px] ${exportMode ? '' : 'h-full'}`}
                     style={{
                         gridTemplateColumns: "70px 1fr",
-                        gridTemplateRows: `48px repeat(${hours.length - 1}, minmax(50px, 1fr)) 24px`,
+                        gridTemplateRows: exportMode
+                            ? `48px repeat(${hours.length - 1}, ${EXPORT_ROW_HEIGHT}px) 24px`
+                            : `48px repeat(${hours.length - 1}, minmax(50px, 1fr)) 24px`,
                     }}
                 >
                     {/* Header Row */}
                     <div /> {/* Empty corner cell */}
-                    <div className="flex flex-col items-center justify-center border-b border-border/60" style={{ marginLeft: '-115px' }}>
+                    <div className="flex flex-col items-center justify-center border-b border-gray-300" style={{ marginLeft: '-115px' }}>
                         <span className="text-xs font-medium text-gray-500">{shortDayName}</span>
                         <span className="text-sm font-semibold text-gray-900">{selectedDate.getDate()}</span>
                     </div>
@@ -226,14 +245,13 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                     {/* Time rows - data rows with time slots, last row is label-only */}
                     {hours.map((hour, index) => (
                         <React.Fragment key={hour}>
-                            {/* Time label */}
                             <div className="flex items-start justify-end pr-3">
-                                <span className="text-xs text-gray-400 -translate-y-1/2 whitespace-nowrap">{formatHour(hour, use12HourFormat)}</span>
+                                <span className="text-xs font-medium text-gray-500 -translate-y-1/2 whitespace-nowrap">{formatHour(hour, use12HourFormat)}</span>
                             </div>
 
                             {/* Day cell - only render for data rows (not the last label row) */}
                             {index !== hours.length - 1 && (
-                                <div className="relative border-b border-l border-r border-border/60">
+                                <div className="relative border-b border-l border-r border-gray-300">
                                     {/* Render events for this cell */}
                                     {index === 0 &&
                                         dayEvents.map((event) => {
