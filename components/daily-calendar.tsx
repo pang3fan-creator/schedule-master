@@ -1,28 +1,27 @@
 "use client"
 
 import * as React from "react"
-import { useRef, useState, useEffect, useMemo, useCallback } from "react"
+import { useRef, useState, useEffect, useMemo } from "react"
 
-import { ChevronLeft, ChevronRight } from "lucide-react"
+import { ChevronLeft, ChevronRight, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import type { Event } from "@/components/weekly-calendar"
-import { formatDateString } from "@/components/weekly-calendar"
+import { formatDateString, EVENT_COLORS } from "@/components/weekly-calendar"
+import { useSettings } from "@/components/SettingsContext"
+import { useEventDrag } from "@/hooks/useEventDrag"
 
 interface DailyCalendarProps {
     events: Event[]
     selectedDate: Date
     onDateChange: (date: Date) => void
     onEventUpdate?: (updatedEvent: Event) => void
+    onEventDelete?: (eventId: string) => void
+    onEventDoubleClick?: (event: Event) => void
+    onEventContextMenu?: (event: Event, x: number, y: number) => void
 }
 
 const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 const shortDayNames = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
-
-const hours = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
-
-// Time constraints
-const MIN_HOUR = 8  // 8 AM
-const MAX_HOUR = 17 // 5 PM
 
 // Get the Monday of the week containing the given date
 function getMonday(date: Date): Date {
@@ -56,11 +55,22 @@ function formatDate(date: Date): string {
     return `${dayName}, ${month} ${day}, ${year}`
 }
 
-function formatHour(hour: number): string {
+function formatHour(hour: number, use12Hour: boolean): string {
+    if (use12Hour) {
+        if (hour === 0) return "12:00 AM"
+        if (hour === 12) return "12:00 PM"
+        if (hour < 12) return `${hour}:00 AM`
+        return `${hour - 12}:00 PM`
+    }
     return `${hour.toString().padStart(2, "0")}:00`
 }
 
-function formatTime(hour: number, minute: number): string {
+function formatTime(hour: number, minute: number, use12Hour: boolean): string {
+    if (use12Hour) {
+        const period = hour >= 12 ? "PM" : "AM"
+        const displayHour = hour === 0 ? 12 : hour > 12 ? hour - 12 : hour
+        return `${displayHour}:${minute.toString().padStart(2, "0")} ${period}`
+    }
     return `${hour.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")}`
 }
 
@@ -72,68 +82,41 @@ function getEventPosition(event: Event, rowHeight: number) {
 
     return {
         top: `${startOffset * rowHeight}px`,
-        height: `${duration * rowHeight - 8}px`,
+        height: `${Math.max(duration * rowHeight - 8, 20)}px`,
     }
 }
 
-// Calculate new time based on drag offset
-function calculateDraggedTime(
-    originalStartHour: number,
-    originalStartMinute: number,
-    originalEndHour: number,
-    originalEndMinute: number,
-    offsetPx: number,
-    rowHeight: number
-): { startHour: number; startMinute: number; endHour: number; endMinute: number } {
-    const hourOffset = offsetPx / rowHeight
-
-    // Calculate new start time
-    let newStartTotalMinutes = (originalStartHour * 60 + originalStartMinute) + (hourOffset * 60)
-    const duration = (originalEndHour * 60 + originalEndMinute) - (originalStartHour * 60 + originalStartMinute)
-
-    // Round to nearest 5 minutes for cleaner times (do this first)
-    newStartTotalMinutes = Math.round(newStartTotalMinutes / 5) * 5
-    let newEndTotalMinutes = newStartTotalMinutes + duration
-
-    // Constrain to boundaries (apply after rounding)
-    const minMinutes = MIN_HOUR * 60 // 8:00 AM = 480 minutes
-    const maxMinutes = MAX_HOUR * 60 // 5:00 PM = 1020 minutes
-
-    // Ensure start time doesn't go before MIN_HOUR
-    if (newStartTotalMinutes < minMinutes) {
-        newStartTotalMinutes = minMinutes
-        newEndTotalMinutes = minMinutes + duration
-    }
-
-    // Ensure end time doesn't go after MAX_HOUR
-    if (newEndTotalMinutes > maxMinutes) {
-        newEndTotalMinutes = maxMinutes
-        newStartTotalMinutes = maxMinutes - duration
-    }
-
-    return {
-        startHour: Math.floor(newStartTotalMinutes / 60),
-        startMinute: Math.round(newStartTotalMinutes % 60),
-        endHour: Math.floor(newEndTotalMinutes / 60),
-        endMinute: Math.round(newEndTotalMinutes % 60),
-    }
-}
-
-export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdate }: DailyCalendarProps) {
+export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdate, onEventDelete, onEventDoubleClick, onEventContextMenu }: DailyCalendarProps) {
     const gridRef = useRef<HTMLDivElement>(null)
     const [rowHeight, setRowHeight] = useState(58)
 
-    // Drag state
-    const [dragState, setDragState] = useState<{
-        eventId: string | null
-        startY: number
-        originalEvent: Event | null
-        currentOffset: number
-    }>({
-        eventId: null,
-        startY: 0,
-        originalEvent: null,
-        currentOffset: 0,
+    // Get settings from context
+    const { settings } = useSettings()
+    const { use12HourFormat, workingHoursStart, workingHoursEnd, timeIncrement } = settings
+
+    // Generate hours array dynamically based on settings
+    const hours = useMemo(() => {
+        const result: number[] = []
+        for (let h = workingHoursStart; h <= workingHoursEnd; h++) {
+            result.push(h)
+        }
+        return result
+    }, [workingHoursStart, workingHoursEnd])
+
+    // Use the event drag hook for drag-and-drop with touch support
+    const {
+        dragState,
+        handleMouseDown,
+        handleTouchStart,
+        getVisualPosition,
+        getDisplayTime,
+    } = useEventDrag({
+        onEventUpdate,
+        rowHeight,
+        minHour: workingHoursStart,
+        maxHour: workingHoursEnd,
+        events,  // Pass events for collision detection during drag
+        timeIncrement,  // Pass time increment for drag snapping
     })
 
     // Get day index for filtering events
@@ -165,17 +148,22 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
         return events.filter(event => event.date === selectedDateString)
     }, [events, selectedDate])
 
-    // Calculate actual row height based on grid dimensions
+    // Calculate actual row height based on grid dimensions and hour count
     useEffect(() => {
         const updateRowHeight = () => {
             if (gridRef.current) {
                 const gridElement = gridRef.current
                 const gridHeight = gridElement.clientHeight
                 const headerHeight = 48
-                const availableHeight = gridHeight - headerHeight
-                const calculatedRowHeight = availableHeight / 9
-                if (calculatedRowHeight > 0) {
-                    setRowHeight(calculatedRowHeight)
+                const labelRowHeight = 24  // Last row is label-only
+                const availableHeight = gridHeight - headerHeight - labelRowHeight
+                // Dynamic row count based on hours array
+                const dataRowCount = hours.length - 1
+                const calculatedRowHeight = availableHeight / dataRowCount
+                // Set minimum row height to prevent compression
+                const finalRowHeight = Math.max(calculatedRowHeight, 50)
+                if (finalRowHeight > 0) {
+                    setRowHeight(finalRowHeight)
                 }
             }
         }
@@ -183,106 +171,7 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
         updateRowHeight()
         window.addEventListener('resize', updateRowHeight)
         return () => window.removeEventListener('resize', updateRowHeight)
-    }, [])
-
-    // Handle mouse down on event card
-    const handleMouseDown = useCallback((e: React.MouseEvent, event: Event) => {
-        e.preventDefault()
-        e.stopPropagation()
-        setDragState({
-            eventId: event.id,
-            startY: e.clientY,
-            originalEvent: { ...event },
-            currentOffset: 0,
-        })
-    }, [])
-
-    // Handle mouse move (global)
-    useEffect(() => {
-        const handleMouseMove = (e: MouseEvent) => {
-            if (dragState.eventId && dragState.originalEvent) {
-                const offset = e.clientY - dragState.startY
-                setDragState(prev => ({ ...prev, currentOffset: offset }))
-            }
-        }
-
-        const handleMouseUp = () => {
-            if (dragState.eventId && dragState.originalEvent && onEventUpdate) {
-                const newTimes = calculateDraggedTime(
-                    dragState.originalEvent.startHour,
-                    dragState.originalEvent.startMinute,
-                    dragState.originalEvent.endHour,
-                    dragState.originalEvent.endMinute,
-                    dragState.currentOffset,
-                    rowHeight
-                )
-
-                onEventUpdate({
-                    ...dragState.originalEvent,
-                    ...newTimes,
-                })
-            }
-
-            setDragState({
-                eventId: null,
-                startY: 0,
-                originalEvent: null,
-                currentOffset: 0,
-            })
-        }
-
-        if (dragState.eventId) {
-            window.addEventListener('mousemove', handleMouseMove)
-            window.addEventListener('mouseup', handleMouseUp)
-            return () => {
-                window.removeEventListener('mousemove', handleMouseMove)
-                window.removeEventListener('mouseup', handleMouseUp)
-            }
-        }
-    }, [dragState.eventId, dragState.originalEvent, dragState.startY, dragState.currentOffset, rowHeight, onEventUpdate])
-
-    // Get display time for an event (considering drag state)
-    const getDisplayTime = useCallback((event: Event) => {
-        if (dragState.eventId === event.id && dragState.originalEvent) {
-            const newTimes = calculateDraggedTime(
-                dragState.originalEvent.startHour,
-                dragState.originalEvent.startMinute,
-                dragState.originalEvent.endHour,
-                dragState.originalEvent.endMinute,
-                dragState.currentOffset,
-                rowHeight
-            )
-            return {
-                startHour: newTimes.startHour,
-                startMinute: newTimes.startMinute,
-                endHour: newTimes.endHour,
-                endMinute: newTimes.endMinute,
-            }
-        }
-        return {
-            startHour: event.startHour,
-            startMinute: event.startMinute,
-            endHour: event.endHour,
-            endMinute: event.endMinute,
-        }
-    }, [dragState, rowHeight])
-
-    // Get visual position for an event (considering drag state)
-    const getVisualPosition = useCallback((event: Event) => {
-        if (dragState.eventId === event.id && dragState.originalEvent) {
-            const newTimes = calculateDraggedTime(
-                dragState.originalEvent.startHour,
-                dragState.originalEvent.startMinute,
-                dragState.originalEvent.endHour,
-                dragState.originalEvent.endMinute,
-                dragState.currentOffset,
-                rowHeight
-            )
-            const tempEvent = { ...event, ...newTimes }
-            return getEventPosition(tempEvent, rowHeight)
-        }
-        return getEventPosition(event, rowHeight)
-    }, [dragState, rowHeight])
+    }, [hours.length])
 
     // Navigate to today
     const goToToday = () => {
@@ -296,8 +185,8 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                 {/* Spacer for layout balance */}
                 <div className="w-20"></div>
 
-                {/* Center navigation */}
-                <div className="flex items-center">
+                {/* Center navigation - offset by half sidebar width (115px) to align with navbar center */}
+                <div className="flex items-center" style={{ marginLeft: '-115px' }}>
                     <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToPreviousDay}>
                         <ChevronLeft className="size-6" />
                     </Button>
@@ -323,38 +212,39 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                     ref={gridRef}
                     className="grid min-w-[400px] h-full"
                     style={{
-                        gridTemplateColumns: "60px 1fr",
-                        gridTemplateRows: "48px repeat(9, 1fr) auto"
+                        gridTemplateColumns: "70px 1fr",
+                        gridTemplateRows: `48px repeat(${hours.length - 1}, minmax(50px, 1fr)) 24px`,
                     }}
                 >
                     {/* Header Row */}
                     <div /> {/* Empty corner cell */}
-                    <div className="flex flex-col items-center justify-center border-b border-gray-300">
+                    <div className="flex flex-col items-center justify-center border-b border-gray-300" style={{ marginLeft: '-115px' }}>
                         <span className="text-xs font-medium text-gray-500">{shortDayName}</span>
                         <span className="text-sm font-semibold text-gray-900">{selectedDate.getDate()}</span>
                     </div>
 
-                    {/* Time rows - 9 data rows (8AM-4PM) + 1 label row (5PM) */}
+                    {/* Time rows - data rows with time slots, last row is label-only */}
                     {hours.map((hour, index) => (
                         <React.Fragment key={hour}>
                             {/* Time label */}
                             <div className="flex items-start justify-end pr-3">
-                                <span className="text-xs text-gray-400 -translate-y-1/2">{formatHour(hour)}</span>
+                                <span className="text-xs text-gray-400 -translate-y-1/2 whitespace-nowrap">{formatHour(hour, use12HourFormat)}</span>
                             </div>
 
-                            {/* Day cell - only render for rows with actual time slots (not the last label row) */}
+                            {/* Day cell - only render for data rows (not the last label row) */}
                             {index !== hours.length - 1 && (
                                 <div className="relative border-b border-l border-r border-gray-300">
                                     {/* Render events for this cell */}
-                                    {hour === 8 &&
+                                    {index === 0 &&
                                         dayEvents.map((event) => {
                                             const position = getVisualPosition(event)
                                             const displayTime = getDisplayTime(event)
                                             const isDragging = dragState.eventId === event.id
+                                            const colorConfig = EVENT_COLORS[event.color || 'blue']
                                             return (
                                                 <div
                                                     key={event.id}
-                                                    className={`absolute left-1 right-1 z-10 rounded-md border-l-4 border-blue-500 bg-blue-100 p-2 overflow-hidden text-center flex flex-col justify-between ${isDragging ? 'cursor-grabbing shadow-lg ring-2 ring-blue-400' : 'cursor-grab'}`}
+                                                    className={`group absolute left-1 right-1 z-10 rounded-md border-l-4 ${colorConfig.border} ${colorConfig.bg} p-2 overflow-hidden text-center flex flex-col justify-between ${isDragging ? 'cursor-grabbing shadow-lg ring-2 ring-blue-400' : 'cursor-grab hover:shadow-md'}`}
                                                     style={{
                                                         top: position.top,
                                                         height: position.height,
@@ -362,12 +252,40 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                                                         userSelect: 'none',
                                                     }}
                                                     onMouseDown={(e) => handleMouseDown(e, event)}
+                                                    onTouchStart={(e) => handleTouchStart(e, event)}
+                                                    onDoubleClick={(e) => {
+                                                        if (!isDragging && onEventDoubleClick) {
+                                                            e.stopPropagation()
+                                                            onEventDoubleClick(event)
+                                                        }
+                                                    }}
+                                                    onContextMenu={(e) => {
+                                                        e.preventDefault()
+                                                        e.stopPropagation()
+                                                        if (onEventContextMenu) {
+                                                            onEventContextMenu(event, e.clientX, e.clientY)
+                                                        }
+                                                    }}
                                                 >
-                                                    <p className="text-sm font-semibold text-blue-700">{event.title}</p>
-                                                    <p className="text-xs text-blue-600">{event.description}</p>
-                                                    <p className="text-xs text-blue-600">
-                                                        {formatTime(displayTime.startHour, displayTime.startMinute)} -{" "}
-                                                        {formatTime(displayTime.endHour, displayTime.endMinute)}
+                                                    {onEventDelete && (
+                                                        <button
+                                                            type="button"
+                                                            className="absolute top-1 right-1 size-5 flex items-center justify-center rounded-full bg-red-500 text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600"
+                                                            onClick={(e) => {
+                                                                e.stopPropagation()
+                                                                e.preventDefault()
+                                                                onEventDelete(event.id)
+                                                            }}
+                                                            onMouseDown={(e) => e.stopPropagation()}
+                                                        >
+                                                            <X className="size-3" />
+                                                        </button>
+                                                    )}
+                                                    <p className={`text-sm font-semibold ${colorConfig.text}`}>{event.title}</p>
+                                                    <p className={`text-xs ${colorConfig.textSecondary}`}>{event.description}</p>
+                                                    <p className={`text-xs ${colorConfig.textSecondary}`}>
+                                                        {formatTime(displayTime.startHour, displayTime.startMinute, use12HourFormat)} -{" "}
+                                                        {formatTime(displayTime.endHour, displayTime.endMinute, use12HourFormat)}
                                                     </p>
                                                 </div>
                                             )

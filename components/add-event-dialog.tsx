@@ -18,11 +18,10 @@ import {
     Calendar,
     Clock,
     Info,
-    Type,
-    Hash,
+    Palette,
 } from "lucide-react"
-import type { Event } from "@/components/weekly-calendar"
-import { formatDateString } from "@/components/weekly-calendar"
+import type { Event, EventColor } from "@/components/weekly-calendar"
+import { formatDateString, EVENT_COLORS } from "@/components/weekly-calendar"
 
 interface AddEventDialogProps {
     open: boolean
@@ -61,11 +60,14 @@ export function AddEventDialog({
     currentMonday,
 }: AddEventDialogProps) {
     const [title, setTitle] = useState("")
-    const [code, setCode] = useState("")
     const [selectedDays, setSelectedDays] = useState<number[]>([])
     const [startTime, setStartTime] = useState("08:00")
     const [endTime, setEndTime] = useState("09:00")
     const [description, setDescription] = useState("")
+    const [selectedColor, setSelectedColor] = useState<EventColor>("blue")
+
+    // Available color options
+    const colorOptions: EventColor[] = ['blue', 'green', 'red', 'yellow', 'purple', 'pink', 'orange', 'teal']
 
     // Calculate the week dates based on currentMonday
     const weekDates = useMemo(() => {
@@ -91,7 +93,6 @@ export function AddEventDialog({
             const eventDate = weekDates[day]
             onAddEvent({
                 title: title.trim(),
-                code: code.trim() || "",
                 description: description.trim(),
                 day,
                 date: formatDateString(eventDate),
@@ -99,6 +100,7 @@ export function AddEventDialog({
                 startMinute: start.minute,
                 endHour: end.hour,
                 endMinute: end.minute,
+                color: selectedColor,
             })
         })
 
@@ -109,18 +111,17 @@ export function AddEventDialog({
 
     const handleReset = () => {
         setTitle("")
-        setCode("")
         setSelectedDays([])
         setStartTime("08:00")
         setEndTime("09:00")
         setDescription("")
+        setSelectedColor("blue")
     }
 
     const handleCopy = () => {
         // Copy event data to clipboard
         const eventData = {
             title,
-            code,
             days: selectedDays.map((d) => dayOptions[d].label),
             startTime,
             endTime,
@@ -164,21 +165,32 @@ export function AddEventDialog({
                                 value={title}
                                 onChange={(e) => setTitle(e.target.value)}
                                 className="flex-1 h-9 border-gray-200 focus:border-blue-500 focus:ring-blue-500/20"
+                                style={{ wordBreak: 'break-all' }}
                             />
-                            <Button
-                                variant="outline"
-                                size="sm"
-                                className="h-9 px-3 border-gray-200 text-gray-600 hover:bg-gray-50"
-                            >
-                                <Type className="size-4" />
-                            </Button>
-                            <Button
-                                variant="outline"
-                                size="sm"
-                                className="h-9 px-3 border-gray-200 text-gray-600 hover:bg-gray-50"
-                            >
-                                <Hash className="size-4" />
-                            </Button>
+                        </div>
+                    </div>
+
+                    {/* Color Field */}
+                    <div className="space-y-2">
+                        <Label className="text-sm font-medium text-gray-700">Color</Label>
+                        <div className="flex items-center gap-2">
+                            <div className="flex items-center justify-center size-9 border border-gray-200 rounded-md bg-gray-50">
+                                <Palette className="size-4 text-gray-500" />
+                            </div>
+                            <div className="flex gap-1.5 flex-1">
+                                {colorOptions.map((color) => {
+                                    const colorConfig = EVENT_COLORS[color]
+                                    return (
+                                        <button
+                                            key={color}
+                                            type="button"
+                                            className={`size-8 rounded-full border-2 transition-all ${colorConfig.bg} ${selectedColor === color ? 'ring-2 ring-offset-2 ring-blue-500 border-gray-400' : 'border-transparent hover:scale-110'}`}
+                                            onClick={() => setSelectedColor(color)}
+                                            title={color.charAt(0).toUpperCase() + color.slice(1)}
+                                        />
+                                    )
+                                })}
+                            </div>
                         </div>
                     </div>
 
@@ -254,6 +266,7 @@ export function AddEventDialog({
                                 value={description}
                                 onChange={(e) => setDescription(e.target.value)}
                                 className="flex-1 min-h-[80px] border-gray-200 focus:border-blue-500 focus:ring-blue-500/20 resize-none"
+                                style={{ wordBreak: 'break-all', overflowWrap: 'break-word' }}
                             />
                         </div>
                     </div>

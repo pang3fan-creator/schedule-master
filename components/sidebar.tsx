@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/dialog"
 import { AddEventDialog } from "@/components/add-event-dialog"
 import { UpgradeModal } from "@/components/UpgradeModal"
+import { SettingsDialog } from "@/components/SettingsDialog"
 import { useSubscription } from "@/components/SubscriptionContext"
 import type { Event } from "@/components/weekly-calendar"
 
@@ -24,27 +25,23 @@ interface SidebarProps {
   onViewModeChange: (mode: "day" | "week") => void
   onAddEvent: (event: Omit<Event, "id">) => void
   currentMonday: Date
+  onExport: () => void
+  showAddDialog?: boolean  // External control to show add dialog
+  onAddDialogClose?: () => void  // Callback when add dialog closes
 }
 
-export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, currentMonday }: SidebarProps) {
+export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, currentMonday, onExport, showAddDialog, onAddDialogClose }: SidebarProps) {
   const [showResetDialog, setShowResetDialog] = useState(false)
   const [showAddEventDialog, setShowAddEventDialog] = useState(false)
   const [showUpgradeModal, setShowUpgradeModal] = useState(false)
+  const [showSettingsDialog, setShowSettingsDialog] = useState(false)
   const [upgradeFeature, setUpgradeFeature] = useState("")
 
   const { isPro, isLoading } = useSubscription()
 
   const handleExportClick = () => {
-    if (isLoading) return
-
-    if (!isPro) {
-      setUpgradeFeature("High-res PDF export")
-      setShowUpgradeModal(true)
-      return
-    }
-
-    // TODO: Implement actual export functionality for Pro users
-    console.log("Exporting for Pro user...")
+    // Open export dialog in parent
+    onExport()
   }
 
   const handleAIAutofillClick = () => {
@@ -73,8 +70,13 @@ export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, curre
 
       {/* Add Event Dialog */}
       <AddEventDialog
-        open={showAddEventDialog}
-        onOpenChange={setShowAddEventDialog}
+        open={showAddEventDialog || showAddDialog || false}
+        onOpenChange={(open) => {
+          setShowAddEventDialog(open)
+          if (!open && onAddDialogClose) {
+            onAddDialogClose()
+          }
+        }}
         onAddEvent={onAddEvent}
         currentMonday={currentMonday}
       />
@@ -108,10 +110,20 @@ export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, curre
           <Download className="size-5" />
           Export/Download
         </Button>
-        <Button variant="ghost" className="justify-start gap-3 text-gray-600 hover:text-gray-900">
+        <Button
+          variant="ghost"
+          className="justify-start gap-3 text-gray-600 hover:text-gray-900"
+          onClick={() => setShowSettingsDialog(true)}
+        >
           <Settings className="size-5" />
           Settings
         </Button>
+
+        {/* Settings Dialog */}
+        <SettingsDialog
+          open={showSettingsDialog}
+          onOpenChange={setShowSettingsDialog}
+        />
         <Dialog open={showResetDialog} onOpenChange={setShowResetDialog}>
           <DialogTrigger asChild>
             <Button variant="ghost" className="justify-start gap-3 text-gray-600 hover:text-gray-900">
