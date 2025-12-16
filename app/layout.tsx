@@ -1,4 +1,5 @@
 import type React from "react"
+import { Inter } from "next/font/google"
 import type { Metadata } from "next"
 import { ClerkProvider } from "@clerk/nextjs"
 import { Analytics } from "@vercel/analytics/next"
@@ -29,6 +30,8 @@ export const metadata: Metadata = {
   },
 }
 
+const inter = Inter({ subsets: ["latin"] })
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -37,7 +40,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={`font-sans antialiased`}>
+        <body className={`${inter.className} antialiased`}>
           <SettingsProvider>
             <SubscriptionProvider>
               {children}

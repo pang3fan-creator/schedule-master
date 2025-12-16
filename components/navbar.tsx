@@ -33,7 +33,7 @@ export function Navbar() {
 
   return (
     <>
-      <header className="flex h-16 shrink-0 items-center justify-between border-b border-gray-100 bg-white px-6">
+      <header className="sticky top-0 z-50 flex h-16 shrink-0 items-center justify-between border-b border-white/10 bg-white/70 backdrop-blur-lg px-6 transition-all dark:bg-black/70 dark:border-white/5">
         {/* Left: Logo */}
         <Link href="/" className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
           <Database className="size-6 text-blue-600" />

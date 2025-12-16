@@ -179,7 +179,7 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
     }
 
     return (
-        <div className="flex h-full flex-col p-6 bg-gray-100">
+        <div className="flex h-full flex-col p-6 bg-muted/20">
             {/* Header with navigation */}
             <div className="mb-4 flex items-center justify-between flex-shrink-0">
                 {/* Spacer for layout balance */}
@@ -218,7 +218,7 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                 >
                     {/* Header Row */}
                     <div /> {/* Empty corner cell */}
-                    <div className="flex flex-col items-center justify-center border-b border-gray-300" style={{ marginLeft: '-115px' }}>
+                    <div className="flex flex-col items-center justify-center border-b border-border/60" style={{ marginLeft: '-115px' }}>
                         <span className="text-xs font-medium text-gray-500">{shortDayName}</span>
                         <span className="text-sm font-semibold text-gray-900">{selectedDate.getDate()}</span>
                     </div>
@@ -233,7 +233,7 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
 
                             {/* Day cell - only render for data rows (not the last label row) */}
                             {index !== hours.length - 1 && (
-                                <div className="relative border-b border-l border-r border-gray-300">
+                                <div className="relative border-b border-l border-r border-border/60">
                                     {/* Render events for this cell */}
                                     {index === 0 &&
                                         dayEvents.map((event) => {
@@ -244,7 +244,7 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                                             return (
                                                 <div
                                                     key={event.id}
-                                                    className={`group absolute left-1 right-1 z-10 rounded-md border-l-4 ${colorConfig.border} ${colorConfig.bg} p-2 overflow-hidden text-center flex flex-col justify-between ${isDragging ? 'cursor-grabbing shadow-lg ring-2 ring-blue-400' : 'cursor-grab hover:shadow-md'}`}
+                                                    className={`group absolute left-1 right-1 z-10 rounded-lg border-l-4 ${colorConfig.border} ${colorConfig.bg} backdrop-blur-sm p-2 overflow-hidden text-center flex flex-col justify-between ${isDragging ? 'cursor-grabbing shadow-xl ring-2 ring-blue-400' : 'cursor-grab hover:shadow-lg hover:scale-[1.02] transition-all duration-200'}`}
                                                     style={{
                                                         top: position.top,
                                                         height: position.height,

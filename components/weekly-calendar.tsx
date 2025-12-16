@@ -26,14 +26,14 @@ export interface Event {
 
 // Color configuration for event styling
 export const EVENT_COLORS: Record<EventColor, { bg: string; border: string; text: string; textSecondary: string }> = {
-  blue: { bg: 'bg-blue-100', border: 'border-blue-500', text: 'text-blue-700', textSecondary: 'text-blue-600' },
-  green: { bg: 'bg-green-100', border: 'border-green-500', text: 'text-green-700', textSecondary: 'text-green-600' },
-  red: { bg: 'bg-red-100', border: 'border-red-500', text: 'text-red-700', textSecondary: 'text-red-600' },
-  yellow: { bg: 'bg-yellow-100', border: 'border-yellow-500', text: 'text-yellow-700', textSecondary: 'text-yellow-600' },
-  purple: { bg: 'bg-purple-100', border: 'border-purple-500', text: 'text-purple-700', textSecondary: 'text-purple-600' },
-  pink: { bg: 'bg-pink-100', border: 'border-pink-500', text: 'text-pink-700', textSecondary: 'text-pink-600' },
-  orange: { bg: 'bg-orange-100', border: 'border-orange-500', text: 'text-orange-700', textSecondary: 'text-orange-600' },
-  teal: { bg: 'bg-teal-100', border: 'border-teal-500', text: 'text-teal-700', textSecondary: 'text-teal-600' },
+  blue: { bg: 'bg-blue-500/15', border: 'border-blue-500', text: 'text-blue-700', textSecondary: 'text-blue-600' },
+  green: { bg: 'bg-green-500/15', border: 'border-green-500', text: 'text-green-700', textSecondary: 'text-green-600' },
+  red: { bg: 'bg-red-500/15', border: 'border-red-500', text: 'text-red-700', textSecondary: 'text-red-600' },
+  yellow: { bg: 'bg-yellow-500/15', border: 'border-yellow-500', text: 'text-yellow-700', textSecondary: 'text-yellow-600' },
+  purple: { bg: 'bg-purple-500/15', border: 'border-purple-500', text: 'text-purple-700', textSecondary: 'text-purple-600' },
+  pink: { bg: 'bg-pink-500/15', border: 'border-pink-500', text: 'text-pink-700', textSecondary: 'text-pink-600' },
+  orange: { bg: 'bg-orange-500/15', border: 'border-orange-500', text: 'text-orange-700', textSecondary: 'text-orange-600' },
+  teal: { bg: 'bg-teal-500/15', border: 'border-teal-500', text: 'text-teal-700', textSecondary: 'text-teal-600' },
 }
 
 interface WeeklyCalendarProps {
@@ -249,7 +249,7 @@ export function WeeklyCalendar({ events, onEventUpdate, onEventDelete, onEventDo
   }
 
   return (
-    <div className="flex h-full flex-col p-6 bg-gray-100">
+    <div className="flex h-full flex-col p-6 bg-muted/20">
       {/* Header with navigation */}
       <div className="mb-4 flex items-center justify-between flex-shrink-0">
         {/* Spacer for layout balance */}
@@ -289,7 +289,7 @@ export function WeeklyCalendar({ events, onEventUpdate, onEventDelete, onEventDo
           {/* Header Row */}
           <div /> {/* Empty corner cell */}
           {days.map((day) => (
-            <div key={day.short} className="flex flex-col items-center justify-center border-b border-gray-300">
+            <div key={day.short} className="flex flex-col items-center justify-center border-b border-border/60">
               <span className="text-xs font-medium text-gray-500">{day.short}</span>
               <span className="text-sm font-semibold text-gray-900">{day.date}</span>
             </div>
@@ -307,7 +307,7 @@ export function WeeklyCalendar({ events, onEventUpdate, onEventDelete, onEventDo
               {index !== hours.length - 1 && days.map((day, dayIndex) => (
                 <div
                   key={`${day.short}-${hour}`}
-                  className={`relative border-b border-l border-gray-300 ${dayIndex === days.length - 1 ? "border-r" : ""}`}
+                  className={`relative border-b border-l border-border/60 ${dayIndex === days.length - 1 ? "border-r" : ""}`}
                 >
                   {/* Render events for this cell - events are positioned relative to the first cell of each column */}
                   {index === 0 &&
@@ -321,7 +321,7 @@ export function WeeklyCalendar({ events, onEventUpdate, onEventDelete, onEventDo
                         return (
                           <div
                             key={event.id}
-                            className={`group absolute left-1 right-1 z-10 rounded-md border-l-4 ${colorConfig.border} ${colorConfig.bg} p-2 overflow-hidden text-center flex flex-col justify-between ${isDragging ? 'cursor-grabbing shadow-lg ring-2 ring-blue-400' : 'cursor-grab hover:shadow-md'}`}
+                            className={`group absolute left-1 right-1 z-10 rounded-lg border-l-4 ${colorConfig.border} ${colorConfig.bg} backdrop-blur-sm p-2 overflow-hidden text-center flex flex-col justify-between ${isDragging ? 'cursor-grabbing shadow-xl ring-2 ring-blue-400' : 'cursor-grab hover:shadow-lg hover:scale-[1.02] transition-all duration-200'}`}
                             style={{
                               top: position.top,
                               height: position.height,
