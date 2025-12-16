@@ -72,10 +72,10 @@ export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, curre
   }
 
   return (
-    <aside className="flex w-[230px] shrink-0 flex-col border-r border-gray-100 p-4">
+    <aside className="flex w-[230px] shrink-0 flex-col border-r border-gray-100/80 bg-white/50 backdrop-blur-sm p-4">
       {/* Add New Item Button */}
       <Button
-        className="mb-4 w-full bg-blue-600 hover:bg-blue-700 text-white gap-2"
+        className="mb-4 w-full bg-blue-600 hover:bg-blue-700 text-white gap-2 shadow-md hover:shadow-lg hover:glow-primary transition-all duration-300"
         onClick={() => setShowAddEventDialog(true)}
       >
         <PlusCircle className="size-5" />
@@ -205,9 +205,9 @@ export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, curre
       {/* Spacer */}
       <div className="flex-1" />
 
-      {/* AI Autofill Button */}
+      {/* AI Autofill Button with shimmer */}
       <Button
-        className="w-full bg-gradient-to-r from-violet-500 to-blue-500 hover:from-violet-600 hover:to-blue-600 text-white gap-2"
+        className="w-full bg-gradient-to-r from-violet-500 to-blue-500 hover:from-violet-600 hover:to-blue-600 text-white gap-2 shimmer hover:glow-primary transition-shadow duration-300"
         onClick={handleAIAutofillClick}
       >
         <Sparkles className="size-5" />

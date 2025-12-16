@@ -249,8 +249,8 @@ export function PricingCard({
     return (
         <div
             className={cn(
-                "relative flex flex-col rounded-2xl border bg-white p-6 shadow-sm transition-shadow hover:shadow-md",
-                popular ? "border-blue-600 ring-1 ring-blue-600" : "border-gray-200",
+                "relative flex flex-col rounded-2xl border bg-white p-6 shadow-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-1",
+                popular ? "border-transparent bg-gradient-to-b from-white to-violet-50/30 ring-2 ring-blue-500/50" : "border-gray-200",
                 isCurrentPlan && "ring-2 ring-green-500 border-green-500"
             )}
         >

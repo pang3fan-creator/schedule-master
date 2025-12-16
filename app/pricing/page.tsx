@@ -112,7 +112,7 @@ export default function PricingPage() {
     ];
 
     return (
-        <div className="min-h-screen flex flex-col bg-gray-50/50">
+        <div className="min-h-screen flex flex-col bg-gradient-to-b from-violet-50/30 via-white to-white">
             <Navbar />
 
             <main className="flex-1 py-16 md:py-24">
@@ -124,7 +124,7 @@ export default function PricingPage() {
                 {/* Hero Section */}
                 <div className="container mx-auto px-4 text-center mb-16">
                     <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl mb-4">
-                        Choose Your Plan
+                        Choose Your <span className="bg-gradient-to-r from-violet-600 to-blue-600 bg-clip-text text-transparent">Plan</span>
                     </h1>
                     <p className="text-xl text-gray-500 max-w-2xl mx-auto">
                         Find the perfect plan for your needs. No hidden fees, no credit card required to start.
