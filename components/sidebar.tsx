@@ -18,7 +18,7 @@ import { UpgradeModal } from "@/components/UpgradeModal"
 import { FeatureComingSoonModal } from "@/components/FeatureComingSoonModal"
 import { SettingsDialog } from "@/components/SettingsDialog"
 import { useSubscription } from "@/components/SubscriptionContext"
-import type { Event } from "@/components/weekly-calendar"
+import { type Event } from "@/lib/types"
 
 interface SidebarProps {
   onReset: () => void

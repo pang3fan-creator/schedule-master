@@ -20,8 +20,9 @@ import {
     Info,
     Palette,
 } from "lucide-react"
-import type { Event, EventColor } from "@/components/weekly-calendar"
-import { formatDateString, EVENT_COLORS } from "@/components/weekly-calendar"
+import type { Event, EventColor } from "@/lib/types"
+import { EVENT_COLORS } from "@/lib/types"
+import { formatDateString } from "@/lib/time-utils"
 
 interface AddEventDialogProps {
     open: boolean

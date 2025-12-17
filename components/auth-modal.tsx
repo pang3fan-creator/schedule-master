@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation"
 import {
     Dialog,
     DialogContent,
+    DialogTitle,
 } from "@/components/ui/dialog"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { Input } from "@/components/ui/input"
@@ -37,6 +38,7 @@ export function AuthModal({ open, onOpenChange, defaultMode = "sign-in" }: AuthM
                 className="sm:max-w-[900px] p-0 overflow-hidden gap-0 border-0"
                 showCloseButton={true}
             >
+                <DialogTitle className="sr-only">Authentication</DialogTitle>
                 <div className="flex min-h-[620px]">
                     {/* Left Panel - Brand Area */}
                     <div className="hidden md:flex flex-col justify-center items-center w-[45%] bg-gradient-to-br from-gray-50 to-blue-50 p-8 relative overflow-hidden">
@@ -576,6 +578,7 @@ function SignUpForm({ onSuccess }: { onSuccess: () => void }) {
                     </div>
                 </div>
 
+                <div id="clerk-captcha"></div>
                 <Button
                     type="submit"
                     className="w-full h-11 bg-blue-600 hover:bg-blue-700 text-white font-medium"

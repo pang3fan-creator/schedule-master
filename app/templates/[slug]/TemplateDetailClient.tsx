@@ -6,8 +6,8 @@ import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import { getTemplate, type TemplateData } from "@/lib/templates"
-import { formatDateString } from "@/components/weekly-calendar"
-import { EVENT_COLORS, type Event } from "@/components/weekly-calendar"
+import { formatDateString } from "@/lib/time-utils"
+import { EVENT_COLORS, type Event } from "@/lib/types"
 import { ArrowLeft, Calendar, Play } from "lucide-react"
 import Link from "next/link"
 
@@ -38,7 +38,7 @@ function generateEventsFromTemplate(template: TemplateData): Event[] {
             ...templateEvent,
             id: `template-${template.slug}-${index}`,
             date: formatDateString(eventDate),
-        }
+        } as Event
     })
 }
 

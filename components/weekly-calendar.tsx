@@ -8,33 +8,7 @@ import { Button } from "@/components/ui/button"
 import { useSettings } from "@/components/SettingsContext"
 import { useEventDrag } from "@/hooks/useEventDrag"
 
-export type EventColor = 'blue' | 'green' | 'red' | 'yellow' | 'purple' | 'pink' | 'orange' | 'teal'
-
-export interface Event {
-  id: string
-  title: string
-  description: string
-  day: number
-  date: string // YYYY-MM-DD format for specific date filtering
-  startHour: number
-  startMinute: number
-  endHour: number
-  endMinute: number
-  color?: EventColor // Optional, defaults to 'blue'
-  builderType?: string // 'schedule-builder' | 'employee-schedule' | etc.
-}
-
-// Color configuration for event styling
-export const EVENT_COLORS: Record<EventColor, { bg: string; border: string; text: string; textSecondary: string }> = {
-  blue: { bg: 'bg-blue-500/15', border: 'border-blue-500', text: 'text-blue-700', textSecondary: 'text-blue-600' },
-  green: { bg: 'bg-green-500/15', border: 'border-green-500', text: 'text-green-700', textSecondary: 'text-green-600' },
-  red: { bg: 'bg-red-500/15', border: 'border-red-500', text: 'text-red-700', textSecondary: 'text-red-600' },
-  yellow: { bg: 'bg-yellow-500/15', border: 'border-yellow-500', text: 'text-yellow-700', textSecondary: 'text-yellow-600' },
-  purple: { bg: 'bg-purple-500/15', border: 'border-purple-500', text: 'text-purple-700', textSecondary: 'text-purple-600' },
-  pink: { bg: 'bg-pink-500/15', border: 'border-pink-500', text: 'text-pink-700', textSecondary: 'text-pink-600' },
-  orange: { bg: 'bg-orange-500/15', border: 'border-orange-500', text: 'text-orange-700', textSecondary: 'text-orange-600' },
-  teal: { bg: 'bg-teal-500/15', border: 'border-teal-500', text: 'text-teal-700', textSecondary: 'text-teal-600' },
-}
+import { type Event, type EventColor, EVENT_COLORS } from "@/lib/types"
 
 interface WeeklyCalendarProps {
   events: Event[]
@@ -78,13 +52,7 @@ function getWeekDates(weekStart: Date): Date[] {
   return dates
 }
 
-// Format date to YYYY-MM-DD string for event matching
-export function formatDateString(date: Date): string {
-  const year = date.getFullYear()
-  const month = (date.getMonth() + 1).toString().padStart(2, '0')
-  const day = date.getDate().toString().padStart(2, '0')
-  return `${year}-${month}-${day}`
-}
+
 
 // Format date range for header (e.g., "October 21 - 27, 2025" or "October 28 - November 3, 2025")
 function formatDateRange(monday: Date, sunday: Date): string {
@@ -109,35 +77,24 @@ function formatDateRange(monday: Date, sunday: Date): string {
   }
 }
 
-function formatHour(hour: number, use12Hour: boolean): string {
-  if (use12Hour) {
-    if (hour === 0) return "12:00 AM"
-    if (hour === 12) return "12:00 PM"
-    if (hour < 12) return `${hour}:00 AM`
-    return `${hour - 12}:00 PM`
-  }
-  return `${hour.toString().padStart(2, "0")}:00`
-}
+// Utility functions imported from lib/time-utils
+import {
+  formatHour,
+  formatTime,
+  formatDateString,
+  getEventPosition as getEventPositionUtil
+} from "@/lib/time-utils"
 
-function formatTime(hour: number, minute: number, use12Hour: boolean): string {
-  if (use12Hour) {
-    const period = hour >= 12 ? "PM" : "AM"
-    const displayHour = hour === 0 ? 12 : hour > 12 ? hour - 12 : hour
-    return `${displayHour}:${minute.toString().padStart(2, "0")} ${period}`
-  }
-  return `${hour.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")}`
-}
-
-// Calculate event position using actual row height in pixels
+// Wrapper to match existing usage or replace usages directly
 function getEventPosition(event: Event, rowHeight: number, minHour: number = 8) {
-  const startOffset = (event.startHour - minHour) + event.startMinute / 60
-  const endOffset = (event.endHour - minHour) + event.endMinute / 60
-  const duration = endOffset - startOffset
-
-  return {
-    top: `${startOffset * rowHeight}px`,
-    height: `${Math.max(duration * rowHeight - 8, 20)}px`,
-  }
+  return getEventPositionUtil(
+    event.startHour,
+    event.startMinute,
+    event.endHour,
+    event.endMinute,
+    rowHeight,
+    minHour
+  )
 }
 
 export function WeeklyCalendar({ events, onEventUpdate, onEventDelete, onEventDoubleClick, onEventContextMenu, exportMode = false }: WeeklyCalendarProps) {

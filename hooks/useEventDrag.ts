@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useCallback, useEffect, useRef } from "react"
-import type { Event } from "@/components/weekly-calendar"
+import type { Event } from "@/lib/types"
 import { calculateDraggedTime } from "@/lib/time-utils"
 
 interface DragState {

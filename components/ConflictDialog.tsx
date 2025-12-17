@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { AlertTriangle } from "lucide-react"
-import type { Event } from "@/components/weekly-calendar"
+import type { Event } from "@/lib/types"
 import { formatEventTimeRange } from "@/lib/event-conflict"
 
 interface ConflictDialogProps {

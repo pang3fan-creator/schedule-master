@@ -5,8 +5,15 @@ import { useRef, useState, useEffect, useMemo } from "react"
 
 import { ChevronLeft, ChevronRight, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import type { Event } from "@/components/weekly-calendar"
-import { formatDateString, EVENT_COLORS } from "@/components/weekly-calendar"
+
+import { type Event, EVENT_COLORS } from "@/lib/types"
+// Utility functions imported from lib/time-utils
+import {
+    formatDateString,
+    formatHour as formatHourUtil,
+    formatTime as formatTimeUtil,
+    getEventPosition as getEventPositionUtil
+} from "@/lib/time-utils"
 import { useSettings } from "@/components/SettingsContext"
 import { useEventDrag } from "@/hooks/useEventDrag"
 
@@ -56,36 +63,26 @@ function formatDate(date: Date): string {
     return `${dayName}, ${month} ${day}, ${year}`
 }
 
+// Wrapper to match existing usage
 function formatHour(hour: number, use12Hour: boolean): string {
-    if (use12Hour) {
-        if (hour === 0) return "12:00 AM"
-        if (hour === 12) return "12:00 PM"
-        if (hour < 12) return `${hour}:00 AM`
-        return `${hour - 12}:00 PM`
-    }
-    return `${hour.toString().padStart(2, "0")}:00`
+    return formatHourUtil(hour, use12Hour)
 }
 
 function formatTime(hour: number, minute: number, use12Hour: boolean): string {
-    if (use12Hour) {
-        const period = hour >= 12 ? "PM" : "AM"
-        const displayHour = hour === 0 ? 12 : hour > 12 ? hour - 12 : hour
-        return `${displayHour}:${minute.toString().padStart(2, "0")} ${period}`
-    }
-    return `${hour.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")}`
+    return formatTimeUtil(hour, minute, use12Hour)
 }
 
-// Calculate event position using actual row height in pixels
 function getEventPosition(event: Event, rowHeight: number) {
-    const startOffset = (event.startHour - 8) + event.startMinute / 60
-    const endOffset = (event.endHour - 8) + event.endMinute / 60
-    const duration = endOffset - startOffset
-
-    return {
-        top: `${startOffset * rowHeight}px`,
-        height: `${Math.max(duration * rowHeight - 8, 20)}px`,
-    }
+    return getEventPositionUtil(
+        event.startHour,
+        event.startMinute,
+        event.endHour,
+        event.endMinute,
+        rowHeight,
+        8 // Default minHour
+    )
 }
+
 
 export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdate, onEventDelete, onEventDoubleClick, onEventContextMenu, exportMode = false }: DailyCalendarProps) {
     const gridRef = useRef<HTMLDivElement>(null)

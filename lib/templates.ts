@@ -1,4 +1,4 @@
-import type { Event, EventColor } from "@/components/weekly-calendar"
+import type { Event, EventColor } from "@/lib/types"
 
 export interface TemplateData {
     slug: string

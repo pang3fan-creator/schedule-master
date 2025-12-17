@@ -1,4 +1,5 @@
 import { toPng, toJpeg } from "html-to-image"
+import { formatHour, formatTime, formatDateString } from "@/lib/time-utils"
 
 export type ExportFormat = "png" | "jpg" | "pdf"
 
@@ -157,29 +158,7 @@ export function generateFilename(prefix: string = "schedule"): string {
     return `${prefix}-${dateStr}`
 }
 
-/**
- * Format hour for display
- */
-function formatHourForPdf(hour: number, use12Hour: boolean): string {
-    if (use12Hour) {
-        const period = hour >= 12 ? 'PM' : 'AM'
-        const h = hour % 12 || 12
-        return `${h}:00 ${period}`
-    }
-    return `${hour.toString().padStart(2, '0')}:00`
-}
 
-/**
- * Format time for event display
- */
-function formatTimeForPdf(hour: number, minute: number, use12Hour: boolean): string {
-    if (use12Hour) {
-        const period = hour >= 12 ? 'PM' : 'AM'
-        const h = hour % 12 || 12
-        return `${h}:${minute.toString().padStart(2, '0')} ${period}`
-    }
-    return `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`
-}
 
 /**
  * Get week dates starting from a given date
@@ -194,15 +173,7 @@ function getWeekDatesForPdf(weekStart: Date): Date[] {
     return dates
 }
 
-/**
- * Format date as YYYY-MM-DD
- */
-function formatDateString(date: Date): string {
-    const year = date.getFullYear()
-    const month = (date.getMonth() + 1).toString().padStart(2, '0')
-    const day = date.getDate().toString().padStart(2, '0')
-    return `${year}-${month}-${day}`
-}
+
 
 /**
  * Check if text contains non-ASCII characters (Chinese, etc.)
@@ -338,7 +309,7 @@ export async function exportScheduleToPdf(
         pdf.setTextColor(107, 114, 128) // gray-500
         for (let row = 0; row < hours.length; row++) {
             const y = gridTop + row * rowHeight
-            const timeText = formatHourForPdf(hours[row], use12HourFormat)
+            const timeText = formatHour(hours[row], use12HourFormat)
             pdf.text(timeText, gridLeft - 3, y + 1, { align: 'right' })
         }
 
@@ -409,7 +380,7 @@ export async function exportScheduleToPdf(
                 // Time at bottom
                 if (eventHeight > 10) {
                     pdf.setFontSize(6)
-                    const timeStr = `${formatTimeForPdf(event.startHour, event.startMinute, use12HourFormat)} - ${formatTimeForPdf(event.endHour, event.endMinute, use12HourFormat)}`
+                    const timeStr = `${formatTime(event.startHour, event.startMinute, use12HourFormat)} - ${formatTime(event.endHour, event.endMinute, use12HourFormat)}`
                     // Position time at the bottom of the card
                     const timeY = eventTop + actualEventHeight - 2
                     pdf.text(timeStr, textLeft, timeY)
@@ -434,17 +405,7 @@ interface CsvExportOptions {
     settings: PdfExportSettings
 }
 
-/**
- * Format time for CSV display
- */
-function formatTimeForCsv(hour: number, minute: number, use12Hour: boolean): string {
-    if (use12Hour) {
-        const period = hour >= 12 ? 'PM' : 'AM'
-        const h = hour % 12 || 12
-        return `${h}:${minute.toString().padStart(2, '0')} ${period}`
-    }
-    return `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`
-}
+
 
 /**
  * Get day name from date
@@ -519,8 +480,8 @@ export function exportScheduleToCsv(options: CsvExportOptions): void {
                 getDayName(event.date), // Day name
                 escapeCsvField(event.title), // Title
                 escapeCsvField(event.description || ''), // Description
-                formatTimeForCsv(event.startHour, event.startMinute, use12HourFormat), // Start Time
-                formatTimeForCsv(event.endHour, event.endMinute, use12HourFormat), // End Time
+                formatTime(event.startHour, event.startMinute, use12HourFormat), // Start Time
+                formatTime(event.endHour, event.endMinute, use12HourFormat), // End Time
                 calculateDuration(event.startHour, event.startMinute, event.endHour, event.endMinute), // Duration
                 event.color || 'blue' // Color
             ]

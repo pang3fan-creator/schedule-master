@@ -2,7 +2,7 @@
  * Event conflict detection utilities
  */
 
-import type { Event } from "@/components/weekly-calendar"
+import type { Event } from "@/lib/types"
 
 /**
  * Check if two time ranges overlap on the same day
