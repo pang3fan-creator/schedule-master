@@ -78,7 +78,7 @@ export default function ScheduleBuilderPage() {
   const [isExporting, setIsExporting] = useState(false)  // Export mode for calendar rendering
 
   // Get settings from context for PDF export
-  const { settings } = useSettings()
+  const { settings, reloadSettings } = useSettings()
 
   // Context menu state
   const [contextMenu, setContextMenu] = useState<{
@@ -109,12 +109,15 @@ export default function ScheduleBuilderPage() {
   // Ref for the calendar container (for export)
   const calendarRef = useRef<HTMLDivElement>(null)
 
-  // Load events from localStorage on mount
+  // Load events from localStorage on mount and reload settings
+  // (in case a template was just applied)
   useEffect(() => {
     const storedEvents = loadEventsFromStorage()
     setEvents(storedEvents)
     setIsLoaded(true)
-  }, [])
+    // Reload settings in case template was just applied
+    reloadSettings()
+  }, [reloadSettings])
 
   // Save events to localStorage whenever events change (after initial load)
   useEffect(() => {

@@ -189,9 +189,9 @@ export function ExportDialog({
                                             {option.label}
                                         </span>
                                         {option.proOnly && (
-                                            <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-700">
-                                                <Crown className="size-3" />
-                                                Pro
+                                            <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[10px] font-semibold bg-gradient-to-r from-amber-400 to-orange-500 text-white">
+                                                <Crown className="size-2.5" />
+                                                PRO
                                             </span>
                                         )}
                                     </div>

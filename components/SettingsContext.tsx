@@ -26,6 +26,7 @@ interface SettingsContextType {
   settings: CalendarSettings
   updateSettings: (newSettings: Partial<CalendarSettings>) => void
   resetSettings: () => void
+  reloadSettings: () => void
 }
 
 const SettingsContext = createContext<SettingsContextType | undefined>(undefined)
@@ -68,6 +69,24 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     setIsLoaded(true)
   }, [])
 
+  // Listen for storage events (when another tab/context writes to localStorage)
+  // Also used to reload settings after template is applied
+  useEffect(() => {
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === SETTINGS_STORAGE_KEY && e.newValue) {
+        try {
+          const parsed = JSON.parse(e.newValue)
+          setSettings({ ...DEFAULT_SETTINGS, ...parsed })
+        } catch (error) {
+          console.error("Error parsing settings from storage event:", error)
+        }
+      }
+    }
+
+    window.addEventListener("storage", handleStorageChange)
+    return () => window.removeEventListener("storage", handleStorageChange)
+  }, [])
+
   // Save settings to localStorage whenever they change
   useEffect(() => {
     if (isLoaded) {
@@ -83,8 +102,14 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     setSettings(DEFAULT_SETTINGS)
   }, [])
 
+  // Reload settings from localStorage (useful after template is applied)
+  const reloadSettings = useCallback(() => {
+    const storedSettings = loadSettingsFromStorage()
+    setSettings(storedSettings)
+  }, [])
+
   return (
-    <SettingsContext.Provider value={{ settings, updateSettings, resetSettings }}>
+    <SettingsContext.Provider value={{ settings, updateSettings, resetSettings, reloadSettings }}>
       {children}
     </SettingsContext.Provider>
   )

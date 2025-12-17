@@ -6,6 +6,7 @@ import { Footer } from "@/components/footer"
 import { BlogCard } from "@/components/blog-card"
 import { CategoryFilter } from "@/components/category-filter"
 import { ChevronLeft, ChevronRight } from "lucide-react"
+import { PageHero } from "@/components/page-hero"
 
 interface Post {
     slug: string
@@ -81,14 +82,10 @@ export function BlogPageClient({ posts, categories }: BlogPageClientProps) {
 
             <main className="flex-1 py-16">
                 {/* Hero Section */}
-                <div className="container mx-auto px-4 text-center mb-12">
-                    <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl mb-4">
-                        Our Blog
-                    </h1>
-                    <p className="text-xl text-gray-500 max-w-2xl mx-auto">
-                        Insights on productivity, scheduling, and team management.
-                    </p>
-                </div>
+                <PageHero
+                    title="Our Blog"
+                    description="Insights on productivity, scheduling, and team management."
+                />
 
                 {/* Category Filter */}
                 <div className="container mx-auto px-4 mb-12">
@@ -138,8 +135,8 @@ export function BlogPageClient({ posts, categories }: BlogPageClientProps) {
                                         key={index}
                                         onClick={() => handlePageChange(page)}
                                         className={`w-10 h-10 flex items-center justify-center rounded-lg text-sm font-medium transition-colors ${currentPage === page
-                                                ? 'bg-blue-600 text-white'
-                                                : 'border border-gray-200 bg-white text-gray-700 hover:bg-gray-50'
+                                            ? 'bg-blue-600 text-white'
+                                            : 'border border-gray-200 bg-white text-gray-700 hover:bg-gray-50'
                                             }`}
                                     >
                                         {page}
