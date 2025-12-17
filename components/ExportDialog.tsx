@@ -104,7 +104,7 @@ export function ExportDialog({
                     filename: generateFilename("schedule"),
                     format: selectedFormat,
                     scale: 2,
-                    watermark: !isPro ? "schedulebuilder.app" : undefined,
+                    watermark: !isPro ? "TrySchedule.com" : undefined,
                 })
             }
             onOpenChange(false)

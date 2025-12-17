@@ -2,8 +2,9 @@
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Database, Crown, ChevronDown, Briefcase, GraduationCap, Dumbbell, Palette, Sparkles } from "lucide-react"
+import { Crown, ChevronDown, Briefcase, GraduationCap, Dumbbell, Palette, Sparkles } from "lucide-react"
 import Link from "next/link"
+import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import {
@@ -61,8 +62,8 @@ export function Navbar() {
       <header className="sticky top-0 z-50 flex h-16 shrink-0 items-center justify-between border-b border-white/10 bg-white/70 backdrop-blur-lg px-6 transition-all dark:bg-black/70 dark:border-white/5">
         {/* Left: Logo */}
         <Link href="/" className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
-          <Database className="size-6 text-blue-600" />
-          <span className="text-lg font-semibold text-gray-900">Schedule Builder</span>
+          <Image src="/logo.png" alt="TrySchedule - Free Online Schedule Builder" width={32} height={32} className="object-contain" />
+          <span className="text-lg text-gray-900"><span className="font-bold">Try</span><span className="font-normal">Schedule</span></span>
         </Link>
 
         {/* Center: Navigation Links */}

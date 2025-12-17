@@ -2,8 +2,8 @@ import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 
 export const metadata = {
-    title: "Terms of Service | Schedule Builder",
-    description: "Terms of Service for Schedule Builder",
+    title: "Terms of Service | TrySchedule",
+    description: "Terms of Service for TrySchedule - Free Online Schedule Builder",
 }
 
 export default function TermsPage() {
@@ -20,14 +20,14 @@ export default function TermsPage() {
                         <section className="mb-8">
                             <h2 className="text-2xl font-semibold text-gray-900 mb-4">1. Acceptance of Terms</h2>
                             <p className="text-gray-600 mb-4">
-                                By accessing and using Schedule Builder ("the Service"), you accept and agree to be bound by the terms and provisions of this agreement. If you do not agree to abide by these terms, please do not use the Service.
+                                By accessing and using TrySchedule ("the Service"), you accept and agree to be bound by the terms and provisions of this agreement. If you do not agree to abide by these terms, please do not use the Service.
                             </p>
                         </section>
 
                         <section className="mb-8">
                             <h2 className="text-2xl font-semibold text-gray-900 mb-4">2. Description of Service</h2>
                             <p className="text-gray-600 mb-4">
-                                Schedule Builder is a web-based scheduling and planning tool that allows users to create, manage, and share schedules. We provide various subscription tiers including free and paid options with different feature sets.
+                                TrySchedule is a web-based scheduling and planning tool that allows users to create, manage, and share schedules. We provide various subscription tiers including free and paid options with different feature sets.
                             </p>
                         </section>
 
@@ -66,14 +66,14 @@ export default function TermsPage() {
                         <section className="mb-8">
                             <h2 className="text-2xl font-semibold text-gray-900 mb-4">6. Intellectual Property</h2>
                             <p className="text-gray-600 mb-4">
-                                The Service and its original content, features, and functionality are owned by ScheduleApp, Inc. and are protected by international copyright, trademark, and other intellectual property laws.
+                                The Service and its original content, features, and functionality are owned by TrySchedule and are protected by international copyright, trademark, and other intellectual property laws.
                             </p>
                         </section>
 
                         <section className="mb-8">
                             <h2 className="text-2xl font-semibold text-gray-900 mb-4">7. Limitation of Liability</h2>
                             <p className="text-gray-600 mb-4">
-                                In no event shall ScheduleApp, Inc. be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use of or inability to use the Service.
+                                In no event shall TrySchedule be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use of or inability to use the Service.
                             </p>
                         </section>
 
@@ -88,8 +88,8 @@ export default function TermsPage() {
                             <h2 className="text-2xl font-semibold text-gray-900 mb-4">9. Contact Information</h2>
                             <p className="text-gray-600">
                                 If you have any questions about these Terms, please contact us at{" "}
-                                <a href="mailto:legal@schedulebuilder.com" className="text-blue-600 hover:underline">
-                                    legal@schedulebuilder.com
+                                <a href="mailto:legal@tryschedule.com" className="text-blue-600 hover:underline">
+                                    legal@tryschedule.com
                                 </a>
                             </p>
                         </section>

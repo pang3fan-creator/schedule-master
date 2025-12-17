@@ -20,12 +20,12 @@ export async function generateMetadata({ params }: TemplatePageProps): Promise<M
 
     if (!template) {
         return {
-            title: "Template Not Found | Schedule Builder",
+            title: "Template Not Found | TrySchedule",
         }
     }
 
     return {
-        title: `${template.title} | Schedule Builder Templates`,
+        title: `${template.title} | TrySchedule Templates`,
         description: template.description,
         keywords: [template.slug.replace(/-/g, ' '), 'schedule builder', 'free template', template.category.toLowerCase()],
     }
@@ -36,7 +36,7 @@ function generateJsonLd(slug: string) {
     const template = getTemplate(slug)
     if (!template) return null
 
-    const baseUrl = "https://schedulebuilder.com" // Update with actual domain
+    const baseUrl = "https://tryschedule.com" // Update with actual domain
 
     // FAQPage Schema
     const faqSchema = template.faq && template.faq.length > 0 ? {

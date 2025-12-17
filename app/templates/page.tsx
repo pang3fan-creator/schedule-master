@@ -149,7 +149,7 @@ export default function TemplatesPage() {
                                                 BLANK CANVAS
                                             </span>
                                             <h3 className="text-lg font-semibold text-gray-900 mt-1 group-hover:text-blue-700 transition-colors">
-                                                Schedule Builder
+                                                Blank Schedule
                                             </h3>
                                             <p className="text-sm text-gray-600 mt-2 line-clamp-2">
                                                 Start fresh with a blank schedule. Create your own custom layout from scratch.

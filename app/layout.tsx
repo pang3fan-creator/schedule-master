@@ -9,8 +9,8 @@ import { SettingsProvider } from "@/components/SettingsContext"
 import "./globals.css"
 
 export const metadata: Metadata = {
-  title: "Schedule Builder",
-  description: "Weekly schedule builder application",
+  title: "TrySchedule | The #1 Free Schedule Builder (No Login)",
+  description: "TrySchedule is the easiest free online schedule builder for students, managers, and teams. Create beautiful schedules in minutes.",
   generator: "v0.app",
   icons: {
     icon: [

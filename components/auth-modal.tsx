@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import Image from "next/image"
 import { useState } from "react"
 import { useSignIn, useSignUp } from "@clerk/nextjs"
 import { useRouter } from "next/navigation"
@@ -13,7 +14,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
-import { Database, Eye, EyeOff, ArrowRight, Loader2 } from "lucide-react"
+import { Eye, EyeOff, ArrowRight, Loader2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 interface AuthModalProps {
@@ -48,7 +49,7 @@ export function AuthModal({ open, onOpenChange, defaultMode = "sign-in" }: AuthM
                         {/* Content */}
                         <div className="relative z-10 text-center">
                             <h2 className="text-2xl font-bold text-gray-900 mb-3">
-                                {activeTab === "sign-in" ? "Good to see you again!" : "Join Schedule Builder"}
+                                {activeTab === "sign-in" ? "Good to see you again!" : "Join TrySchedule"}
                             </h2>
                             <p className="text-gray-500 text-sm max-w-[280px]">
                                 {activeTab === "sign-in"
@@ -696,8 +697,8 @@ function CalendarPreviewCard() {
     return (
         <div className="bg-white rounded-xl shadow-lg p-4 w-[200px]">
             <div className="flex items-center gap-2 mb-3">
-                <Database className="size-4 text-blue-600" />
-                <span className="text-xs font-medium text-gray-700">Schedule Builder</span>
+                <Image src="/logo.png" alt="TrySchedule - Free Online Schedule Builder" width={16} height={16} className="object-contain" />
+                <span className="text-xs font-medium text-gray-700"><strong>Try</strong>Schedule</span>
             </div>
             <div className="space-y-2">
                 {/* Mock calendar rows */}

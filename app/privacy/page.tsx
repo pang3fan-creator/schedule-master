@@ -2,8 +2,8 @@ import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 
 export const metadata = {
-    title: "Privacy Policy | Schedule Builder",
-    description: "Privacy Policy for Schedule Builder",
+    title: "Privacy Policy | TrySchedule",
+    description: "Privacy Policy for TrySchedule - Free Online Schedule Builder",
 }
 
 export default function PrivacyPage() {
@@ -20,7 +20,7 @@ export default function PrivacyPage() {
                         <section className="mb-8">
                             <h2 className="text-2xl font-semibold text-gray-900 mb-4">1. Introduction</h2>
                             <p className="text-gray-600 mb-4">
-                                ScheduleApp, Inc. ("we", "our", or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our Schedule Builder service.
+                                TrySchedule ("we", "our", or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our TrySchedule service.
                             </p>
                         </section>
 
@@ -114,8 +114,8 @@ export default function PrivacyPage() {
                             <h2 className="text-2xl font-semibold text-gray-900 mb-4">10. Contact Us</h2>
                             <p className="text-gray-600">
                                 If you have questions about this Privacy Policy, please contact us at{" "}
-                                <a href="mailto:privacy@schedulebuilder.com" className="text-blue-600 hover:underline">
-                                    privacy@schedulebuilder.com
+                                <a href="mailto:privacy@tryschedule.com" className="text-blue-600 hover:underline">
+                                    privacy@tryschedule.com
                                 </a>
                             </p>
                         </section>
