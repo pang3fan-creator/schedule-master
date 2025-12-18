@@ -72,7 +72,7 @@ export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, curre
   }
 
   return (
-    <aside className="flex w-[230px] shrink-0 flex-col border-r border-gray-100/80 bg-white/50 backdrop-blur-sm p-4">
+    <aside className="hidden md:flex w-[230px] shrink-0 flex-col border-r border-gray-100/80 bg-white/50 backdrop-blur-sm p-4">
       {/* Add New Item Button */}
       <Button
         className="mb-4 w-full bg-blue-600 hover:bg-blue-700 text-white gap-2 shadow-md hover:shadow-lg hover:glow-primary transition-all duration-300"

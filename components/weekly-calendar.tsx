@@ -16,6 +16,7 @@ interface WeeklyCalendarProps {
   onEventDelete?: (eventId: string) => void
   onEventDoubleClick?: (event: Event) => void
   onEventContextMenu?: (event: Event, x: number, y: number) => void
+  onEventLongPress?: (event: Event) => void  // For mobile long-press action
   exportMode?: boolean  // When true, renders for export (no scroll, fixed heights)
 }
 
@@ -97,7 +98,7 @@ function getEventPosition(event: Event, rowHeight: number, minHour: number = 8) 
   )
 }
 
-export function WeeklyCalendar({ events, onEventUpdate, onEventDelete, onEventDoubleClick, onEventContextMenu, exportMode = false }: WeeklyCalendarProps) {
+export function WeeklyCalendar({ events, onEventUpdate, onEventDelete, onEventDoubleClick, onEventContextMenu, onEventLongPress, exportMode = false }: WeeklyCalendarProps) {
   const gridRef = useRef<HTMLDivElement>(null)
   // In export mode, use fixed row height to ensure consistent rendering
   const EXPORT_ROW_HEIGHT = 80
@@ -217,47 +218,78 @@ export function WeeklyCalendar({ events, onEventUpdate, onEventDelete, onEventDo
   }
 
   return (
-    <div className={`flex flex-col p-6 bg-muted/20 ${exportMode ? '' : 'h-full'}`}>
-      {/* Header with navigation */}
-      <div className="mb-4 flex items-center justify-between flex-shrink-0">
-        {/* Spacer for layout balance - hidden in export mode */}
-        {!exportMode && <div className="w-20"></div>}
+    <div className={`flex flex-col p-4 md:p-6 bg-muted/20 ${exportMode ? '' : 'h-full'}`}>
+      {/* Header with navigation - responsive layout */}
+      <div className="mb-4 flex-shrink-0">
+        {/* Desktop layout */}
+        <div className="hidden md:flex items-center justify-between relative">
+          {/* Spacer for layout balance - hidden in export mode */}
+          {!exportMode && <div className="w-20"></div>}
 
-        {/* Center navigation - offset by half sidebar width (115px) to align with navbar center */}
-        {/* In export mode, no offset needed and no nav buttons */}
-        <div className={`flex items-center ${exportMode ? 'flex-1 justify-center' : ''}`} style={exportMode ? {} : { marginLeft: '-115px' }}>
+          {/* Center navigation - absolute positioned for true centering */}
+          <div className={`flex items-center ${exportMode ? 'flex-1 justify-center' : 'absolute left-1/2 -translate-x-1/2'}`}>
+            {!exportMode && (
+              <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToPreviousWeek}>
+                <ChevronLeft className="size-6" />
+              </Button>
+            )}
+            <h2 className="text-xl font-semibold text-gray-900 min-w-[280px] text-center">{dateRangeString}</h2>
+            {!exportMode && (
+              <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToNextWeek}>
+                <ChevronRight className="size-6" />
+              </Button>
+            )}
+          </div>
+
+          {/* Today button - hidden in export mode */}
           {!exportMode && (
-            <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToPreviousWeek}>
-              <ChevronLeft className="size-6" />
-            </Button>
-          )}
-          <h2 className="text-xl font-semibold text-gray-900 min-w-[280px] text-center">{dateRangeString}</h2>
-          {!exportMode && (
-            <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToNextWeek}>
-              <ChevronRight className="size-6" />
+            <Button
+              variant="outline"
+              className="w-20 border-blue-500 text-blue-600 hover:bg-blue-50 hover:text-blue-700 font-medium"
+              onClick={goToToday}
+            >
+              Today
             </Button>
           )}
         </div>
 
-        {/* Today button - hidden in export mode */}
-        {!exportMode && (
-          <Button
-            variant="outline"
-            className="w-20 border-blue-500 text-blue-600 hover:bg-blue-50 hover:text-blue-700 font-medium"
-            onClick={goToToday}
-          >
-            Today
-          </Button>
-        )}
+        {/* Mobile layout - stacked */}
+        <div className="md:hidden flex flex-col items-center gap-2">
+          {/* Navigation row */}
+          {!exportMode && (
+            <div className="flex items-center justify-center w-full">
+              <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToPreviousWeek}>
+                <ChevronLeft className="size-6" />
+              </Button>
+              <h2 className="text-sm font-semibold text-gray-900 text-center flex-1 px-1">{dateRangeString}</h2>
+              <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToNextWeek}>
+                <ChevronRight className="size-6" />
+              </Button>
+            </div>
+          )}
+          {/* Today button - below date on mobile */}
+          {!exportMode && (
+            <Button
+              variant="outline"
+              size="sm"
+              className="border-blue-500 text-blue-600 hover:bg-blue-50 hover:text-blue-700 font-medium"
+              onClick={goToToday}
+            >
+              Today
+            </Button>
+          )}
+          {/* Mobile scroll hint */}
+          <p className="text-xs text-gray-400">← Scroll horizontally to see all days →</p>
+        </div>
       </div>
 
       {/* Calendar Grid - in export mode, no overflow/scroll constraints */}
       <div className={exportMode ? '' : 'flex-1 min-h-0 overflow-auto'}>
         <div
           ref={gridRef}
-          className={`grid min-w-[800px] ${exportMode ? '' : 'h-full'}`}
+          className={`grid min-w-[700px] ${exportMode ? '' : 'h-full'}`}
           style={{
-            gridTemplateColumns: "70px repeat(7, 1fr)",
+            gridTemplateColumns: "60px repeat(7, minmax(80px, 1fr))",
             // In export mode, use fixed row heights instead of responsive ones
             gridTemplateRows: exportMode
               ? `48px repeat(${hours.length - 1}, ${EXPORT_ROW_HEIGHT}px) 24px`
@@ -309,10 +341,15 @@ export function WeeklyCalendar({ events, onEventUpdate, onEventDelete, onEventDo
                             onMouseDown={(e) => handleMouseDown(e, event)}
                             onTouchStart={(e) => handleTouchStart(e, event)}
                             onDoubleClick={(e) => {
-                              // Double click to edit
-                              if (!isDragging && onEventDoubleClick) {
+                              // Double click/tap to edit
+                              if (!isDragging) {
                                 e.stopPropagation()
-                                onEventDoubleClick(event)
+                                // On mobile, use action sheet; on desktop, use edit dialog
+                                if (onEventLongPress && window.innerWidth < 768) {
+                                  onEventLongPress(event)
+                                } else if (onEventDoubleClick) {
+                                  onEventDoubleClick(event)
+                                }
                               }
                             }}
                             onContextMenu={(e) => {
@@ -324,11 +361,11 @@ export function WeeklyCalendar({ events, onEventUpdate, onEventDelete, onEventDo
                               }
                             }}
                           >
-                            {/* Delete button - shows on hover */}
+                            {/* Delete button - hidden on mobile (use double-tap instead) */}
                             {onEventDelete && (
                               <button
                                 type="button"
-                                className="absolute top-1 right-1 size-5 flex items-center justify-center rounded-full bg-red-500 text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600"
+                                className="absolute top-1 right-1 size-5 flex items-center justify-center rounded-full bg-red-500 text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600 hidden md:flex"
                                 onClick={(e) => {
                                   e.stopPropagation()
                                   e.preventDefault()

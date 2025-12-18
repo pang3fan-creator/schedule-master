@@ -13,6 +13,10 @@ import { ConflictDialog } from "@/components/ConflictDialog"
 import { EditEventDialog } from "@/components/EditEventDialog"
 import { findConflictingEvents } from "@/lib/event-conflict"
 import { useSettings } from "@/components/SettingsContext"
+import { MobileToolbar } from "@/components/MobileToolbar"
+import { MobileEventActionSheet } from "@/components/MobileEventActionSheet"
+import { MobileWelcomeTip } from "@/components/MobileWelcomeTip"
+import { useIsMobile } from "@/hooks/useMediaQuery"
 
 // LocalStorage key for events
 const EVENTS_STORAGE_KEY = "schedule-builder-events"
@@ -80,6 +84,9 @@ export default function ScheduleBuilderPage() {
   // Get settings from context for PDF export
   const { settings, reloadSettings } = useSettings()
 
+  // Detect mobile for conditional rendering
+  const isMobile = useIsMobile()
+
   // Context menu state
   const [contextMenu, setContextMenu] = useState<{
     event: Event
@@ -103,6 +110,9 @@ export default function ScheduleBuilderPage() {
   // Edit event state
   const [editEvent, setEditEvent] = useState<Event | null>(null)
 
+  // Mobile action sheet state
+  const [mobileActionEvent, setMobileActionEvent] = useState<Event | null>(null)
+
   // State for reopening add dialog after conflict
   const [showAddDialog, setShowAddDialog] = useState(false)
 
@@ -125,6 +135,20 @@ export default function ScheduleBuilderPage() {
       saveEventsToStorage(events)
     }
   }, [events, isLoaded])
+
+  // Set initial view mode to daily on mobile (after isMobile is determined)
+  const [hasSetInitialView, setHasSetInitialView] = useState(false)
+  useEffect(() => {
+    // Only set once, after we know if it's mobile
+    if (!hasSetInitialView && typeof window !== 'undefined') {
+      // Check screen width directly for initial load
+      const isMobileScreen = window.innerWidth < 768
+      if (isMobileScreen) {
+        setViewMode("day")
+      }
+      setHasSetInitialView(true)
+    }
+  }, [hasSetInitialView])
 
   const handleReset = () => {
     setEvents([])
@@ -277,11 +301,28 @@ export default function ScheduleBuilderPage() {
     setShowExportDialog(true)
   }, [])
 
+  // Handle mobile long press on event
+  const handleEventLongPress = useCallback((event: Event) => {
+    setMobileActionEvent(event)
+  }, [])
+
+  // Handle mobile action sheet edit
+  const handleMobileActionEdit = useCallback((event: Event) => {
+    setEditEvent(event)
+  }, [])
+
+  // Handle mobile action sheet delete
+  const handleMobileActionDelete = useCallback((event: Event) => {
+    setDeleteConfirm({ event })
+  }, [])
+
+
   return (
     <div className={`flex flex-col bg-white ${isExporting ? '' : 'h-screen'}`}>
       {!isExporting && <Navbar />}
       <div className={`flex flex-1 ${isExporting ? '' : 'overflow-hidden'}`}>
-        {!isExporting && (
+        {/* Desktop Sidebar - Hidden on mobile */}
+        {!isExporting && !isMobile && (
           <Sidebar
             onReset={handleReset}
             viewMode={viewMode}
@@ -293,7 +334,7 @@ export default function ScheduleBuilderPage() {
             onAddDialogClose={() => setShowAddDialog(false)}
           />
         )}
-        <main className={`flex-1 ${isExporting ? '' : 'overflow-auto'}`} ref={calendarRef}>
+        <main className={`flex-1 ${isExporting ? '' : 'overflow-auto'} ${!isExporting && isMobile ? 'pb-20' : ''}`} ref={calendarRef}>
           {viewMode === "week" ? (
             <WeeklyCalendar
               events={events}
@@ -301,6 +342,7 @@ export default function ScheduleBuilderPage() {
               onEventDelete={handleEventDelete}
               onEventDoubleClick={handleEventDoubleClick}
               onEventContextMenu={handleEventContextMenu}
+              onEventLongPress={handleEventLongPress}
               exportMode={isExporting}
             />
           ) : (
@@ -312,11 +354,26 @@ export default function ScheduleBuilderPage() {
               onEventDelete={handleEventDelete}
               onEventDoubleClick={handleEventDoubleClick}
               onEventContextMenu={handleEventContextMenu}
+              onEventLongPress={handleEventLongPress}
               exportMode={isExporting}
             />
           )}
         </main>
       </div>
+
+      {/* Mobile Bottom Toolbar */}
+      {!isExporting && isMobile && (
+        <MobileToolbar
+          onReset={handleReset}
+          viewMode={viewMode}
+          onViewModeChange={setViewMode}
+          onAddEvent={handleAddEvent}
+          currentMonday={currentMonday}
+          onExport={handleExport}
+          showAddDialog={showAddDialog}
+          onAddDialogClose={() => setShowAddDialog(false)}
+        />
+      )}
 
       {/* Export Dialog */}
       <ExportDialog
@@ -374,6 +431,18 @@ export default function ScheduleBuilderPage() {
         event={editEvent}
         onUpdateEvent={handleEventUpdate}
       />
+
+      {/* Mobile Event Action Sheet */}
+      <MobileEventActionSheet
+        open={mobileActionEvent !== null}
+        onOpenChange={(open) => !open && setMobileActionEvent(null)}
+        event={mobileActionEvent}
+        onEdit={handleMobileActionEdit}
+        onDelete={handleMobileActionDelete}
+      />
+
+      {/* Mobile Welcome Tip - shows once on first mobile visit */}
+      <MobileWelcomeTip />
     </div>
   )
 }

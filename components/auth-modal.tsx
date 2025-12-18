@@ -67,14 +67,14 @@ export function AuthModal({ open, onOpenChange, defaultMode = "sign-in" }: AuthM
                     {/* Right Panel - Auth Form */}
                     <div className="flex-1 p-8 py-12 flex flex-col justify-center">
                         <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as "sign-up" | "sign-in")} className="w-full h-full flex flex-col">
-                            <TabsList className="grid w-full grid-cols-2 mb-6 bg-transparent gap-0 h-auto p-0">
+                            <TabsList className="grid w-full grid-cols-2 mb-6 bg-transparent gap-4 h-auto p-0">
                                 <TabsTrigger
                                     value="sign-up"
                                     className={cn(
-                                        "pt-2 pb-3 rounded-none border-b-2 data-[state=active]:shadow-none",
+                                        "py-2.5 rounded-lg border data-[state=active]:shadow-none transition-all",
                                         activeTab === "sign-up"
-                                            ? "border-blue-600 text-blue-600"
-                                            : "border-transparent text-gray-400 hover:text-gray-600"
+                                            ? "border-blue-600 text-blue-600 bg-blue-50/50"
+                                            : "border-gray-200 text-gray-400 hover:text-gray-600 hover:border-gray-300"
                                     )}
                                 >
                                     Sign Up
@@ -82,10 +82,10 @@ export function AuthModal({ open, onOpenChange, defaultMode = "sign-in" }: AuthM
                                 <TabsTrigger
                                     value="sign-in"
                                     className={cn(
-                                        "pt-2 pb-3 rounded-none border-b-2 data-[state=active]:shadow-none",
+                                        "py-2.5 rounded-lg border data-[state=active]:shadow-none transition-all",
                                         activeTab === "sign-in"
-                                            ? "border-blue-600 text-blue-600"
-                                            : "border-transparent text-gray-400 hover:text-gray-600"
+                                            ? "border-blue-600 text-blue-600 bg-blue-50/50"
+                                            : "border-gray-200 text-gray-400 hover:text-gray-600 hover:border-gray-300"
                                     )}
                                 >
                                     Sign In

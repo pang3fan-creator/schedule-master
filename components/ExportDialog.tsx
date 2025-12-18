@@ -108,11 +108,6 @@ export function ExportDialog({
                 })
             }
             onOpenChange(false)
-
-            // Refresh page after successful export
-            setTimeout(() => {
-                window.location.reload()
-            }, 500)
         } catch (error) {
             console.error("Export failed:", error)
         } finally {
@@ -222,7 +217,7 @@ export function ExportDialog({
                     )}
                 </div>
 
-                <DialogFooter className="gap-2 sm:gap-0">
+                <DialogFooter className="gap-2 sm:gap-2">
                     <Button variant="outline" onClick={() => onOpenChange(false)}>
                         Cancel
                     </Button>

@@ -140,9 +140,9 @@ export function EditEventDialog({
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="sm:max-w-[480px] p-0 gap-0 overflow-hidden" showCloseButton={false}>
+            <DialogContent className="sm:max-w-[480px] max-h-[90vh] p-0 gap-0 overflow-hidden flex flex-col" showCloseButton={false}>
                 {/* Header */}
-                <DialogHeader className="flex flex-row items-center justify-between px-6 py-4 border-b border-gray-100">
+                <DialogHeader className="flex flex-row items-center justify-between px-4 md:px-6 py-4 border-b border-gray-100 shrink-0">
                     <div className="flex items-center gap-3">
                         <Edit3 className="size-5 text-blue-600" />
                         <DialogTitle className="text-lg font-semibold text-gray-900">
@@ -159,8 +159,8 @@ export function EditEventDialog({
                     </Button>
                 </DialogHeader>
 
-                {/* Form Content */}
-                <div className="px-6 py-5 space-y-5 max-h-[60vh] overflow-y-auto">
+                {/* Form Content - scrollable */}
+                <div className="px-4 md:px-6 py-4 md:py-5 space-y-4 md:space-y-5 overflow-y-auto flex-1">
                     {/* Title */}
                     <div className="space-y-2">
                         <Label className="text-sm font-medium text-gray-700 flex items-center gap-2">
@@ -182,13 +182,13 @@ export function EditEventDialog({
                             <Calendar className="size-4 text-gray-400" />
                             Day
                         </Label>
-                        <div className="flex gap-2">
+                        <div className="flex gap-1.5 flex-wrap">
                             {dayOptions.map((day) => (
                                 <button
                                     key={day.value}
                                     type="button"
                                     onClick={() => setSelectedDay(day.value)}
-                                    className={`px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${selectedDay === day.value
+                                    className={`px-2 md:px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${selectedDay === day.value
                                         ? 'bg-blue-600 text-white'
                                         : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                                         }`}
@@ -200,7 +200,7 @@ export function EditEventDialog({
                     </div>
 
                     {/* Time Selection */}
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
                         <div className="space-y-2">
                             <Label className="text-sm font-medium text-gray-700 flex items-center gap-2">
                                 <Clock className="size-4 text-gray-400" />
@@ -210,7 +210,7 @@ export function EditEventDialog({
                                 type="time"
                                 value={startTime}
                                 onChange={(e) => setStartTime(e.target.value)}
-                                className="h-10"
+                                className="h-10 w-full"
                             />
                         </div>
                         <div className="space-y-2">
@@ -222,7 +222,7 @@ export function EditEventDialog({
                                 type="time"
                                 value={endTime}
                                 onChange={(e) => setEndTime(e.target.value)}
-                                className="h-10"
+                                className="h-10 w-full"
                             />
                         </div>
                     </div>
@@ -269,7 +269,7 @@ export function EditEventDialog({
                 </div>
 
                 {/* Footer */}
-                <div className="flex justify-end gap-3 px-6 py-4 border-t border-gray-100 bg-gray-50">
+                <div className="flex justify-end gap-3 px-4 md:px-6 py-4 border-t border-gray-100 bg-gray-50 shrink-0">
                     <Button
                         variant="outline"
                         onClick={() => onOpenChange(false)}
