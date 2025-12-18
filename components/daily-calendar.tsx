@@ -25,6 +25,7 @@ interface DailyCalendarProps {
     onEventDelete?: (eventId: string) => void
     onEventDoubleClick?: (event: Event) => void
     onEventContextMenu?: (event: Event, x: number, y: number) => void
+    onEventLongPress?: (event: Event) => void  // For mobile long-press action
     exportMode?: boolean  // When true, renders for export (no scroll, fixed heights)
 }
 
@@ -84,7 +85,7 @@ function getEventPosition(event: Event, rowHeight: number) {
 }
 
 
-export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdate, onEventDelete, onEventDoubleClick, onEventContextMenu, exportMode = false }: DailyCalendarProps) {
+export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdate, onEventDelete, onEventDoubleClick, onEventContextMenu, onEventLongPress, exportMode = false }: DailyCalendarProps) {
     const gridRef = useRef<HTMLDivElement>(null)
     // In export mode, use fixed row height
     const EXPORT_ROW_HEIGHT = 80
@@ -187,47 +188,77 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
     }
 
     return (
-        <div className={`flex flex-col p-6 bg-muted/20 ${exportMode ? '' : 'h-full'}`}>
-            {/* Header with navigation */}
-            <div className="mb-4 flex items-center justify-between flex-shrink-0">
-                {/* Spacer for layout balance - hidden in export mode */}
-                {!exportMode && <div className="w-20"></div>}
+        <div className={`flex flex-col p-4 md:p-6 bg-muted/20 ${exportMode ? '' : 'h-full'}`}>
+            {/* Header with navigation - responsive layout */}
+            <div className="mb-4 flex-shrink-0">
+                {/* Desktop layout */}
+                <div className="hidden md:flex items-center justify-between relative">
+                    {/* Spacer for layout balance - hidden in export mode */}
+                    {!exportMode && <div className="w-20"></div>}
 
-                {/* Center navigation - in export mode, no offset and no nav buttons */}
-                <div className={`flex items-center ${exportMode ? 'flex-1 justify-center' : ''}`} style={exportMode ? {} : { marginLeft: '-115px' }}>
+                    {/* Center navigation - absolute positioned for true centering */}
+                    <div className={`flex items-center ${exportMode ? 'flex-1 justify-center' : 'absolute left-1/2 -translate-x-1/2'}`}>
+                        {!exportMode && (
+                            <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToPreviousDay}>
+                                <ChevronLeft className="size-6" />
+                            </Button>
+                        )}
+                        <h2 className="text-xl font-semibold text-gray-900 min-w-[320px] text-center">{formatDate(selectedDate)}</h2>
+                        {!exportMode && (
+                            <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToNextDay}>
+                                <ChevronRight className="size-6" />
+                            </Button>
+                        )}
+                    </div>
+
+                    {/* Today button - hidden in export mode */}
                     {!exportMode && (
-                        <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToPreviousDay}>
-                            <ChevronLeft className="size-6" />
-                        </Button>
-                    )}
-                    <h2 className="text-xl font-semibold text-gray-900 min-w-[320px] text-center">{formatDate(selectedDate)}</h2>
-                    {!exportMode && (
-                        <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToNextDay}>
-                            <ChevronRight className="size-6" />
+                        <Button
+                            variant="outline"
+                            className="w-20 border-blue-500 text-blue-600 hover:bg-blue-50 hover:text-blue-700 font-medium"
+                            onClick={goToToday}
+                        >
+                            Today
                         </Button>
                     )}
                 </div>
 
-                {/* Today button - hidden in export mode */}
-                {!exportMode && (
-                    <Button
-                        variant="outline"
-                        className="w-20 border-blue-500 text-blue-600 hover:bg-blue-50 hover:text-blue-700 font-medium"
-                        onClick={goToToday}
-                    >
-                        Today
-                    </Button>
-                )}
+                {/* Mobile layout - stacked */}
+                <div className="md:hidden flex flex-col items-center gap-2">
+                    {/* Navigation row */}
+                    {!exportMode && (
+                        <div className="flex items-center justify-center w-full">
+                            <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToPreviousDay}>
+                                <ChevronLeft className="size-6" />
+                            </Button>
+                            <h2 className="text-base font-semibold text-gray-900 text-center flex-1 px-2">{formatDate(selectedDate)}</h2>
+                            <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToNextDay}>
+                                <ChevronRight className="size-6" />
+                            </Button>
+                        </div>
+                    )}
+                    {/* Today button - below date on mobile */}
+                    {!exportMode && (
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            className="border-blue-500 text-blue-600 hover:bg-blue-50 hover:text-blue-700 font-medium"
+                            onClick={goToToday}
+                        >
+                            Today
+                        </Button>
+                    )}
+                </div>
             </div>
 
-            {/* Calendar Grid - in export mode, no overflow/scroll constraints */}
+            {/* Calendar Grid - responsive width */}
             <div className={exportMode ? '' : 'flex-1 min-h-0 overflow-auto'}>
                 <div className="mx-auto max-w-4xl h-full">
                     <div
                         ref={gridRef}
-                        className={`grid min-w-[400px] ${exportMode ? '' : 'h-full'}`}
+                        className={`grid w-full ${exportMode ? '' : 'h-full'}`}
                         style={{
-                            gridTemplateColumns: "70px 1fr",
+                            gridTemplateColumns: "60px 1fr",
                             gridTemplateRows: exportMode
                                 ? `48px repeat(${hours.length - 1}, ${EXPORT_ROW_HEIGHT}px) 24px`
                                 : `48px repeat(${hours.length - 1}, minmax(50px, 1fr)) 24px`,
@@ -249,7 +280,7 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
 
                                 {/* Day cell - only render for data rows (not the last label row) */}
                                 {index !== hours.length - 1 && (
-                                    <div className={`relative border-b border-l border-r border-gray-300 ${index === 0 ? 'border-t' : ''}`}>
+                                    <div className="relative border-b border-l border-r border-gray-300">
                                         {/* Render events for this cell */}
                                         {index === 0 &&
                                             dayEvents.map((event) => {
@@ -270,9 +301,14 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                                                         onMouseDown={(e) => handleMouseDown(e, event)}
                                                         onTouchStart={(e) => handleTouchStart(e, event)}
                                                         onDoubleClick={(e) => {
-                                                            if (!isDragging && onEventDoubleClick) {
+                                                            if (!isDragging) {
                                                                 e.stopPropagation()
-                                                                onEventDoubleClick(event)
+                                                                // On mobile, use action sheet; on desktop, use edit dialog
+                                                                if (onEventLongPress && window.innerWidth < 768) {
+                                                                    onEventLongPress(event)
+                                                                } else if (onEventDoubleClick) {
+                                                                    onEventDoubleClick(event)
+                                                                }
                                                             }
                                                         }}
                                                         onContextMenu={(e) => {
@@ -283,10 +319,11 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                                                             }
                                                         }}
                                                     >
+                                                        {/* Delete button - hidden on mobile (use double-tap instead) */}
                                                         {onEventDelete && (
                                                             <button
                                                                 type="button"
-                                                                className="absolute top-1 right-1 size-5 flex items-center justify-center rounded-full bg-red-500 text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600"
+                                                                className="absolute top-1 right-1 size-5 flex items-center justify-center rounded-full bg-red-500 text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600 hidden md:flex"
                                                                 onClick={(e) => {
                                                                     e.stopPropagation()
                                                                     e.preventDefault()

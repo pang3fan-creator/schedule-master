@@ -17,6 +17,7 @@ import { SubscriptionModal } from "@/components/SubscriptionModal"
 import { UpgradeModal } from "@/components/UpgradeModal"
 import { getAllTemplates } from "@/lib/templates"
 import { useSubscription } from "@/components/SubscriptionContext"
+import { MobileNav } from "@/components/MobileNav"
 
 // Icon mapping for templates
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -59,15 +60,23 @@ export function Navbar() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 flex h-16 shrink-0 items-center justify-between border-b border-white/10 bg-white/70 backdrop-blur-lg px-6 transition-all dark:bg-black/70 dark:border-white/5">
+      <header className="sticky top-0 z-50 flex h-16 shrink-0 items-center justify-between border-b border-white/10 bg-white/70 backdrop-blur-lg px-4 md:px-6 transition-all dark:bg-black/70 dark:border-white/5">
+        {/* Mobile: Hamburger Menu */}
+        <div className="md:hidden">
+          <MobileNav />
+        </div>
+
         {/* Left: Logo */}
         <Link href="/" className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
           <Image src="/logo.png" alt="TrySchedule - Free Online Schedule Builder" width={32} height={32} className="object-contain" />
-          <span className="text-lg text-gray-900"><span className="font-bold">Try</span><span className="font-normal">Schedule</span></span>
+          <span className="text-lg text-gray-900 hidden sm:inline">
+            <span className="font-bold">Try</span>
+            <span className="font-normal">Schedule</span>
+          </span>
         </Link>
 
-        {/* Center: Navigation Links */}
-        <nav className="absolute left-1/2 -translate-x-1/2 flex items-center gap-8">
+        {/* Center: Navigation Links - Hidden on mobile */}
+        <nav className="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center gap-8">
           {/* Templates Dropdown */}
           <div
             className="relative"
@@ -158,18 +167,18 @@ export function Navbar() {
           })}
         </nav>
 
-        {/* Right: Auth Buttons */}
+        {/* Right: Auth Buttons - Hidden on mobile (available in MobileNav) */}
         <div className="flex items-center gap-3">
           <SignedOut>
             <Button
               variant="ghost"
-              className="text-gray-700"
+              className="hidden md:inline-flex text-gray-700"
               onClick={() => openAuthModal("sign-in")}
             >
               Sign In
             </Button>
             <Button
-              className="bg-blue-600 hover:bg-blue-700 text-white"
+              className="hidden md:inline-flex bg-blue-600 hover:bg-blue-700 text-white"
               onClick={() => openAuthModal("sign-up")}
             >
               Sign Up

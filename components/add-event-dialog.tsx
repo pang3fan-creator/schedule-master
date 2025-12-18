@@ -133,9 +133,9 @@ export function AddEventDialog({
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="sm:max-w-[480px] p-0 gap-0 overflow-hidden" showCloseButton={false}>
+            <DialogContent className="sm:max-w-[480px] max-h-[90vh] p-0 gap-0 overflow-hidden flex flex-col" showCloseButton={false}>
                 {/* Header */}
-                <DialogHeader className="flex flex-row items-center justify-between px-6 py-4 border-b border-gray-100">
+                <DialogHeader className="flex flex-row items-center justify-between px-4 md:px-6 py-4 border-b border-gray-100 shrink-0">
                     <div className="flex items-center gap-3">
                         <CalendarPlus className="size-5 text-blue-600" />
                         <DialogTitle className="text-lg font-semibold text-gray-900">
@@ -152,8 +152,8 @@ export function AddEventDialog({
                     </Button>
                 </DialogHeader>
 
-                {/* Form Content */}
-                <div className="px-6 py-5 space-y-5">
+                {/* Form Content - scrollable */}
+                <div className="px-4 md:px-6 py-4 md:py-5 space-y-4 md:space-y-5 overflow-y-auto flex-1">
                     {/* Title Field */}
                     <div className="space-y-2">
                         <Label className="text-sm font-medium text-gray-700">Title</Label>
@@ -198,17 +198,17 @@ export function AddEventDialog({
                     {/* Day(s) Field */}
                     <div className="space-y-2">
                         <Label className="text-sm font-medium text-gray-700">Day(s)</Label>
-                        <div className="flex items-center gap-2">
-                            <div className="flex items-center justify-center size-9 border border-gray-200 rounded-md bg-gray-50">
+                        <div className="flex items-start gap-2">
+                            <div className="flex items-center justify-center size-9 border border-gray-200 rounded-md bg-gray-50 shrink-0">
                                 <Calendar className="size-4 text-gray-500" />
                             </div>
-                            <div className="flex gap-1.5 flex-1">
+                            <div className="flex flex-wrap gap-1.5 flex-1">
                                 {dayOptions.map((day) => (
                                     <Button
                                         key={day.value}
                                         variant="outline"
                                         size="sm"
-                                        className={`h-9 px-3 text-xs font-medium transition-all ${selectedDays.includes(day.value)
+                                        className={`h-9 px-2 md:px-3 text-xs font-medium transition-all ${selectedDays.includes(day.value)
                                             ? "bg-blue-600 text-white border-blue-600 hover:bg-blue-700 hover:border-blue-700"
                                             : "border-gray-200 text-gray-600 hover:bg-gray-50 hover:border-gray-300"
                                             }`}

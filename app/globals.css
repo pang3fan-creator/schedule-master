@@ -215,4 +215,9 @@ body[data-scroll-locked] {
       transform: translateY(-10px);
     }
   }
+
+  /* Safe area padding for iPhone notch */
+  .safe-area-pb {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
 }
