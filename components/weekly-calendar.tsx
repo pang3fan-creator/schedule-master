@@ -21,9 +21,7 @@ interface WeeklyCalendarProps {
   onAddEvent?: (data: { startTime: string; endTime: string; day: number }) => void
 }
 
-// Day names for different week start configurations
-const DAY_NAMES_MONDAY_START = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"]
-const DAY_NAMES_SUNDAY_START = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
+
 
 // Get the first day of the week containing the given date
 function getWeekStart(date: Date, startsOnSunday: boolean): Date {
@@ -84,8 +82,12 @@ import {
   formatHour,
   formatTime,
   formatDateString,
-  getEventPosition as getEventPositionUtil
+  getEventPosition as getEventPositionUtil,
+  DAY_NAMES_MONDAY_START,
+  DAY_NAMES_SUNDAY_START
 } from "@/lib/time-utils"
+import { useDragToCreate } from "@/hooks/useDragToCreate"
+import { useCurrentTime } from "@/hooks/useCurrentTime"
 
 // Wrapper to match existing usage or replace usages directly
 function getEventPosition(event: Event, rowHeight: number, minHour: number = 8) {
@@ -137,8 +139,6 @@ export function WeeklyCalendar({ events, onEventUpdate, onEventDelete, onEventDo
     setCurrentWeekStart(getWeekStart(new Date(), weekStartsOnSunday))
   }, [weekStartsOnSunday])
 
-  // Import helper hooks
-  const { useDragToCreate } = require("@/hooks/useDragToCreate")
 
   // Use the event drag hook for drag-and-drop with touch support
   const {
@@ -164,7 +164,6 @@ export function WeeklyCalendar({ events, onEventUpdate, onEventDelete, onEventDo
   })
 
   // Current Time hook
-  const { useCurrentTime } = require("@/hooks/useCurrentTime")
   const currentTime = useCurrentTime()
 
   // Calculate the week's dates based on current week start
@@ -244,6 +243,19 @@ export function WeeklyCalendar({ events, onEventUpdate, onEventDelete, onEventDo
       settings.workingHoursStart
     )
   }
+
+  // Optimize: Group events by date string to avoid repeated filtering
+  const eventsByDate = useMemo(() => {
+    const map = new Map<string, Event[]>()
+    events.forEach(event => {
+      const dateKey = event.date
+      if (!map.has(dateKey)) {
+        map.set(dateKey, [])
+      }
+      map.get(dateKey)!.push(event)
+    })
+    return map
+  }, [events])
 
   return (
     <div className={`flex flex-col p-4 md:p-6 bg-muted/20 ${exportMode ? '' : 'h-full'}`}>
@@ -385,8 +397,7 @@ export function WeeklyCalendar({ events, onEventUpdate, onEventDelete, onEventDo
 
                   {/* Render events for this cell - events are positioned relative to the first cell of each column */}
                   {index === 0 &&
-                    events
-                      .filter((event) => event.date === formatDateString(weekDates[dayIndex]))
+                    (eventsByDate.get(formatDateString(weekDates[dayIndex])) || [])
                       .map((event) => {
                         const position = getVisualPosition(event)
                         const displayTime = getDisplayTime(event)

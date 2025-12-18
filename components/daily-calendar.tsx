@@ -13,10 +13,16 @@ import {
     formatHour as formatHourUtil,
     formatTime as formatTimeUtil,
     getEventPosition as getEventPositionUtil,
-    groupOverlappingEvents
+    groupOverlappingEvents,
+    DAY_NAMES,
+    SHORT_DAY_NAMES,
+    getWeekStart,
+    getIsoDayIndex
 } from "@/lib/time-utils"
 import { useSettings } from "@/components/SettingsContext"
 import { useEventDrag } from "@/hooks/useEventDrag"
+import { useDragToCreate } from "@/hooks/useDragToCreate"
+import { useCurrentTime } from "@/hooks/useCurrentTime"
 
 interface DailyCalendarProps {
     events: Event[]
@@ -31,25 +37,10 @@ interface DailyCalendarProps {
     onAddEvent?: (data: { startTime: string; endTime: string; day: number }) => void
 }
 
-const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-const shortDayNames = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
+const dayNames = DAY_NAMES
+const shortDayNames = SHORT_DAY_NAMES
 
-// Get the Monday of the week containing the given date
-function getMonday(date: Date): Date {
-    const d = new Date(date)
-    const day = d.getDay()
-    const diff = day === 0 ? -6 : 1 - day
-    d.setDate(d.getDate() + diff)
-    d.setHours(0, 0, 0, 0)
-    return d
-}
 
-// Get day index (0-6, Monday-Sunday) for event filtering
-function getDayIndex(date: Date): number {
-    const day = date.getDay()
-    // Convert from Sunday=0 to Monday=0
-    return day === 0 ? 6 : day - 1
-}
 
 // Format date for header (e.g., "Thursday, December 11, 2025")
 function formatDate(date: Date): string {
@@ -114,8 +105,7 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
         return result
     }, [workingHoursStart, workingHoursEnd])
 
-    // Import helper hooks
-    const { useDragToCreate } = require("@/hooks/useDragToCreate")
+
 
     // Use the event drag hook for drag-and-drop with touch support
     const {
@@ -141,7 +131,6 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
     })
 
     // Current Time hook
-    const { useCurrentTime } = require("@/hooks/useCurrentTime")
     const currentTime = useCurrentTime()
 
     // Check if selected date is today
@@ -153,7 +142,7 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
     }, [selectedDate, currentTime]) // Re-check if day changes (unlikely but safe)
 
     // Get day index for filtering events
-    const currentDayIndex = useMemo(() => getDayIndex(selectedDate), [selectedDate])
+    const currentDayIndex = useMemo(() => getIsoDayIndex(selectedDate), [selectedDate])
 
     // ... rest of logic ...
 
@@ -228,6 +217,9 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
             settings.workingHoursStart
         )
     }
+
+    // Memoize grouped events to avoid recalculation on every render
+    const groupedDayEvents = useMemo(() => groupOverlappingEvents(dayEvents), [dayEvents])
 
     return (
         <div className={`flex flex-col p-4 md:p-6 bg-muted/20 ${exportMode ? '' : 'h-full'}`}>
@@ -359,7 +351,7 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
 
                                         {/* Render events for this cell */}
                                         {index === 0 &&
-                                            groupOverlappingEvents(dayEvents).map((event) => {
+                                            groupedDayEvents.map((event) => {
                                                 const position = getVisualPosition(event)
                                                 const displayTime = getDisplayTime(event)
                                                 const isDragging = dragState.eventId === event.id

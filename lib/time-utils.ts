@@ -7,6 +7,12 @@
 export const DEFAULT_MIN_HOUR = 8  // 8 AM
 export const DEFAULT_MAX_HOUR = 17 // 5 PM
 
+// Day names for different week start configurations
+export const DAY_NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+export const SHORT_DAY_NAMES = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
+export const DAY_NAMES_MONDAY_START = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"]
+export const DAY_NAMES_SUNDAY_START = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
+
 import { type Event } from "@/lib/types"
 
 export interface GroupedEvent extends Event {
@@ -77,6 +83,14 @@ export function getWeekDates(weekStart: Date): Date[] {
         dates.push(date)
     }
     return dates
+}
+
+/**
+ * Get ISO day index (0-6, Monday-Sunday)
+ */
+export function getIsoDayIndex(date: Date): number {
+    const day = date.getDay()
+    return day === 0 ? 6 : day - 1
 }
 
 /**
