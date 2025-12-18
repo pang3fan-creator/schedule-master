@@ -29,6 +29,11 @@ interface AddEventDialogProps {
     onOpenChange: (open: boolean) => void
     onAddEvent: (event: Omit<Event, "id">) => void
     currentMonday: Date // The Monday of the currently displayed week
+    initialData?: {
+        startTime?: string
+        endTime?: string
+        selectedDays?: number[]
+    }
 }
 
 const dayOptions = [
@@ -59,6 +64,7 @@ export function AddEventDialog({
     onOpenChange,
     onAddEvent,
     currentMonday,
+    initialData
 }: AddEventDialogProps) {
     const [title, setTitle] = useState("")
     const [selectedDays, setSelectedDays] = useState<number[]>([])
@@ -66,6 +72,27 @@ export function AddEventDialog({
     const [endTime, setEndTime] = useState("09:00")
     const [description, setDescription] = useState("")
     const [selectedColor, setSelectedColor] = useState<EventColor>("blue")
+
+    // Update state when initialData changes or dialog opens
+    useState(() => {
+        if (open && initialData) {
+            if (initialData.startTime) setStartTime(initialData.startTime)
+            if (initialData.endTime) setEndTime(initialData.endTime)
+            if (initialData.selectedDays) setSelectedDays(initialData.selectedDays)
+        }
+    })
+
+    // Also sync when initialData changes while open
+    // Using useEffect instead of useState initializer for updates
+    const [prevInitialData, setPrevInitialData] = useState(initialData)
+    if (initialData !== prevInitialData) {
+        setPrevInitialData(initialData)
+        if (initialData) {
+            if (initialData.startTime) setStartTime(initialData.startTime)
+            if (initialData.endTime) setEndTime(initialData.endTime)
+            if (initialData.selectedDays) setSelectedDays(initialData.selectedDays)
+        }
+    }
 
     // Available color options
     const colorOptions: EventColor[] = ['blue', 'green', 'red', 'yellow', 'purple', 'pink', 'orange', 'teal']

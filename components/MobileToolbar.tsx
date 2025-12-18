@@ -34,6 +34,11 @@ interface MobileToolbarProps {
     onExport: () => void
     showAddDialog?: boolean
     onAddDialogClose?: () => void
+    initialData?: {
+        startTime?: string
+        endTime?: string
+        selectedDays?: number[]
+    }
 }
 
 export function MobileToolbar({
@@ -45,6 +50,7 @@ export function MobileToolbar({
     onExport,
     showAddDialog,
     onAddDialogClose,
+    initialData,
 }: MobileToolbarProps) {
     const [showResetDialog, setShowResetDialog] = useState(false)
     const [showAddEventDialog, setShowAddEventDialog] = useState(false)
@@ -176,6 +182,7 @@ export function MobileToolbar({
                 }}
                 onAddEvent={onAddEvent}
                 currentMonday={currentMonday}
+                initialData={initialData}
             />
 
             {/* Reset Dialog */}

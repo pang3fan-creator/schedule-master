@@ -7,6 +7,13 @@
 export const DEFAULT_MIN_HOUR = 8  // 8 AM
 export const DEFAULT_MAX_HOUR = 17 // 5 PM
 
+import { type Event } from "@/lib/types"
+
+export interface GroupedEvent extends Event {
+    left: number
+    width: number
+}
+
 /**
  * Format hour for display
  */
@@ -189,4 +196,104 @@ export function minutesToTime(totalMinutes: number): { hour: number; minute: num
  */
 export function timeToMinutes(hour: number, minute: number): number {
     return hour * 60 + minute
+}
+
+/**
+ * Group overlapping events to calculate their horizontal position and width
+ */
+export function groupOverlappingEvents(events: Event[]): GroupedEvent[] {
+    if (events.length === 0) return []
+
+    // Sort events by start time, then duration (descending)
+    const sortedEvents = [...events].sort((a, b) => {
+        const startA = a.startHour * 60 + a.startMinute
+        const startB = b.startHour * 60 + b.startMinute
+        if (startA !== startB) return startA - startB
+
+        const endA = a.endHour * 60 + a.endMinute
+        const endB = b.endHour * 60 + b.endMinute
+        return (endB - startB) - (endA - startA)
+    })
+
+    const groups: GroupedEvent[][] = []
+
+    // Group overlapping events
+    sortedEvents.forEach((event) => {
+        const evtStart = event.startHour * 60 + event.startMinute
+        const evtEnd = event.endHour * 60 + event.endMinute
+
+        let placed = false
+        // Try to add to existing group
+        for (const group of groups) {
+            // Check if overlaps with ANY event in the group
+            const overlaps = group.some(groupEvent => {
+                const groupStart = groupEvent.startHour * 60 + groupEvent.startMinute
+                const groupEnd = groupEvent.endHour * 60 + groupEvent.endMinute
+                return (evtStart < groupEnd && evtEnd > groupStart)
+            })
+
+            if (overlaps) {
+                group.push({ ...event, left: 0, width: 0 })
+                placed = true
+                break
+            }
+        }
+
+        if (!placed) {
+            groups.push([{ ...event, left: 0, width: 0 }])
+        }
+    })
+
+    const result: GroupedEvent[] = []
+
+    // Calculate position for each group
+    groups.forEach(group => {
+        // Expand width of events to fill columns
+        const columns: GroupedEvent[][] = []
+
+        group.forEach(event => {
+            const evtStart = event.startHour * 60 + event.startMinute
+            const evtEnd = event.endHour * 60 + event.endMinute
+
+            let columnIndex = 0
+            while (true) {
+                if (!columns[columnIndex]) {
+                    columns[columnIndex] = []
+                    columns[columnIndex].push(event)
+                    break
+                }
+
+                // Check if fits in this column (no overlap with last event in column)
+                // Since sorted by start time, we only check the last added event in the column?
+                // Actually need to check all events in column for overlap?
+                // Since sorted by start time, checking last might be enough if we just want to avoid immediate collision
+                // But simplified logic: just find first column where it fits
+
+                const hasOverlap = columns[columnIndex].some(colEvent => {
+                    const colStart = colEvent.startHour * 60 + colEvent.startMinute
+                    const colEnd = colEvent.endHour * 60 + colEvent.endMinute
+                    return (evtStart < colEnd && evtEnd > colStart)
+                })
+
+                if (!hasOverlap) {
+                    columns[columnIndex].push(event)
+                    break
+                }
+
+                columnIndex++
+            }
+        })
+
+        const totalColumns = columns.length
+
+        columns.forEach((column, colIndex) => {
+            column.forEach(event => {
+                event.left = (colIndex / totalColumns) * 100
+                event.width = (1 / totalColumns) * 100
+                result.push(event)
+            })
+        })
+    })
+
+    return result
 }

@@ -29,9 +29,14 @@ interface SidebarProps {
   onExport: () => void
   showAddDialog?: boolean  // External control to show add dialog
   onAddDialogClose?: () => void  // Callback when add dialog closes
+  initialData?: {          // Initial data used when showAddDialog is true
+    startTime?: string
+    endTime?: string
+    selectedDays?: number[]
+  }
 }
 
-export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, currentMonday, onExport, showAddDialog, onAddDialogClose }: SidebarProps) {
+export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, currentMonday, onExport, showAddDialog, onAddDialogClose, initialData }: SidebarProps) {
   const [showResetDialog, setShowResetDialog] = useState(false)
   const [showAddEventDialog, setShowAddEventDialog] = useState(false)
   const [showUpgradeModal, setShowUpgradeModal] = useState(false)
@@ -93,6 +98,7 @@ export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, curre
         }}
         onAddEvent={onAddEvent}
         currentMonday={currentMonday}
+        initialData={initialData}
       />
 
       {/* Upgrade Modal */}

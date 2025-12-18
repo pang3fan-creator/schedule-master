@@ -116,6 +116,29 @@ export default function ScheduleBuilderPage() {
   // State for reopening add dialog after conflict
   const [showAddDialog, setShowAddDialog] = useState(false)
 
+  // State for initial data when opening add dialog (e.g. from drag interaction)
+  const [addDialogInitialData, setAddDialogInitialData] = useState<{
+    startTime?: string
+    endTime?: string
+    selectedDays?: number[]
+  } | undefined>(undefined)
+
+  // Handle opening add dialog with specific data
+  const handleOpenAddDialog = useCallback((data: { startTime: string; endTime: string; day: number }) => {
+    setAddDialogInitialData({
+      startTime: data.startTime,
+      endTime: data.endTime,
+      selectedDays: [data.day]
+    })
+    setShowAddDialog(true)
+  }, [])
+
+  // Reset initial data when dialog closes
+  const handleAddDialogClose = useCallback(() => {
+    setShowAddDialog(false)
+    setAddDialogInitialData(undefined)
+  }, [])
+
   // Ref for the calendar container (for export)
   const calendarRef = useRef<HTMLDivElement>(null)
 
@@ -246,8 +269,8 @@ export default function ScheduleBuilderPage() {
     } else {
       // For add conflicts, reopen add dialog
       setShowAddDialog(true)
+      // Keep existing initial data if any
     }
-    // Close conflict dialog
     setConflictState(null)
   }, [conflictState])
 
@@ -316,7 +339,6 @@ export default function ScheduleBuilderPage() {
     setDeleteConfirm({ event })
   }, [])
 
-
   return (
     <div className={`flex flex-col bg-white ${isExporting ? '' : 'h-screen'}`}>
       {!isExporting && <Navbar />}
@@ -331,7 +353,8 @@ export default function ScheduleBuilderPage() {
             currentMonday={currentMonday}
             onExport={handleExport}
             showAddDialog={showAddDialog}
-            onAddDialogClose={() => setShowAddDialog(false)}
+            onAddDialogClose={handleAddDialogClose}
+            initialData={addDialogInitialData}
           />
         )}
         <main className={`flex-1 ${isExporting ? '' : 'overflow-auto'} ${!isExporting && isMobile ? 'pb-20' : ''}`} ref={calendarRef}>
@@ -344,6 +367,7 @@ export default function ScheduleBuilderPage() {
               onEventContextMenu={handleEventContextMenu}
               onEventLongPress={handleEventLongPress}
               exportMode={isExporting}
+              onAddEvent={handleOpenAddDialog}
             />
           ) : (
             <DailyCalendar
@@ -356,6 +380,7 @@ export default function ScheduleBuilderPage() {
               onEventContextMenu={handleEventContextMenu}
               onEventLongPress={handleEventLongPress}
               exportMode={isExporting}
+              onAddEvent={handleOpenAddDialog}
             />
           )}
         </main>
@@ -371,7 +396,8 @@ export default function ScheduleBuilderPage() {
           currentMonday={currentMonday}
           onExport={handleExport}
           showAddDialog={showAddDialog}
-          onAddDialogClose={() => setShowAddDialog(false)}
+          onAddDialogClose={handleAddDialogClose}
+          initialData={addDialogInitialData}
         />
       )}
 

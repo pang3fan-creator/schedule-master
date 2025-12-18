@@ -18,6 +18,7 @@ interface WeeklyCalendarProps {
   onEventContextMenu?: (event: Event, x: number, y: number) => void
   onEventLongPress?: (event: Event) => void  // For mobile long-press action
   exportMode?: boolean  // When true, renders for export (no scroll, fixed heights)
+  onAddEvent?: (data: { startTime: string; endTime: string; day: number }) => void
 }
 
 // Day names for different week start configurations
@@ -98,7 +99,7 @@ function getEventPosition(event: Event, rowHeight: number, minHour: number = 8) 
   )
 }
 
-export function WeeklyCalendar({ events, onEventUpdate, onEventDelete, onEventDoubleClick, onEventContextMenu, onEventLongPress, exportMode = false }: WeeklyCalendarProps) {
+export function WeeklyCalendar({ events, onEventUpdate, onEventDelete, onEventDoubleClick, onEventContextMenu, onEventLongPress, exportMode = false, onAddEvent }: WeeklyCalendarProps) {
   const gridRef = useRef<HTMLDivElement>(null)
   // In export mode, use fixed row height to ensure consistent rendering
   const EXPORT_ROW_HEIGHT = 80
@@ -136,6 +137,9 @@ export function WeeklyCalendar({ events, onEventUpdate, onEventDelete, onEventDo
     setCurrentWeekStart(getWeekStart(new Date(), weekStartsOnSunday))
   }, [weekStartsOnSunday])
 
+  // Import helper hooks
+  const { useDragToCreate } = require("@/hooks/useDragToCreate")
+
   // Use the event drag hook for drag-and-drop with touch support
   const {
     dragState,
@@ -151,6 +155,17 @@ export function WeeklyCalendar({ events, onEventUpdate, onEventDelete, onEventDo
     events,  // Pass events for collision detection during drag
     timeIncrement,  // Pass time increment for drag snapping
   })
+
+  // Drag-to-create hook
+  const { creatingEvent, handleGridMouseDown: handleCreateMouseDown } = useDragToCreate({
+    onAddEvent,
+    rowHeight,
+    timeIncrement
+  })
+
+  // Current Time hook
+  const { useCurrentTime } = require("@/hooks/useCurrentTime")
+  const currentTime = useCurrentTime()
 
   // Calculate the week's dates based on current week start
   const weekDates = useMemo(() => getWeekDates(currentWeekStart), [currentWeekStart])
@@ -215,6 +230,19 @@ export function WeeklyCalendar({ events, onEventUpdate, onEventDelete, onEventDo
   // Navigate to current week (today)
   const goToToday = () => {
     setCurrentWeekStart(getWeekStart(new Date(), weekStartsOnSunday))
+  }
+
+  // Helper for ghost event position
+  const getGhostPosition = () => {
+    if (!creatingEvent) return undefined
+    return getEventPositionUtil(
+      creatingEvent.startHour,
+      creatingEvent.startMinute,
+      creatingEvent.endHour,
+      creatingEvent.endMinute,
+      rowHeight,
+      settings.workingHoursStart
+    )
   }
 
   return (
@@ -318,7 +346,43 @@ export function WeeklyCalendar({ events, onEventUpdate, onEventDelete, onEventDo
                 <div
                   key={`${day.short}-${hour}`}
                   className={`relative border-b border-l border-gray-300 ${dayIndex === days.length - 1 ? "border-r" : ""}`}
+                  onMouseDown={(e) => handleCreateMouseDown(e, hour, dayIndex, !!dragState.eventId)}
                 >
+                  {/* Current Time Indicator - only if date matches today and within this hour */}
+                  {weekDates[dayIndex].getDate() === currentTime.getDate() &&
+                    weekDates[dayIndex].getMonth() === currentTime.getMonth() &&
+                    weekDates[dayIndex].getFullYear() === currentTime.getFullYear() &&
+                    currentTime.getHours() === hour && (
+                      <div
+                        className="absolute z-30 w-full pointer-events-none"
+                        style={{
+                          top: `${(currentTime.getMinutes() / 60) * 100}%`,
+                        }}
+                      >
+                        <div className="absolute -left-[6px] -top-[5px] size-2.5 rounded-full bg-red-500 ring-2 ring-white" />
+                        <div className="border-t-2 border-red-500 w-full opacity-60" />
+                      </div>
+                    )}
+
+                  {/* Creating Ghost Event */}
+                  {index === 0 && creatingEvent && creatingEvent.dayIndex === dayIndex && (
+                    <div
+                      className="absolute z-20 rounded-lg border-l-4 border-blue-500 bg-blue-100/50 backdrop-blur-sm p-2 overflow-hidden shadow-lg ring-2 ring-blue-400 pointer-events-none"
+                      style={{
+                        top: getGhostPosition()?.top,
+                        height: getGhostPosition()?.height,
+                        left: '1%',
+                        width: '98%',
+                        transition: 'none'
+                      }}
+                    >
+                      <div className="text-xs font-semibold text-blue-700">New Event</div>
+                      <div className="text-xs text-blue-600">
+                        {formatTime(creatingEvent.startHour, creatingEvent.startMinute, use12HourFormat)} - {formatTime(creatingEvent.endHour, creatingEvent.endMinute, use12HourFormat)}
+                      </div>
+                    </div>
+                  )}
+
                   {/* Render events for this cell - events are positioned relative to the first cell of each column */}
                   {index === 0 &&
                     events

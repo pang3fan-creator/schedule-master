@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { useRef, useState, useEffect, useMemo } from "react"
+import { useRef, useState, useEffect, useMemo, useCallback } from "react"
 
 import { ChevronLeft, ChevronRight, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -12,7 +12,8 @@ import {
     formatDateString,
     formatHour as formatHourUtil,
     formatTime as formatTimeUtil,
-    getEventPosition as getEventPositionUtil
+    getEventPosition as getEventPositionUtil,
+    groupOverlappingEvents
 } from "@/lib/time-utils"
 import { useSettings } from "@/components/SettingsContext"
 import { useEventDrag } from "@/hooks/useEventDrag"
@@ -27,6 +28,7 @@ interface DailyCalendarProps {
     onEventContextMenu?: (event: Event, x: number, y: number) => void
     onEventLongPress?: (event: Event) => void  // For mobile long-press action
     exportMode?: boolean  // When true, renders for export (no scroll, fixed heights)
+    onAddEvent?: (data: { startTime: string; endTime: string; day: number }) => void
 }
 
 const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
@@ -85,7 +87,7 @@ function getEventPosition(event: Event, rowHeight: number) {
 }
 
 
-export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdate, onEventDelete, onEventDoubleClick, onEventContextMenu, onEventLongPress, exportMode = false }: DailyCalendarProps) {
+export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdate, onEventDelete, onEventDoubleClick, onEventContextMenu, onEventLongPress, exportMode = false, onAddEvent }: DailyCalendarProps) {
     const gridRef = useRef<HTMLDivElement>(null)
     // In export mode, use fixed row height
     const EXPORT_ROW_HEIGHT = 80
@@ -112,6 +114,9 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
         return result
     }, [workingHoursStart, workingHoursEnd])
 
+    // Import helper hooks
+    const { useDragToCreate } = require("@/hooks/useDragToCreate")
+
     // Use the event drag hook for drag-and-drop with touch support
     const {
         dragState,
@@ -128,8 +133,31 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
         timeIncrement,  // Pass time increment for drag snapping
     })
 
+    // Drag-to-create hook
+    const { creatingEvent, handleGridMouseDown: handleCreateMouseDown } = useDragToCreate({
+        onAddEvent,
+        rowHeight,
+        timeIncrement
+    })
+
+    // Current Time hook
+    const { useCurrentTime } = require("@/hooks/useCurrentTime")
+    const currentTime = useCurrentTime()
+
+    // Check if selected date is today
+    const isToday = useMemo(() => {
+        const today = new Date()
+        return selectedDate.getDate() === today.getDate() &&
+            selectedDate.getMonth() === today.getMonth() &&
+            selectedDate.getFullYear() === today.getFullYear()
+    }, [selectedDate, currentTime]) // Re-check if day changes (unlikely but safe)
+
     // Get day index for filtering events
     const currentDayIndex = useMemo(() => getDayIndex(selectedDate), [selectedDate])
+
+    // ... rest of logic ...
+
+
 
     // Get short day name for header
     const shortDayName = useMemo(() => {
@@ -185,6 +213,20 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
     // Navigate to today
     const goToToday = () => {
         onDateChange(new Date())
+    }
+
+
+    // Helper for ghost event position
+    const getGhostPosition = () => {
+        if (!creatingEvent) return undefined
+        return getEventPositionUtil(
+            creatingEvent.startHour,
+            creatingEvent.startMinute,
+            creatingEvent.endHour,
+            creatingEvent.endMinute,
+            rowHeight,
+            settings.workingHoursStart
+        )
     }
 
     return (
@@ -280,24 +322,64 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
 
                                 {/* Day cell - only render for data rows (not the last label row) */}
                                 {index !== hours.length - 1 && (
-                                    <div className="relative border-b border-l border-r border-gray-300">
+                                    <div className="relative border-b border-l border-r border-gray-300"
+                                        onMouseDown={(e) => handleCreateMouseDown(e, hour, currentDayIndex, !!dragState.eventId)}
+                                    >
+                                        {/* Current Time Indicator - only if today and within this hour */}
+                                        {isToday && currentTime.getHours() === hour && (
+                                            <div
+                                                className="absolute z-30 w-full pointer-events-none"
+                                                style={{
+                                                    top: `${(currentTime.getMinutes() / 60) * 100}%`,
+                                                }}
+                                            >
+                                                <div className="absolute -left-[6px] -top-[5px] size-2.5 rounded-full bg-red-500 ring-2 ring-white" />
+                                                <div className="border-t-2 border-red-500 w-full opacity-60" />
+                                            </div>
+                                        )}
+
+                                        {/* Creating Ghost Event */}
+                                        {index === 0 && creatingEvent && (
+                                            <div
+                                                className="absolute z-20 rounded-lg border-l-4 border-blue-500 bg-blue-100/50 backdrop-blur-sm p-2 overflow-hidden shadow-lg ring-2 ring-blue-400 pointer-events-none"
+                                                style={{
+                                                    top: getGhostPosition()?.top,
+                                                    height: getGhostPosition()?.height,
+                                                    left: '2%',
+                                                    width: '96%',
+                                                    transition: 'none'
+                                                }}
+                                            >
+                                                <div className="text-xs font-semibold text-blue-700">New Event</div>
+                                                <div className="text-xs text-blue-600">
+                                                    {formatTime(creatingEvent.startHour, creatingEvent.startMinute, use12HourFormat)} - {formatTime(creatingEvent.endHour, creatingEvent.endMinute, use12HourFormat)}
+                                                </div>
+                                            </div>
+                                        )}
+
                                         {/* Render events for this cell */}
                                         {index === 0 &&
-                                            dayEvents.map((event) => {
+                                            groupOverlappingEvents(dayEvents).map((event) => {
                                                 const position = getVisualPosition(event)
                                                 const displayTime = getDisplayTime(event)
                                                 const isDragging = dragState.eventId === event.id
                                                 const colorConfig = EVENT_COLORS[event.color || 'blue']
+
+                                                // Dynamic style for overlap handling
+                                                const style = {
+                                                    top: position.top,
+                                                    height: position.height,
+                                                    left: `${event.left}%`,
+                                                    width: `${event.width}%`,
+                                                    transition: isDragging ? 'none' : 'top 0.1s ease-out, height 0.1s ease-out',
+                                                    userSelect: 'none' as const,
+                                                }
+
                                                 return (
                                                     <div
                                                         key={event.id}
-                                                        className={`group absolute left-1 right-1 z-10 rounded-lg border-l-4 ${colorConfig.border} ${colorConfig.bg} backdrop-blur-sm p-2 overflow-hidden text-center flex flex-col justify-between ${isDragging ? 'cursor-grabbing shadow-xl ring-2 ring-blue-400' : 'cursor-grab hover:shadow-lg hover:scale-[1.02] transition-all duration-200'}`}
-                                                        style={{
-                                                            top: position.top,
-                                                            height: position.height,
-                                                            transition: isDragging ? 'none' : 'top 0.1s ease-out, height 0.1s ease-out',
-                                                            userSelect: 'none',
-                                                        }}
+                                                        className={`group absolute z-10 rounded-lg border-l-4 ${colorConfig.border} ${colorConfig.bg} backdrop-blur-sm p-2 overflow-hidden text-center flex flex-col justify-between ${isDragging ? 'cursor-grabbing shadow-xl ring-2 ring-blue-400' : 'cursor-grab hover:shadow-lg hover:scale-[1.02] transition-all duration-200'}`}
+                                                        style={style}
                                                         onMouseDown={(e) => handleMouseDown(e, event)}
                                                         onTouchStart={(e) => handleTouchStart(e, event)}
                                                         onDoubleClick={(e) => {
@@ -334,9 +416,9 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                                                                 <X className="size-3" />
                                                             </button>
                                                         )}
-                                                        <p className={`text-sm font-semibold ${colorConfig.text}`}>{event.title}</p>
-                                                        <p className={`text-xs ${colorConfig.textSecondary}`}>{event.description}</p>
-                                                        <p className={`text-xs ${colorConfig.textSecondary}`}>
+                                                        <p className={`text-sm font-semibold ${colorConfig.text} truncate`}>{event.title}</p>
+                                                        <p className={`text-xs ${colorConfig.textSecondary} truncate`}>{event.description}</p>
+                                                        <p className={`text-xs ${colorConfig.textSecondary} truncate`}>
                                                             {formatTime(displayTime.startHour, displayTime.startMinute, use12HourFormat)} -{" "}
                                                             {formatTime(displayTime.endHour, displayTime.endMinute, use12HourFormat)}
                                                         </p>
@@ -353,4 +435,3 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
         </div>
     )
 }
-
