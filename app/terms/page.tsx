@@ -88,8 +88,11 @@ export default function TermsPage() {
                             <h2 className="text-2xl font-semibold text-gray-900 mb-4">9. Contact Information</h2>
                             <p className="text-gray-600">
                                 If you have any questions about these Terms, please contact us at{" "}
-                                <a href="mailto:legal@tryschedule.com" className="text-blue-600 hover:underline">
-                                    legal@tryschedule.com
+                                <a 
+                                    href="mailto:support@tryschedule.com" 
+                                    className="text-blue-600 hover:text-blue-700 hover:underline cursor-pointer transition-colors font-medium"
+                                >
+                                    support@tryschedule.com
                                 </a>
                             </p>
                         </section>

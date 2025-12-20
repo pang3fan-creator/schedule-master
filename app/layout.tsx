@@ -11,8 +11,40 @@ import "./globals.css"
 export const metadata: Metadata = {
   title: "TrySchedule | The #1 Free Schedule Builder (No Login)",
   description: "TrySchedule is the easiest free online schedule builder for students, managers, and teams. Create beautiful schedules in minutes.",
-  generator: "v0.app",
+  generator: "Next.js",
   manifest: "/manifest.json",
+  keywords: [
+    "free schedule builder",
+    "online schedule maker",
+    "schedule builder",
+    "free online schedule builder",
+    "visual schedule builder",
+    "employee schedule builder",
+    "work schedule builder",
+    "weekly schedule builder",
+    "schedule planner",
+    "shift scheduler",
+  ],
+  openGraph: {
+    title: "TrySchedule | The #1 Free Schedule Builder (No Login)",
+    description: "TrySchedule is the easiest free online schedule builder for students, managers, and teams. Create beautiful schedules in minutes.",
+    type: "website",
+    siteName: "TrySchedule",
+    images: [
+      {
+        url: "/opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: "TrySchedule - Free Online Schedule Builder",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "TrySchedule | The #1 Free Schedule Builder",
+    description: "TrySchedule is the easiest free online schedule builder for students, managers, and teams.",
+    images: ["/opengraph-image.png"],
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",

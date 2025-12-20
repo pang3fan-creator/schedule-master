@@ -114,8 +114,11 @@ export default function PrivacyPage() {
                             <h2 className="text-2xl font-semibold text-gray-900 mb-4">10. Contact Us</h2>
                             <p className="text-gray-600">
                                 If you have questions about this Privacy Policy, please contact us at{" "}
-                                <a href="mailto:privacy@tryschedule.com" className="text-blue-600 hover:underline">
-                                    privacy@tryschedule.com
+                                <a 
+                                    href="mailto:support@tryschedule.com" 
+                                    className="text-blue-600 hover:text-blue-700 hover:underline cursor-pointer transition-colors font-medium"
+                                >
+                                    support@tryschedule.com
                                 </a>
                             </p>
                         </section>

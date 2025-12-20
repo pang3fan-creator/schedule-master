@@ -22,11 +22,36 @@ export default function ContactPage() {
         e.preventDefault()
         setIsLoading(true)
 
-        // Simulate form submission
-        await new Promise((resolve) => setTimeout(resolve, 1000))
+        try {
+            const response = await fetch("/api/contact", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formState),
+            })
 
-        setIsLoading(false)
-        setIsSubmitted(true)
+            const data = await response.json()
+
+            if (!response.ok) {
+                throw new Error(data.error || "发送失败，请稍后重试")
+            }
+
+            // 成功提交
+            setIsSubmitted(true)
+            // 重置表单
+            setFormState({
+                name: "",
+                email: "",
+                subject: "",
+                message: "",
+            })
+        } catch (error) {
+            console.error("表单提交错误:", error)
+            alert(error instanceof Error ? error.message : "发送失败，请稍后重试")
+        } finally {
+            setIsLoading(false)
+        }
     }
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -58,8 +83,8 @@ export default function ContactPage() {
                             </div>
                             <h3 className="font-semibold text-gray-900 mb-2">Email</h3>
                             <p className="text-gray-500 text-sm mb-2">For general inquiries</p>
-                            <a href="mailto:support@schedulebuilder.com" className="text-blue-600 hover:underline text-sm">
-                                support@schedulebuilder.com
+                            <a href="mailto:support@tryschedule.com" className="text-blue-600 hover:underline text-sm">
+                                support@tryschedule.com
                             </a>
                         </div>
 
