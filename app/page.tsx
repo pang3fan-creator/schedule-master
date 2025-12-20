@@ -342,6 +342,10 @@ export default function ScheduleBuilderPage() {
   return (
     <div className={`flex flex-col bg-white ${isExporting ? '' : 'h-screen'}`}>
       {!isExporting && <Navbar />}
+      {/* SEO: H1 Title - visually hidden but accessible for search engines */}
+      {!isExporting && (
+        <h1 className="sr-only">Free Online Schedule Builder</h1>
+      )}
       <div className={`flex flex-1 ${isExporting ? '' : 'overflow-hidden'}`}>
         {/* Desktop Sidebar - Hidden on mobile */}
         {!isExporting && !isMobile && (

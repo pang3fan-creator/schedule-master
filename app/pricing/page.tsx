@@ -5,8 +5,7 @@ import { FAQAccordion } from "@/components/faq-accordion";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { useSearchParams } from "next/navigation";
-import { Suspense } from "react";
-import { PageHero } from "@/components/page-hero";
+import { Suspense, Fragment as ReactFragment } from "react";
 
 // Creem Product IDs - 需要在 Creem Dashboard 创建产品后替换
 const PRODUCT_IDS = {
@@ -35,11 +34,17 @@ function SuccessBanner() {
 export default function PricingPage() {
     const plans = [
         {
-            title: "Free",
+            title: "Starter",
             price: "$0",
-            description: "Get started with our basic features for individuals.",
-            features: ["Basic scheduling", "Limited templates", "Watermarked exports"],
-            buttonText: "Get Started",
+            priceDetail: "/ forever",
+            description: "For students & personal use",
+            features: [
+                "Unlimited web editing",
+                "Basic templates (Weekly/Daily)",
+                "Download as standard image (JPG)",
+                "Browser-based storage (No login needed)",
+            ],
+            buttonText: "Start Building for Free",
             buttonVariant: "secondary" as const,
             isFree: true,
         },
@@ -48,7 +53,11 @@ export default function PricingPage() {
             price: "$4.9",
             priceDetail: "/ week",
             description: "Perfect for one-time scheduling or temporary needs.",
-            features: ["All Free features", "Watermark-free exports", "Premium templates"],
+            features: [
+                "All Starter features",
+                "Watermark-free exports",
+                "Premium templates",
+            ],
             buttonText: "Choose Pass",
             buttonVariant: "secondary" as const,
             productId: PRODUCT_IDS["7day"],
@@ -60,11 +69,14 @@ export default function PricingPage() {
             description: "Ideal for managers, HR, and frequent schedulers.",
             features: [
                 "All previous features",
-                "AI-powered suggestions",
-                "Cloud saving & sync",
-                "Priority support",
+                "AI Auto-Scheduler (Generate shifts in seconds)",
+                "High-Res Export (PDF & Vector for printing)",
+                "Google Calendar Sync (Real-time integration)",
+                "Cloud Save (Access from any device)",
+                "No Watermarks on exports",
+                "Priority Email Support",
             ],
-            buttonText: "Upgrade Now",
+            buttonText: "Upgrade to Pro",
             buttonVariant: "default" as const,
             popular: true,
             productId: PRODUCT_IDS.monthly,
@@ -88,29 +100,135 @@ export default function PricingPage() {
 
     const faqs = [
         {
+            question: "Is the schedule builder really free?",
+            answer:
+                "Yes! Our free online schedule maker allows you to create, edit, and download schedules as images without paying a dime. You only pay if you need advanced features like PDF export or AI automation.",
+        },
+        {
+            question: "How does the AI schedule generator work?",
+            answer:
+                "Our AI scheduler analyzes your input (tasks, employees, time slots) and automatically generates an optimized roster, saving you hours of manual planning.",
+        },
+        {
+            question: "Can I use this for employee shift scheduling?",
+            answer:
+                "Absolutely. The Pro plan is designed for managers. You can build work shift schedules, handle rotations, and export the final roster to Excel for payroll easily.",
+        },
+        {
             question: "Can I cancel my subscription anytime?",
             answer:
-                "Yes, you can cancel your Monthly Subscription at any time from your account settings. Your plan will remain active until the end of the current billing period. The 7-Day Pass and Lifetime Deal are one-time payments and do not require cancellation.",
-        },
-        {
-            question: "What is the 7-Day Pass?",
-            answer:
-                "The 7-Day Pass is a one-time purchase that gives you access to all Pro features for 7 days. It does not auto-renew and is perfect for users who only need to create a schedule occasionally.",
-        },
-        {
-            question: "What happens if I downgrade my Monthly plan?",
-            answer:
-                "If you downgrade, you will retain access to Pro features until the end of your billing cycle. After that, your account will revert to the Free plan, and you will lose access to premium features like cloud sync and AI suggestions.",
+                "Yes, you can cancel your monthly subscription instantly from your dashboard. No questions asked. 30-day money-back guarantee.",
         },
     ];
 
     const comparisonTable = [
-        { feature: "AI Features", free: false, pass: true, pro: true, lifetime: true },
-        { feature: "No Watermark Export", free: false, pass: true, pro: true, lifetime: true },
-        { feature: "Cloud Save", free: false, pass: true, pro: true, lifetime: true },
-        { feature: "Unlimited Schedules", free: true, pass: true, pro: true, lifetime: true },
-        { feature: "Priority Support", free: false, pass: false, pro: true, lifetime: true },
+        { 
+            category: "Core Tools",
+            feature: "Drag-and-drop Builder", 
+            free: true, 
+            pass: true, 
+            pro: true, 
+            lifetime: true 
+        },
+        { 
+            category: "Core Tools",
+            feature: "Visual Schedule Builder", 
+            free: true, 
+            pass: true, 
+            pro: true, 
+            lifetime: true 
+        },
+        { 
+            category: "Core Tools",
+            feature: "Mobile-Friendly Editor", 
+            free: true, 
+            pass: true, 
+            pro: true, 
+            lifetime: true 
+        },
+        { 
+            category: "Export & Sharing",
+            feature: "Save as JPG Image", 
+            free: "Standard", 
+            pass: "HD", 
+            pro: "HD", 
+            lifetime: "HD" 
+        },
+        { 
+            category: "Export & Sharing",
+            feature: "Printable PDF Export", 
+            free: false, 
+            pass: false, 
+            pro: true, 
+            lifetime: true 
+        },
+        { 
+            category: "Export & Sharing",
+            feature: "Export to Excel / CSV", 
+            free: false, 
+            pass: false, 
+            pro: true, 
+            lifetime: true 
+        },
+        { 
+            category: "Export & Sharing",
+            feature: "Sync to Google Calendar", 
+            free: false, 
+            pass: false, 
+            pro: true, 
+            lifetime: true 
+        },
+        { 
+            category: "Advanced Power",
+            feature: "AI Schedule Generator", 
+            free: false, 
+            pass: false, 
+            pro: true, 
+            lifetime: true 
+        },
+        { 
+            category: "Advanced Power",
+            feature: "Employee Shift Templates", 
+            free: "Limited", 
+            pass: "Unlimited", 
+            pro: "Unlimited", 
+            lifetime: "Unlimited" 
+        },
+        { 
+            category: "Advanced Power",
+            feature: "Recurring Shifts", 
+            free: "Manual", 
+            pass: "One-click", 
+            pro: "One-click", 
+            lifetime: "One-click" 
+        },
+        { 
+            category: "Advanced Power",
+            feature: "Cloud Storage", 
+            free: "Local Only", 
+            pass: "Unlimited Cloud", 
+            pro: "Unlimited Cloud", 
+            lifetime: "Unlimited Cloud" 
+        },
+        { 
+            category: "Advanced Power",
+            feature: "Ads & Watermarks", 
+            free: "Ad-supported", 
+            pass: "Ad-Free", 
+            pro: "Ad-Free", 
+            lifetime: "Ad-Free" 
+        },
     ];
+
+    // Group comparison table by category
+    const groupedTable = comparisonTable.reduce((acc, row) => {
+        const category = row.category || "Other";
+        if (!acc[category]) {
+            acc[category] = [];
+        }
+        acc[category].push(row);
+        return acc;
+    }, {} as Record<string, typeof comparisonTable>);
 
     return (
         <div className="min-h-screen flex flex-col bg-gradient-to-b from-violet-50/30 via-white to-white">
@@ -123,10 +241,17 @@ export default function PricingPage() {
                 </Suspense>
 
                 {/* Hero Section */}
-                <PageHero
-                    title={<>Choose Your <span className="bg-gradient-to-r from-violet-600 to-blue-600 bg-clip-text text-transparent">Plan</span></>}
-                    description="Find the perfect plan for your needs. No hidden fees, no credit card required to start."
-                />
+                <div className="container mx-auto px-4 text-center mb-12">
+                    <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl mb-4">
+                        Professional Scheduling Tools
+                    </h1>
+                    <p className="text-xl text-gray-500 max-w-2xl mx-auto mb-2">
+                        Start with our free schedule builder forever, or upgrade to Pro to automate your workflow with AI, export high-res PDFs, and manage unlimited rosters.
+                    </p>
+                    <p className="text-sm text-gray-400 italic max-w-2xl mx-auto">
+                        Trusted by 50,000+ students and managers worldwide.
+                    </p>
+                </div>
 
                 {/* Pricing Cards */}
                 <div className="container mx-auto px-4 mb-24">
@@ -140,28 +265,37 @@ export default function PricingPage() {
                 {/* Comparison Table */}
                 <div className="container mx-auto px-4 mb-24 max-w-5xl">
                     <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
-                        Compare plans
+                        Compare Plans & Features
                     </h2>
                     <div className="overflow-x-auto rounded-xl border border-gray-200 bg-white shadow-sm">
                         <table className="w-full text-sm text-left">
                             <thead className="bg-gray-50 text-gray-900 font-medium">
                                 <tr>
                                     <th className="px-6 py-4">Feature</th>
-                                    <th className="px-6 py-4">Free</th>
+                                    <th className="px-6 py-4">Starter (Free)</th>
                                     <th className="px-6 py-4">7-Day Pass</th>
-                                    <th className="px-6 py-4">Pro</th>
+                                    <th className="px-6 py-4">Pro (Monthly)</th>
                                     <th className="px-6 py-4">Lifetime Deal</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-100">
-                                {comparisonTable.map((row) => (
-                                    <tr key={row.feature} className="hover:bg-gray-50/50">
-                                        <td className="px-6 py-4 font-medium text-gray-900">{row.feature}</td>
-                                        <td className="px-6 py-4">{renderStatus(row.free)}</td>
-                                        <td className="px-6 py-4">{renderStatus(row.pass)}</td>
-                                        <td className="px-6 py-4">{renderStatus(row.pro)}</td>
-                                        <td className="px-6 py-4">{renderStatus(row.lifetime)}</td>
-                                    </tr>
+                                {Object.entries(groupedTable).map(([category, rows]) => (
+                                    <ReactFragment key={category}>
+                                        <tr className="bg-gray-50/50">
+                                            <td colSpan={5} className="px-6 py-3 font-semibold text-gray-900 text-base">
+                                                {category}
+                                            </td>
+                                        </tr>
+                                        {rows.map((row) => (
+                                            <tr key={row.feature} className="hover:bg-gray-50/50">
+                                                <td className="px-6 py-4 font-medium text-gray-900">{row.feature}</td>
+                                                <td className="px-6 py-4">{renderStatus(row.free)}</td>
+                                                <td className="px-6 py-4">{renderStatus(row.pass)}</td>
+                                                <td className="px-6 py-4">{renderStatus(row.pro)}</td>
+                                                <td className="px-6 py-4">{renderStatus(row.lifetime)}</td>
+                                            </tr>
+                                        ))}
+                                    </ReactFragment>
                                 ))}
                             </tbody>
                         </table>
@@ -184,10 +318,13 @@ export default function PricingPage() {
     );
 }
 
-function renderStatus(value: boolean) {
+function renderStatus(value: boolean | string) {
+    if (typeof value === "string") {
+        return <span className="text-gray-700 font-medium">{value}</span>;
+    }
     return value ? (
-        <span className="text-blue-600 font-medium">Yes</span>
+        <span className="text-blue-600 font-medium">✅</span>
     ) : (
-        <span className="text-gray-400">No</span>
+        <span className="text-gray-400">❌</span>
     );
 }
