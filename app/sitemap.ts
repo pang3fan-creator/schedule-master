@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next'
 import { getAllTemplateSlugs } from '@/lib/templates'
+import { getAllPosts } from '@/lib/posts'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://tryschedule.com'
@@ -59,5 +60,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }))
 
-  return [...staticPages, ...templatePages]
+  // Blog post pages
+  const allPosts = getAllPosts()
+  const blogPages = allPosts.map((post) => ({
+    url: `${baseUrl}/blog/${post.slug}`,
+    lastModified: post.date ? new Date(post.date) : new Date(),
+    changeFrequency: 'monthly' as const,
+    priority: 0.6,
+  }))
+
+  return [...staticPages, ...templatePages, ...blogPages]
 }
+
