@@ -34,22 +34,40 @@ export function FeatureComingSoonModal({
 
         setIsSubmitting(true);
 
-        // TODO: Send to analytics/email service (e.g., Google Analytics event, Mailchimp, etc.)
-        // For now, just log it and simulate a delay
-        console.log(`[Painted Door Test] Feature: ${featureName}, Email: ${email}`);
+        try {
+            const response = await fetch("/api/contact", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    name: "Feature Waitlist",
+                    email,
+                    subject: `[Waitlist] ${featureName}`,
+                    message: `用户希望订阅功能更新：${featureName}\n邮箱：${email}`,
+                }),
+            });
 
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1000));
+            const data = await response.json();
 
-        setIsSubmitting(false);
-        setIsSubmitted(true);
+            if (!response.ok) {
+                throw new Error(data.error || "提交失败，请稍后重试");
+            }
 
-        // Reset and close after showing success
-        setTimeout(() => {
-            setIsSubmitted(false);
-            setEmail("");
-            onOpenChange(false);
-        }, 2000);
+            setIsSubmitted(true);
+
+            // Reset并关闭
+            setTimeout(() => {
+                setIsSubmitted(false);
+                setEmail("");
+                onOpenChange(false);
+            }, 2000);
+        } catch (err) {
+            console.error("提交等待列表失败:", err);
+            alert(err instanceof Error ? err.message : "提交失败，请稍后重试");
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     const handleClose = (open: boolean) => {
