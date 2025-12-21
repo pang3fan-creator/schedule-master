@@ -233,4 +233,8 @@ body[data-scroll-locked] {
     white-space: nowrap;
     border-width: 0;
   }
+
+  .text-center {
+    text-align: center;
+  }
 }

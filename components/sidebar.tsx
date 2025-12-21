@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { PlusCircle, Download, Settings, RotateCcw, Sparkles, Cloud, Calendar } from "lucide-react"
+import { PlusCircle, Download, Settings, RotateCcw, Sparkles, Cloud, Calendar, CalendarCheck } from "lucide-react"
 import {
   Dialog,
   DialogContent,
@@ -22,10 +22,12 @@ import { type Event } from "@/lib/types"
 
 interface SidebarProps {
   onReset: () => void
+  onToday: () => void
   viewMode: "day" | "week"
   onViewModeChange: (mode: "day" | "week") => void
   onAddEvent: (event: Omit<Event, "id">) => void
-  currentMonday: Date
+  weekStart: Date
+  weekStartsOnSunday: boolean
   onExport: () => void
   showAddDialog?: boolean  // External control to show add dialog
   onAddDialogClose?: () => void  // Callback when add dialog closes
@@ -36,7 +38,7 @@ interface SidebarProps {
   }
 }
 
-export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, currentMonday, onExport, showAddDialog, onAddDialogClose, initialData }: SidebarProps) {
+export function Sidebar({ onReset, onToday, viewMode, onViewModeChange, onAddEvent, weekStart, weekStartsOnSunday, onExport, showAddDialog, onAddDialogClose, initialData }: SidebarProps) {
   const [showResetDialog, setShowResetDialog] = useState(false)
   const [showAddEventDialog, setShowAddEventDialog] = useState(false)
   const [showUpgradeModal, setShowUpgradeModal] = useState(false)
@@ -97,7 +99,8 @@ export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, curre
           }
         }}
         onAddEvent={onAddEvent}
-        currentMonday={currentMonday}
+        weekStart={weekStart}
+        weekStartsOnSunday={weekStartsOnSunday}
         initialData={initialData}
       />
 
@@ -129,6 +132,16 @@ export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, curre
 
       {/* Menu Items */}
       <nav className="flex flex-col gap-1">
+        {/* Today Button */}
+        <Button
+          variant="ghost"
+          className="justify-start gap-3 text-gray-600 hover:text-gray-900"
+          onClick={onToday}
+        >
+          <CalendarCheck className="size-5" />
+          Today
+        </Button>
+
         {/* Reset Dialog */}
         <Dialog open={showResetDialog} onOpenChange={setShowResetDialog}>
           <DialogTrigger asChild>

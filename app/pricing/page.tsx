@@ -41,7 +41,7 @@ export default function PricingPage() {
             features: [
                 "Unlimited web editing",
                 "Basic templates (Weekly/Daily)",
-                "Download as standard image (JPG)",
+                "Download as image (JPG/PNG)",
                 "Browser-based storage (No login needed)",
             ],
             buttonText: "Start Building for Free",
@@ -52,11 +52,14 @@ export default function PricingPage() {
             title: "7-Day Pass",
             price: "$4.9",
             priceDetail: "/ week",
-            description: "Perfect for one-time scheduling or temporary needs.",
+            description: "Perfect for one-time scheduling.",
             features: [
                 "All Starter features",
-                "Watermark-free exports",
-                "Premium templates",
+                "AI Auto-Scheduler",
+                "High-Res Export (PDF & Vector)",
+                "Google Calendar Sync",
+                "Cloud Save (Access from any device)",
+                "No Watermarks on exports",
             ],
             buttonText: "Choose Pass",
             buttonVariant: "secondary" as const,
@@ -66,12 +69,12 @@ export default function PricingPage() {
             title: "Monthly",
             price: "$9.9",
             priceDetail: "/ month",
-            description: "Ideal for managers, HR, and frequent schedulers.",
+            description: "Ideal for managers, HR, frequent schedulers.",
             features: [
-                "All previous features",
-                "AI Auto-Scheduler (Generate shifts in seconds)",
-                "High-Res Export (PDF & Vector for printing)",
-                "Google Calendar Sync (Real-time integration)",
+                "All Starter features",
+                "AI Auto-Scheduler",
+                "High-Res Export (PDF & Vector)",
+                "Google Calendar Sync",
                 "Cloud Save (Access from any device)",
                 "No Watermarks on exports",
                 "Priority Email Support",
@@ -87,9 +90,9 @@ export default function PricingPage() {
             priceDetail: "/ one-time",
             description: "Pay once and get all pro features forever.",
             features: [
-                "All Monthly features",
-                "One-time payment",
-                "Future updates included",
+                "All previous features",
+                "One-time payment with lifetime use",
+                "Priority Email Support",
             ],
             buttonText: "Buy Once",
             buttonVariant: "default" as const,
@@ -122,101 +125,101 @@ export default function PricingPage() {
     ];
 
     const comparisonTable = [
-        { 
+        {
             category: "Core Tools",
-            feature: "Drag-and-drop Builder", 
-            free: true, 
-            pass: true, 
-            pro: true, 
-            lifetime: true 
+            feature: "Drag-and-drop Builder",
+            free: true,
+            pass: true,
+            pro: true,
+            lifetime: true
         },
-        { 
+        {
             category: "Core Tools",
-            feature: "Visual Schedule Builder", 
-            free: true, 
-            pass: true, 
-            pro: true, 
-            lifetime: true 
+            feature: "Visual Schedule Builder",
+            free: true,
+            pass: true,
+            pro: true,
+            lifetime: true
         },
-        { 
+        {
             category: "Core Tools",
-            feature: "Mobile-Friendly Editor", 
-            free: true, 
-            pass: true, 
-            pro: true, 
-            lifetime: true 
+            feature: "Mobile-Friendly Editor",
+            free: true,
+            pass: true,
+            pro: true,
+            lifetime: true
         },
-        { 
+        {
+            category: "Core Tools",
+            feature: "Download As Image",
+            free: true,
+            pass: true,
+            pro: true,
+            lifetime: true
+        },
+        {
             category: "Export & Sharing",
-            feature: "Save as JPG Image", 
-            free: "Standard", 
-            pass: "HD", 
-            pro: "HD", 
-            lifetime: "HD" 
+            feature: "Printable PDF Export",
+            free: false,
+            pass: true,
+            pro: true,
+            lifetime: true
         },
-        { 
+        {
             category: "Export & Sharing",
-            feature: "Printable PDF Export", 
-            free: false, 
-            pass: false, 
-            pro: true, 
-            lifetime: true 
+            feature: "Export to Excel / CSV",
+            free: false,
+            pass: true,
+            pro: true,
+            lifetime: true
         },
-        { 
+        {
             category: "Export & Sharing",
-            feature: "Export to Excel / CSV", 
-            free: false, 
-            pass: false, 
-            pro: true, 
-            lifetime: true 
+            feature: "Sync to Google Calendar",
+            free: false,
+            pass: true,
+            pro: true,
+            lifetime: true
         },
-        { 
-            category: "Export & Sharing",
-            feature: "Sync to Google Calendar", 
-            free: false, 
-            pass: false, 
-            pro: true, 
-            lifetime: true 
-        },
-        { 
+        {
             category: "Advanced Power",
-            feature: "AI Schedule Generator", 
-            free: false, 
-            pass: false, 
-            pro: true, 
-            lifetime: true 
+            feature: "AI Schedule Generator",
+            free: false,
+            pass: true,
+            pro: true,
+            lifetime: true
         },
-        { 
+        {
             category: "Advanced Power",
-            feature: "Employee Shift Templates", 
-            free: "Limited", 
-            pass: "Unlimited", 
-            pro: "Unlimited", 
-            lifetime: "Unlimited" 
+            feature: "Unlimited Templates",
+            free: false,
+            pass: true,
+            pro: true,
+            lifetime: true
         },
-        { 
+        {
             category: "Advanced Power",
-            feature: "Recurring Shifts", 
-            free: "Manual", 
-            pass: "One-click", 
-            pro: "One-click", 
-            lifetime: "One-click" 
+            feature: "Cloud Storage",
+            free: false,
+            pass: true,
+            pro: true,
+            lifetime: true
         },
-        { 
+        {
             category: "Advanced Power",
-            feature: "Cloud Storage", 
-            free: "Local Only", 
-            pass: "Unlimited Cloud", 
-            pro: "Unlimited Cloud", 
-            lifetime: "Unlimited Cloud" 
+            feature: "No Watermarks",
+            free: false,
+            pass: true,
+            pro: true,
+            lifetime: true
         },
-        { 
+        {
             category: "Advanced Power",
-            feature: "Ads & Watermarks", 
-            free: "Ad-supported", 
-            pass: "Ad-Free", 
-            pro: "Ad-Free", 
-            lifetime: "Ad-Free" 
+            feature: "Priority Email Support",
+            free: false,
+            pass: false,
+            pro: true,
+            lifetime: true
         },
     ];
 
@@ -246,10 +249,10 @@ export default function PricingPage() {
                         Professional Scheduling Tools
                     </h1>
                     <p className="text-xl text-gray-500 max-w-2xl mx-auto mb-2">
-                        Start with our free schedule builder forever, or upgrade to Pro to automate your workflow with AI, export high-res PDFs, and manage unlimited rosters.
+                        Start with our free schedule builder forever, or upgrade to Pro to automate your workflow with AI, export high-res PDFs.
                     </p>
                     <p className="text-sm text-gray-400 italic max-w-2xl mx-auto">
-                        Trusted by 50,000+ students and managers worldwide.
+                        Trusted by 5000+ students and managers worldwide.
                     </p>
                 </div>
 
@@ -271,28 +274,28 @@ export default function PricingPage() {
                         <table className="w-full text-sm text-left">
                             <thead className="bg-gray-50 text-gray-900 font-medium">
                                 <tr>
-                                    <th className="px-6 py-4">Feature</th>
-                                    <th className="px-6 py-4">Starter (Free)</th>
-                                    <th className="px-6 py-4">7-Day Pass</th>
-                                    <th className="px-6 py-4">Pro (Monthly)</th>
-                                    <th className="px-6 py-4">Lifetime Deal</th>
+                                    <th className="px-6 py-4 text-left w-1/3">Feature</th>
+                                    <th className="px-6 py-4 text-center w-1/6">Starter</th>
+                                    <th className="px-6 py-4 text-center w-1/6">7-Day Pass</th>
+                                    <th className="px-6 py-4 text-center w-1/6">Monthly</th>
+                                    <th className="px-6 py-4 text-center w-1/6">Lifetime</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-100">
                                 {Object.entries(groupedTable).map(([category, rows]) => (
                                     <ReactFragment key={category}>
-                                        <tr className="bg-gray-50/50">
-                                            <td colSpan={5} className="px-6 py-3 font-semibold text-gray-900 text-base">
+                                        <tr className={`bg-gray-50/80`}>
+                                            <td colSpan={5} className="px-6 py-4 font-semibold text-gray-900 text-sm tracking-wide uppercase">
                                                 {category}
                                             </td>
                                         </tr>
                                         {rows.map((row) => (
-                                            <tr key={row.feature} className="hover:bg-gray-50/50">
-                                                <td className="px-6 py-4 font-medium text-gray-900">{row.feature}</td>
-                                                <td className="px-6 py-4">{renderStatus(row.free)}</td>
-                                                <td className="px-6 py-4">{renderStatus(row.pass)}</td>
-                                                <td className="px-6 py-4">{renderStatus(row.pro)}</td>
-                                                <td className="px-6 py-4">{renderStatus(row.lifetime)}</td>
+                                            <tr key={row.feature} className="hover:bg-violet-50/30 transition-colors duration-150">
+                                                <td className="px-6 py-4 font-medium text-gray-700">{row.feature}</td>
+                                                <td className="px-6 py-4 text-center">{renderStatus(row.free)}</td>
+                                                <td className="px-6 py-4 text-center">{renderStatus(row.pass)}</td>
+                                                <td className="px-6 py-4 text-center">{renderStatus(row.pro)}</td>
+                                                <td className="px-6 py-4 text-center">{renderStatus(row.lifetime)}</td>
                                             </tr>
                                         ))}
                                     </ReactFragment>
@@ -320,11 +323,16 @@ export default function PricingPage() {
 
 function renderStatus(value: boolean | string) {
     if (typeof value === "string") {
-        return <span className="text-gray-700 font-medium">{value}</span>;
+        return <span className="text-gray-900 font-medium">{value}</span>;
     }
     return value ? (
-        <span className="text-blue-600 font-medium">✅</span>
+        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800">
+            Yes
+        </span>
     ) : (
-        <span className="text-gray-400">❌</span>
+        <span className="text-gray-400 font-medium text-sm">No</span>
     );
 }
+
+// 添加新的CSS类定义
+

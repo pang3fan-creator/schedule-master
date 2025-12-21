@@ -12,6 +12,8 @@ import { type Event, type EventColor, EVENT_COLORS } from "@/lib/types"
 
 interface WeeklyCalendarProps {
   events: Event[]
+  selectedDate: Date
+  onDateChange: (date: Date) => void
   onEventUpdate?: (updatedEvent: Event) => void
   onEventDelete?: (eventId: string) => void
   onEventDoubleClick?: (event: Event) => void
@@ -101,7 +103,7 @@ function getEventPosition(event: Event, rowHeight: number, minHour: number = 8) 
   )
 }
 
-export function WeeklyCalendar({ events, onEventUpdate, onEventDelete, onEventDoubleClick, onEventContextMenu, onEventLongPress, exportMode = false, onAddEvent }: WeeklyCalendarProps) {
+export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpdate, onEventDelete, onEventDoubleClick, onEventContextMenu, onEventLongPress, exportMode = false, onAddEvent }: WeeklyCalendarProps) {
   const gridRef = useRef<HTMLDivElement>(null)
   // In export mode, use fixed row height to ensure consistent rendering
   const EXPORT_ROW_HEIGHT = 80
@@ -131,14 +133,8 @@ export function WeeklyCalendar({ events, onEventUpdate, onEventDelete, onEventDo
   // Get appropriate day names based on week start setting
   const dayNames = weekStartsOnSunday ? DAY_NAMES_SUNDAY_START : DAY_NAMES_MONDAY_START
 
-  // State for current week's start - initialize to current week
-  const [currentWeekStart, setCurrentWeekStart] = useState(() => getWeekStart(new Date(), weekStartsOnSunday))
-
-  // Update week start when settings change
-  useEffect(() => {
-    setCurrentWeekStart(getWeekStart(new Date(), weekStartsOnSunday))
-  }, [weekStartsOnSunday])
-
+  // Calculate current week start from selectedDate
+  const currentWeekStart = useMemo(() => getWeekStart(selectedDate, weekStartsOnSunday), [selectedDate, weekStartsOnSunday])
 
   // Use the event drag hook for drag-and-drop with touch support
   const {
@@ -185,20 +181,16 @@ export function WeeklyCalendar({ events, onEventUpdate, onEventDelete, onEventDo
 
   // Navigate to previous week
   const goToPreviousWeek = () => {
-    setCurrentWeekStart((prev: Date) => {
-      const newStart = new Date(prev)
-      newStart.setDate(prev.getDate() - 7)
-      return newStart
-    })
+    const newDate = new Date(selectedDate)
+    newDate.setDate(selectedDate.getDate() - 7)
+    onDateChange(newDate)
   }
 
   // Navigate to next week
   const goToNextWeek = () => {
-    setCurrentWeekStart((prev: Date) => {
-      const newStart = new Date(prev)
-      newStart.setDate(prev.getDate() + 7)
-      return newStart
-    })
+    const newDate = new Date(selectedDate)
+    newDate.setDate(selectedDate.getDate() + 7)
+    onDateChange(newDate)
   }
 
   // Calculate actual row height based on grid dimensions and hour count
@@ -228,7 +220,7 @@ export function WeeklyCalendar({ events, onEventUpdate, onEventDelete, onEventDo
 
   // Navigate to current week (today)
   const goToToday = () => {
-    setCurrentWeekStart(getWeekStart(new Date(), weekStartsOnSunday))
+    onDateChange(new Date())
   }
 
   // Helper for ghost event position
@@ -281,15 +273,9 @@ export function WeeklyCalendar({ events, onEventUpdate, onEventDelete, onEventDo
             )}
           </div>
 
-          {/* Today button - hidden in export mode */}
+          {/* Today button removed from here, moved to Sidebar */}
           {!exportMode && (
-            <Button
-              variant="outline"
-              className="w-20 border-blue-500 text-blue-600 hover:bg-blue-50 hover:text-blue-700 font-medium"
-              onClick={goToToday}
-            >
-              Today
-            </Button>
+            <div className="w-20"></div>
           )}
         </div>
 
@@ -327,14 +313,15 @@ export function WeeklyCalendar({ events, onEventUpdate, onEventDelete, onEventDo
       <div className={exportMode ? '' : 'flex-1 min-h-0 overflow-auto'}>
         <div
           ref={gridRef}
-          className={`grid min-w-[700px] ${exportMode ? '' : 'h-full'}`}
+          className={`grid min-w-[700px] select-none ${exportMode ? '' : 'h-full'}`}
           style={{
-            gridTemplateColumns: "60px repeat(7, minmax(80px, 1fr))",
+            gridTemplateColumns: "70px repeat(7, minmax(80px, 1fr))",
             // In export mode, use fixed row heights instead of responsive ones
             gridTemplateRows: exportMode
               ? `48px repeat(${hours.length - 1}, ${EXPORT_ROW_HEIGHT}px) 24px`
               : `48px repeat(${hours.length - 1}, minmax(50px, 1fr)) 24px`,
           }}
+          onContextMenu={(e) => e.preventDefault()}
         >
           {/* Header Row */}
           <div /> {/* Empty corner cell */}
@@ -360,6 +347,9 @@ export function WeeklyCalendar({ events, onEventUpdate, onEventDelete, onEventDo
                   className={`relative border-b border-l border-gray-300 ${dayIndex === days.length - 1 ? "border-r" : ""}`}
                   onMouseDown={(e) => handleCreateMouseDown(e, hour, dayIndex, !!dragState.eventId)}
                 >
+                  {/* Hover Effect Layer - Separate from container to avoid event bubbling triggering it */}
+                  <div className="absolute inset-0 hover:bg-gray-100 transition-colors" />
+
                   {/* Current Time Indicator - only if date matches today and within this hour */}
                   {weekDates[dayIndex].getDate() === currentTime.getDate() &&
                     weekDates[dayIndex].getMonth() === currentTime.getMonth() &&

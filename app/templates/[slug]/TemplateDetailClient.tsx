@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
@@ -94,7 +94,7 @@ function TemplatePreview({ template }: { template: TemplateData }) {
             {/* Time grid */}
             <div className="grid grid-cols-8" style={{ gridTemplateRows: `repeat(${hours.length}, 32px)` }}>
                 {hours.map((hour, hourIndex) => (
-                    <>
+                    <React.Fragment key={hour}>
                         {/* Hour label */}
                         <div key={`hour-${hour}`} className="p-1 text-xs text-gray-400 text-right pr-2 border-t border-gray-100">
                             {formatHour(hour)}
@@ -135,7 +135,7 @@ function TemplatePreview({ template }: { template: TemplateData }) {
                                 })}
                             </div>
                         ))}
-                    </>
+                    </React.Fragment>
                 ))}
             </div>
         </div>

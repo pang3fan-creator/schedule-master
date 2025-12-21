@@ -28,7 +28,8 @@ interface AddEventDialogProps {
     open: boolean
     onOpenChange: (open: boolean) => void
     onAddEvent: (event: Omit<Event, "id">) => void
-    currentMonday: Date // The Monday of the currently displayed week
+    weekStart: Date // The start of the currently displayed week
+    weekStartsOnSunday: boolean
     initialData?: {
         startTime?: string
         endTime?: string
@@ -36,15 +37,8 @@ interface AddEventDialogProps {
     }
 }
 
-const dayOptions = [
-    { label: "Mon", value: 0 },
-    { label: "Tue", value: 1 },
-    { label: "Wed", value: 2 },
-    { label: "Thu", value: 3 },
-    { label: "Fri", value: 4 },
-    { label: "Sat", value: 5 },
-    { label: "Sun", value: 6 },
-]
+// Day options moved inside component to be dynamic
+
 
 // Parse time string to hour and minute
 function parseTimeValue(timeStr: string): { hour: number; minute: number } {
@@ -63,7 +57,8 @@ export function AddEventDialog({
     open,
     onOpenChange,
     onAddEvent,
-    currentMonday,
+    weekStart,
+    weekStartsOnSunday,
     initialData
 }: AddEventDialogProps) {
     const [title, setTitle] = useState("")
@@ -97,10 +92,37 @@ export function AddEventDialog({
     // Available color options
     const colorOptions: EventColor[] = ['blue', 'green', 'red', 'yellow', 'purple', 'pink', 'orange', 'teal']
 
-    // Calculate the week dates based on currentMonday
+    // Generate day options based on week start setting
+    const dayOptions = useMemo(() => {
+        if (weekStartsOnSunday) {
+            return [
+                { label: "Sun", value: 0 },
+                { label: "Mon", value: 1 },
+                { label: "Tue", value: 2 },
+                { label: "Wed", value: 3 },
+                { label: "Thu", value: 4 },
+                { label: "Fri", value: 5 },
+                { label: "Sat", value: 6 },
+            ]
+        } else {
+            return [
+                { label: "Mon", value: 0 },
+                { label: "Tue", value: 1 },
+                { label: "Wed", value: 2 },
+                { label: "Thu", value: 3 },
+                { label: "Fri", value: 4 },
+                { label: "Sat", value: 5 },
+                { label: "Sun", value: 6 },
+            ]
+        }
+    }, [weekStartsOnSunday])
+
+    // Calculate the week dates based on weekStart
+    // The index from dayOptions directly maps to the visual day index (0-6)
+    // where 0 is the first day of the week (either Sun or Mon)
     const weekDates = useMemo(() => {
-        return dayOptions.map((_, index) => getDateForDay(currentMonday, index))
-    }, [currentMonday])
+        return Array.from({ length: 7 }, (_, index) => getDateForDay(weekStart, index))
+    }, [weekStart])
 
     const handleDayToggle = (dayValue: number) => {
         setSelectedDays((prev) =>
@@ -150,7 +172,10 @@ export function AddEventDialog({
         // Copy event data to clipboard
         const eventData = {
             title,
-            days: selectedDays.map((d) => dayOptions[d].label),
+            days: selectedDays.map((d) => {
+                const day = dayOptions.find(opt => opt.value === d)
+                return day ? day.label : ""
+            }),
             startTime,
             endTime,
             description,

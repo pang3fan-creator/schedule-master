@@ -245,16 +245,11 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                         )}
                     </div>
 
-                    {/* Today button - hidden in export mode */}
-                    {!exportMode && (
-                        <Button
-                            variant="outline"
-                            className="w-20 border-blue-500 text-blue-600 hover:bg-blue-50 hover:text-blue-700 font-medium"
-                            onClick={goToToday}
-                        >
-                            Today
-                        </Button>
-                    )}
+                    {/* Spacer for layout balance - already implicitly balanced by removing button on right? No, we need an empty div to balance the left spacer if the left spacer exists. 
+                        Wait, lines 231 has a spacer: {!exportMode && <div className="w-20"></div>}
+                        So I should put an empty div here too.
+                    */}
+                    {!exportMode && <div className="w-20"></div>}
                 </div>
 
                 {/* Mobile layout - stacked */}
@@ -290,13 +285,14 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                 <div className="mx-auto max-w-4xl h-full">
                     <div
                         ref={gridRef}
-                        className={`grid w-full ${exportMode ? '' : 'h-full'}`}
+                        className={`grid w-full select-none ${exportMode ? '' : 'h-full'}`}
                         style={{
-                            gridTemplateColumns: "60px 1fr",
+                            gridTemplateColumns: "70px 1fr",
                             gridTemplateRows: exportMode
                                 ? `48px repeat(${hours.length - 1}, ${EXPORT_ROW_HEIGHT}px) 24px`
                                 : `48px repeat(${hours.length - 1}, minmax(50px, 1fr)) 24px`,
                         }}
+                        onContextMenu={(e) => e.preventDefault()}
                     >
                         {/* Header Row */}
                         <div /> {/* Empty corner cell */}
@@ -317,6 +313,9 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                                     <div className="relative border-b border-l border-r border-gray-300"
                                         onMouseDown={(e) => handleCreateMouseDown(e, hour, currentDayIndex, !!dragState.eventId)}
                                     >
+                                        {/* Hover Effect Layer - Separate from container to avoid event bubbling triggering it */}
+                                        <div className="absolute inset-0 hover:bg-gray-100 transition-colors" />
+
                                         {/* Current Time Indicator - only if today and within this hour */}
                                         {isToday && currentTime.getHours() === hour && (
                                             <div
