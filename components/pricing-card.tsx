@@ -124,6 +124,9 @@ export function PricingCard({
 
     const buttonClassName = getButtonClassName();
 
+    // 只在 Monthly 计划显示 "30-day money-back guarantee"
+    const shouldShowGuarantee = title === "Monthly";
+
     const renderButton = () => {
         // Free 计划直接跳转到主页
         if (isFree) {
@@ -156,9 +159,15 @@ export function PricingCard({
                     >
                         {buttonText}
                     </Button>
-                    <p className="text-center text-xs text-gray-500 mt-1">
-                        30-day money-back guarantee
-                    </p>
+                    {shouldShowGuarantee ? (
+                        <p className="text-center text-xs text-gray-500 mt-1">
+                            30-day money-back guarantee
+                        </p>
+                    ) : (
+                        <p className="text-center text-xs text-transparent mt-1 select-none" aria-hidden="true">
+                            &nbsp;
+                        </p>
+                    )}
                 </>
             );
         }
@@ -174,9 +183,15 @@ export function PricingCard({
                     >
                         {buttonText}
                     </Button>
-                    <p className="text-center text-xs text-gray-500 mt-1">
-                        30-day money-back guarantee
-                    </p>
+                    {shouldShowGuarantee ? (
+                        <p className="text-center text-xs text-gray-500 mt-1">
+                            30-day money-back guarantee
+                        </p>
+                    ) : (
+                        <p className="text-center text-xs text-transparent mt-1 select-none" aria-hidden="true">
+                            &nbsp;
+                        </p>
+                    )}
                     <AuthModal
                         open={authModalOpen}
                         onOpenChange={setAuthModalOpen}
@@ -197,9 +212,15 @@ export function PricingCard({
                     >
                         Loading...
                     </Button>
-                    <p className="text-center text-xs text-gray-500 mt-1">
-                        30-day money-back guarantee
-                    </p>
+                    {shouldShowGuarantee ? (
+                        <p className="text-center text-xs text-gray-500 mt-1">
+                            30-day money-back guarantee
+                        </p>
+                    ) : (
+                        <p className="text-center text-xs text-transparent mt-1 select-none" aria-hidden="true">
+                            &nbsp;
+                        </p>
+                    )}
                 </>
             );
         }
@@ -239,9 +260,15 @@ export function PricingCard({
                         {displayText}
                     </Button>
                 </CreemCheckout>
-                <p className="text-center text-xs text-gray-500 mt-1">
-                    30-day money-back guarantee
-                </p>
+                {shouldShowGuarantee ? (
+                    <p className="text-center text-xs text-gray-500 mt-1">
+                        30-day money-back guarantee
+                    </p>
+                ) : (
+                    <p className="text-center text-xs text-transparent mt-1 select-none" aria-hidden="true">
+                        &nbsp;
+                    </p>
+                )}
             </>
         );
     };

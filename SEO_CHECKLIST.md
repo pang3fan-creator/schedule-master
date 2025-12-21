@@ -34,7 +34,7 @@
   - 所有计划的描述和功能列表已按 SEO 要求更新
 
 - ✅ **Feature Comparison Table**: 已完全重构
-  - 包含所有 SEO 关键词（Visual Schedule Builder、Mobile-Friendly Editor、Printable PDF Export、Export to Excel/CSV、Sync to Google Calendar、AI Schedule Generator、Employee Shift Templates、Recurring Shifts、Cloud Storage 等）
+  - 包含所有 SEO 关键词（Visual Schedule Builder、Mobile-Friendly Editor、Printable PDF Export、Export to CSV、Sync to Google Calendar、AI Schedule Generator、Employee Shift Templates、Recurring Shifts、Cloud Storage 等）
   - 按类别分组（Core Tools、Export & Sharing、Advanced Power）
 
 - ✅ **FAQs**: 已更新
@@ -121,4 +121,6 @@
 3. 检查 Open Graph 图片在社交媒体分享时的显示
 4. 使用 Google Rich Results Test 验证结构化数据（如果使用）
 5. 使用 PageSpeed Insights 检查页面速度
+
+
 

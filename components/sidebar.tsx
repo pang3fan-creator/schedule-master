@@ -18,6 +18,7 @@ import { UpgradeModal } from "@/components/UpgradeModal"
 import { FeatureComingSoonModal } from "@/components/FeatureComingSoonModal"
 import { SettingsDialog } from "@/components/SettingsDialog"
 import { useSubscription } from "@/components/SubscriptionContext"
+import { ConfirmDialog } from "@/components/ConfirmDialog"
 import { type Event } from "@/lib/types"
 
 interface SidebarProps {
@@ -142,37 +143,27 @@ export function Sidebar({ onReset, onToday, viewMode, onViewModeChange, onAddEve
           Today
         </Button>
 
+        {/* Reset Button */}
+        <Button
+          variant="ghost"
+          className="justify-start gap-3 text-gray-600 hover:text-gray-900"
+          onClick={() => setShowResetDialog(true)}
+        >
+          <RotateCcw className="size-5" />
+          Reset
+        </Button>
+
         {/* Reset Dialog */}
-        <Dialog open={showResetDialog} onOpenChange={setShowResetDialog}>
-          <DialogTrigger asChild>
-            <Button variant="ghost" className="justify-start gap-3 text-gray-600 hover:text-gray-900">
-              <RotateCcw className="size-5" />
-              Reset
-            </Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Reset Schedule</DialogTitle>
-              <DialogDescription>
-                Are you sure you want to delete all events from the calendar? This action cannot be undone.
-              </DialogDescription>
-            </DialogHeader>
-            <DialogFooter className="gap-2 sm:gap-2">
-              <Button variant="outline" onClick={() => setShowResetDialog(false)}>
-                Cancel
-              </Button>
-              <Button
-                className="bg-blue-600 hover:bg-blue-700 text-white"
-                onClick={() => {
-                  onReset()
-                  setShowResetDialog(false)
-                }}
-              >
-                Yes, Reset
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+        <ConfirmDialog
+          open={showResetDialog}
+          onOpenChange={setShowResetDialog}
+          title="Reset Schedule"
+          description="Are you sure you want to delete all events from the calendar? This action cannot be undone."
+          icon={RotateCcw}
+          confirmText="Yes, Reset"
+          onConfirm={onReset}
+          variant="blue"
+        />
 
         {/* Settings */}
         <Button

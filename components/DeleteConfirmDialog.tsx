@@ -1,15 +1,7 @@
 "use client"
 
-import {
-    AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
-    AlertDialogContent,
-    AlertDialogDescription,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogTitle,
-} from "@/components/ui/alert-dialog"
+import { ConfirmDialog } from "@/components/ConfirmDialog"
+import { Trash2 } from "lucide-react"
 
 interface DeleteConfirmDialogProps {
     open: boolean
@@ -25,24 +17,16 @@ export function DeleteConfirmDialog({
     onConfirm,
 }: DeleteConfirmDialogProps) {
     return (
-        <AlertDialog open={open} onOpenChange={onOpenChange}>
-            <AlertDialogContent>
-                <AlertDialogHeader>
-                    <AlertDialogTitle>Delete Event</AlertDialogTitle>
-                    <AlertDialogDescription>
-                        Are you sure you want to delete "{eventTitle}"? This action cannot be undone.
-                    </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction
-                        onClick={onConfirm}
-                        className="bg-red-600 hover:bg-red-700"
-                    >
-                        Delete
-                    </AlertDialogAction>
-                </AlertDialogFooter>
-            </AlertDialogContent>
-        </AlertDialog>
+        <ConfirmDialog
+            open={open}
+            onOpenChange={onOpenChange}
+            title="Delete Event"
+            description={`Are you sure you want to delete "${eventTitle}"? This action cannot be undone.`}
+            icon={Trash2}
+            iconClassName="size-5 text-red-500"
+            confirmText="Delete"
+            onConfirm={onConfirm}
+            variant="destructive"
+        />
     )
 }
