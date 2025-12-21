@@ -17,19 +17,10 @@ import { MobileToolbar } from "@/components/MobileToolbar"
 import { MobileEventActionSheet } from "@/components/MobileEventActionSheet"
 import { MobileWelcomeTip } from "@/components/MobileWelcomeTip"
 import { useIsMobile } from "@/hooks/useMediaQuery"
+import { getWeekStart } from "@/lib/time-utils"
 
 // LocalStorage key for events
 const EVENTS_STORAGE_KEY = "schedule-builder-events"
-
-// Get the Monday of the week containing the given date
-function getMonday(date: Date): Date {
-  const d = new Date(date)
-  const day = d.getDay()
-  const diff = day === 0 ? -6 : 1 - day
-  d.setDate(d.getDate() + diff)
-  d.setHours(0, 0, 0, 0)
-  return d
-}
 
 // Load events from localStorage
 function loadEventsFromStorage(): Event[] {
@@ -77,12 +68,15 @@ export default function ScheduleBuilderPage() {
   const [isLoaded, setIsLoaded] = useState(false)
   const [viewMode, setViewMode] = useState<"day" | "week">("week")
   const [selectedDate, setSelectedDate] = useState<Date>(() => new Date())
-  const [currentMonday, setCurrentMonday] = useState<Date>(() => getMonday(new Date()))
+  // Get settings from context
+  const { settings, reloadSettings } = useSettings()
+
+  // Calculate current week start based on selected date and settings
+  // This ensures the "Add Event" dialog uses the correct week reference
+  const currentWeekStart = getWeekStart(selectedDate, settings.weekStartsOnSunday)
+
   const [showExportDialog, setShowExportDialog] = useState(false)
   const [isExporting, setIsExporting] = useState(false)  // Export mode for calendar rendering
-
-  // Get settings from context for PDF export
-  const { settings, reloadSettings } = useSettings()
 
   // Detect mobile for conditional rendering
   const isMobile = useIsMobile()
@@ -351,10 +345,12 @@ export default function ScheduleBuilderPage() {
         {!isExporting && !isMobile && (
           <Sidebar
             onReset={handleReset}
+            onToday={() => setSelectedDate(new Date())}
             viewMode={viewMode}
             onViewModeChange={setViewMode}
             onAddEvent={handleAddEvent}
-            currentMonday={currentMonday}
+            weekStart={currentWeekStart}
+            weekStartsOnSunday={settings.weekStartsOnSunday}
             onExport={handleExport}
             showAddDialog={showAddDialog}
             onAddDialogClose={handleAddDialogClose}
@@ -365,6 +361,8 @@ export default function ScheduleBuilderPage() {
           {viewMode === "week" ? (
             <WeeklyCalendar
               events={events}
+              selectedDate={selectedDate}
+              onDateChange={setSelectedDate}
               onEventUpdate={handleEventUpdate}
               onEventDelete={handleEventDelete}
               onEventDoubleClick={handleEventDoubleClick}
@@ -397,7 +395,7 @@ export default function ScheduleBuilderPage() {
           viewMode={viewMode}
           onViewModeChange={setViewMode}
           onAddEvent={handleAddEvent}
-          currentMonday={currentMonday}
+          currentMonday={currentWeekStart}
           onExport={handleExport}
           showAddDialog={showAddDialog}
           onAddDialogClose={handleAddDialogClose}
@@ -419,7 +417,7 @@ export default function ScheduleBuilderPage() {
           weekStartsOnSunday: settings.weekStartsOnSunday,
           use12HourFormat: settings.use12HourFormat,
         }}
-        currentWeekStart={currentMonday}
+        currentWeekStart={currentWeekStart}
         viewMode={viewMode}
         selectedDate={selectedDate}
       />

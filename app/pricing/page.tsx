@@ -125,101 +125,101 @@ export default function PricingPage() {
     ];
 
     const comparisonTable = [
-        { 
+        {
             category: "Core Tools",
-            feature: "Drag-and-drop Builder", 
-            free: true, 
-            pass: true, 
-            pro: true, 
-            lifetime: true 
+            feature: "Drag-and-drop Builder",
+            free: true,
+            pass: true,
+            pro: true,
+            lifetime: true
         },
-        { 
+        {
             category: "Core Tools",
-            feature: "Visual Schedule Builder", 
-            free: true, 
-            pass: true, 
-            pro: true, 
-            lifetime: true 
+            feature: "Visual Schedule Builder",
+            free: true,
+            pass: true,
+            pro: true,
+            lifetime: true
         },
-        { 
+        {
             category: "Core Tools",
-            feature: "Mobile-Friendly Editor", 
-            free: true, 
-            pass: true, 
-            pro: true, 
-            lifetime: true 
+            feature: "Mobile-Friendly Editor",
+            free: true,
+            pass: true,
+            pro: true,
+            lifetime: true
         },
-        { 
+        {
             category: "Core Tools",
-            feature: "Download As Image", 
-            free: true, 
-            pass: true, 
-            pro: true, 
-            lifetime: true 
+            feature: "Download As Image",
+            free: true,
+            pass: true,
+            pro: true,
+            lifetime: true
         },
-        { 
+        {
             category: "Export & Sharing",
-            feature: "Printable PDF Export", 
-            free: false, 
-            pass: true, 
-            pro: true, 
-            lifetime: true 
+            feature: "Printable PDF Export",
+            free: false,
+            pass: true,
+            pro: true,
+            lifetime: true
         },
-        { 
+        {
             category: "Export & Sharing",
-            feature: "Export to Excel / CSV", 
-            free: false, 
-            pass: true, 
-            pro: true, 
-            lifetime: true 
+            feature: "Export to Excel / CSV",
+            free: false,
+            pass: true,
+            pro: true,
+            lifetime: true
         },
-        { 
+        {
             category: "Export & Sharing",
-            feature: "Sync to Google Calendar", 
-            free: false, 
-            pass: true,  
-            pro: true, 
-            lifetime: true 
+            feature: "Sync to Google Calendar",
+            free: false,
+            pass: true,
+            pro: true,
+            lifetime: true
         },
-        { 
+        {
             category: "Advanced Power",
-            feature: "AI Schedule Generator", 
-            free: false, 
-            pass: true, 
-            pro: true, 
-            lifetime: true 
+            feature: "AI Schedule Generator",
+            free: false,
+            pass: true,
+            pro: true,
+            lifetime: true
         },
-        { 
+        {
             category: "Advanced Power",
-            feature: "Unlimited Templates", 
-            free: false, 
-            pass: true , 
-            pro: true , 
-            lifetime: true  
+            feature: "Unlimited Templates",
+            free: false,
+            pass: true,
+            pro: true,
+            lifetime: true
         },
-        { 
+        {
             category: "Advanced Power",
-            feature: "Cloud Storage", 
-            free: false, 
-            pass: true , 
-            pro: true , 
-            lifetime: true 
+            feature: "Cloud Storage",
+            free: false,
+            pass: true,
+            pro: true,
+            lifetime: true
         },
-        { 
+        {
             category: "Advanced Power",
-            feature: "No Watermarks", 
-            free: false, 
-            pass: true , 
-            pro: true , 
-            lifetime: true  
+            feature: "No Watermarks",
+            free: false,
+            pass: true,
+            pro: true,
+            lifetime: true
         },
-        { 
+        {
             category: "Advanced Power",
-            feature: "Priority Email Support", 
-            free: false, 
-            pass: false, 
-            pro: true , 
-            lifetime: true  
+            feature: "Priority Email Support",
+            free: false,
+            pass: false,
+            pro: true,
+            lifetime: true
         },
     ];
 
@@ -274,28 +274,28 @@ export default function PricingPage() {
                         <table className="w-full text-sm text-left">
                             <thead className="bg-gray-50 text-gray-900 font-medium">
                                 <tr>
-                                    <th className="px-6 py-4">Feature</th>
-                                    <th className="px-6 py-4">Starter</th>
-                                    <th className="px-6 py-4">7-Day Pass</th>
-                                    <th className="px-6 py-4">Monthly</th>
-                                    <th className="px-6 py-4">Lifetime</th>
+                                    <th className="px-6 py-4 text-left w-1/3">Feature</th>
+                                    <th className="px-6 py-4 text-center w-1/6">Starter</th>
+                                    <th className="px-6 py-4 text-center w-1/6">7-Day Pass</th>
+                                    <th className="px-6 py-4 text-center w-1/6">Monthly</th>
+                                    <th className="px-6 py-4 text-center w-1/6">Lifetime</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-100">
                                 {Object.entries(groupedTable).map(([category, rows]) => (
                                     <ReactFragment key={category}>
-                                        <tr className={`bg-gray-50/50 ${categoryCentered}`}>
-                                            <td colSpan={5} className="px-6 py-3 font-semibold text-gray-900 text-base">
+                                        <tr className={`bg-gray-50/80`}>
+                                            <td colSpan={5} className="px-6 py-4 font-semibold text-gray-900 text-sm tracking-wide uppercase">
                                                 {category}
                                             </td>
                                         </tr>
                                         {rows.map((row) => (
-                                            <tr key={row.feature} className="hover:bg-gray-50/50">
-                                                <td className="px-6 py-4 font-medium text-gray-900">{row.feature}</td>
-                                                <td className="px-6 py-4">{renderStatus(row.free)}</td>
-                                                <td className="px-6 py-4">{renderStatus(row.pass)}</td>
-                                                <td className="px-6 py-4">{renderStatus(row.pro)}</td>
-                                                <td className="px-6 py-4">{renderStatus(row.lifetime)}</td>
+                                            <tr key={row.feature} className="hover:bg-violet-50/30 transition-colors duration-150">
+                                                <td className="px-6 py-4 font-medium text-gray-700">{row.feature}</td>
+                                                <td className="px-6 py-4 text-center">{renderStatus(row.free)}</td>
+                                                <td className="px-6 py-4 text-center">{renderStatus(row.pass)}</td>
+                                                <td className="px-6 py-4 text-center">{renderStatus(row.pro)}</td>
+                                                <td className="px-6 py-4 text-center">{renderStatus(row.lifetime)}</td>
                                             </tr>
                                         ))}
                                     </ReactFragment>
@@ -323,14 +323,16 @@ export default function PricingPage() {
 
 function renderStatus(value: boolean | string) {
     if (typeof value === "string") {
-        return <span className="text-gray-700 font-medium">{value}</span>;
+        return <span className="text-gray-900 font-medium">{value}</span>;
     }
     return value ? (
-        <span className="text-blue-600 font-medium">✅</span>
+        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800">
+            Yes
+        </span>
     ) : (
-        <span className="text-gray-400">❌</span>
+        <span className="text-gray-400 font-medium text-sm">No</span>
     );
 }
 
 // 添加新的CSS类定义
-const categoryCentered = "text-center";
+
