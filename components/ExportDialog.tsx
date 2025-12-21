@@ -142,7 +142,7 @@ export function ExportDialog({
         },
         {
             format: "excel" as ExportFormat,
-            label: "Excel/CSV",
+            label: "CSV",
             description: "Spreadsheet format for data analysis",
             icon: Table,
             available: isPro,
