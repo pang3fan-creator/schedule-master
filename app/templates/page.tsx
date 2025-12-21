@@ -10,15 +10,8 @@ import { getAllTemplates } from "@/lib/templates";
 import { CategoryFilter } from "@/components/category-filter";
 import { FAQAccordion } from "@/components/faq-accordion";
 import { PageHero } from "@/components/page-hero";
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { ConfirmDialog } from "@/components/ConfirmDialog";
 
 // Icon mapping for templates
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -272,35 +265,17 @@ export default function TemplatesPage() {
             <Footer />
 
             {/* Blank Canvas Confirmation Dialog */}
-            <Dialog open={blankCanvasDialogOpen} onOpenChange={setBlankCanvasDialogOpen}>
-                <DialogContent className="sm:max-w-[425px]">
-                    <DialogHeader>
-                        <div className="flex items-center gap-3">
-                            <div className="p-2 bg-amber-100 rounded-full">
-                                <AlertTriangle className="size-5 text-amber-600" />
-                            </div>
-                            <DialogTitle>Start Fresh?</DialogTitle>
-                        </div>
-                        <DialogDescription className="pt-3">
-                            This will reset your calendar and clear all existing events. Your settings will also be restored to defaults.
-                        </DialogDescription>
-                    </DialogHeader>
-                    <DialogFooter className="gap-2 sm:gap-0">
-                        <Button
-                            variant="outline"
-                            onClick={() => setBlankCanvasDialogOpen(false)}
-                        >
-                            Cancel
-                        </Button>
-                        <Button
-                            onClick={handleBlankCanvasConfirm}
-                            className="bg-blue-600 hover:bg-blue-700"
-                        >
-                            Yes, Start Fresh
-                        </Button>
-                    </DialogFooter>
-                </DialogContent>
-            </Dialog>
+            <ConfirmDialog
+                open={blankCanvasDialogOpen}
+                onOpenChange={setBlankCanvasDialogOpen}
+                title="Start Fresh?"
+                description="This will reset your calendar and clear all existing events. Your settings will also be restored to defaults."
+                icon={AlertTriangle}
+                iconClassName="size-5 text-amber-500"
+                confirmText="Yes, Start Fresh"
+                onConfirm={handleBlankCanvasConfirm}
+                variant="blue"
+            />
         </div>
     );
 }

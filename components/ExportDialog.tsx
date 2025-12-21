@@ -30,7 +30,7 @@ interface ExportDialogProps {
     selectedDate?: Date
 }
 
-type ExportFormat = "png" | "jpg" | "pdf" | "excel"
+type ExportFormat = "png" | "jpg" | "pdf" | "csv"
 
 export function ExportDialog({
     open,
@@ -82,7 +82,7 @@ export function ExportDialog({
                 } else {
                     console.error("Missing settings or currentWeekStart for PDF export")
                 }
-            } else if (selectedFormat === "excel") {
+            } else if (selectedFormat === "csv") {
                 // CSV/Excel export for Pro users only
                 if (!isPro) {
                     return
@@ -141,7 +141,7 @@ export function ExportDialog({
             proOnly: true,
         },
         {
-            format: "excel" as ExportFormat,
+            format: "csv" as ExportFormat,
             label: "CSV",
             description: "Spreadsheet format for data analysis",
             icon: Table,
@@ -158,7 +158,7 @@ export function ExportDialog({
                         <Download className="size-5" />
                         Export Schedule
                     </DialogTitle>
-                    <DialogDescription>
+                    <DialogDescription className="text-left">
                         Choose a format to download your schedule.
                     </DialogDescription>
                 </DialogHeader>
@@ -197,14 +197,14 @@ export function ExportDialog({
                     </div>
 
                     {/* Pro upgrade prompt for non-pro users */}
-                    {!isPro && (selectedFormat === "pdf" || selectedFormat === "excel") && (
+                    {!isPro && (selectedFormat === "pdf" || selectedFormat === "csv") && (
                         <div className="rounded-lg bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 p-4">
                             <div className="flex items-start gap-3">
                                 <Crown className="size-5 text-amber-600 mt-0.5" />
                                 <div>
                                     <p className="font-medium text-amber-900">Upgrade to Pro</p>
                                     <p className="text-sm text-amber-700 mt-1">
-                                        Unlock PDF and Excel exports, plus remove watermarks from images.
+                                        Unlock PDF and CSV exports, plus remove watermarks from images.
                                     </p>
                                     <Link href="/pricing">
                                         <Button size="sm" className="mt-2 bg-amber-600 hover:bg-amber-700">
@@ -223,7 +223,7 @@ export function ExportDialog({
                     </Button>
                     <Button
                         onClick={handleExport}
-                        disabled={isExporting || (!isPro && (selectedFormat === "pdf" || selectedFormat === "excel"))}
+                        disabled={isExporting || (!isPro && (selectedFormat === "pdf" || selectedFormat === "csv"))}
                         className="gap-2"
                     >
                         {isExporting ? (

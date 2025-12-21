@@ -395,7 +395,8 @@ export default function ScheduleBuilderPage() {
           viewMode={viewMode}
           onViewModeChange={setViewMode}
           onAddEvent={handleAddEvent}
-          currentMonday={currentWeekStart}
+          weekStart={currentWeekStart}
+          weekStartsOnSunday={settings.weekStartsOnSunday}
           onExport={handleExport}
           showAddDialog={showAddDialog}
           onAddDialogClose={handleAddDialogClose}

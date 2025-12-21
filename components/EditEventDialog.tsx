@@ -23,6 +23,7 @@ import {
 import type { Event, EventColor } from "@/lib/types"
 import { EVENT_COLORS } from "@/lib/types"
 import { formatDateString } from "@/lib/time-utils"
+import { EventForm, EventDialogFooter } from "@/components/EventForm"
 
 interface EditEventDialogProps {
     open: boolean
@@ -160,131 +161,33 @@ export function EditEventDialog({
                 </DialogHeader>
 
                 {/* Form Content - scrollable */}
-                <div className="px-4 md:px-6 py-4 md:py-5 space-y-4 md:space-y-5 overflow-y-auto flex-1">
-                    {/* Title */}
-                    <div className="space-y-2">
-                        <Label className="text-sm font-medium text-gray-700 flex items-center gap-2">
-                            <Type className="size-4 text-gray-400" />
-                            Title
-                        </Label>
-                        <Input
-                            value={title}
-                            onChange={(e) => setTitle(e.target.value)}
-                            placeholder="Event title"
-                            className="h-10"
-                            style={{ wordBreak: 'break-all' }}
-                        />
-                    </div>
-
-                    {/* Day Selection */}
-                    <div className="space-y-2">
-                        <Label className="text-sm font-medium text-gray-700 flex items-center gap-2">
-                            <Calendar className="size-4 text-gray-400" />
-                            Day
-                        </Label>
-                        <div className="flex gap-1.5 flex-wrap">
-                            {dayOptions.map((day) => (
-                                <button
-                                    key={day.value}
-                                    type="button"
-                                    onClick={() => setSelectedDay(day.value)}
-                                    className={`px-2 md:px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${selectedDay === day.value
-                                        ? 'bg-blue-600 text-white'
-                                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                                        }`}
-                                >
-                                    {day.label}
-                                </button>
-                            ))}
-                        </div>
-                    </div>
-
-                    {/* Time Selection */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
-                        <div className="space-y-2">
-                            <Label className="text-sm font-medium text-gray-700 flex items-center gap-2">
-                                <Clock className="size-4 text-gray-400" />
-                                Start
-                            </Label>
-                            <Input
-                                type="time"
-                                value={startTime}
-                                onChange={(e) => setStartTime(e.target.value)}
-                                className="h-10 w-full"
-                            />
-                        </div>
-                        <div className="space-y-2">
-                            <Label className="text-sm font-medium text-gray-700 flex items-center gap-2">
-                                <Clock className="size-4 text-gray-400" />
-                                End
-                            </Label>
-                            <Input
-                                type="time"
-                                value={endTime}
-                                onChange={(e) => setEndTime(e.target.value)}
-                                className="h-10 w-full"
-                            />
-                        </div>
-                    </div>
-
-                    {/* Color Selection */}
-                    <div className="space-y-2">
-                        <Label className="text-sm font-medium text-gray-700 flex items-center gap-2">
-                            <Palette className="size-4 text-gray-400" />
-                            Color
-                        </Label>
-                        <div className="flex gap-2 flex-wrap">
-                            {colorOptions.map((colorName) => {
-                                const colors = EVENT_COLORS[colorName]
-                                return (
-                                    <button
-                                        key={colorName}
-                                        type="button"
-                                        onClick={() => setSelectedColor(colorName)}
-                                        className={`w-8 h-8 rounded-full border-2 transition-all ${colors.bg} ${selectedColor === colorName
-                                            ? `${colors.border} ring-2 ring-offset-2 ring-blue-500`
-                                            : 'border-transparent hover:scale-110'
-                                            }`}
-                                        title={colorName}
-                                    />
-                                )
-                            })}
-                        </div>
-                    </div>
-
-                    {/* Description */}
-                    <div className="space-y-2">
-                        <Label className="text-sm font-medium text-gray-700 flex items-center gap-2">
-                            <Info className="size-4 text-gray-400" />
-                            Description
-                        </Label>
-                        <Textarea
-                            value={description}
-                            onChange={(e) => setDescription(e.target.value)}
-                            placeholder="Add notes or description..."
-                            className="min-h-[80px] resize-none"
-                            style={{ wordBreak: 'break-all', overflowWrap: 'break-word' }}
-                        />
-                    </div>
+                <div className="px-4 md:px-6 py-4 md:py-5 overflow-y-auto flex-1">
+                    <EventForm
+                        title={title}
+                        onTitleChange={setTitle}
+                        selectedDays={[selectedDay]}
+                        onDayToggle={(day) => setSelectedDay(day)}
+                        dayOptions={dayOptions}
+                        selectionMode="single"
+                        startTime={startTime}
+                        onStartTimeChange={setStartTime}
+                        endTime={endTime}
+                        onEndTimeChange={setEndTime}
+                        description={description}
+                        onDescriptionChange={setDescription}
+                        selectedColor={selectedColor}
+                        onColorChange={setSelectedColor}
+                    />
                 </div>
 
                 {/* Footer */}
-                <div className="flex justify-end gap-3 px-4 md:px-6 py-4 border-t border-gray-100 bg-gray-50 shrink-0">
-                    <Button
-                        variant="outline"
-                        onClick={() => onOpenChange(false)}
-                        className="px-4"
-                    >
-                        Cancel
-                    </Button>
-                    <Button
-                        onClick={handleSubmit}
-                        disabled={!title.trim()}
-                        className="px-4 bg-blue-600 hover:bg-blue-700"
-                    >
-                        Save Changes
-                    </Button>
-                </div>
+                <EventDialogFooter
+                    primaryText="Save Changes"
+                    onPrimary={handleSubmit}
+                    disablePrimary={!title.trim()}
+                    secondaryText="Cancel"
+                    onSecondary={() => onOpenChange(false)}
+                />
             </DialogContent>
         </Dialog>
     )
