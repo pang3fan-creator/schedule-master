@@ -30,7 +30,8 @@ interface MobileToolbarProps {
     viewMode: "day" | "week"
     onViewModeChange: (mode: "day" | "week") => void
     onAddEvent: (event: Omit<Event, "id">) => void
-    currentMonday: Date
+    weekStart: Date
+    weekStartsOnSunday: boolean
     onExport: () => void
     showAddDialog?: boolean
     onAddDialogClose?: () => void
@@ -46,7 +47,8 @@ export function MobileToolbar({
     viewMode,
     onViewModeChange,
     onAddEvent,
-    currentMonday,
+    weekStart,
+    weekStartsOnSunday,
     onExport,
     showAddDialog,
     onAddDialogClose,
@@ -181,7 +183,8 @@ export function MobileToolbar({
                     }
                 }}
                 onAddEvent={onAddEvent}
-                currentMonday={currentMonday}
+                weekStart={weekStart}
+                weekStartsOnSunday={weekStartsOnSunday}
                 initialData={initialData}
             />
 
