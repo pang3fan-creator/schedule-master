@@ -16,9 +16,8 @@ interface WeeklyCalendarProps {
   onDateChange: (date: Date) => void
   onEventUpdate?: (updatedEvent: Event) => void
   onEventDelete?: (eventId: string) => void
-  onEventDoubleClick?: (event: Event) => void
+  onEventClick?: (event: Event) => void  // Single click to edit
   onEventContextMenu?: (event: Event, x: number, y: number) => void
-  onEventLongPress?: (event: Event) => void  // For mobile long-press action
   exportMode?: boolean  // When true, renders for export (no scroll, fixed heights)
   onAddEvent?: (data: { startTime: string; endTime: string; day: number }) => void
 }
@@ -103,7 +102,7 @@ function getEventPosition(event: Event, rowHeight: number, minHour: number = 8) 
   )
 }
 
-export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpdate, onEventDelete, onEventDoubleClick, onEventContextMenu, onEventLongPress, exportMode = false, onAddEvent }: WeeklyCalendarProps) {
+export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpdate, onEventDelete, onEventClick, onEventContextMenu, exportMode = false, onAddEvent }: WeeklyCalendarProps) {
   const gridRef = useRef<HTMLDivElement>(null)
   // In export mode, use fixed row height to ensure consistent rendering
   const EXPORT_ROW_HEIGHT = 80
@@ -143,6 +142,7 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
     handleTouchStart,
     getVisualPosition,
     getDisplayTime,
+    wasRecentlyDragged,
   } = useEventDrag({
     onEventUpdate,
     rowHeight,
@@ -153,7 +153,7 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
   })
 
   // Drag-to-create hook
-  const { creatingEvent, handleGridMouseDown: handleCreateMouseDown } = useDragToCreate({
+  const { creatingEvent, handleGridMouseDown: handleCreateMouseDown, handleGridTouchStart: handleCreateTouchStart } = useDragToCreate({
     onAddEvent,
     rowHeight,
     timeIncrement
@@ -346,6 +346,7 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
                   key={`${day.short}-${hour}`}
                   className={`relative border-b border-l border-gray-300 ${dayIndex === days.length - 1 ? "border-r" : ""}`}
                   onMouseDown={(e) => handleCreateMouseDown(e, hour, dayIndex, !!dragState.eventId)}
+                  onTouchStart={(e) => handleCreateTouchStart(e, hour, dayIndex, !!dragState.eventId)}
                 >
                   {/* Hover Effect Layer - Separate from container to avoid event bubbling triggering it */}
                   <div className="absolute inset-0 hover:bg-gray-100 transition-colors" />
@@ -405,16 +406,11 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
                             }}
                             onMouseDown={(e) => handleMouseDown(e, event)}
                             onTouchStart={(e) => handleTouchStart(e, event)}
-                            onDoubleClick={(e) => {
-                              // Double click/tap to edit
-                              if (!isDragging) {
+                            onClick={(e) => {
+                              // Single click to edit (only if not dragging and didn't just finish dragging)
+                              if (!isDragging && !wasRecentlyDragged && onEventClick) {
                                 e.stopPropagation()
-                                // On mobile, use action sheet; on desktop, use edit dialog
-                                if (onEventLongPress && window.innerWidth < 768) {
-                                  onEventLongPress(event)
-                                } else if (onEventDoubleClick) {
-                                  onEventDoubleClick(event)
-                                }
+                                onEventClick(event)
                               }
                             }}
                             onContextMenu={(e) => {

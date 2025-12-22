@@ -31,6 +31,7 @@ interface UseEventDragReturn {
         endHour: number
         endMinute: number
     }
+    wasRecentlyDragged: boolean  // True briefly after drag ends, to prevent click from firing
 }
 
 
@@ -53,8 +54,15 @@ export function useEventDrag({
         currentOffset: 0,
     })
 
+    // Track if we recently completed a drag (to prevent click from firing)
+    const [wasRecentlyDragged, setWasRecentlyDragged] = useState(false)
+
     // Track if we're using touch
     const isTouchRef = useRef(false)
+    // Track if actual dragging has occurred (moved beyond threshold)
+    const hasDraggedRef = useRef(false)
+    // Drag threshold in pixels - movement less than this is considered a click
+    const DRAG_THRESHOLD = 5
     // Track max/min allowed offsets due to collisions
     const collisionBoundsRef = useRef<{ minOffset: number; maxOffset: number }>({
         minOffset: -Infinity,
@@ -106,9 +114,10 @@ export function useEventDrag({
 
     // Handle mouse down on event card
     const handleMouseDown = useCallback((e: React.MouseEvent, event: Event) => {
-        e.preventDefault()
+        // Don't call e.preventDefault() to allow onClick to fire for clicks
         e.stopPropagation()
         isTouchRef.current = false
+        hasDraggedRef.current = false  // Reset drag tracking
 
         // Calculate collision bounds when drag starts
         collisionBoundsRef.current = calculateCollisionBounds(event)
@@ -126,6 +135,7 @@ export function useEventDrag({
         if (e.touches.length !== 1) return
         e.stopPropagation()
         isTouchRef.current = true
+        hasDraggedRef.current = false  // Reset drag tracking
 
         // Calculate collision bounds when drag starts
         collisionBoundsRef.current = calculateCollisionBounds(event)
@@ -145,27 +155,42 @@ export function useEventDrag({
 
         const handleMouseMove = (e: MouseEvent) => {
             if (isTouchRef.current) return
-            let offsetY = e.clientY - dragState.startY
+            const rawOffsetY = e.clientY - dragState.startY
+
+            // Only start dragging if moved beyond threshold
+            if (!hasDraggedRef.current && Math.abs(rawOffsetY) < DRAG_THRESHOLD) {
+                return  // Still within click threshold, don't update offset
+            }
+            hasDraggedRef.current = true  // Mark as dragging
+
             // Clamp to collision bounds
-            offsetY = Math.max(collisionBoundsRef.current.minOffset,
-                Math.min(collisionBoundsRef.current.maxOffset, offsetY))
+            let offsetY = Math.max(collisionBoundsRef.current.minOffset,
+                Math.min(collisionBoundsRef.current.maxOffset, rawOffsetY))
             setDragState((prev) => ({ ...prev, currentOffset: offsetY }))
         }
 
         const handleTouchMove = (e: TouchEvent) => {
             if (!isTouchRef.current) return
             if (e.touches.length !== 1) return
-            e.preventDefault() // Prevent scrolling while dragging
             const touch = e.touches[0]
-            let offsetY = touch.clientY - dragState.startY
+            const rawOffsetY = touch.clientY - dragState.startY
+
+            // Only start dragging if moved beyond threshold
+            if (!hasDraggedRef.current && Math.abs(rawOffsetY) < DRAG_THRESHOLD) {
+                return  // Still within click threshold, don't update offset
+            }
+            hasDraggedRef.current = true  // Mark as dragging
+            e.preventDefault()  // Prevent scrolling only when actually dragging
+
             // Clamp to collision bounds
-            offsetY = Math.max(collisionBoundsRef.current.minOffset,
-                Math.min(collisionBoundsRef.current.maxOffset, offsetY))
+            let offsetY = Math.max(collisionBoundsRef.current.minOffset,
+                Math.min(collisionBoundsRef.current.maxOffset, rawOffsetY))
             setDragState((prev) => ({ ...prev, currentOffset: offsetY }))
         }
 
         const handleEnd = () => {
-            if (dragState.originalEvent && dragState.currentOffset !== 0 && onEventUpdate) {
+            // Only update event if we actually dragged (not just clicked)
+            if (hasDraggedRef.current && dragState.originalEvent && dragState.currentOffset !== 0 && onEventUpdate) {
                 const newTimes = calculateDraggedTime(
                     dragState.originalEvent.startHour,
                     dragState.originalEvent.startMinute,
@@ -183,6 +208,16 @@ export function useEventDrag({
                     ...newTimes,
                 }, true)
             }
+
+            // If we actually dragged, set wasRecentlyDragged to prevent click from firing
+            if (hasDraggedRef.current) {
+                setWasRecentlyDragged(true)
+                // Reset after a short delay (click event fires synchronously after mouseup)
+                setTimeout(() => {
+                    setWasRecentlyDragged(false)
+                }, 100)
+            }
+
             setDragState({
                 eventId: null,
                 startY: 0,
@@ -190,6 +225,7 @@ export function useEventDrag({
                 currentOffset: 0,
             })
             isTouchRef.current = false
+            hasDraggedRef.current = false
         }
 
         // Add listeners
@@ -278,5 +314,6 @@ export function useEventDrag({
         handleTouchStart,
         getVisualPosition,
         getDisplayTime,
+        wasRecentlyDragged,
     }
 }

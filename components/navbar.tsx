@@ -14,9 +14,7 @@ import {
 } from "@clerk/nextjs"
 import { AuthModal } from "@/components/auth-modal"
 import { SubscriptionModal } from "@/components/SubscriptionModal"
-import { UpgradeModal } from "@/components/UpgradeModal"
 import { getAllTemplates } from "@/lib/templates"
-import { useSubscription } from "@/components/SubscriptionContext"
 import { MobileNav } from "@/components/MobileNav"
 
 // Icon mapping for templates
@@ -35,12 +33,10 @@ const navLinks = [
 
 export function Navbar() {
   const pathname = usePathname()
-  const { isPro } = useSubscription()
   const [authModalOpen, setAuthModalOpen] = useState(false)
   const [authMode, setAuthMode] = useState<"sign-in" | "sign-up">("sign-in")
   const [subscriptionModalOpen, setSubscriptionModalOpen] = useState(false)
   const [templatesDropdownOpen, setTemplatesDropdownOpen] = useState(false)
-  const [upgradeModalOpen, setUpgradeModalOpen] = useState(false)
 
   const templates = getAllTemplates()
 
@@ -49,12 +45,8 @@ export function Navbar() {
     setAuthModalOpen(true)
   }
 
-  const handleTemplateClick = (e: React.MouseEvent, template: { slug: string; requiresPro?: boolean }) => {
-    if (template.requiresPro && !isPro) {
-      e.preventDefault()
-      setUpgradeModalOpen(true)
-    }
-  }
+  // Removed paywall check on template link click - users can now view all templates
+  // Paywall is only triggered when clicking "Use This Template" button on detail page
 
   const isTemplatesActive = pathname.startsWith("/templates")
 
@@ -109,7 +101,6 @@ export function Navbar() {
                       <Link
                         key={template.slug}
                         href={`/templates/${template.slug}`}
-                        onClick={(e) => handleTemplateClick(e, template)}
                         className="flex items-start gap-3 px-4 py-3 hover:bg-gray-50 transition-colors"
                       >
                         <div className="p-1.5 bg-blue-50 rounded-md">
@@ -218,12 +209,7 @@ export function Navbar() {
         onOpenChange={setSubscriptionModalOpen}
       />
 
-      {/* Upgrade Modal for Pro templates */}
-      <UpgradeModal
-        open={upgradeModalOpen}
-        onOpenChange={setUpgradeModalOpen}
-        feature="AI Schedule Generator"
-      />
+
     </>
   )
 }

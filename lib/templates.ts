@@ -61,28 +61,28 @@ Key benefits include drag-and-drop scheduling, color-coded shifts for easy visua
         category: "Business",
         icon: "Briefcase",
         settings: {
-            weekStartsOnSunday: false,
+            weekStartsOnSunday: true,
             use12HourFormat: true,
             workingHoursStart: 6,
             workingHoursEnd: 22,
             timeIncrement: 30,
         },
         events: [
-            // Monday
-            createEvent("John - Morning", "Front desk", 0, 6, 0, 14, 0, "blue"),
-            createEvent("Sarah - Afternoon", "Front desk", 0, 14, 0, 22, 0, "green"),
-            // Tuesday
-            createEvent("Mike - Morning", "Warehouse", 1, 6, 0, 14, 0, "orange"),
-            createEvent("Lisa - Afternoon", "Warehouse", 1, 14, 0, 22, 0, "purple"),
-            // Wednesday
-            createEvent("John - Morning", "Front desk", 2, 6, 0, 14, 0, "blue"),
-            createEvent("Mike - Afternoon", "Front desk", 2, 14, 0, 22, 0, "orange"),
-            // Thursday
-            createEvent("Sarah - Morning", "Customer Service", 3, 6, 0, 14, 0, "green"),
-            createEvent("Lisa - Afternoon", "Customer Service", 3, 14, 0, 22, 0, "purple"),
-            // Friday
-            createEvent("All Staff Meeting", "Conference Room", 4, 9, 0, 10, 0, "red"),
-            createEvent("John - Day Shift", "Front desk", 4, 10, 0, 18, 0, "blue"),
+            // Monday (day 1 when weekStartsOnSunday)
+            createEvent("John - Morning", "Front desk", 1, 6, 0, 14, 0, "blue"),
+            createEvent("Sarah - Afternoon", "Front desk", 1, 14, 0, 22, 0, "green"),
+            // Tuesday (day 2)
+            createEvent("Mike - Morning", "Warehouse", 2, 6, 0, 14, 0, "orange"),
+            createEvent("Lisa - Afternoon", "Warehouse", 2, 14, 0, 22, 0, "purple"),
+            // Wednesday (day 3)
+            createEvent("John - Morning", "Front desk", 3, 6, 0, 14, 0, "blue"),
+            createEvent("Mike - Afternoon", "Front desk", 3, 14, 0, 22, 0, "orange"),
+            // Thursday (day 4)
+            createEvent("Sarah - Morning", "Customer Service", 4, 6, 0, 14, 0, "green"),
+            createEvent("Lisa - Afternoon", "Customer Service", 4, 14, 0, 22, 0, "purple"),
+            // Friday (day 5)
+            createEvent("All Staff Meeting", "Conference Room", 5, 9, 0, 10, 0, "red"),
+            createEvent("John - Day Shift", "Front desk", 5, 10, 0, 18, 0, "blue"),
         ],
         faq: [
             {
@@ -119,35 +119,35 @@ Use color coding to differentiate between subjects, add room numbers and profess
         category: "Education",
         icon: "GraduationCap",
         settings: {
-            weekStartsOnSunday: false,
+            weekStartsOnSunday: true,
             use12HourFormat: true,
             workingHoursStart: 8,
             workingHoursEnd: 18,
             timeIncrement: 15,
         },
         events: [
-            // Monday
-            createEvent("Calculus 101", "Room 201 - Prof. Smith", 0, 8, 0, 9, 30, "blue"),
-            createEvent("Physics Lab", "Science Building 305", 0, 10, 0, 12, 0, "green"),
-            createEvent("Lunch Break", "Student Center", 0, 12, 0, 13, 0, "yellow"),
-            createEvent("English Composition", "Humanities 102", 0, 14, 0, 15, 30, "purple"),
-            // Tuesday
-            createEvent("Chemistry", "Science Building 201", 1, 9, 0, 10, 30, "orange"),
-            createEvent("Study Group", "Library", 1, 11, 0, 12, 0, "teal"),
+            // Monday (day 1 when weekStartsOnSunday)
+            createEvent("Calculus 101", "Room 201 - Prof. Smith", 1, 8, 0, 9, 30, "blue"),
+            createEvent("Physics Lab", "Science Building 305", 1, 10, 0, 12, 0, "green"),
             createEvent("Lunch Break", "Student Center", 1, 12, 0, 13, 0, "yellow"),
-            createEvent("History", "Humanities 305", 1, 14, 0, 15, 30, "red"),
-            // Wednesday
-            createEvent("Calculus 101", "Room 201 - Prof. Smith", 2, 8, 0, 9, 30, "blue"),
-            createEvent("Computer Science", "Tech Building 101", 2, 10, 0, 11, 30, "pink"),
+            createEvent("English Composition", "Humanities 102", 1, 14, 0, 15, 30, "purple"),
+            // Tuesday (day 2)
+            createEvent("Chemistry", "Science Building 201", 2, 9, 0, 10, 30, "orange"),
+            createEvent("Study Group", "Library", 2, 11, 0, 12, 0, "teal"),
             createEvent("Lunch Break", "Student Center", 2, 12, 0, 13, 0, "yellow"),
-            createEvent("Office Hours", "Prof. Smith's Office", 2, 15, 0, 16, 0, "blue"),
-            // Thursday
-            createEvent("Chemistry Lab", "Science Building 310", 3, 9, 0, 12, 0, "orange"),
+            createEvent("History", "Humanities 305", 2, 14, 0, 15, 30, "red"),
+            // Wednesday (day 3)
+            createEvent("Calculus 101", "Room 201 - Prof. Smith", 3, 8, 0, 9, 30, "blue"),
+            createEvent("Computer Science", "Tech Building 101", 3, 10, 0, 11, 30, "pink"),
             createEvent("Lunch Break", "Student Center", 3, 12, 0, 13, 0, "yellow"),
-            createEvent("English Composition", "Humanities 102", 3, 14, 0, 15, 30, "purple"),
-            // Friday
-            createEvent("Calculus 101", "Room 201 - Prof. Smith", 4, 8, 0, 9, 30, "blue"),
-            createEvent("Physics Lecture", "Science Building 101", 4, 10, 0, 11, 30, "green"),
+            createEvent("Office Hours", "Prof. Smith's Office", 3, 15, 0, 16, 0, "blue"),
+            // Thursday (day 4)
+            createEvent("Chemistry Lab", "Science Building 310", 4, 9, 0, 12, 0, "orange"),
+            createEvent("Lunch Break", "Student Center", 4, 12, 0, 13, 0, "yellow"),
+            createEvent("English Composition", "Humanities 102", 4, 14, 0, 15, 30, "purple"),
+            // Friday (day 5)
+            createEvent("Calculus 101", "Room 201 - Prof. Smith", 5, 8, 0, 9, 30, "blue"),
+            createEvent("Physics Lecture", "Science Building 101", 5, 10, 0, 11, 30, "green"),
         ],
         faq: [
             {
@@ -315,7 +315,7 @@ Whether you're a busy professional trying to maximize productivity, a student ba
         icon: "Sparkles",
         requiresPro: true,
         settings: {
-            weekStartsOnSunday: false,
+            weekStartsOnSunday: true,
             use12HourFormat: true,
             workingHoursStart: 8,
             workingHoursEnd: 18,
@@ -323,29 +323,29 @@ Whether you're a busy professional trying to maximize productivity, a student ba
         },
         events: [
             // AI-optimized schedule example
-            // Monday - High energy morning tasks
-            createEvent("Deep Work Block", "AI suggests: tackle complex tasks", 0, 9, 0, 11, 30, "blue"),
-            createEvent("Break", "AI suggests: step away from screen", 0, 11, 30, 12, 0, "teal"),
-            createEvent("Lunch", "AI suggests: healthy meal", 0, 12, 0, 13, 0, "yellow"),
-            createEvent("Meetings", "AI suggests: schedule calls post-lunch", 0, 14, 0, 16, 0, "purple"),
-            // Tuesday
-            createEvent("Creative Tasks", "AI suggests: morning creativity peak", 1, 9, 0, 12, 0, "pink"),
-            createEvent("Lunch", "AI suggests: light meal", 1, 12, 0, 13, 0, "yellow"),
-            createEvent("Admin Work", "AI suggests: low-energy task time", 1, 14, 0, 16, 0, "green"),
-            // Wednesday
-            createEvent("Deep Work Block", "AI suggests: mid-week focus", 2, 9, 0, 12, 0, "blue"),
-            createEvent("Lunch", "AI suggests: social lunch", 2, 12, 0, 13, 0, "yellow"),
-            createEvent("Team Sync", "AI suggests: collaboration time", 2, 14, 0, 15, 0, "orange"),
-            createEvent("Learning", "AI suggests: skill development", 2, 15, 30, 17, 0, "red"),
-            // Thursday
-            createEvent("Project Work", "AI suggests: execution day", 3, 9, 0, 12, 0, "blue"),
-            createEvent("Lunch", "AI suggests: meal prep day", 3, 12, 0, 13, 0, "yellow"),
-            createEvent("Review & Plan", "AI suggests: mid-week check", 3, 14, 0, 15, 30, "purple"),
-            // Friday
-            createEvent("Priority Tasks", "AI suggests: finish key items", 4, 9, 0, 12, 0, "blue"),
-            createEvent("Lunch", "AI suggests: team lunch", 4, 12, 0, 13, 0, "yellow"),
-            createEvent("Week Review", "AI suggests: reflect & plan", 4, 14, 0, 15, 0, "orange"),
-            createEvent("Flex Time", "AI suggests: catch up or early finish", 4, 15, 0, 17, 0, "teal"),
+            // Monday (day 1 when weekStartsOnSunday) - High energy morning tasks
+            createEvent("Deep Work Block", "AI suggests: tackle complex tasks", 1, 9, 0, 11, 30, "blue"),
+            createEvent("Break", "AI suggests: step away from screen", 1, 11, 30, 12, 0, "teal"),
+            createEvent("Lunch", "AI suggests: healthy meal", 1, 12, 0, 13, 0, "yellow"),
+            createEvent("Meetings", "AI suggests: schedule calls post-lunch", 1, 14, 0, 16, 0, "purple"),
+            // Tuesday (day 2)
+            createEvent("Creative Tasks", "AI suggests: morning creativity peak", 2, 9, 0, 12, 0, "pink"),
+            createEvent("Lunch", "AI suggests: light meal", 2, 12, 0, 13, 0, "yellow"),
+            createEvent("Admin Work", "AI suggests: low-energy task time", 2, 14, 0, 16, 0, "green"),
+            // Wednesday (day 3)
+            createEvent("Deep Work Block", "AI suggests: mid-week focus", 3, 9, 0, 12, 0, "blue"),
+            createEvent("Lunch", "AI suggests: social lunch", 3, 12, 0, 13, 0, "yellow"),
+            createEvent("Team Sync", "AI suggests: collaboration time", 3, 14, 0, 15, 0, "orange"),
+            createEvent("Learning", "AI suggests: skill development", 3, 15, 0, 17, 0, "red"),
+            // Thursday (day 4)
+            createEvent("Project Work", "AI suggests: execution day", 4, 9, 0, 12, 0, "blue"),
+            createEvent("Lunch", "AI suggests: meal prep day", 4, 12, 0, 13, 0, "yellow"),
+            createEvent("Review & Plan", "AI suggests: mid-week check", 4, 14, 0, 15, 30, "purple"),
+            // Friday (day 5)
+            createEvent("Priority Tasks", "AI suggests: finish key items", 5, 9, 0, 12, 0, "blue"),
+            createEvent("Lunch", "AI suggests: team lunch", 5, 12, 0, 13, 0, "yellow"),
+            createEvent("Week Review", "AI suggests: reflect & plan", 5, 14, 0, 15, 0, "orange"),
+            createEvent("Flex Time", "AI suggests: catch up or early finish", 5, 15, 0, 17, 0, "teal"),
         ],
         faq: [
             {

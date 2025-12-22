@@ -16,6 +16,7 @@ import { useSettings } from "@/components/SettingsContext"
 import { MobileToolbar } from "@/components/MobileToolbar"
 import { MobileEventActionSheet } from "@/components/MobileEventActionSheet"
 import { MobileWelcomeTip } from "@/components/MobileWelcomeTip"
+import { DesktopWelcomeTip } from "@/components/DesktopWelcomeTip"
 import { useIsMobile } from "@/hooks/useMediaQuery"
 import { getWeekStart } from "@/lib/time-utils"
 
@@ -288,8 +289,8 @@ export default function ScheduleBuilderPage() {
     }
   }, [deleteConfirm])
 
-  // Handle double-click on an event (for edit)
-  const handleEventDoubleClick = useCallback((event: Event) => {
+  // Handle click on an event (for edit)
+  const handleEventClick = useCallback((event: Event) => {
     setEditEvent(event)
   }, [])
 
@@ -318,10 +319,7 @@ export default function ScheduleBuilderPage() {
     setShowExportDialog(true)
   }, [])
 
-  // Handle mobile long press on event
-  const handleEventLongPress = useCallback((event: Event) => {
-    setMobileActionEvent(event)
-  }, [])
+
 
   // Handle mobile action sheet edit
   const handleMobileActionEdit = useCallback((event: Event) => {
@@ -365,9 +363,8 @@ export default function ScheduleBuilderPage() {
               onDateChange={setSelectedDate}
               onEventUpdate={handleEventUpdate}
               onEventDelete={handleEventDelete}
-              onEventDoubleClick={handleEventDoubleClick}
+              onEventClick={handleEventClick}
               onEventContextMenu={handleEventContextMenu}
-              onEventLongPress={handleEventLongPress}
               exportMode={isExporting}
               onAddEvent={handleOpenAddDialog}
             />
@@ -378,9 +375,8 @@ export default function ScheduleBuilderPage() {
               onDateChange={setSelectedDate}
               onEventUpdate={handleEventUpdate}
               onEventDelete={handleEventDelete}
-              onEventDoubleClick={handleEventDoubleClick}
+              onEventClick={handleEventClick}
               onEventContextMenu={handleEventContextMenu}
-              onEventLongPress={handleEventLongPress}
               exportMode={isExporting}
               onAddEvent={handleOpenAddDialog}
             />
@@ -472,6 +468,9 @@ export default function ScheduleBuilderPage() {
 
       {/* Mobile Welcome Tip - shows once on first mobile visit */}
       <MobileWelcomeTip />
+
+      {/* Desktop Welcome Tip - shows once on first desktop visit */}
+      <DesktopWelcomeTip />
     </div>
   )
 }

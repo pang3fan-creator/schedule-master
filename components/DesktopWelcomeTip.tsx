@@ -1,25 +1,25 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { X, Move, MousePointer2 } from "lucide-react"
+import { X, Move, MousePointer2, MousePointerClick, Plus } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
-const MOBILE_TIP_STORAGE_KEY = "schedule-mobile-tip-shown"
+const DESKTOP_TIP_STORAGE_KEY = "schedule-desktop-tip-shown"
 
-interface MobileWelcomeTipProps {
+interface DesktopWelcomeTipProps {
     onClose?: () => void
 }
 
-export function MobileWelcomeTip({ onClose }: MobileWelcomeTipProps) {
+export function DesktopWelcomeTip({ onClose }: DesktopWelcomeTipProps) {
     const [isVisible, setIsVisible] = useState(false)
 
     useEffect(() => {
-        // Only show on mobile
+        // Only show on desktop
         if (typeof window === "undefined") return
-        if (window.innerWidth >= 768) return
+        if (window.innerWidth < 768) return
 
         // Check if user has already seen the tip
-        const hasShown = localStorage.getItem(MOBILE_TIP_STORAGE_KEY)
+        const hasShown = localStorage.getItem(DESKTOP_TIP_STORAGE_KEY)
         if (!hasShown) {
             // Small delay to let page load
             const timer = setTimeout(() => {
@@ -31,7 +31,7 @@ export function MobileWelcomeTip({ onClose }: MobileWelcomeTipProps) {
 
     const handleClose = () => {
         setIsVisible(false)
-        localStorage.setItem(MOBILE_TIP_STORAGE_KEY, "true")
+        localStorage.setItem(DESKTOP_TIP_STORAGE_KEY, "true")
         onClose?.()
     }
 
@@ -39,7 +39,7 @@ export function MobileWelcomeTip({ onClose }: MobileWelcomeTipProps) {
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-            <div className="relative bg-white rounded-2xl shadow-xl max-w-sm w-full p-6 animate-in fade-in zoom-in duration-300">
+            <div className="relative bg-white rounded-2xl shadow-xl max-w-md w-full p-6 animate-in fade-in zoom-in duration-300">
                 {/* Close button */}
                 <button
                     onClick={handleClose}
@@ -57,24 +57,48 @@ export function MobileWelcomeTip({ onClose }: MobileWelcomeTipProps) {
                 <div className="space-y-4">
                     <div className="flex items-start gap-3">
                         <div className="flex-shrink-0 w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
-                            <MousePointer2 className="size-5 text-green-600" />
+                            <Plus className="size-5 text-green-600" />
                         </div>
                         <div>
-                            <p className="font-medium text-gray-900">Tap to edit</p>
+                            <p className="font-medium text-gray-900">Click to create</p>
                             <p className="text-sm text-gray-500">
-                                Tap an event to edit it.
+                                Click on an empty cell to add a new event.
                             </p>
                         </div>
                     </div>
 
                     <div className="flex items-start gap-3">
                         <div className="flex-shrink-0 w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
-                            <Move className="size-5 text-blue-600" />
+                            <MousePointer2 className="size-5 text-blue-600" />
+                        </div>
+                        <div>
+                            <p className="font-medium text-gray-900">Click to edit</p>
+                            <p className="text-sm text-gray-500">
+                                Click an event to edit it.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="flex items-start gap-3">
+                        <div className="flex-shrink-0 w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center">
+                            <Move className="size-5 text-purple-600" />
                         </div>
                         <div>
                             <p className="font-medium text-gray-900">Drag to move</p>
                             <p className="text-sm text-gray-500">
                                 Drag events up or down to adjust time.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="flex items-start gap-3">
+                        <div className="flex-shrink-0 w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center">
+                            <MousePointerClick className="size-5 text-orange-600" />
+                        </div>
+                        <div>
+                            <p className="font-medium text-gray-900">Right-click for menu</p>
+                            <p className="text-sm text-gray-500">
+                                Right-click an event for more options.
                             </p>
                         </div>
                     </div>

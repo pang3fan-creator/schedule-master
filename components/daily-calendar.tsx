@@ -30,9 +30,8 @@ interface DailyCalendarProps {
     onDateChange: (date: Date) => void
     onEventUpdate?: (updatedEvent: Event) => void
     onEventDelete?: (eventId: string) => void
-    onEventDoubleClick?: (event: Event) => void
+    onEventClick?: (event: Event) => void  // Single click to edit
     onEventContextMenu?: (event: Event, x: number, y: number) => void
-    onEventLongPress?: (event: Event) => void  // For mobile long-press action
     exportMode?: boolean  // When true, renders for export (no scroll, fixed heights)
     onAddEvent?: (data: { startTime: string; endTime: string; day: number }) => void
 }
@@ -58,7 +57,7 @@ function formatDate(date: Date): string {
 }
 
 
-export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdate, onEventDelete, onEventDoubleClick, onEventContextMenu, onEventLongPress, exportMode = false, onAddEvent }: DailyCalendarProps) {
+export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdate, onEventDelete, onEventClick, onEventContextMenu, exportMode = false, onAddEvent }: DailyCalendarProps) {
     const gridRef = useRef<HTMLDivElement>(null)
     // In export mode, use fixed row height
     const EXPORT_ROW_HEIGHT = 80
@@ -94,6 +93,7 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
         handleTouchStart,
         getVisualPosition,
         getDisplayTime,
+        wasRecentlyDragged,
     } = useEventDrag({
         onEventUpdate,
         rowHeight,
@@ -104,7 +104,7 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
     })
 
     // Drag-to-create hook
-    const { creatingEvent, handleGridMouseDown: handleCreateMouseDown } = useDragToCreate({
+    const { creatingEvent, handleGridMouseDown: handleCreateMouseDown, handleGridTouchStart: handleCreateTouchStart } = useDragToCreate({
         onAddEvent,
         rowHeight,
         timeIncrement
@@ -292,6 +292,7 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                                 {index !== hours.length - 1 && (
                                     <div className="relative border-b border-l border-r border-gray-300"
                                         onMouseDown={(e) => handleCreateMouseDown(e, hour, currentDayIndex, !!dragState.eventId)}
+                                        onTouchStart={(e) => handleCreateTouchStart(e, hour, currentDayIndex, !!dragState.eventId)}
                                     >
                                         {/* Hover Effect Layer - Separate from container to avoid event bubbling triggering it */}
                                         <div className="absolute inset-0 hover:bg-gray-100 transition-colors" />
@@ -353,15 +354,11 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                                                         style={style}
                                                         onMouseDown={(e) => handleMouseDown(e, event)}
                                                         onTouchStart={(e) => handleTouchStart(e, event)}
-                                                        onDoubleClick={(e) => {
-                                                            if (!isDragging) {
+                                                        onClick={(e) => {
+                                                            // Single click to edit (only if not dragging and didn't just finish dragging)
+                                                            if (!isDragging && !wasRecentlyDragged && onEventClick) {
                                                                 e.stopPropagation()
-                                                                // On mobile, use action sheet; on desktop, use edit dialog
-                                                                if (onEventLongPress && window.innerWidth < 768) {
-                                                                    onEventLongPress(event)
-                                                                } else if (onEventDoubleClick) {
-                                                                    onEventDoubleClick(event)
-                                                                }
+                                                                onEventClick(event)
                                                             }
                                                         }}
                                                         onContextMenu={(e) => {
