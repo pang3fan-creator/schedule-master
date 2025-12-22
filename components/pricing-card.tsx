@@ -228,13 +228,19 @@ export function PricingCard({
         // 不允许购买的情况
         if (!purchaseCheck.allowed) {
             return (
-                <Button
-                    variant="secondary"
-                    className="w-full mb-2"
-                    disabled
-                >
-                    {purchaseCheck.message}
-                </Button>
+                <>
+                    <Button
+                        variant="secondary"
+                        className="w-full mb-2"
+                        disabled
+                    >
+                        {purchaseCheck.message}
+                    </Button>
+                    {/* Invisible placeholder to align with other buttons */}
+                    <p className="text-center text-xs text-transparent mt-1 select-none" aria-hidden="true">
+                        &nbsp;
+                    </p>
+                </>
             );
         }
 

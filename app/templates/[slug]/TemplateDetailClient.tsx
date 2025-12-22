@@ -14,28 +14,24 @@ import { useSubscription } from "@/components/SubscriptionContext"
 import { UpgradeModal } from "@/components/UpgradeModal"
 import { FAQAccordion } from "@/components/faq-accordion"
 
-// Get week start date (Monday by default, Sunday if weekStartsOnSunday)
-function getWeekStart(weekStartsOnSunday: boolean = false): Date {
-    const d = new Date()
-    const day = d.getDay()
-    let diff: number
-    if (weekStartsOnSunday) {
-        diff = -day
-    } else {
-        diff = day === 0 ? -6 : 1 - day
-    }
-    d.setDate(d.getDate() + diff)
-    d.setHours(0, 0, 0, 0)
-    return d
+// Get the date of a specific day of the week for the current week
+// dayOfWeek: 0=Sunday, 1=Monday, 2=Tuesday, etc. (JavaScript standard)
+function getDateForDayOfWeek(dayOfWeek: number): Date {
+    const today = new Date()
+    const currentDayOfWeek = today.getDay() // 0=Sunday, 1=Monday, etc.
+    const diff = dayOfWeek - currentDayOfWeek
+    const targetDate = new Date(today)
+    targetDate.setDate(today.getDate() + diff)
+    targetDate.setHours(0, 0, 0, 0)
+    return targetDate
 }
 
 // Convert template events to full events with dates
+// Template events use semantic day values: 0=Sunday, 1=Monday, 2=Tuesday, etc.
+// This is the JavaScript Date.getDay() standard and works regardless of weekStartsOnSunday setting
 function generateEventsFromTemplate(template: TemplateData): Event[] {
-    const weekStart = getWeekStart(template.settings?.weekStartsOnSunday)
-
     return template.events.map((templateEvent, index) => {
-        const eventDate = new Date(weekStart)
-        eventDate.setDate(weekStart.getDate() + templateEvent.day)
+        const eventDate = getDateForDayOfWeek(templateEvent.day)
 
         return {
             ...templateEvent,
@@ -47,8 +43,16 @@ function generateEventsFromTemplate(template: TemplateData): Event[] {
 
 // Mini calendar preview component
 function TemplatePreview({ template }: { template: TemplateData }) {
-    const events = generateEventsFromTemplate(template)
-    const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+    const weekStartsOnSunday = template.settings?.weekStartsOnSunday ?? true
+
+    // Adjust days array based on weekStartsOnSunday setting
+    // dayOrder maps column index to semantic day value (0=Sunday, 1=Monday, etc.)
+    const dayOrder = weekStartsOnSunday
+        ? [0, 1, 2, 3, 4, 5, 6]  // Sun=0, Mon=1, Tue=2, Wed=3, Thu=4, Fri=5, Sat=6
+        : [1, 2, 3, 4, 5, 6, 0]  // Mon=1, Tue=2, Wed=3, Thu=4, Fri=5, Sat=6, Sun=0
+    const days = weekStartsOnSunday
+        ? ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+        : ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
 
     // Get time range from template settings or use defaults
     const startHour = template.settings?.workingHoursStart ?? 8
@@ -72,10 +76,12 @@ function TemplatePreview({ template }: { template: TemplateData }) {
         return `${hour}:00`
     }
 
-    // Group events by day
-    const eventsByDay = events.reduce((acc, event) => {
+    // Group events by semantic day value (0=Sunday, 1=Monday, etc.)
+    // Use template.events directly since they contain the semantic day values
+    const eventsBySemanticDay = template.events.reduce((acc, event, index) => {
         if (!acc[event.day]) acc[event.day] = []
-        acc[event.day].push(event)
+        // Add id for rendering
+        acc[event.day].push({ ...event, id: `template-${template.slug}-${index}` } as Event)
         return acc
     }, {} as Record<number, Event[]>)
 
@@ -101,40 +107,44 @@ function TemplatePreview({ template }: { template: TemplateData }) {
                         </div>
 
                         {/* Day cells */}
-                        {days.map((_, dayIndex) => (
-                            <div
-                                key={`${hour}-${dayIndex}`}
-                                className="relative border-l border-t border-gray-100"
-                            >
-                                {/* Render events that start at this hour */}
-                                {hourIndex === 0 && eventsByDay[dayIndex]?.map((event) => {
-                                    // Use dynamic startHour for offset calculation
-                                    const startOffset = (event.startHour - startHour) * 32
-                                    const duration = ((event.endHour - event.startHour) + (event.endMinute - event.startMinute) / 60) * 32
-                                    const colorConfig = EVENT_COLORS[event.color || 'blue']
+                        {days.map((_, dayIndex) => {
+                            // Map column index to semantic day value using dayOrder
+                            const semanticDay = dayOrder[dayIndex]
+                            return (
+                                <div
+                                    key={`${hour}-${dayIndex}`}
+                                    className="relative border-l border-t border-gray-100"
+                                >
+                                    {/* Render events that start at this hour */}
+                                    {hourIndex === 0 && eventsBySemanticDay[semanticDay]?.map((event) => {
+                                        // Use dynamic startHour for offset calculation
+                                        const startOffset = (event.startHour - startHour) * 32
+                                        const duration = ((event.endHour - event.startHour) + (event.endMinute - event.startMinute) / 60) * 32
+                                        const colorConfig = EVENT_COLORS[event.color || 'blue']
 
-                                    // Skip events that are outside the visible time range
-                                    if (event.startHour < startHour || event.startHour >= endHour) {
-                                        return null
-                                    }
+                                        // Skip events that are outside the visible time range
+                                        if (event.startHour < startHour || event.startHour >= endHour) {
+                                            return null
+                                        }
 
-                                    return (
-                                        <div
-                                            key={event.id}
-                                            className={`absolute left-0.5 right-0.5 ${colorConfig.bg} ${colorConfig.border} border-l-2 rounded-sm z-10 overflow-hidden`}
-                                            style={{
-                                                top: `${startOffset}px`,
-                                                height: `${Math.max(duration - 2, 10)}px`,
-                                            }}
-                                        >
-                                            <span className={`text-[8px] ${colorConfig.text} p-0.5 block truncate`}>
-                                                {event.title}
-                                            </span>
-                                        </div>
-                                    )
-                                })}
-                            </div>
-                        ))}
+                                        return (
+                                            <div
+                                                key={event.id}
+                                                className={`absolute left-0.5 right-0.5 ${colorConfig.bg} ${colorConfig.border} border-l-2 rounded-sm z-10 overflow-hidden`}
+                                                style={{
+                                                    top: `${startOffset}px`,
+                                                    height: `${Math.max(duration - 2, 10)}px`,
+                                                }}
+                                            >
+                                                <span className={`text-[8px] ${colorConfig.text} p-0.5 block truncate`}>
+                                                    {event.title}
+                                                </span>
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+                            )
+                        })}
                     </React.Fragment>
                 ))}
             </div>

@@ -8,22 +8,14 @@ import {
     DialogTitle,
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
 import {
     CalendarPlus,
     X,
-    Tag,
-    Calendar,
-    Clock,
-    Info,
-    Palette,
 } from "lucide-react"
 import type { Event, EventColor } from "@/lib/types"
-import { EVENT_COLORS } from "@/lib/types"
 import { formatDateString } from "@/lib/time-utils"
-import { EventForm, EventDialogFooter } from "@/components/EventForm"
+import { EventForm, EventDialogFooter, parseTimeValue, validateEventTimes, DAY_OPTIONS_SUNDAY_FIRST } from "@/components/EventForm"
+import { useSettings } from "@/components/SettingsContext"
 
 interface AddEventDialogProps {
     open: boolean
@@ -36,15 +28,6 @@ interface AddEventDialogProps {
         endTime?: string
         selectedDays?: number[]
     }
-}
-
-// Day options moved inside component to be dynamic
-
-
-// Parse time string to hour and minute
-function parseTimeValue(timeStr: string): { hour: number; minute: number } {
-    const [h, m] = timeStr.split(":").map(Number)
-    return { hour: h || 8, minute: m || 0 }
 }
 
 // Get the date for a specific day of the week based on Monday
@@ -62,12 +45,17 @@ export function AddEventDialog({
     weekStartsOnSunday,
     initialData
 }: AddEventDialogProps) {
+    const { settings } = useSettings()
     const [title, setTitle] = useState("")
     const [selectedDays, setSelectedDays] = useState<number[]>([])
     const [startTime, setStartTime] = useState("08:00")
     const [endTime, setEndTime] = useState("09:00")
     const [description, setDescription] = useState("")
     const [selectedColor, setSelectedColor] = useState<EventColor>("blue")
+
+    // Working hours boundaries (A and B)
+    const minStartMinutes = settings.workingHoursStart * 60 // A in minutes
+    const maxEndMinutes = settings.workingHoursEnd * 60     // B in minutes
 
     // Update state when initialData changes or dialog opens
     useState(() => {
@@ -90,33 +78,8 @@ export function AddEventDialog({
         }
     }
 
-    // Available color options
-    const colorOptions: EventColor[] = ['blue', 'green', 'red', 'yellow', 'purple', 'pink', 'orange', 'teal']
-
-    // Generate day options based on week start setting
-    const dayOptions = useMemo(() => {
-        if (weekStartsOnSunday) {
-            return [
-                { label: "Sun", value: 0 },
-                { label: "Mon", value: 1 },
-                { label: "Tue", value: 2 },
-                { label: "Wed", value: 3 },
-                { label: "Thu", value: 4 },
-                { label: "Fri", value: 5 },
-                { label: "Sat", value: 6 },
-            ]
-        } else {
-            return [
-                { label: "Mon", value: 0 },
-                { label: "Tue", value: 1 },
-                { label: "Wed", value: 2 },
-                { label: "Thu", value: 3 },
-                { label: "Fri", value: 4 },
-                { label: "Sat", value: 5 },
-                { label: "Sun", value: 6 },
-            ]
-        }
-    }, [weekStartsOnSunday])
+    // Always use Sunday-first day options (US standard)
+    const dayOptions = DAY_OPTIONS_SUNDAY_FIRST
 
     // Calculate the week dates based on weekStart
     // The index from dayOptions directly maps to the visual day index (0-6)
@@ -136,8 +99,16 @@ export function AddEventDialog({
     const handleSubmit = () => {
         if (!title.trim() || selectedDays.length === 0) return
 
-        const start = parseTimeValue(startTime)
-        const end = parseTimeValue(endTime)
+        // Validate times on submit
+        const validatedTimes = validateEventTimes({
+            startTime,
+            endTime,
+            minStartMinutes,
+            maxEndMinutes
+        })
+
+        const start = parseTimeValue(validatedTimes.startTime)
+        const end = parseTimeValue(validatedTimes.endTime)
 
         // Create an event for each selected day with specific date
         selectedDays.forEach((day) => {

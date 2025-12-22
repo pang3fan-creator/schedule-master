@@ -41,7 +41,16 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
     }
 
     const handleWorkingHoursStartChange = (value: string) => {
-        updateSettings({ workingHoursStart: parseInt(value) })
+        const newStart = parseInt(value)
+        // If current end is not valid (must be > start), adjust it to start + 1
+        if (settings.workingHoursEnd <= newStart) {
+            updateSettings({
+                workingHoursStart: newStart,
+                workingHoursEnd: newStart + 1
+            })
+        } else {
+            updateSettings({ workingHoursStart: newStart })
+        }
     }
 
     const handleWorkingHoursEndChange = (value: string) => {
@@ -52,8 +61,14 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
         resetSettings()
     }
 
-    // Generate hour options (0-23)
-    const hourOptions = Array.from({ length: 24 }, (_, i) => i)
+    // Generate hour options for start time (A): 0-23 (12 AM to 11 PM)
+    const startHourOptions = Array.from({ length: 24 }, (_, i) => i)
+
+    // Generate hour options for end time (B): (A+1) to 24 (midnight)
+    const endHourOptions = Array.from(
+        { length: 24 - settings.workingHoursStart },
+        (_, i) => settings.workingHoursStart + 1 + i
+    )
 
     // Format hour for display based on current time format setting
     const formatHourOption = (hour: number) => {
@@ -156,7 +171,7 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
                                     <SelectValue />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    {hourOptions.map((hour) => (
+                                    {startHourOptions.map((hour) => (
                                         <SelectItem key={hour} value={hour.toString()}>
                                             {formatHourOption(hour)}
                                         </SelectItem>
@@ -172,7 +187,7 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
                                     <SelectValue />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    {hourOptions.map((hour) => (
+                                    {endHourOptions.map((hour) => (
                                         <SelectItem key={hour} value={hour.toString()}>
                                             {formatHourOption(hour)}
                                         </SelectItem>
