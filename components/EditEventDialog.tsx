@@ -8,22 +8,14 @@ import {
     DialogTitle,
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
 import {
     Edit3,
     X,
-    Clock,
-    Info,
-    Type,
-    Palette,
-    Calendar,
 } from "lucide-react"
 import type { Event, EventColor } from "@/lib/types"
-import { EVENT_COLORS } from "@/lib/types"
 import { formatDateString } from "@/lib/time-utils"
-import { EventForm, EventDialogFooter } from "@/components/EventForm"
+import { EventForm, EventDialogFooter, parseTimeValue, formatTimeString, validateEventTimes, DAY_OPTIONS_SUNDAY_FIRST } from "@/components/EventForm"
+import { useSettings } from "@/components/SettingsContext"
 
 interface EditEventDialogProps {
     open: boolean
@@ -32,50 +24,30 @@ interface EditEventDialogProps {
     onUpdateEvent: (event: Event) => void
 }
 
-const dayOptions = [
-    { label: "Mon", value: 0 },
-    { label: "Tue", value: 1 },
-    { label: "Wed", value: 2 },
-    { label: "Thu", value: 3 },
-    { label: "Fri", value: 4 },
-    { label: "Sat", value: 5 },
-    { label: "Sun", value: 6 },
-]
+// Always use Sunday-first day options (US standard)
+const dayOptions = DAY_OPTIONS_SUNDAY_FIRST
 
-// Format hour and minute to time string
-function formatTimeString(hour: number, minute: number): string {
-    return `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`
-}
-
-// Parse time string to hour and minute
-function parseTimeValue(timeStr: string): { hour: number; minute: number } {
-    const [h, m] = timeStr.split(":").map(Number)
-    return { hour: h || 8, minute: m || 0 }
-}
-
-// Get the Monday of the week containing the given date
-function getMonday(date: Date): Date {
+// Get the Sunday of the week containing the given date
+function getSunday(date: Date): Date {
     const d = new Date(date)
-    const day = d.getDay()
-    const diff = day === 0 ? -6 : 1 - day
-    d.setDate(d.getDate() + diff)
+    const day = d.getDay() // 0=Sun, 1=Mon, ..., 6=Sat
+    d.setDate(d.getDate() - day) // Go back to Sunday
     d.setHours(0, 0, 0, 0)
     return d
 }
 
-// Get the date for a specific day of the week based on Monday
-function getDateForDay(monday: Date, dayIndex: number): Date {
-    const date = new Date(monday)
-    date.setDate(monday.getDate() + dayIndex)
+// Get the date for a specific day of the week based on Sunday (0=Sun, 6=Sat)
+function getDateForDay(sunday: Date, dayIndex: number): Date {
+    const date = new Date(sunday)
+    date.setDate(sunday.getDate() + dayIndex)
     return date
 }
 
-// Get day index from date string (0 = Monday, 6 = Sunday)
+// Get day index from date string (0 = Sunday, 6 = Saturday) - Sunday-first format
 function getDayIndexFromDate(dateStr: string): number {
     const date = new Date(dateStr)
-    const day = date.getDay()
-    // Convert from JS day (0=Sun, 1=Mon, ..., 6=Sat) to our format (0=Mon, ..., 6=Sun)
-    return day === 0 ? 6 : day - 1
+    // JS day is already 0=Sun, 1=Mon, ..., 6=Sat which matches our Sunday-first format
+    return date.getDay()
 }
 
 export function EditEventDialog({
@@ -84,6 +56,7 @@ export function EditEventDialog({
     event,
     onUpdateEvent,
 }: EditEventDialogProps) {
+    const { settings } = useSettings()
     const [title, setTitle] = useState("")
     const [selectedDay, setSelectedDay] = useState<number>(0)
     const [startTime, setStartTime] = useState("08:00")
@@ -91,15 +64,16 @@ export function EditEventDialog({
     const [description, setDescription] = useState("")
     const [selectedColor, setSelectedColor] = useState<EventColor>("blue")
 
-    // Available color options
-    const colorOptions: EventColor[] = ['blue', 'green', 'red', 'yellow', 'purple', 'pink', 'orange', 'teal']
+    // Working hours boundaries (A and B)
+    const minStartMinutes = settings.workingHoursStart * 60 // A in minutes
+    const maxEndMinutes = settings.workingHoursEnd * 60     // B in minutes
 
-    // Calculate the week dates based on event's date
+    // Calculate the week dates based on event's date (Sunday-first)
     const weekDates = useMemo(() => {
         if (!event) return []
         const eventDate = new Date(event.date)
-        const monday = getMonday(eventDate)
-        return dayOptions.map((_, index) => getDateForDay(monday, index))
+        const sunday = getSunday(eventDate)
+        return dayOptions.map((_, index) => getDateForDay(sunday, index))
     }, [event])
 
     // Initialize form with event data when dialog opens
@@ -117,8 +91,16 @@ export function EditEventDialog({
     const handleSubmit = () => {
         if (!title.trim() || !event) return
 
-        const start = parseTimeValue(startTime)
-        const end = parseTimeValue(endTime)
+        // Validate times on submit
+        const validatedTimes = validateEventTimes({
+            startTime,
+            endTime,
+            minStartMinutes,
+            maxEndMinutes
+        })
+
+        const start = parseTimeValue(validatedTimes.startTime)
+        const end = parseTimeValue(validatedTimes.endTime)
         const newDate = weekDates[selectedDay]
 
         onUpdateEvent({

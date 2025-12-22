@@ -13,10 +13,102 @@ import {
 } from "lucide-react"
 import { type EventColor, EVENT_COLORS } from "@/lib/types"
 
-interface DayOption {
+// ============== Time Utility Functions ==============
+
+// Parse time string to hour and minute
+export function parseTimeValue(timeStr: string): { hour: number; minute: number } {
+    const [h, m] = timeStr.split(":").map(Number)
+    return { hour: h || 8, minute: m || 0 }
+}
+
+// Format hour and minute to time string
+export function formatTimeString(hour: number, minute: number): string {
+    return `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`
+}
+
+// Convert time string to total minutes
+export function timeToMinutes(timeStr: string): number {
+    const { hour, minute } = parseTimeValue(timeStr)
+    return hour * 60 + minute
+}
+
+// Convert total minutes to time string
+export function minutesToTime(minutes: number): string {
+    const h = Math.floor(minutes / 60)
+    const m = minutes % 60
+    return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`
+}
+
+// ============== Time Validation (On Submit) ==============
+
+interface ValidateEventTimesProps {
+    startTime: string  // C
+    endTime: string    // D
+    minStartMinutes: number  // A in minutes (workingHoursStart * 60)
+    maxEndMinutes: number    // B in minutes (workingHoursEnd * 60)
+}
+
+interface ValidatedTimes {
+    startTime: string
+    endTime: string
+}
+
+/**
+ * Validates and adjusts event times on submit.
+ * Rules:
+ * 1. A ≤ C ≤ B-15min (clamp C to this range)
+ * 2. A+15min ≤ D ≤ B (clamp D to this range)
+ * 3. C ≤ D-15min (if C > D-15min, set D = C+15min)
+ */
+export function validateEventTimes({
+    startTime,
+    endTime,
+    minStartMinutes,
+    maxEndMinutes
+}: ValidateEventTimesProps): ValidatedTimes {
+    let cMinutes = timeToMinutes(startTime)
+    let dMinutes = timeToMinutes(endTime)
+
+    // Step 1: Clamp C to [A, B-15min]
+    const maxCMinutes = maxEndMinutes - 15
+    if (cMinutes < minStartMinutes) cMinutes = minStartMinutes
+    if (cMinutes > maxCMinutes) cMinutes = maxCMinutes
+
+    // Step 2: Clamp D to [A+15min, B]
+    const minDMinutes = minStartMinutes + 15
+    if (dMinutes < minDMinutes) dMinutes = minDMinutes
+    if (dMinutes > maxEndMinutes) dMinutes = maxEndMinutes
+
+    // Step 3: Ensure C ≤ D-15min (if not, set D = C+15min)
+    if (cMinutes > dMinutes - 15) {
+        dMinutes = cMinutes + 15
+        // Re-clamp D to max if needed
+        if (dMinutes > maxEndMinutes) dMinutes = maxEndMinutes
+    }
+
+    return {
+        startTime: minutesToTime(cMinutes),
+        endTime: minutesToTime(dMinutes)
+    }
+}
+
+// ============== Shared Day Options ==============
+
+export interface DayOption {
     label: string
     value: number
 }
+
+// Day options always starting with Sunday (US standard)
+export const DAY_OPTIONS_SUNDAY_FIRST: DayOption[] = [
+    { label: "Sun", value: 0 },
+    { label: "Mon", value: 1 },
+    { label: "Tue", value: 2 },
+    { label: "Wed", value: 3 },
+    { label: "Thu", value: 4 },
+    { label: "Fri", value: 5 },
+    { label: "Sat", value: 6 },
+]
 
 interface EventFormProps {
     title: string

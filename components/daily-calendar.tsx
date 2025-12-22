@@ -10,8 +10,8 @@ import { type Event, EVENT_COLORS } from "@/lib/types"
 // Utility functions imported from lib/time-utils
 import {
     formatDateString,
-    formatHour as formatHourUtil,
-    formatTime as formatTimeUtil,
+    formatHour,
+    formatTime,
     getEventPosition as getEventPositionUtil,
     groupOverlappingEvents,
     DAY_NAMES,
@@ -55,26 +55,6 @@ function formatDate(date: Date): string {
     const year = date.getFullYear()
 
     return `${dayName}, ${month} ${day}, ${year}`
-}
-
-// Wrapper to match existing usage
-function formatHour(hour: number, use12Hour: boolean): string {
-    return formatHourUtil(hour, use12Hour)
-}
-
-function formatTime(hour: number, minute: number, use12Hour: boolean): string {
-    return formatTimeUtil(hour, minute, use12Hour)
-}
-
-function getEventPosition(event: Event, rowHeight: number) {
-    return getEventPositionUtil(
-        event.startHour,
-        event.startMinute,
-        event.endHour,
-        event.endMinute,
-        rowHeight,
-        8 // Default minHour
-    )
 }
 
 

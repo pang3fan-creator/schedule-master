@@ -36,11 +36,11 @@ export function useDragToCreate({ onAddEvent, rowHeight, timeIncrement }: UseDra
         let endTotal: number
 
         if (currentTotal < originalStartTotal) {
-            // Dragging upwards
+            // Dragging upwards: end time is the END of the original grid cell (N+1 hour)
             startTotal = currentTotal
-            endTotal = originalStartTotal
+            endTotal = originalStartTotal + 60
         } else {
-            // Dragging downwards
+            // Dragging downwards: start time is the START of the original grid cell (N)
             startTotal = originalStartTotal
             endTotal = currentTotal
         }
@@ -91,11 +91,11 @@ export function useDragToCreate({ onAddEvent, rowHeight, timeIncrement }: UseDra
             } else {
                 // Drag: Use calculated position
                 if (currentTotal < originalStartTotal) {
-                    // Dragging upwards
+                    // Dragging upwards: end time is the END of the original grid cell (N+1 hour)
                     startTotal = currentTotal
-                    endTotal = originalStartTotal
+                    endTotal = originalStartTotal + 60
                 } else {
-                    // Dragging downwards
+                    // Dragging downwards: start time is the START of the original grid cell (N)
                     startTotal = originalStartTotal
                     endTotal = currentTotal
                 }
