@@ -21,9 +21,7 @@ import {
 } from "@clerk/nextjs"
 import { AuthModal } from "@/components/auth-modal"
 import { SubscriptionModal } from "@/components/SubscriptionModal"
-import { UpgradeModal } from "@/components/UpgradeModal"
 import { getAllTemplates } from "@/lib/templates"
-import { useSubscription } from "@/components/SubscriptionContext"
 import { cn } from "@/lib/utils"
 
 // Icon mapping for templates
@@ -42,12 +40,10 @@ const navLinks = [
 
 export function MobileNav() {
     const pathname = usePathname()
-    const { isPro } = useSubscription()
     const [open, setOpen] = useState(false)
     const [authModalOpen, setAuthModalOpen] = useState(false)
     const [authMode, setAuthMode] = useState<"sign-in" | "sign-up">("sign-in")
     const [subscriptionModalOpen, setSubscriptionModalOpen] = useState(false)
-    const [upgradeModalOpen, setUpgradeModalOpen] = useState(false)
     const [showTemplates, setShowTemplates] = useState(false)
 
     const templates = getAllTemplates()
@@ -58,15 +54,8 @@ export function MobileNav() {
         setAuthModalOpen(true)
     }
 
-    const handleTemplateClick = (e: React.MouseEvent, template: { slug: string; requiresPro?: boolean }) => {
-        if (template.requiresPro && !isPro) {
-            e.preventDefault()
-            setOpen(false)
-            setUpgradeModalOpen(true)
-        } else {
-            setOpen(false)
-        }
-    }
+    // Removed paywall check on template link click - users can now view all templates
+    // Paywall is only triggered when clicking "Use This Template" button on detail page
 
     const isTemplatesActive = pathname.startsWith("/templates")
 
@@ -115,7 +104,6 @@ export function MobileNav() {
                                             <SheetClose asChild key={template.slug}>
                                                 <Link
                                                     href={`/templates/${template.slug}`}
-                                                    onClick={(e) => handleTemplateClick(e, template)}
                                                     className="flex items-center gap-3 py-2 px-3 rounded-lg hover:bg-gray-50"
                                                 >
                                                     <div className="p-1 bg-blue-50 rounded">
@@ -221,13 +209,6 @@ export function MobileNav() {
             <SubscriptionModal
                 open={subscriptionModalOpen}
                 onOpenChange={setSubscriptionModalOpen}
-            />
-
-            {/* Upgrade Modal for Pro templates */}
-            <UpgradeModal
-                open={upgradeModalOpen}
-                onOpenChange={setUpgradeModalOpen}
-                feature="Pro Templates"
             />
         </>
     )
