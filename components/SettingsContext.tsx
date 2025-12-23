@@ -15,7 +15,7 @@ export interface CalendarSettings {
 const DEFAULT_SETTINGS: CalendarSettings = {
   weekStartsOnSunday: true,    // PRD requirement: US default is Sunday
   use12HourFormat: true,       // PRD requirement: US default is 12h AM/PM
-  timeIncrement: 30,
+  timeIncrement: 5,
   workingHoursStart: 8,        // 8 AM
   workingHoursEnd: 17,         // 5 PM
 }

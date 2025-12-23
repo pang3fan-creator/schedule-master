@@ -3,9 +3,7 @@ import Image from "next/image"
 
 export function Footer() {
     return (
-        <footer className="relative border-t border-gray-100 bg-gradient-to-b from-white to-gray-50/50 py-8 md:py-10">
-            {/* Subtle gradient line at top */}
-            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-500/20 to-transparent" />
+        <footer className="border-t border-gray-200 bg-gray-50 py-6 md:py-8">
 
             {/* Desktop Layout - horizontal (hidden on mobile) */}
             <div className="hidden md:flex container mx-auto px-4 flex-row justify-between items-center gap-4 text-sm text-gray-500">

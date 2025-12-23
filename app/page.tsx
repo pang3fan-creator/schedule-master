@@ -332,7 +332,7 @@ export default function ScheduleBuilderPage() {
   }, [])
 
   return (
-    <div className={`flex flex-col bg-white ${isExporting ? '' : 'h-screen'}`}>
+    <div className={`flex flex-col bg-gray-50 ${isExporting ? '' : 'h-screen'}`}>
       {!isExporting && <Navbar />}
       {/* SEO: H1 Title - visually hidden but accessible for search engines */}
       {!isExporting && (

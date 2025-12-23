@@ -52,7 +52,7 @@ export function Navbar() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 flex h-16 shrink-0 items-center justify-between border-b border-white/10 bg-white/70 backdrop-blur-lg px-4 md:px-6 transition-all dark:bg-black/70 dark:border-white/5">
+      <header className="sticky top-0 z-50 flex h-16 shrink-0 items-center justify-between border-b border-gray-200 bg-white/80 backdrop-blur-md px-4 md:px-6 shadow-sm transition-all dark:bg-black/70 dark:border-white/5">
         {/* Mobile: Hamburger Menu */}
         <div className="md:hidden">
           <MobileNav />
