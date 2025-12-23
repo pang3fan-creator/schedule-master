@@ -3,10 +3,7 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* Prevent layout shift using scrollbar-gutter */
-html {
-  scrollbar-gutter: stable;
-}
+/* scrollbar-gutter removed to prevent white bar on full-screen pages */
 
 /* 
   Aggressively override Radix UI's automatic scrollbar compensation 
