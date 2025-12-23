@@ -2,8 +2,7 @@
 
 import React, { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-import { Navbar } from "@/components/navbar"
-import { Footer } from "@/components/footer"
+import { PageLayout } from "@/components/page-layout"
 import { Button } from "@/components/ui/button"
 import { getTemplate, type TemplateData } from "@/lib/templates"
 import { formatDateString } from "@/lib/time-utils"
@@ -203,26 +202,22 @@ export function TemplateDetailClient({ slug }: TemplateDetailClientProps) {
 
     if (!template) {
         return (
-            <div className="min-h-screen flex flex-col bg-gray-50">
-                <Navbar />
-                <main className="flex-1 flex items-center justify-center">
+            <PageLayout bgColor="bg-gray-50" contentPadding="">
+                <div className="flex-1 flex items-center justify-center">
                     <div className="text-center">
                         <h1 className="text-2xl font-bold text-gray-900 mb-4">Template Not Found</h1>
                         <Link href="/templates" className="text-blue-600 hover:underline">
                             ← Back to Templates
                         </Link>
                     </div>
-                </main>
-                <Footer />
-            </div>
+                </div>
+            </PageLayout>
         )
     }
 
     return (
-        <div className="min-h-screen flex flex-col bg-gray-50/50">
-            <Navbar />
-
-            <main className="flex-1 py-16">
+        <>
+            <PageLayout bgColor="bg-gray-50/50">
                 {/* Back link */}
                 <div className="container mx-auto px-4 max-w-6xl">
                     <Link
@@ -324,11 +319,7 @@ export function TemplateDetailClient({ slug }: TemplateDetailClientProps) {
                         </div>
                     </div>
                 </section>
-
-
-            </main>
-
-            <Footer />
+            </PageLayout>
 
             {/* Upgrade Modal */}
             <UpgradeModal
@@ -336,6 +327,6 @@ export function TemplateDetailClient({ slug }: TemplateDetailClientProps) {
                 onOpenChange={setUpgradeModalOpen}
                 feature={template.title}
             />
-        </div>
+        </>
     )
 }

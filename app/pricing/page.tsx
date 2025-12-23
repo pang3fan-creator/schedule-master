@@ -2,8 +2,7 @@
 
 import { PricingCard } from "@/components/pricing-card";
 import { FAQAccordion } from "@/components/faq-accordion";
-import { Navbar } from "@/components/navbar";
-import { Footer } from "@/components/footer";
+import { PageLayout } from "@/components/page-layout";
 import { useSearchParams } from "next/navigation";
 import { Suspense, Fragment as ReactFragment } from "react";
 
@@ -234,90 +233,84 @@ export default function PricingPage() {
     }, {} as Record<string, typeof comparisonTable>);
 
     return (
-        <div className="min-h-screen flex flex-col bg-gradient-to-b from-violet-50/30 via-white to-white">
-            <Navbar />
+        <PageLayout bgColor="bg-gradient-to-b from-violet-50/30 via-white to-white">
+            {/* Success Banner */}
+            <Suspense fallback={null}>
+                <SuccessBanner />
+            </Suspense>
 
-            <main className="flex-1 py-16">
-                {/* Success Banner */}
-                <Suspense fallback={null}>
-                    <SuccessBanner />
-                </Suspense>
+            {/* Hero Section */}
+            <div className="container mx-auto px-4 text-center mb-12">
+                <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl mb-4">
+                    Professional Scheduling Tools
+                </h1>
+                <p className="text-xl text-gray-500 max-w-2xl mx-auto mb-2">
+                    Start with our free schedule builder forever, or upgrade to Pro to automate your workflow with AI, export high-res PDFs.
+                </p>
+                <p className="text-sm text-gray-400 italic max-w-2xl mx-auto">
+                    Trusted by 5000+ students and managers worldwide.
+                </p>
+            </div>
 
-                {/* Hero Section */}
-                <div className="container mx-auto px-4 text-center mb-12">
-                    <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl mb-4">
-                        Professional Scheduling Tools
-                    </h1>
-                    <p className="text-xl text-gray-500 max-w-2xl mx-auto mb-2">
-                        Start with our free schedule builder forever, or upgrade to Pro to automate your workflow with AI, export high-res PDFs.
-                    </p>
-                    <p className="text-sm text-gray-400 italic max-w-2xl mx-auto">
-                        Trusted by 5000+ students and managers worldwide.
-                    </p>
+            {/* Pricing Cards */}
+            <div className="container mx-auto px-4 mb-24">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    {plans.map((plan) => (
+                        <PricingCard key={plan.title} {...plan} />
+                    ))}
                 </div>
+            </div>
 
-                {/* Pricing Cards */}
-                <div className="container mx-auto px-4 mb-24">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        {plans.map((plan) => (
-                            <PricingCard key={plan.title} {...plan} />
-                        ))}
-                    </div>
-                </div>
-
-                {/* Comparison Table */}
-                <div className="container mx-auto px-4 mb-24 max-w-5xl">
-                    <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
-                        Compare Plans & Features
-                    </h2>
-                    <div className="overflow-x-auto rounded-xl border border-gray-200 bg-white shadow-sm">
-                        <table className="w-full text-sm text-left">
-                            <thead className="bg-gray-50 text-gray-900 font-medium">
-                                <tr>
-                                    <th className="px-6 py-4 text-left w-1/3">Feature</th>
-                                    <th className="px-6 py-4 text-center w-1/6">Starter</th>
-                                    <th className="px-6 py-4 text-center w-1/6">7-Day Pass</th>
-                                    <th className="px-6 py-4 text-center w-1/6">Monthly</th>
-                                    <th className="px-6 py-4 text-center w-1/6">Lifetime</th>
-                                </tr>
-                            </thead>
-                            <tbody className="divide-y divide-gray-100">
-                                {Object.entries(groupedTable).map(([category, rows]) => (
-                                    <ReactFragment key={category}>
-                                        <tr className={`bg-gray-50/80`}>
-                                            <td colSpan={5} className="px-6 py-4 font-semibold text-gray-900 text-sm tracking-wide uppercase">
-                                                {category}
-                                            </td>
+            {/* Comparison Table */}
+            <div className="container mx-auto px-4 mb-24 max-w-5xl">
+                <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
+                    Compare Plans & Features
+                </h2>
+                <div className="overflow-x-auto rounded-xl border border-gray-200 bg-white shadow-sm">
+                    <table className="w-full text-sm text-left">
+                        <thead className="bg-gray-50 text-gray-900 font-medium">
+                            <tr>
+                                <th className="px-6 py-4 text-left w-1/3">Feature</th>
+                                <th className="px-6 py-4 text-center w-1/6">Starter</th>
+                                <th className="px-6 py-4 text-center w-1/6">7-Day Pass</th>
+                                <th className="px-6 py-4 text-center w-1/6">Monthly</th>
+                                <th className="px-6 py-4 text-center w-1/6">Lifetime</th>
+                            </tr>
+                        </thead>
+                        <tbody className="divide-y divide-gray-100">
+                            {Object.entries(groupedTable).map(([category, rows]) => (
+                                <ReactFragment key={category}>
+                                    <tr className={`bg-gray-50/80`}>
+                                        <td colSpan={5} className="px-6 py-4 font-semibold text-gray-900 text-sm tracking-wide uppercase">
+                                            {category}
+                                        </td>
+                                    </tr>
+                                    {rows.map((row) => (
+                                        <tr key={row.feature} className="hover:bg-violet-50/30 transition-colors duration-150">
+                                            <td className="px-6 py-4 font-medium text-gray-700">{row.feature}</td>
+                                            <td className="px-6 py-4 text-center">{renderStatus(row.free)}</td>
+                                            <td className="px-6 py-4 text-center">{renderStatus(row.pass)}</td>
+                                            <td className="px-6 py-4 text-center">{renderStatus(row.pro)}</td>
+                                            <td className="px-6 py-4 text-center">{renderStatus(row.lifetime)}</td>
                                         </tr>
-                                        {rows.map((row) => (
-                                            <tr key={row.feature} className="hover:bg-violet-50/30 transition-colors duration-150">
-                                                <td className="px-6 py-4 font-medium text-gray-700">{row.feature}</td>
-                                                <td className="px-6 py-4 text-center">{renderStatus(row.free)}</td>
-                                                <td className="px-6 py-4 text-center">{renderStatus(row.pass)}</td>
-                                                <td className="px-6 py-4 text-center">{renderStatus(row.pro)}</td>
-                                                <td className="px-6 py-4 text-center">{renderStatus(row.lifetime)}</td>
-                                            </tr>
-                                        ))}
-                                    </ReactFragment>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
+                                    ))}
+                                </ReactFragment>
+                            ))}
+                        </tbody>
+                    </table>
                 </div>
+            </div>
 
-                {/* FAQ Section */}
-                <div className="container mx-auto px-4 max-w-5xl">
-                    <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
-                        Frequently Asked Questions
-                    </h2>
-                    <div className="bg-white rounded-xl border border-gray-200 p-6 md:p-8 shadow-sm">
-                        <FAQAccordion items={faqs} />
-                    </div>
+            {/* FAQ Section */}
+            <div className="container mx-auto px-4 max-w-5xl">
+                <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
+                    Frequently Asked Questions
+                </h2>
+                <div className="bg-white rounded-xl border border-gray-200 p-6 md:p-8 shadow-sm">
+                    <FAQAccordion items={faqs} />
                 </div>
-            </main>
-
-            <Footer />
-        </div>
+            </div>
+        </PageLayout>
     );
 }
 

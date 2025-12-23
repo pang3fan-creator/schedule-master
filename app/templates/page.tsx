@@ -2,9 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Navbar } from "@/components/navbar";
-import { Footer } from "@/components/footer";
-import Link from "next/link";
+import { PageLayout } from "@/components/page-layout";
+import Link from "next/link";;
 import { Briefcase, GraduationCap, Dumbbell, Palette, Sparkles, Calendar, Crown, ChevronLeft, ChevronRight, AlertTriangle } from "lucide-react";
 import { getAllTemplates } from "@/lib/templates";
 import { CategoryFilter } from "@/components/category-filter";
@@ -95,10 +94,8 @@ export default function TemplatesPage() {
     };
 
     return (
-        <div className="min-h-screen flex flex-col bg-gray-50/50">
-            <Navbar />
-
-            <main className="flex-1 py-16">
+        <>
+            <PageLayout bgColor="bg-gray-50/50">
                 {/* Hero Section */}
                 <PageHero
                     title="Schedule Templates"
@@ -260,9 +257,7 @@ export default function TemplatesPage() {
                         ]} />
                     </div>
                 </section>
-            </main>
-
-            <Footer />
+            </PageLayout>
 
             {/* Blank Canvas Confirmation Dialog */}
             <ConfirmDialog
@@ -276,6 +271,6 @@ export default function TemplatesPage() {
                 onConfirm={handleBlankCanvasConfirm}
                 variant="blue"
             />
-        </div>
+        </>
     );
 }

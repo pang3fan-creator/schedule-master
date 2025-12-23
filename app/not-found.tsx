@@ -1,17 +1,14 @@
 "use client"
 
 import Link from "next/link"
-import { Navbar } from "@/components/navbar"
-import { Footer } from "@/components/footer"
+import { PageLayout } from "@/components/page-layout"
 import { Button } from "@/components/ui/button"
 import { Home, Search } from "lucide-react"
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
-      <Navbar />
-
-      <main className="flex-1 flex items-center justify-center px-4 py-16">
+    <PageLayout bgColor="bg-gray-50" contentPadding="">
+      <div className="flex-1 flex items-center justify-center px-4 py-16">
         <div className="text-center max-w-2xl mx-auto">
           {/* 404 Number */}
           <div className="mb-8">
@@ -67,9 +64,7 @@ export default function NotFound() {
             </div>
           </div>
         </div>
-      </main>
-
-      <Footer />
-    </div>
+      </div>
+    </PageLayout>
   )
 }

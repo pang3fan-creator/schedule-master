@@ -42,20 +42,30 @@ export function AuthModal({ open, onOpenChange, defaultMode = "sign-in" }: AuthM
                 <DialogTitle className="sr-only">Authentication</DialogTitle>
                 <div className="flex min-h-[620px]">
                     {/* Left Panel - Brand Area */}
-                    <div className="hidden md:flex flex-col justify-center items-center w-[45%] bg-gradient-to-br from-gray-50 to-blue-50 p-8 relative overflow-hidden">
-                        {/* Decorative circles */}
+                    <div className="hidden md:flex flex-col justify-center items-center w-[45%] bg-gradient-to-br from-blue-600 via-blue-500 to-violet-600 p-8 relative overflow-hidden">
+                        {/* Decorative elements */}
                         <DecorativeCircles />
 
                         {/* Content */}
                         <div className="relative z-10 text-center">
-                            <h2 className="text-2xl font-bold text-gray-900 mb-3">
-                                {activeTab === "sign-in" ? "Good to see you again!" : "Join TrySchedule"}
+                            <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
+                                <Image src="/logo.png" alt="TrySchedule" width={40} height={40} className="object-contain" />
+                            </div>
+                            <h2 className="text-2xl font-bold text-white mb-3">
+                                {activeTab === "sign-in" ? "Welcome back!" : "Join TrySchedule"}
                             </h2>
-                            <p className="text-gray-500 text-sm max-w-[280px]">
+                            <p className="text-blue-100 text-sm max-w-[280px] leading-relaxed">
                                 {activeTab === "sign-in"
                                     ? "Let's pick up where you left off and keep scheduling smarter"
                                     : "Start building beautiful schedules in minutes, no learning curve required"}
                             </p>
+                        </div>
+
+                        {/* Feature highlights */}
+                        <div className="relative z-10 mt-8 space-y-3 w-full max-w-[240px]">
+                            <FeatureItem icon="✨" text="Drag & drop simplicity" />
+                            <FeatureItem icon="🎨" text="Beautiful color themes" />
+                            <FeatureItem icon="📱" text="Works on any device" />
                         </div>
 
                         {/* Calendar Preview Card */}
@@ -628,64 +638,51 @@ function SignUpForm({ onSuccess }: { onSuccess: () => void }) {
 // ============================================
 // Decorative Components
 // ============================================
+// Feature Item Component
+function FeatureItem({ icon, text }: { icon: string; text: string }) {
+    return (
+        <div className="flex items-center gap-3 bg-white/10 backdrop-blur-sm rounded-lg px-4 py-2.5">
+            <span className="text-lg">{icon}</span>
+            <span className="text-sm text-white font-medium">{text}</span>
+        </div>
+    )
+}
+
 function DecorativeCircles() {
     return (
         <>
-            {/* Top left partial circle */}
-            <div className="absolute -top-20 -left-20 w-40 h-40">
-                <svg viewBox="0 0 100 100" className="w-full h-full">
+            {/* Large gradient orb - top right */}
+            <div className="absolute -top-20 -right-20 w-64 h-64 bg-white/10 rounded-full blur-3xl" />
+
+            {/* Medium orb - bottom left */}
+            <div className="absolute -bottom-16 -left-16 w-48 h-48 bg-violet-400/20 rounded-full blur-2xl" />
+
+            {/* Small floating circles */}
+            <div className="absolute top-20 right-8 w-3 h-3 bg-white/30 rounded-full animate-pulse" />
+            <div className="absolute top-32 left-12 w-2 h-2 bg-white/20 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }} />
+            <div className="absolute bottom-24 right-16 w-2 h-2 bg-white/25 rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
+
+            {/* Decorative ring */}
+            <div className="absolute top-1/4 -left-8 w-24 h-24">
+                <svg viewBox="0 0 100 100" className="w-full h-full opacity-20">
                     <circle
                         cx="50" cy="50" r="40"
                         fill="none"
-                        stroke="#3B82F6"
-                        strokeWidth="8"
-                        strokeDasharray="125 126"
-                        strokeLinecap="round"
+                        stroke="white"
+                        strokeWidth="2"
+                        strokeDasharray="20 10"
                     />
                 </svg>
             </div>
 
-            {/* Bottom left partial circle */}
-            <div className="absolute -bottom-10 -left-10 w-32 h-32">
-                <svg viewBox="0 0 100 100" className="w-full h-full">
+            {/* Another decorative ring */}
+            <div className="absolute bottom-1/3 -right-4 w-16 h-16">
+                <svg viewBox="0 0 100 100" className="w-full h-full opacity-15">
                     <circle
                         cx="50" cy="50" r="40"
                         fill="none"
-                        stroke="#EF4444"
-                        strokeWidth="8"
-                        strokeDasharray="100 152"
-                        strokeLinecap="round"
-                        transform="rotate(45 50 50)"
-                    />
-                </svg>
-            </div>
-
-            {/* Right side partial circle */}
-            <div className="absolute top-1/3 -right-8 w-24 h-24">
-                <svg viewBox="0 0 100 100" className="w-full h-full">
-                    <circle
-                        cx="50" cy="50" r="40"
-                        fill="none"
-                        stroke="#FBBF24"
-                        strokeWidth="8"
-                        strokeDasharray="80 172"
-                        strokeLinecap="round"
-                        transform="rotate(-90 50 50)"
-                    />
-                </svg>
-            </div>
-
-            {/* Small accent circles */}
-            <div className="absolute bottom-1/4 left-1/4 w-16 h-16">
-                <svg viewBox="0 0 100 100" className="w-full h-full">
-                    <circle
-                        cx="50" cy="50" r="40"
-                        fill="none"
-                        stroke="#3B82F6"
-                        strokeWidth="8"
-                        strokeDasharray="60 192"
-                        strokeLinecap="round"
-                        transform="rotate(180 50 50)"
+                        stroke="white"
+                        strokeWidth="3"
                     />
                 </svg>
             </div>
@@ -695,31 +692,74 @@ function DecorativeCircles() {
 
 function CalendarPreviewCard() {
     return (
-        <div className="bg-white rounded-xl shadow-lg p-4 w-[200px]">
-            <div className="flex items-center gap-2 mb-3">
-                <Image src="/logo.png" alt="TrySchedule - Free Online Schedule Builder" width={16} height={16} className="object-contain" />
-                <span className="text-xs font-medium text-gray-700"><strong>Try</strong>Schedule</span>
+        <div className="bg-white rounded-xl shadow-2xl p-4 w-[220px] transform hover:scale-105 transition-transform duration-300">
+            {/* Header */}
+            <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-2">
+                    <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-blue-500 to-violet-500 flex items-center justify-center">
+                        <span className="text-white text-xs font-bold">T</span>
+                    </div>
+                    <span className="text-xs font-semibold text-gray-700">
+                        <span className="text-blue-600">Try</span>Schedule
+                    </span>
+                </div>
+                <div className="flex gap-1">
+                    <div className="w-2 h-2 rounded-full bg-red-400" />
+                    <div className="w-2 h-2 rounded-full bg-yellow-400" />
+                    <div className="w-2 h-2 rounded-full bg-green-400" />
+                </div>
             </div>
-            <div className="space-y-2">
-                {/* Mock calendar rows */}
-                <div className="flex gap-1">
-                    <div className="h-2 w-8 bg-gray-100 rounded" />
-                    <div className="h-2 flex-1 bg-blue-100 rounded" />
+
+            {/* Day headers */}
+            <div className="flex gap-1 mb-2">
+                {['M', 'T', 'W', 'T', 'F'].map((day, i) => (
+                    <div key={i} className="flex-1 text-center text-[10px] font-medium text-gray-400">
+                        {day}
+                    </div>
+                ))}
+            </div>
+
+            {/* Calendar grid */}
+            <div className="space-y-1.5">
+                {/* Row 1 */}
+                <div className="flex gap-1 h-3">
+                    <div className="flex-1 bg-blue-400 rounded-sm" />
+                    <div className="flex-1 bg-blue-400 rounded-sm" />
+                    <div className="flex-1 bg-gray-100 rounded-sm" />
+                    <div className="flex-1 bg-gray-100 rounded-sm" />
+                    <div className="flex-1 bg-violet-400 rounded-sm" />
                 </div>
-                <div className="flex gap-1">
-                    <div className="h-2 w-8 bg-gray-100 rounded" />
-                    <div className="h-2 w-12 bg-blue-200 rounded" />
-                    <div className="h-2 flex-1 bg-gray-50 rounded" />
+                {/* Row 2 */}
+                <div className="flex gap-1 h-3">
+                    <div className="flex-1 bg-gray-100 rounded-sm" />
+                    <div className="flex-1 bg-emerald-400 rounded-sm" />
+                    <div className="flex-1 bg-emerald-400 rounded-sm" />
+                    <div className="flex-1 bg-gray-100 rounded-sm" />
+                    <div className="flex-1 bg-gray-100 rounded-sm" />
                 </div>
-                <div className="flex gap-1">
-                    <div className="h-2 w-8 bg-gray-100 rounded" />
-                    <div className="h-2 flex-1 bg-yellow-100 rounded" />
+                {/* Row 3 */}
+                <div className="flex gap-1 h-3">
+                    <div className="flex-1 bg-amber-400 rounded-sm" />
+                    <div className="flex-1 bg-gray-100 rounded-sm" />
+                    <div className="flex-1 bg-gray-100 rounded-sm" />
+                    <div className="flex-1 bg-rose-400 rounded-sm" />
+                    <div className="flex-1 bg-rose-400 rounded-sm" />
                 </div>
-                <div className="flex gap-1">
-                    <div className="h-2 w-8 bg-gray-100 rounded" />
-                    <div className="h-2 w-16 bg-red-100 rounded" />
-                    <div className="h-2 flex-1 bg-blue-100 rounded" />
+                {/* Row 4 */}
+                <div className="flex gap-1 h-3">
+                    <div className="flex-1 bg-gray-100 rounded-sm" />
+                    <div className="flex-1 bg-gray-100 rounded-sm" />
+                    <div className="flex-1 bg-sky-400 rounded-sm" />
+                    <div className="flex-1 bg-sky-400 rounded-sm" />
+                    <div className="flex-1 bg-gray-100 rounded-sm" />
                 </div>
+            </div>
+
+            {/* Footer indicator */}
+            <div className="mt-3 flex items-center justify-center gap-1">
+                <div className="w-1 h-1 rounded-full bg-blue-500" />
+                <div className="w-1 h-1 rounded-full bg-gray-300" />
+                <div className="w-1 h-1 rounded-full bg-gray-300" />
             </div>
         </div>
     )

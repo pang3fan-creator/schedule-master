@@ -1,8 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Navbar } from "@/components/navbar"
-import { Footer } from "@/components/footer"
+import { PageLayout } from "@/components/page-layout"
 import { BlogCard } from "@/components/blog-card"
 import { CategoryFilter } from "@/components/category-filter"
 import { ChevronLeft, ChevronRight } from "lucide-react"
@@ -77,91 +76,85 @@ export function BlogPageClient({ posts, categories }: BlogPageClientProps) {
     }
 
     return (
-        <div className="min-h-screen flex flex-col bg-gray-50/50">
-            <Navbar />
+        <PageLayout bgColor="bg-gray-50/50">
+            {/* Hero Section */}
+            <PageHero
+                title="Our Blog"
+                description="Insights on productivity, scheduling, and team management."
+            />
 
-            <main className="flex-1 py-16">
-                {/* Hero Section */}
-                <PageHero
-                    title="Our Blog"
-                    description="Insights on productivity, scheduling, and team management."
+            {/* Category Filter */}
+            <div className="container mx-auto px-4 mb-12">
+                <CategoryFilter
+                    categories={categories}
+                    activeCategory={activeCategory}
+                    onCategoryChange={handleCategoryChange}
                 />
+            </div>
 
-                {/* Category Filter */}
-                <div className="container mx-auto px-4 mb-12">
-                    <CategoryFilter
-                        categories={categories}
-                        activeCategory={activeCategory}
-                        onCategoryChange={handleCategoryChange}
-                    />
+            {/* Featured Article */}
+            {featuredPost && (
+                <div className="container mx-auto px-4 mb-12 max-w-6xl">
+                    <BlogCard {...featuredPost} featured />
                 </div>
+            )}
 
-                {/* Featured Article */}
-                {featuredPost && (
-                    <div className="container mx-auto px-4 mb-12 max-w-6xl">
-                        <BlogCard {...featuredPost} featured />
+            {/* Article Grid */}
+            <div className="container mx-auto px-4 max-w-6xl">
+                {paginatedPosts.length > 0 ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {paginatedPosts.map((post) => (
+                            <BlogCard key={post.slug} {...post} />
+                        ))}
+                    </div>
+                ) : (
+                    <div className="text-center py-12 text-gray-500">
+                        No articles found in this category.
                     </div>
                 )}
 
-                {/* Article Grid */}
-                <div className="container mx-auto px-4 max-w-6xl">
-                    {paginatedPosts.length > 0 ? (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {paginatedPosts.map((post) => (
-                                <BlogCard key={post.slug} {...post} />
-                            ))}
-                        </div>
-                    ) : (
-                        <div className="text-center py-12 text-gray-500">
-                            No articles found in this category.
-                        </div>
-                    )}
+                {/* Pagination */}
+                {totalPages > 1 && (
+                    <div className="flex items-center justify-center gap-2 mt-12">
+                        <button
+                            onClick={() => handlePageChange(currentPage - 1)}
+                            disabled={currentPage === 1}
+                            className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                            aria-label="Previous page"
+                        >
+                            <ChevronLeft className="w-5 h-5" />
+                        </button>
 
-                    {/* Pagination */}
-                    {totalPages > 1 && (
-                        <div className="flex items-center justify-center gap-2 mt-12">
-                            <button
-                                onClick={() => handlePageChange(currentPage - 1)}
-                                disabled={currentPage === 1}
-                                className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                                aria-label="Previous page"
-                            >
-                                <ChevronLeft className="w-5 h-5" />
-                            </button>
+                        {getPageNumbers().map((page, index) => (
+                            typeof page === 'number' ? (
+                                <button
+                                    key={index}
+                                    onClick={() => handlePageChange(page)}
+                                    className={`w-10 h-10 flex items-center justify-center rounded-lg text-sm font-medium transition-colors ${currentPage === page
+                                        ? 'bg-blue-600 text-white'
+                                        : 'border border-gray-200 bg-white text-gray-700 hover:bg-gray-50'
+                                        }`}
+                                >
+                                    {page}
+                                </button>
+                            ) : (
+                                <span key={index} className="w-10 h-10 flex items-center justify-center text-gray-400">
+                                    {page}
+                                </span>
+                            )
+                        ))}
 
-                            {getPageNumbers().map((page, index) => (
-                                typeof page === 'number' ? (
-                                    <button
-                                        key={index}
-                                        onClick={() => handlePageChange(page)}
-                                        className={`w-10 h-10 flex items-center justify-center rounded-lg text-sm font-medium transition-colors ${currentPage === page
-                                            ? 'bg-blue-600 text-white'
-                                            : 'border border-gray-200 bg-white text-gray-700 hover:bg-gray-50'
-                                            }`}
-                                    >
-                                        {page}
-                                    </button>
-                                ) : (
-                                    <span key={index} className="w-10 h-10 flex items-center justify-center text-gray-400">
-                                        {page}
-                                    </span>
-                                )
-                            ))}
-
-                            <button
-                                onClick={() => handlePageChange(currentPage + 1)}
-                                disabled={currentPage === totalPages}
-                                className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                                aria-label="Next page"
-                            >
-                                <ChevronRight className="w-5 h-5" />
-                            </button>
-                        </div>
-                    )}
-                </div>
-            </main>
-
-            <Footer />
-        </div>
+                        <button
+                            onClick={() => handlePageChange(currentPage + 1)}
+                            disabled={currentPage === totalPages}
+                            className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                            aria-label="Next page"
+                        >
+                            <ChevronRight className="w-5 h-5" />
+                        </button>
+                    </div>
+                )}
+            </div>
+        </PageLayout>
     )
 }
