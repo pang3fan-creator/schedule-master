@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import { CreemCheckout } from "@creem_io/nextjs";
 import { useUser } from "@clerk/nextjs";
 import { useSubscription } from "@/components/SubscriptionContext";
-import { AuthModal } from "@/components/auth-modal";
+import { AuthModal } from "@/components/AuthModal";
 import Link from "next/link";
 
 /**

@@ -19,7 +19,7 @@ import {
     SignedOut,
     UserButton,
 } from "@clerk/nextjs"
-import { AuthModal } from "@/components/auth-modal"
+import { AuthModal } from "@/components/AuthModal"
 import { SubscriptionModal } from "@/components/SubscriptionModal"
 import { getAllTemplates } from "@/lib/templates"
 import { cn } from "@/lib/utils"

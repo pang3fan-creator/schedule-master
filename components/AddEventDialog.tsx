@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect } from "react"
 import {
     Dialog,
     DialogContent,
@@ -13,7 +13,7 @@ import {
     X,
 } from "lucide-react"
 import type { Event, EventColor } from "@/lib/types"
-import { formatDateString } from "@/lib/time-utils"
+import { formatDateString, getDateForDay } from "@/lib/time-utils"
 import { EventForm, EventDialogFooter, parseTimeValue, validateEventTimes, DAY_OPTIONS_SUNDAY_FIRST } from "@/components/EventForm"
 import { useSettings } from "@/components/SettingsContext"
 
@@ -28,13 +28,6 @@ interface AddEventDialogProps {
         endTime?: string
         selectedDays?: number[]
     }
-}
-
-// Get the date for a specific day of the week based on Monday
-function getDateForDay(monday: Date, dayIndex: number): Date {
-    const date = new Date(monday)
-    date.setDate(monday.getDate() + dayIndex)
-    return date
 }
 
 export function AddEventDialog({
@@ -57,26 +50,14 @@ export function AddEventDialog({
     const minStartMinutes = settings.workingHoursStart * 60 // A in minutes
     const maxEndMinutes = settings.workingHoursEnd * 60     // B in minutes
 
-    // Update state when initialData changes or dialog opens
-    useState(() => {
+    // Sync state when initialData changes or dialog opens
+    useEffect(() => {
         if (open && initialData) {
             if (initialData.startTime) setStartTime(initialData.startTime)
             if (initialData.endTime) setEndTime(initialData.endTime)
             if (initialData.selectedDays) setSelectedDays(initialData.selectedDays)
         }
-    })
-
-    // Also sync when initialData changes while open
-    // Using useEffect instead of useState initializer for updates
-    const [prevInitialData, setPrevInitialData] = useState(initialData)
-    if (initialData !== prevInitialData) {
-        setPrevInitialData(initialData)
-        if (initialData) {
-            if (initialData.startTime) setStartTime(initialData.startTime)
-            if (initialData.endTime) setEndTime(initialData.endTime)
-            if (initialData.selectedDays) setSelectedDays(initialData.selectedDays)
-        }
-    }
+    }, [open, initialData])
 
     // Always use Sunday-first day options (US standard)
     const dayOptions = DAY_OPTIONS_SUNDAY_FIRST

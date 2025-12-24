@@ -1,4 +1,4 @@
-import { PageLayout } from "@/components/page-layout"
+import { PageLayout } from "@/components/PageLayout"
 
 export const metadata = {
     title: "Terms of Service | TrySchedule",

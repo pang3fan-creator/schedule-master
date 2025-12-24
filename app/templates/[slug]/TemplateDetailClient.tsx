@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-import { PageLayout } from "@/components/page-layout"
+import { PageLayout } from "@/components/PageLayout"
 import { Button } from "@/components/ui/button"
 import { getTemplate, type TemplateData } from "@/lib/templates"
 import { formatDateString } from "@/lib/time-utils"
@@ -11,7 +11,7 @@ import { ArrowLeft, Calendar, Play, ChevronDown, Crown } from "lucide-react"
 import Link from "next/link"
 import { useSubscription } from "@/components/SubscriptionContext"
 import { UpgradeModal } from "@/components/UpgradeModal"
-import { FAQAccordion } from "@/components/faq-accordion"
+import { FAQAccordion } from "@/components/FaqAccordion"
 
 // Get the date of a specific day of the week for the current week
 // dayOfWeek: 0=Sunday, 1=Monday, 2=Tuesday, etc. (JavaScript standard)

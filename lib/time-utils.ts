@@ -94,6 +94,37 @@ export function getIsoDayIndex(date: Date): number {
 }
 
 /**
+ * Get the Sunday of the week containing the given date (for Sunday-first weeks)
+ */
+export function getSunday(date: Date): Date {
+    const d = new Date(date)
+    const day = d.getDay() // 0=Sun, 1=Mon, ..., 6=Sat
+    d.setDate(d.getDate() - day) // Go back to Sunday
+    d.setHours(0, 0, 0, 0)
+    return d
+}
+
+/**
+ * Get the date for a specific day of the week based on a reference date
+ * @param weekStart - The first day of the week
+ * @param dayIndex - The day index (0-6)
+ */
+export function getDateForDay(weekStart: Date, dayIndex: number): Date {
+    const date = new Date(weekStart)
+    date.setDate(weekStart.getDate() + dayIndex)
+    return date
+}
+
+/**
+ * Get day index from date string (0 = Sunday, 6 = Saturday) - Sunday-first format
+ */
+export function getDayIndexFromDate(dateStr: string): number {
+    const date = new Date(dateStr)
+    return date.getDay()
+}
+
+
+/**
  * Format date range for header (e.g., "October 21 - 27, 2025")
  */
 export function formatDateRange(startDate: Date, endDate: Date): string {

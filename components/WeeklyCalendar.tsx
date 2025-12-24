@@ -10,6 +10,21 @@ import { useEventDrag } from "@/hooks/useEventDrag"
 
 import { type Event, type EventColor, EVENT_COLORS } from "@/lib/types"
 
+// Import all time utilities from lib/time-utils
+import {
+  formatHour,
+  formatTime,
+  formatDateString,
+  getEventPosition as getEventPositionUtil,
+  getWeekStart,
+  getWeekDates,
+  formatDateRange,
+  DAY_NAMES_MONDAY_START,
+  DAY_NAMES_SUNDAY_START
+} from "@/lib/time-utils"
+import { useDragToCreate } from "@/hooks/useDragToCreate"
+import { useCurrentTime } from "@/hooks/useCurrentTime"
+
 interface WeeklyCalendarProps {
   events: Event[]
   selectedDate: Date
@@ -22,75 +37,7 @@ interface WeeklyCalendarProps {
   onAddEvent?: (data: { startTime: string; endTime: string; day: number }) => void
 }
 
-
-
-// Get the first day of the week containing the given date
-function getWeekStart(date: Date, startsOnSunday: boolean): Date {
-  const d = new Date(date)
-  const day = d.getDay()
-  // getDay() returns 0 for Sunday, 1 for Monday, etc.
-  let diff: number
-  if (startsOnSunday) {
-    // Sunday start: go back to previous Sunday (or stay if already Sunday)
-    diff = -day
-  } else {
-    // Monday start: go back to previous Monday
-    diff = day === 0 ? -6 : 1 - day
-  }
-  d.setDate(d.getDate() + diff)
-  d.setHours(0, 0, 0, 0)
-  return d
-}
-
-// Get array of dates for the week starting from the given start date
-function getWeekDates(weekStart: Date): Date[] {
-  const dates: Date[] = []
-  for (let i = 0; i < 7; i++) {
-    const date = new Date(weekStart)
-    date.setDate(weekStart.getDate() + i)
-    dates.push(date)
-  }
-  return dates
-}
-
-
-
-// Format date range for header (e.g., "October 21 - 27, 2025" or "October 28 - November 3, 2025")
-function formatDateRange(monday: Date, sunday: Date): string {
-  const monthNames = [
-    "January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"
-  ]
-
-  const startMonth = monthNames[monday.getMonth()]
-  const endMonth = monthNames[sunday.getMonth()]
-  const startDay = monday.getDate()
-  const endDay = sunday.getDate()
-  const startYear = monday.getFullYear()
-  const endYear = sunday.getFullYear()
-
-  if (startYear !== endYear) {
-    return `${startMonth} ${startDay}, ${startYear} - ${endMonth} ${endDay}, ${endYear}`
-  } else if (startMonth !== endMonth) {
-    return `${startMonth} ${startDay} - ${endMonth} ${endDay}, ${startYear}`
-  } else {
-    return `${startMonth} ${startDay} - ${endDay}, ${startYear}`
-  }
-}
-
-// Utility functions imported from lib/time-utils
-import {
-  formatHour,
-  formatTime,
-  formatDateString,
-  getEventPosition as getEventPositionUtil,
-  DAY_NAMES_MONDAY_START,
-  DAY_NAMES_SUNDAY_START
-} from "@/lib/time-utils"
-import { useDragToCreate } from "@/hooks/useDragToCreate"
-import { useCurrentTime } from "@/hooks/useCurrentTime"
-
-// Wrapper to match existing usage or replace usages directly
+// Wrapper to match existing usage - uses the utility function
 function getEventPosition(event: Event, rowHeight: number, minHour: number = 8) {
   return getEventPositionUtil(
     event.startHour,

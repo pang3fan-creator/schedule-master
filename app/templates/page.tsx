@@ -2,13 +2,13 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { PageLayout } from "@/components/page-layout";
+import { PageLayout } from "@/components/PageLayout";
 import Link from "next/link";;
 import { Briefcase, GraduationCap, Dumbbell, Palette, Sparkles, Calendar, Crown, ChevronLeft, ChevronRight, AlertTriangle } from "lucide-react";
 import { getAllTemplates } from "@/lib/templates";
-import { CategoryFilter } from "@/components/category-filter";
-import { FAQAccordion } from "@/components/faq-accordion";
-import { PageHero } from "@/components/page-hero";
+import { CategoryFilter } from "@/components/CategoryFilter";
+import { FAQAccordion } from "@/components/FaqAccordion";
+import { PageHero } from "@/components/PageHero";
 import { Button } from "@/components/ui/button";
 import { ConfirmDialog } from "@/components/ConfirmDialog";
 

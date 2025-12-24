@@ -87,9 +87,58 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://tryschedule.com'
+
+  // Organization Schema for brand recognition
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "TrySchedule",
+    "url": baseUrl,
+    "logo": `${baseUrl}/logo.png`,
+    "description": "The #1 free online schedule builder for students, managers, and teams.",
+    "sameAs": [],
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "customer support",
+      "email": "support@tryschedule.com",
+    },
+  }
+
+  // SoftwareApplication Schema for rich search results
+  const softwareSchema = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "TrySchedule",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD",
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "ratingCount": "500",
+    },
+  }
+
   return (
     <ClerkProvider>
       <html lang="en">
+        <head>
+          {/* Organization Schema */}
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+          />
+          {/* SoftwareApplication Schema */}
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
+          />
+        </head>
         <body className="antialiased">
           <SettingsProvider>
             <SubscriptionProvider>

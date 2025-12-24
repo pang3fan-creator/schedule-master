@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { PageLayout } from "@/components/page-layout"
+import { PageLayout } from "@/components/PageLayout"
 import { Button } from "@/components/ui/button"
 import { Home, Search } from "lucide-react"
 

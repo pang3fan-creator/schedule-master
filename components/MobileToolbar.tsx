@@ -19,7 +19,7 @@ import {
     SheetTitle,
     SheetTrigger,
 } from "@/components/ui/sheet"
-import { AddEventDialog } from "@/components/add-event-dialog"
+import { AddEventDialog } from "@/components/AddEventDialog"
 import { FeatureComingSoonModal } from "@/components/FeatureComingSoonModal"
 import { SettingsDialog } from "@/components/SettingsDialog"
 import { useSubscription } from "@/components/SubscriptionContext"

@@ -1,11 +1,11 @@
 "use client"
 
 import { useState } from "react"
-import { PageLayout } from "@/components/page-layout"
-import { BlogCard } from "@/components/blog-card"
-import { CategoryFilter } from "@/components/category-filter"
+import { PageLayout } from "@/components/PageLayout"
+import { BlogCard } from "@/components/BlogCard"
+import { CategoryFilter } from "@/components/CategoryFilter"
 import { ChevronLeft, ChevronRight } from "lucide-react"
-import { PageHero } from "@/components/page-hero"
+import { PageHero } from "@/components/PageHero"
 
 interface Post {
     slug: string

@@ -13,7 +13,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { AddEventDialog } from "@/components/add-event-dialog"
+import { AddEventDialog } from "@/components/AddEventDialog"
 import { UpgradeModal } from "@/components/UpgradeModal"
 import { FeatureComingSoonModal } from "@/components/FeatureComingSoonModal"
 import { SettingsDialog } from "@/components/SettingsDialog"

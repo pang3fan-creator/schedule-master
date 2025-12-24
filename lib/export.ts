@@ -1,5 +1,5 @@
 import { toPng, toJpeg } from "html-to-image"
-import { formatHour, formatTime, formatDateString } from "@/lib/time-utils"
+import { formatHour, formatTime, formatDateString, getWeekDates } from "@/lib/time-utils"
 
 export type ExportFormat = "png" | "jpg" | "pdf"
 
@@ -160,20 +160,6 @@ export function generateFilename(prefix: string = "schedule"): string {
 
 
 
-/**
- * Get week dates starting from a given date
- */
-function getWeekDatesForPdf(weekStart: Date): Date[] {
-    const dates: Date[] = []
-    for (let i = 0; i < 7; i++) {
-        const date = new Date(weekStart)
-        date.setDate(weekStart.getDate() + i)
-        dates.push(date)
-    }
-    return dates
-}
-
-
 
 /**
  * Check if text contains non-ASCII characters (Chinese, etc.)
@@ -240,7 +226,7 @@ export async function exportScheduleToPdf(
 
         // Get week dates or single date
         const dates = viewMode === 'week'
-            ? getWeekDatesForPdf(currentWeekStart)
+            ? getWeekDates(currentWeekStart)
             : [selectedDate || new Date()]
 
         // Day names

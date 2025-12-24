@@ -13,7 +13,7 @@ import {
     X,
 } from "lucide-react"
 import type { Event, EventColor } from "@/lib/types"
-import { formatDateString } from "@/lib/time-utils"
+import { formatDateString, getSunday, getDateForDay, getDayIndexFromDate } from "@/lib/time-utils"
 import { EventForm, EventDialogFooter, parseTimeValue, formatTimeString, validateEventTimes, DAY_OPTIONS_SUNDAY_FIRST } from "@/components/EventForm"
 import { useSettings } from "@/components/SettingsContext"
 
@@ -26,29 +26,6 @@ interface EditEventDialogProps {
 
 // Always use Sunday-first day options (US standard)
 const dayOptions = DAY_OPTIONS_SUNDAY_FIRST
-
-// Get the Sunday of the week containing the given date
-function getSunday(date: Date): Date {
-    const d = new Date(date)
-    const day = d.getDay() // 0=Sun, 1=Mon, ..., 6=Sat
-    d.setDate(d.getDate() - day) // Go back to Sunday
-    d.setHours(0, 0, 0, 0)
-    return d
-}
-
-// Get the date for a specific day of the week based on Sunday (0=Sun, 6=Sat)
-function getDateForDay(sunday: Date, dayIndex: number): Date {
-    const date = new Date(sunday)
-    date.setDate(sunday.getDate() + dayIndex)
-    return date
-}
-
-// Get day index from date string (0 = Sunday, 6 = Saturday) - Sunday-first format
-function getDayIndexFromDate(dateStr: string): number {
-    const date = new Date(dateStr)
-    // JS day is already 0=Sun, 1=Mon, ..., 6=Sat which matches our Sunday-first format
-    return date.getDay()
-}
 
 export function EditEventDialog({
     open,
