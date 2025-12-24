@@ -1,0 +1,14 @@
+# Modern browser targets to reduce polyfill size
+# Targeting browsers that support ES2020+ features natively
+
+# Latest 2 versions of major browsers
+last 2 Chrome versions
+last 2 Firefox versions
+last 2 Safari versions
+last 2 Edge versions
+
+# Exclude dead browsers
+not dead
+
+# Exclude IE11 and older
+not IE 11

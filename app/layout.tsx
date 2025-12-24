@@ -129,6 +129,12 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <head>
+          {/* Preconnect hints for critical third-party domains */}
+          <link rel="preconnect" href="https://clerk.tryschedule.com" />
+          <link rel="dns-prefetch" href="https://clerk.tryschedule.com" />
+          <link rel="preconnect" href="https://www.googletagmanager.com" />
+          <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+          
           {/* Organization Schema */}
           <script
             type="application/ld+json"
