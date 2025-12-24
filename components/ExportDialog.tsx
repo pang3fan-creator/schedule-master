@@ -14,6 +14,7 @@ import { Label } from "@/components/ui/label"
 import { Download, Image, FileText, Loader2, Crown, Table } from "lucide-react"
 import { useSubscription } from "@/components/SubscriptionContext"
 import { exportScheduleToImage, exportScheduleToPdf, exportScheduleToCsv, generateFilename, PdfEvent, PdfExportSettings } from "@/lib/export"
+import { sendGAEvent } from "@next/third-parties/google"
 import Link from "next/link"
 
 interface ExportDialogProps {
@@ -108,6 +109,8 @@ export function ExportDialog({
                 })
             }
             onOpenChange(false)
+            // Track export event in Google Analytics
+            sendGAEvent('event', 'export_schedule', { format: selectedFormat, isPro: isPro })
         } catch (error) {
             console.error("Export failed:", error)
         } finally {

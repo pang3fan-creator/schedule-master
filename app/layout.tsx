@@ -4,6 +4,7 @@ import type React from "react"
 import type { Metadata, Viewport } from "next"
 import { ClerkProvider } from "@clerk/nextjs"
 import { Analytics } from "@vercel/analytics/next"
+import { GoogleAnalytics } from "@next/third-parties/google"
 import { SubscriptionProvider } from "@/components/SubscriptionContext"
 import { SettingsProvider } from "@/components/SettingsContext"
 import "./globals.css"
@@ -147,6 +148,7 @@ export default function RootLayout({
           </SettingsProvider>
           <Analytics />
         </body>
+        <GoogleAnalytics gaId="G-7FJ22TH53B" />
       </html>
     </ClerkProvider>
   )
