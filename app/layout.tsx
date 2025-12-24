@@ -10,7 +10,7 @@ import { SettingsProvider } from "@/components/SettingsContext"
 import "./globals.css"
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://tryschedule.com'),
+  metadataBase: new URL('https://www.tryschedule.com'),
   title: "TrySchedule | The #1 Free Schedule Builder (No Login)",
   description: "TrySchedule is the easiest free online schedule builder for students, managers, and teams. Create beautiful schedules in minutes.",
   generator: "Next.js",
@@ -86,7 +86,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://tryschedule.com'
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.tryschedule.com'
 
   // Organization Schema for brand recognition
   const organizationSchema = {

@@ -17,13 +17,13 @@ export const metadata: Metadata = {
         type: "website",
     },
     alternates: {
-        canonical: "https://tryschedule.com/pricing",
+        canonical: "https://www.tryschedule.com/pricing",
     },
 }
 
 // Generate Product Schema for structured data
 function generateProductSchemas() {
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://tryschedule.com'
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.tryschedule.com'
 
     return [
         {

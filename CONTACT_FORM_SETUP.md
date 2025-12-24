@@ -27,7 +27,7 @@ Resend 是 Vercel 推荐的邮件服务，免费额度充足（每月 3000 封�
 为了使用自定义发件人地址（如 `noreply@tryschedule.com`），需要验证域名：
 
 1. 在 Resend 控制台进入 "Domains" 页面
-2. 添加您的域名 `tryschedule.com`
+2. 添加您的域名 `www.tryschedule.com`
 3. 按照提示添加 DNS 记录
 4. 等待验证完成（通常几分钟内）
 

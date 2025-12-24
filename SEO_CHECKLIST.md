@@ -73,7 +73,7 @@
 ### 2. 环境变量
 - ⚠️ **NEXT_PUBLIC_SITE_URL**: 需要设置
   - 用途: robots.txt 和 sitemap.xml 中使用
-  - 建议值: `https://tryschedule.com`（或您的实际域名）
+  - 建议值: `https://www.tryschedule.com`（或您的实际域名）
   - 位置: Vercel 环境变量或 `.env.local`
 
 ## 📋 验证清单

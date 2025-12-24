@@ -36,7 +36,7 @@ function generateJsonLd(slug: string) {
     const template = getTemplate(slug)
     if (!template) return null
 
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://tryschedule.com'
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.tryschedule.com'
 
     // FAQPage Schema
     const faqSchema = template.faq && template.faq.length > 0 ? {

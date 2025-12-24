@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
         }
     }
 
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://tryschedule.com'
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.tryschedule.com'
 
     return {
         title: `${post.title} | TrySchedule Blog`,
@@ -67,7 +67,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 function generateArticleSchema(post: ReturnType<typeof getPostBySlug>, slug: string) {
     if (!post) return null
 
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://tryschedule.com'
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.tryschedule.com'
 
     return {
         "@context": "https://schema.org",

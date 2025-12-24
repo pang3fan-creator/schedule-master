@@ -3,8 +3,8 @@ import { getAllTemplateSlugs } from '@/lib/templates'
 import { getAllPosts } from '@/lib/posts'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://tryschedule.com'
-  
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.tryschedule.com'
+
   // Static pages
   const staticPages = [
     {
