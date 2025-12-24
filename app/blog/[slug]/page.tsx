@@ -283,7 +283,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                             <span className="text-sm font-medium text-gray-700">Share:</span>
                             <div className="flex gap-3">
                                 <a
-                                    href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(`${process.env.NEXT_PUBLIC_SITE_URL || 'https://schedulebuilder.com'}/blog/${slug}`)}`}
+                                    href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(`${process.env.NEXT_PUBLIC_SITE_URL || 'https://www.tryschedule.com'}/blog/${slug}`)}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
@@ -294,7 +294,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                                     </svg>
                                 </a>
                                 <a
-                                    href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`${process.env.NEXT_PUBLIC_SITE_URL || 'https://schedulebuilder.com'}/blog/${slug}`)}`}
+                                    href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`${process.env.NEXT_PUBLIC_SITE_URL || 'https://www.tryschedule.com'}/blog/${slug}`)}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
