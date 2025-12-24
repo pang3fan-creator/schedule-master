@@ -1,24 +1,30 @@
 "use client"
 
 import { useState, useCallback, useEffect, useRef } from "react"
+import dynamic from "next/dynamic"
 import { Navbar } from "@/components/Navbar"
 import { Sidebar } from "@/components/Sidebar"
 import { WeeklyCalendar } from "@/components/WeeklyCalendar"
 import { type Event } from "@/lib/types"
 import { DailyCalendar } from "@/components/DailyCalendar"
-import { ExportDialog } from "@/components/ExportDialog"
 import { EventContextMenu } from "@/components/EventContextMenu"
-import { DeleteConfirmDialog } from "@/components/DeleteConfirmDialog"
-import { ConflictDialog } from "@/components/ConflictDialog"
-import { EditEventDialog } from "@/components/EditEventDialog"
 import { findConflictingEvents } from "@/lib/event-conflict"
 import { useSettings } from "@/components/SettingsContext"
 import { MobileToolbar } from "@/components/MobileToolbar"
 import { MobileEventActionSheet } from "@/components/MobileEventActionSheet"
-import { MobileWelcomeTip } from "@/components/MobileWelcomeTip"
-import { DesktopWelcomeTip } from "@/components/DesktopWelcomeTip"
 import { useIsMobile } from "@/hooks/useMediaQuery"
 import { getWeekStart } from "@/lib/time-utils"
+
+// Dynamically import dialog components for code splitting
+// These are only loaded when the user triggers them
+const ExportDialog = dynamic(() => import("@/components/ExportDialog").then(m => m.ExportDialog), { ssr: false })
+const DeleteConfirmDialog = dynamic(() => import("@/components/DeleteConfirmDialog").then(m => m.DeleteConfirmDialog), { ssr: false })
+const ConflictDialog = dynamic(() => import("@/components/ConflictDialog").then(m => m.ConflictDialog), { ssr: false })
+const EditEventDialog = dynamic(() => import("@/components/EditEventDialog").then(m => m.EditEventDialog), { ssr: false })
+
+// Dynamically import welcome tip components (shown once per user)
+const MobileWelcomeTip = dynamic(() => import("@/components/MobileWelcomeTip").then(m => m.MobileWelcomeTip), { ssr: false })
+const DesktopWelcomeTip = dynamic(() => import("@/components/DesktopWelcomeTip").then(m => m.DesktopWelcomeTip), { ssr: false })
 
 // LocalStorage key for events
 const EVENTS_STORAGE_KEY = "schedule-builder-events"

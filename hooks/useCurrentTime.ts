@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react"
 
 export function useCurrentTime() {
-    // Initialize with null to avoid hydration mismatch, or current time
-    const [currentTime, setCurrentTime] = useState<Date>(new Date())
+    // Initialize with null to avoid hydration mismatch
+    // The actual time will be set in useEffect after client-side hydration
+    const [currentTime, setCurrentTime] = useState<Date | null>(null)
 
     useEffect(() => {
-        // Update immediately on mount
+        // Set time immediately on mount (client-side only)
         setCurrentTime(new Date())
 
         // Update every minute

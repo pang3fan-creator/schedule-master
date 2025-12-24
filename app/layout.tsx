@@ -74,8 +74,6 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
   viewportFit: "cover",
   themeColor: "#3b82f6",
 }
@@ -134,7 +132,7 @@ export default function RootLayout({
           <link rel="dns-prefetch" href="https://clerk.tryschedule.com" />
           <link rel="preconnect" href="https://www.googletagmanager.com" />
           <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
-          
+
           {/* Organization Schema */}
           <script
             type="application/ld+json"

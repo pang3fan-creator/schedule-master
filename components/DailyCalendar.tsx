@@ -237,11 +237,11 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                     {/* Navigation row */}
                     {!exportMode && (
                         <div className="flex items-center justify-center w-full">
-                            <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToPreviousDay}>
+                            <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToPreviousDay} aria-label="Go to previous day">
                                 <ChevronLeft className="size-6" />
                             </Button>
                             <h2 className="text-base font-semibold text-gray-900 text-center flex-1 px-2">{formatDate(selectedDate)}</h2>
-                            <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToNextDay}>
+                            <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToNextDay} aria-label="Go to next day">
                                 <ChevronRight className="size-6" />
                             </Button>
                         </div>
@@ -298,7 +298,7 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                                         <div className="absolute inset-0 hover:bg-gray-100 transition-colors" />
 
                                         {/* Current Time Indicator - only if today and within this hour */}
-                                        {isToday && currentTime.getHours() === hour && (
+                                        {isToday && currentTime && currentTime.getHours() === hour && (
                                             <div
                                                 className="absolute z-30 w-full pointer-events-none"
                                                 style={{

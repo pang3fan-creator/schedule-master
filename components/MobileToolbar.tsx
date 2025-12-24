@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import dynamic from "next/dynamic"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { PlusCircle, Download, Settings, RotateCcw, Sparkles, MoreHorizontal } from "lucide-react"
@@ -19,11 +20,13 @@ import {
     SheetTitle,
     SheetTrigger,
 } from "@/components/ui/sheet"
-import { AddEventDialog } from "@/components/AddEventDialog"
-import { FeatureComingSoonModal } from "@/components/FeatureComingSoonModal"
-import { SettingsDialog } from "@/components/SettingsDialog"
 import { useSubscription } from "@/components/SubscriptionContext"
 import { type Event } from "@/lib/types"
+
+// Dynamically import dialog components for code splitting
+const AddEventDialog = dynamic(() => import("@/components/AddEventDialog").then(m => m.AddEventDialog), { ssr: false })
+const FeatureComingSoonModal = dynamic(() => import("@/components/FeatureComingSoonModal").then(m => m.FeatureComingSoonModal), { ssr: false })
+const SettingsDialog = dynamic(() => import("@/components/SettingsDialog").then(m => m.SettingsDialog), { ssr: false })
 
 interface MobileToolbarProps {
     onReset: () => void
@@ -96,7 +99,7 @@ export function MobileToolbar({
                         onValueChange={(value) => onViewModeChange(value as "day" | "week")}
                         className="flex-shrink-0"
                     >
-                        <TabsList className="h-10 bg-gray-100">
+                        <TabsList className="h-10 bg-gray-100" aria-label="Calendar view mode">
                             <TabsTrigger value="day" className="px-3 text-xs data-[state=active]:bg-white">
                                 Day
                             </TabsTrigger>

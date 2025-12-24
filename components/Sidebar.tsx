@@ -1,25 +1,19 @@
 "use client"
 
 import { useState } from "react"
+import dynamic from "next/dynamic"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { PlusCircle, Download, Settings, RotateCcw, Sparkles, Cloud, Calendar, CalendarCheck } from "lucide-react"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
-import { AddEventDialog } from "@/components/AddEventDialog"
-import { UpgradeModal } from "@/components/UpgradeModal"
-import { FeatureComingSoonModal } from "@/components/FeatureComingSoonModal"
-import { SettingsDialog } from "@/components/SettingsDialog"
 import { useSubscription } from "@/components/SubscriptionContext"
 import { ConfirmDialog } from "@/components/ConfirmDialog"
 import { type Event } from "@/lib/types"
+
+// Dynamically import dialog components for code splitting
+const AddEventDialog = dynamic(() => import("@/components/AddEventDialog").then(m => m.AddEventDialog), { ssr: false })
+const UpgradeModal = dynamic(() => import("@/components/UpgradeModal").then(m => m.UpgradeModal), { ssr: false })
+const FeatureComingSoonModal = dynamic(() => import("@/components/FeatureComingSoonModal").then(m => m.FeatureComingSoonModal), { ssr: false })
+const SettingsDialog = dynamic(() => import("@/components/SettingsDialog").then(m => m.SettingsDialog), { ssr: false })
 
 interface SidebarProps {
   onReset: () => void
@@ -121,7 +115,7 @@ export function Sidebar({ onReset, onToday, viewMode, onViewModeChange, onAddEve
 
       {/* Day/Week Toggle */}
       <Tabs value={viewMode} onValueChange={(value) => onViewModeChange(value as "day" | "week")} className="mb-6">
-        <TabsList className="w-full grid grid-cols-2 bg-gray-100">
+        <TabsList className="w-full grid grid-cols-2 bg-gray-100" aria-label="Calendar view mode">
           <TabsTrigger value="day" className="data-[state=active]:bg-white">
             Day
           </TabsTrigger>

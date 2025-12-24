@@ -44,6 +44,7 @@ export function MobileWelcomeTip({ onClose }: MobileWelcomeTipProps) {
                 <button
                     onClick={handleClose}
                     className="absolute top-3 right-3 p-1 rounded-full hover:bg-gray-100 text-gray-400 hover:text-gray-600"
+                    aria-label="Close welcome tip"
                 >
                     <X className="size-5" />
                 </button>

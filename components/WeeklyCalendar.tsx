@@ -231,11 +231,11 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
           {/* Navigation row */}
           {!exportMode && (
             <div className="flex items-center justify-center w-full">
-              <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToPreviousWeek}>
+              <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToPreviousWeek} aria-label="Go to previous week">
                 <ChevronLeft className="size-6" />
               </Button>
               <h2 className="text-sm font-semibold text-gray-900 text-center flex-1 px-1">{dateRangeString}</h2>
-              <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToNextWeek}>
+              <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToNextWeek} aria-label="Go to next week">
                 <ChevronRight className="size-6" />
               </Button>
             </div>
@@ -299,7 +299,8 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
                   <div className="absolute inset-0 hover:bg-gray-100 transition-colors" />
 
                   {/* Current Time Indicator - only if date matches today and within this hour */}
-                  {weekDates[dayIndex].getDate() === currentTime.getDate() &&
+                  {currentTime &&
+                    weekDates[dayIndex].getDate() === currentTime.getDate() &&
                     weekDates[dayIndex].getMonth() === currentTime.getMonth() &&
                     weekDates[dayIndex].getFullYear() === currentTime.getFullYear() &&
                     currentTime.getHours() === hour && (
