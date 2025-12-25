@@ -4,7 +4,7 @@ import { useState } from "react"
 import dynamic from "next/dynamic"
 import { Button } from "@/components/ui/button"
 import { ViewModeToggle } from "@/components/ViewModeToggle"
-import { PlusCircle, Download, Settings, RotateCcw, Sparkles, MoreHorizontal } from "lucide-react"
+import { PlusCircle, Download, Settings, RotateCcw, Sparkles, MoreHorizontal, HelpCircle } from "lucide-react"
 import {
     Dialog,
     DialogContent,
@@ -27,6 +27,9 @@ import { type Event } from "@/lib/types"
 const AddEventDialog = dynamic(() => import("@/components/AddEventDialog").then(m => m.AddEventDialog), { ssr: false })
 const FeatureComingSoonModal = dynamic(() => import("@/components/FeatureComingSoonModal").then(m => m.FeatureComingSoonModal), { ssr: false })
 const SettingsDialog = dynamic(() => import("@/components/SettingsDialog").then(m => m.SettingsDialog), { ssr: false })
+
+// Import FAQDialog directly (not dynamically) to ensure SEO visibility
+import { FAQDialog } from "@/components/FAQDialog"
 
 interface MobileToolbarProps {
     onReset: () => void
@@ -62,6 +65,7 @@ export function MobileToolbar({
     const [showSettingsDialog, setShowSettingsDialog] = useState(false)
     const [showComingSoonModal, setShowComingSoonModal] = useState(false)
     const [showMoreSheet, setShowMoreSheet] = useState(false)
+    const [showFAQDialog, setShowFAQDialog] = useState(false)
     const [comingSoonFeature, setComingSoonFeature] = useState("")
 
     const { isLoading } = useSubscription()
@@ -86,6 +90,11 @@ export function MobileToolbar({
     const handleSettingsClick = () => {
         setShowMoreSheet(false)
         setShowSettingsDialog(true)
+    }
+
+    const handleFAQClick = () => {
+        setShowMoreSheet(false)
+        setShowFAQDialog(true)
     }
 
     return (
@@ -162,6 +171,15 @@ export function MobileToolbar({
                                     </div>
                                     <span className="text-xs text-gray-600">AI Fill</span>
                                 </button>
+                                <button
+                                    onClick={handleFAQClick}
+                                    className="flex flex-col items-center gap-2 p-3 rounded-xl hover:bg-gray-50"
+                                >
+                                    <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center">
+                                        <HelpCircle className="size-5 text-gray-600" />
+                                    </div>
+                                    <span className="text-xs text-gray-600">FAQ</span>
+                                </button>
                             </div>
                         </SheetContent>
                     </Sheet>
@@ -220,6 +238,12 @@ export function MobileToolbar({
                 open={showComingSoonModal}
                 onOpenChange={setShowComingSoonModal}
                 featureName={comingSoonFeature}
+            />
+
+            {/* FAQ Dialog */}
+            <FAQDialog
+                open={showFAQDialog}
+                onOpenChange={setShowFAQDialog}
             />
         </>
     )

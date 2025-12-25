@@ -14,8 +14,7 @@ import { MobileToolbar } from "@/components/MobileToolbar"
 import { MobileEventActionSheet } from "@/components/MobileEventActionSheet"
 import { useIsMobile } from "@/hooks/useMediaQuery"
 import { getWeekStart } from "@/lib/time-utils"
-import { Footer } from "@/components/Footer"
-import { HomepageSEOContent, homepageFAQs } from "@/components/HomepageSEOContent"
+import { homepageFAQs } from "@/components/HomepageSEOContent"
 
 // Dynamically import dialog components for code splitting
 // These are only loaded when the user triggers them
@@ -362,7 +361,7 @@ export default function ScheduleBuilderPage() {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
         />
       )}
-      <div className={`flex flex-col bg-gray-50 ${isExporting ? '' : 'h-screen'}`}>
+      <div className={`flex flex-col bg-gray-50 ${isExporting ? '' : 'h-screen overflow-hidden'}`}>
         {/* Fixed navbar with transparency - content scrolls behind it */}
         {!isExporting && (
           <div className="fixed top-0 left-0 right-0 z-50">
@@ -373,63 +372,65 @@ export default function ScheduleBuilderPage() {
         {!isExporting && (
           <h1 className="sr-only">Free Online Schedule Builder</h1>
         )}
-        {/* Content wrapper - scrollable area, starts after navbar space */}
-        <div className={`flex-1 ${isExporting ? '' : 'overflow-auto pt-16'}`}>
-          {/* Editor Section - fixed height to fill exactly one screen */}
-          <div className={`flex ${isExporting ? 'flex-1' : 'h-[calc(100vh-64px)]'}`}>
-            {/* Desktop Sidebar - Hidden on mobile */}
-            {!isExporting && !isMobile && (
-              <Sidebar
-                onReset={handleReset}
-                onToday={() => setSelectedDate(new Date())}
-                viewMode={viewMode}
-                onViewModeChange={setViewMode}
-                onAddEvent={handleAddEvent}
-                weekStart={currentWeekStart}
-                weekStartsOnSunday={settings.weekStartsOnSunday}
-                onExport={handleExport}
-                showAddDialog={showAddDialog}
-                onAddDialogClose={handleAddDialogClose}
-                initialData={addDialogInitialData}
+        {/* Main content area - fills remaining screen height, no overflow */}
+        <div className={`flex flex-1 min-h-0 ${isExporting ? '' : 'pt-16'}`}>
+          {/* Desktop Sidebar - Hidden on mobile */}
+          {!isExporting && !isMobile && (
+            <Sidebar
+              onReset={handleReset}
+              onToday={() => setSelectedDate(new Date())}
+              viewMode={viewMode}
+              onViewModeChange={setViewMode}
+              onAddEvent={handleAddEvent}
+              weekStart={currentWeekStart}
+              weekStartsOnSunday={settings.weekStartsOnSunday}
+              onExport={handleExport}
+              showAddDialog={showAddDialog}
+              onAddDialogClose={handleAddDialogClose}
+              initialData={addDialogInitialData}
+            />
+          )}
+          <main className={`flex-1 min-h-0 overflow-auto ${!isExporting && isMobile ? 'pb-20' : ''}`} ref={calendarRef}>
+            {viewMode === "week" ? (
+              <WeeklyCalendar
+                events={events}
+                selectedDate={selectedDate}
+                onDateChange={setSelectedDate}
+                onEventUpdate={handleEventUpdate}
+                onEventDelete={handleEventDelete}
+                onEventClick={handleEventClick}
+                onEventContextMenu={handleEventContextMenu}
+                exportMode={isExporting}
+                onAddEvent={handleOpenAddDialog}
+              />
+            ) : (
+              <DailyCalendar
+                events={events}
+                selectedDate={selectedDate}
+                onDateChange={setSelectedDate}
+                onEventUpdate={handleEventUpdate}
+                onEventDelete={handleEventDelete}
+                onEventClick={handleEventClick}
+                onEventContextMenu={handleEventContextMenu}
+                exportMode={isExporting}
+                onAddEvent={handleOpenAddDialog}
               />
             )}
-            <main className={`flex-1 ${!isExporting && isMobile ? 'pb-20' : ''}`} ref={calendarRef}>
-              {viewMode === "week" ? (
-                <WeeklyCalendar
-                  events={events}
-                  selectedDate={selectedDate}
-                  onDateChange={setSelectedDate}
-                  onEventUpdate={handleEventUpdate}
-                  onEventDelete={handleEventDelete}
-                  onEventClick={handleEventClick}
-                  onEventContextMenu={handleEventContextMenu}
-                  exportMode={isExporting}
-                  onAddEvent={handleOpenAddDialog}
-                />
-              ) : (
-                <DailyCalendar
-                  events={events}
-                  selectedDate={selectedDate}
-                  onDateChange={setSelectedDate}
-                  onEventUpdate={handleEventUpdate}
-                  onEventDelete={handleEventDelete}
-                  onEventClick={handleEventClick}
-                  onEventContextMenu={handleEventContextMenu}
-                  exportMode={isExporting}
-                  onAddEvent={handleOpenAddDialog}
-                />
-              )}
-            </main>
-          </div>
-
-          {/* SEO Content Section - inside scroll container */}
-          {!isExporting && (
-            <>
-              <HomepageSEOContent />
-              <Footer />
-            </>
-          )}
+          </main>
         </div>
+
+        {/* SEO Content - hidden from users but accessible to crawlers */}
+        {!isExporting && (
+          <div className="sr-only" aria-hidden="false">
+            <h2>Frequently Asked Questions about TrySchedule</h2>
+            {homepageFAQs.map((faq, index) => (
+              <div key={index}>
+                <h3>{faq.question}</h3>
+                <p>{faq.answer}</p>
+              </div>
+            ))}
+          </div>
+        )}
 
         {/* Mobile Bottom Toolbar */}
         {!isExporting && isMobile && (

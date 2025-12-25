@@ -4,7 +4,7 @@ import { useState } from "react"
 import dynamic from "next/dynamic"
 import { Button } from "@/components/ui/button"
 import { ViewModeToggle } from "@/components/ViewModeToggle"
-import { PlusCircle, Download, Settings, RotateCcw, Sparkles, Cloud, Calendar, CalendarCheck } from "lucide-react"
+import { PlusCircle, Download, Settings, RotateCcw, Sparkles, Cloud, Calendar, CalendarCheck, HelpCircle } from "lucide-react"
 import { useSubscription } from "@/components/SubscriptionContext"
 import { ConfirmDialog } from "@/components/ConfirmDialog"
 import { type Event } from "@/lib/types"
@@ -14,6 +14,9 @@ const AddEventDialog = dynamic(() => import("@/components/AddEventDialog").then(
 const UpgradeModal = dynamic(() => import("@/components/UpgradeModal").then(m => m.UpgradeModal), { ssr: false })
 const FeatureComingSoonModal = dynamic(() => import("@/components/FeatureComingSoonModal").then(m => m.FeatureComingSoonModal), { ssr: false })
 const SettingsDialog = dynamic(() => import("@/components/SettingsDialog").then(m => m.SettingsDialog), { ssr: false })
+
+// Import FAQDialog directly (not dynamically) to ensure SEO visibility
+import { FAQDialog } from "@/components/FAQDialog"
 
 interface SidebarProps {
   onReset: () => void
@@ -39,6 +42,7 @@ export function Sidebar({ onReset, onToday, viewMode, onViewModeChange, onAddEve
   const [showUpgradeModal, setShowUpgradeModal] = useState(false)
   const [showSettingsDialog, setShowSettingsDialog] = useState(false)
   const [showComingSoonModal, setShowComingSoonModal] = useState(false)
+  const [showFAQDialog, setShowFAQDialog] = useState(false)
   const [upgradeFeature, setUpgradeFeature] = useState("")
   const [comingSoonFeature, setComingSoonFeature] = useState("")
 
@@ -74,7 +78,7 @@ export function Sidebar({ onReset, onToday, viewMode, onViewModeChange, onAddEve
   }
 
   return (
-    <aside className="hidden md:flex w-[230px] shrink-0 flex-col border-r border-gray-200 bg-white p-4">
+    <aside className="hidden md:flex w-[230px] h-full shrink-0 flex-col border-r border-gray-200 bg-white p-4 overflow-hidden">
       {/* Add New Item Button */}
       <Button
         className="mb-4 w-full bg-blue-600 hover:bg-blue-700 text-white gap-2 shadow-md hover:shadow-lg transition-all duration-300"
@@ -199,6 +203,22 @@ export function Sidebar({ onReset, onToday, viewMode, onViewModeChange, onAddEve
           <Download className="size-5" />
           Export/Download
         </Button>
+
+        {/* Help & FAQ */}
+        <Button
+          variant="ghost"
+          className="justify-start gap-3 text-gray-600 hover:text-gray-900"
+          onClick={() => setShowFAQDialog(true)}
+        >
+          <HelpCircle className="size-5" />
+          Help & FAQ
+        </Button>
+
+        {/* FAQ Dialog */}
+        <FAQDialog
+          open={showFAQDialog}
+          onOpenChange={setShowFAQDialog}
+        />
       </nav>
 
       {/* Spacer */}
