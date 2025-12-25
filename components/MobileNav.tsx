@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import dynamic from "next/dynamic"
 import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
@@ -19,10 +20,12 @@ import {
     SignedOut,
     UserButton,
 } from "@clerk/nextjs"
-import { AuthModal } from "@/components/AuthModal"
-import { SubscriptionModal } from "@/components/SubscriptionModal"
 import { getAllTemplates } from "@/lib/templates"
 import { cn } from "@/lib/utils"
+
+// Dynamically import modals to reduce initial bundle size
+const AuthModal = dynamic(() => import("@/components/AuthModal").then(m => m.AuthModal), { ssr: false })
+const SubscriptionModal = dynamic(() => import("@/components/SubscriptionModal").then(m => m.SubscriptionModal), { ssr: false })
 
 // Icon mapping for templates
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {

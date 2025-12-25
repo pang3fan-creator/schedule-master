@@ -7,7 +7,21 @@ const nextConfig: NextConfig = {
   // Performance optimizations
   experimental: {
     // Optimize imports for large packages to reduce bundle size
-    optimizePackageImports: ['@clerk/nextjs', 'lucide-react', '@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu'],
+    optimizePackageImports: [
+      '@clerk/nextjs',
+      'lucide-react',
+      '@radix-ui/react-dialog',
+      '@radix-ui/react-dropdown-menu',
+      '@radix-ui/react-select',
+      '@radix-ui/react-tabs',
+      '@radix-ui/react-accordion',
+      '@radix-ui/react-popover',
+      '@radix-ui/react-tooltip',
+      'date-fns',
+      'vaul',
+      'react-day-picker',
+      'cmdk',
+    ],
     // Enable CSS optimization to reduce render-blocking CSS
     optimizeCss: true,
   },

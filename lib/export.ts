@@ -1,4 +1,4 @@
-import { toPng, toJpeg } from "html-to-image"
+// html-to-image is dynamically imported in exportScheduleToImage to reduce initial bundle size
 import { formatHour, formatTime, formatDateString, getWeekDates } from "@/lib/time-utils"
 
 export type ExportFormat = "png" | "jpg" | "pdf"
@@ -116,12 +116,15 @@ export async function exportScheduleToImage(
     const { element, filename, format, scale = 2, watermark } = options
 
     try {
-        const exportFn = format === "jpg" ? toJpeg : toPng
+        // Dynamically import html-to-image to reduce initial bundle size
+        const htmlToImage = await import("html-to-image")
+        const exportFn = format === "jpg" ? htmlToImage.toJpeg : htmlToImage.toPng
+
         let dataUrl = await exportFn(element, {
             pixelRatio: scale,
             backgroundColor: "#ffffff",
             skipFonts: true,
-            filter: (node) => {
+            filter: (node: Node) => {
                 if (!(node instanceof Element)) return true
                 const tagName = node.tagName?.toLowerCase()
                 if (tagName === "script" || tagName === "noscript") return false
