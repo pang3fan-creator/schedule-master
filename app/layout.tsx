@@ -5,6 +5,7 @@ import type { Metadata, Viewport } from "next"
 import { ClerkProvider } from "@clerk/nextjs"
 import { Analytics } from "@vercel/analytics/next"
 import { GoogleAnalytics } from "@next/third-parties/google"
+import Script from "next/script"
 import { SubscriptionProvider } from "@/components/SubscriptionContext"
 import { SettingsProvider } from "@/components/SettingsContext"
 import "./globals.css"
@@ -143,10 +144,10 @@ export default function RootLayout({
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
           />
-          {/* Microsoft Clarity for session recording and heatmaps */}
-          <script
-            async
+          {/* Microsoft Clarity - deferred to avoid render blocking */}
+          <Script
             id="microsoft-clarity"
+            strategy="lazyOnload"
             dangerouslySetInnerHTML={{
               __html: `
                 (function(c,l,a,r,i,t,y){

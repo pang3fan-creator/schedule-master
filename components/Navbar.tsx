@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import dynamic from "next/dynamic"
 import { Button } from "@/components/ui/button"
 import { Crown, ChevronDown, Briefcase, GraduationCap, Dumbbell, Palette, Sparkles } from "lucide-react"
 import Link from "next/link"
@@ -12,10 +13,13 @@ import {
   SignedOut,
   UserButton,
 } from "@clerk/nextjs"
-import { AuthModal } from "@/components/AuthModal"
-import { SubscriptionModal } from "@/components/SubscriptionModal"
 import { getAllTemplates } from "@/lib/templates"
 import { MobileNav } from "@/components/MobileNav"
+
+// Dynamically import modals to reduce initial bundle size
+// These are only loaded when user triggers authentication or subscription actions
+const AuthModal = dynamic(() => import("@/components/AuthModal").then(m => m.AuthModal), { ssr: false })
+const SubscriptionModal = dynamic(() => import("@/components/SubscriptionModal").then(m => m.SubscriptionModal), { ssr: false })
 
 // Icon mapping for templates
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -60,7 +64,7 @@ export function Navbar() {
 
         {/* Left: Logo */}
         <Link href="/" className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
-          <Image src="/logo.png" alt="TrySchedule - Free Online Schedule Builder" width={32} height={32} className="object-contain" />
+          <Image src="/logo.png" alt="TrySchedule - Free Online Schedule Builder" width={32} height={32} className="object-contain" priority />
           <span className="text-lg text-gray-900 hidden sm:inline">
             <span className="font-bold text-blue-600">Try</span>
             <span className="font-normal">Schedule</span>
