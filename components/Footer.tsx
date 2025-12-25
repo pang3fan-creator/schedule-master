@@ -11,7 +11,7 @@ export function Footer() {
                     <div className="flex items-center gap-2">
                         <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
                             <Image src="/logo.png" alt="TrySchedule - Free Online Schedule Builder" width={16} height={16} className="object-contain" />
-                            <span className="text-gray-900"><span className="font-bold text-blue-600">Try</span><span className="font-normal">Schedule</span></span>
+                            <span className="text-blue-600"><span className="font-bold">Try</span><span className="font-normal">Schedule</span></span>
                         </Link>
                         <span>© 2025 TrySchedule. All rights reserved.</span>
                     </div>
@@ -30,7 +30,7 @@ export function Footer() {
                 {/* Logo and Brand */}
                 <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
                     <Image src="/logo.png" alt="TrySchedule - Free Online Schedule Builder" width={16} height={16} className="object-contain" />
-                    <span className="text-gray-900"><span className="font-bold text-blue-600">Try</span><span className="font-normal">Schedule</span></span>
+                    <span className="text-blue-600"><span className="font-bold">Try</span><span className="font-normal">Schedule</span></span>
                 </Link>
 
                 {/* Navigation Links - single row */}

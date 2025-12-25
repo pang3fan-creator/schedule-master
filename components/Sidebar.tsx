@@ -3,7 +3,7 @@
 import { useState } from "react"
 import dynamic from "next/dynamic"
 import { Button } from "@/components/ui/button"
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { ViewModeToggle } from "@/components/ViewModeToggle"
 import { PlusCircle, Download, Settings, RotateCcw, Sparkles, Cloud, Calendar, CalendarCheck } from "lucide-react"
 import { useSubscription } from "@/components/SubscriptionContext"
 import { ConfirmDialog } from "@/components/ConfirmDialog"
@@ -77,7 +77,7 @@ export function Sidebar({ onReset, onToday, viewMode, onViewModeChange, onAddEve
     <aside className="hidden md:flex w-[230px] shrink-0 flex-col border-r border-gray-200 bg-white p-4">
       {/* Add New Item Button */}
       <Button
-        className="mb-4 w-full bg-blue-600 hover:bg-blue-700 text-white gap-2 shadow-md hover:shadow-lg hover:glow-primary transition-all duration-300"
+        className="mb-4 w-full bg-blue-600 hover:bg-blue-700 text-white gap-2 shadow-md hover:shadow-lg transition-all duration-300"
         onClick={() => setShowAddEventDialog(true)}
       >
         <PlusCircle className="size-5" />
@@ -114,16 +114,11 @@ export function Sidebar({ onReset, onToday, viewMode, onViewModeChange, onAddEve
       />
 
       {/* Day/Week Toggle */}
-      <Tabs value={viewMode} onValueChange={(value) => onViewModeChange(value as "day" | "week")} className="mb-6">
-        <TabsList className="w-full grid grid-cols-2 bg-gray-100" aria-label="Calendar view mode">
-          <TabsTrigger value="day" className="data-[state=active]:bg-white">
-            Day
-          </TabsTrigger>
-          <TabsTrigger value="week" className="data-[state=active]:bg-white">
-            Week
-          </TabsTrigger>
-        </TabsList>
-      </Tabs>
+      <ViewModeToggle
+        value={viewMode}
+        onValueChange={onViewModeChange}
+        className="w-full mb-3"
+      />
 
       {/* Menu Items */}
       <nav className="flex flex-col gap-1">

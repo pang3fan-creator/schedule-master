@@ -213,13 +213,13 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                     {/* Center navigation - absolute positioned for true centering */}
                     <div className={`flex items-center ${exportMode ? 'flex-1 justify-center' : 'absolute left-1/2 -translate-x-1/2'}`}>
                         {!exportMode && (
-                            <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToPreviousDay}>
+                            <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToPreviousDay} aria-label="Go to previous day">
                                 <ChevronLeft className="size-6" />
                             </Button>
                         )}
                         <h2 className="text-xl font-semibold text-gray-900 min-w-[320px] text-center">{formatDate(selectedDate)}</h2>
                         {!exportMode && (
-                            <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToNextDay}>
+                            <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToNextDay} aria-label="Go to next day">
                                 <ChevronRight className="size-6" />
                             </Button>
                         )}

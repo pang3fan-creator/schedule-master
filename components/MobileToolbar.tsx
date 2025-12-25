@@ -3,7 +3,7 @@
 import { useState } from "react"
 import dynamic from "next/dynamic"
 import { Button } from "@/components/ui/button"
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { ViewModeToggle } from "@/components/ViewModeToggle"
 import { PlusCircle, Download, Settings, RotateCcw, Sparkles, MoreHorizontal } from "lucide-react"
 import {
     Dialog,
@@ -94,20 +94,12 @@ export function MobileToolbar({
             <div className="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-gray-200 px-2 py-2 md:hidden safe-area-pb">
                 <div className="flex items-center justify-around gap-1">
                     {/* Day/Week Toggle */}
-                    <Tabs
+                    <ViewModeToggle
                         value={viewMode}
-                        onValueChange={(value) => onViewModeChange(value as "day" | "week")}
+                        onValueChange={onViewModeChange}
+                        size="sm"
                         className="flex-shrink-0"
-                    >
-                        <TabsList className="h-10 bg-gray-100" aria-label="Calendar view mode">
-                            <TabsTrigger value="day" className="px-3 text-xs data-[state=active]:bg-white">
-                                Day
-                            </TabsTrigger>
-                            <TabsTrigger value="week" className="px-3 text-xs data-[state=active]:bg-white">
-                                Week
-                            </TabsTrigger>
-                        </TabsList>
-                    </Tabs>
+                    />
 
                     {/* Add Button - Primary Action */}
                     <Button

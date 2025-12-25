@@ -208,13 +208,13 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
           {/* Center navigation - absolute positioned for true centering */}
           <div className={`flex items-center ${exportMode ? 'flex-1 justify-center' : 'absolute left-1/2 -translate-x-1/2'}`}>
             {!exportMode && (
-              <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToPreviousWeek}>
+              <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToPreviousWeek} aria-label="Go to previous week">
                 <ChevronLeft className="size-6" />
               </Button>
             )}
             <h2 className="text-xl font-semibold text-gray-900 min-w-[280px] text-center">{dateRangeString}</h2>
             {!exportMode && (
-              <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToNextWeek}>
+              <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToNextWeek} aria-label="Go to next week">
                 <ChevronRight className="size-6" />
               </Button>
             )}

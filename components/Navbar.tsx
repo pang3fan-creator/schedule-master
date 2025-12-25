@@ -56,7 +56,7 @@ export function Navbar() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 flex h-16 shrink-0 items-center justify-between border-b border-gray-200 bg-white/80 backdrop-blur-md px-4 md:px-6 shadow-sm transition-all dark:bg-black/70 dark:border-white/5">
+      <header className="flex h-16 shrink-0 items-center justify-between border-b border-gray-200 bg-white/60 backdrop-blur-md px-4 md:px-6 shadow-sm transition-all dark:bg-black/70 dark:border-white/5">
         {/* Mobile: Hamburger Menu */}
         <div className="md:hidden">
           <MobileNav />
@@ -65,9 +65,8 @@ export function Navbar() {
         {/* Left: Logo */}
         <Link href="/" className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
           <Image src="/logo.png" alt="TrySchedule - Free Online Schedule Builder" width={32} height={32} className="object-contain" priority />
-          <span className="text-lg text-gray-900 hidden sm:inline">
-            <span className="font-bold text-blue-600">Try</span>
-            <span className="font-normal">Schedule</span>
+          <span className="text-lg text-blue-600 hidden sm:inline">
+            <span className="font-bold">Try</span><span className="font-normal">Schedule</span>
           </span>
         </Link>
 

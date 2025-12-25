@@ -19,8 +19,8 @@ interface PageLayoutProps {
  * PageLayout - A reusable layout component for pages with Navbar and Footer
  * 
  * This component provides:
- * - Fixed navbar at top
- * - Scrollable content area below navbar
+ * - Fixed navbar at top with backdrop-blur transparency
+ * - Full page scrolling with content passing behind navbar
  * - Footer that scrolls with content and stays at bottom
  * - Consistent page structure across all pages
  * 
@@ -41,17 +41,22 @@ export function PageLayout({
     showNavbar = true,
 }: PageLayoutProps) {
     return (
-        <div className={cn("h-screen flex flex-col overflow-hidden", bgColor)}>
-            {showNavbar && <Navbar />}
-
-            <main className="flex-1 overflow-y-auto">
-                <div className="min-h-full flex flex-col">
-                    <div className={cn("flex-1", contentPadding)}>
-                        {children}
-                    </div>
-                    {showFooter && <Footer />}
+        <div className={cn("min-h-screen flex flex-col", bgColor)}>
+            {/* Fixed navbar that content scrolls behind */}
+            {showNavbar && (
+                <div className="fixed top-0 left-0 right-0 z-50">
+                    <Navbar />
                 </div>
+            )}
+
+            {/* Main content with top padding to account for fixed navbar */}
+            <main className={cn("flex-1 flex flex-col", showNavbar && "pt-16")}>
+                <div className={cn("flex-1", contentPadding)}>
+                    {children}
+                </div>
+                {showFooter && <Footer />}
             </main>
         </div>
     )
 }
+
