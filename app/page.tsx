@@ -2,31 +2,18 @@
 
 import { useState, useCallback, useEffect, useRef } from "react"
 import dynamic from "next/dynamic"
-import { Loader2 } from "lucide-react"
 import { Navbar } from "@/components/Navbar"
+import { Sidebar } from "@/components/Sidebar"
 import { WeeklyCalendar } from "@/components/WeeklyCalendar"
 import { type Event } from "@/lib/types"
+import { DailyCalendar } from "@/components/DailyCalendar"
+import { EventContextMenu } from "@/components/EventContextMenu"
 import { findConflictingEvents } from "@/lib/event-conflict"
 import { useSettings } from "@/components/SettingsContext"
+import { MobileToolbar } from "@/components/MobileToolbar"
+import { MobileEventActionSheet } from "@/components/MobileEventActionSheet"
 import { useIsMobile } from "@/hooks/useMediaQuery"
 import { getWeekStart } from "@/lib/time-utils"
-
-// Dynamically import heavy components to reduce initial bundle size
-// DailyCalendar - only loaded when user switches to day view
-const DailyCalendar = dynamic(() => import("@/components/DailyCalendar").then(m => m.DailyCalendar), {
-  ssr: false,
-  loading: () => <div className="flex-1 flex items-center justify-center"><Loader2 className="size-6 animate-spin text-blue-600" /></div>
-})
-
-// Sidebar - only needed on desktop
-const Sidebar = dynamic(() => import("@/components/Sidebar").then(m => m.Sidebar), { ssr: false })
-
-// MobileToolbar - only needed on mobile
-const MobileToolbar = dynamic(() => import("@/components/MobileToolbar").then(m => m.MobileToolbar), { ssr: false })
-
-// Context menus - only loaded when user right-clicks or long-presses
-const EventContextMenu = dynamic(() => import("@/components/EventContextMenu").then(m => m.EventContextMenu), { ssr: false })
-const MobileEventActionSheet = dynamic(() => import("@/components/MobileEventActionSheet").then(m => m.MobileEventActionSheet), { ssr: false })
 
 // Dynamically import dialog components for code splitting
 // These are only loaded when the user triggers them
