@@ -25,7 +25,7 @@ export default function robots(): MetadataRoute.Robots {
         userAgent: '*',
         allow: '/',
         disallow: [
-          '/api/',
+          '/api',
           '/portal',
           '/sso-callback',
           '/checkout',
