@@ -2,16 +2,19 @@
 
 import { useState } from "react"
 import dynamic from "next/dynamic"
-import { useUser } from "@clerk/nextjs"
 import { Button } from "@/components/ui/button"
 import { Crown, ChevronDown, Briefcase, GraduationCap, Dumbbell, Palette, Sparkles } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
+import {
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from "@clerk/nextjs"
 import { getAllTemplates } from "@/lib/templates"
 import { MobileNav } from "@/components/MobileNav"
-import { UserAvatar } from "@/components/UserAvatar"
 
 // Dynamically import modals to reduce initial bundle size
 // These are only loaded when user triggers authentication or subscription actions
@@ -34,7 +37,6 @@ const navLinks = [
 
 export function Navbar() {
   const pathname = usePathname()
-  const { isSignedIn, isLoaded } = useUser()
   const [authModalOpen, setAuthModalOpen] = useState(false)
   const [authMode, setAuthMode] = useState<"sign-in" | "sign-up">("sign-in")
   const [subscriptionModalOpen, setSubscriptionModalOpen] = useState(false)
@@ -162,36 +164,39 @@ export function Navbar() {
 
         {/* Right: Auth Buttons - Hidden on mobile (available in MobileNav) */}
         <div className="flex items-center gap-3">
-          {/* Show skeleton while Clerk is loading */}
-          {!isLoaded && (
-            <div className="hidden md:block w-9 h-9 rounded-full bg-gray-200 animate-pulse" />
-          )}
-
-          {/* Show auth buttons when not signed in */}
-          {isLoaded && !isSignedIn && (
-            <>
-              <Button
-                variant="ghost"
-                className="hidden md:inline-flex text-gray-700"
-                onClick={() => openAuthModal("sign-in")}
-              >
-                Sign In
-              </Button>
-              <Button
-                className="hidden md:inline-flex bg-blue-600 hover:bg-blue-700 text-white"
-                onClick={() => openAuthModal("sign-up")}
-              >
-                Sign Up
-              </Button>
-            </>
-          )}
-
-          {/* Show user avatar when signed in */}
-          {isLoaded && isSignedIn && (
-            <div className="hidden md:block">
-              <UserAvatar onOpenSubscription={() => setSubscriptionModalOpen(true)} />
-            </div>
-          )}
+          <SignedOut>
+            <Button
+              variant="ghost"
+              className="hidden md:inline-flex text-gray-700"
+              onClick={() => openAuthModal("sign-in")}
+            >
+              Sign In
+            </Button>
+            <Button
+              className="hidden md:inline-flex bg-blue-600 hover:bg-blue-700 text-white"
+              onClick={() => openAuthModal("sign-up")}
+            >
+              Sign Up
+            </Button>
+          </SignedOut>
+          <SignedIn>
+            <UserButton
+              afterSignOutUrl="/"
+              appearance={{
+                elements: {
+                  avatarBox: "w-9 h-9",
+                },
+              }}
+            >
+              <UserButton.MenuItems>
+                <UserButton.Action
+                  label="My Subscription"
+                  labelIcon={<Crown className="h-4 w-4" />}
+                  onClick={() => setSubscriptionModalOpen(true)}
+                />
+              </UserButton.MenuItems>
+            </UserButton>
+          </SignedIn>
         </div>
       </header>
 

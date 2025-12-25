@@ -7,7 +7,6 @@ import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { Menu, Crown, Briefcase, GraduationCap, Dumbbell, Palette, Sparkles, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { useUser } from "@clerk/nextjs"
 import {
     Sheet,
     SheetContent,
@@ -16,9 +15,13 @@ import {
     SheetTrigger,
     SheetClose,
 } from "@/components/ui/sheet"
+import {
+    SignedIn,
+    SignedOut,
+    UserButton,
+} from "@clerk/nextjs"
 import { getAllTemplates } from "@/lib/templates"
 import { cn } from "@/lib/utils"
-import { UserAvatar } from "@/components/UserAvatar"
 
 // Dynamically import modals to reduce initial bundle size
 const AuthModal = dynamic(() => import("@/components/AuthModal").then(m => m.AuthModal), { ssr: false })
@@ -40,7 +43,6 @@ const navLinks = [
 
 export function MobileNav() {
     const pathname = usePathname()
-    const { isSignedIn, isLoaded } = useUser()
     const [open, setOpen] = useState(false)
     const [authModalOpen, setAuthModalOpen] = useState(false)
     const [authMode, setAuthMode] = useState<"sign-in" | "sign-up">("sign-in")
@@ -154,13 +156,7 @@ export function MobileNav() {
 
                     {/* Auth buttons at bottom */}
                     <div className="mt-auto border-t p-4">
-                        {/* Loading state */}
-                        {!isLoaded && (
-                            <div className="w-full h-10 bg-gray-200 rounded animate-pulse" />
-                        )}
-
-                        {/* Not signed in */}
-                        {isLoaded && !isSignedIn && (
+                        <SignedOut>
                             <div className="flex flex-col gap-2">
                                 <Button
                                     variant="outline"
@@ -176,18 +172,31 @@ export function MobileNav() {
                                     Sign Up
                                 </Button>
                             </div>
-                        )}
-
-                        {/* Signed in */}
-                        {isLoaded && isSignedIn && (
+                        </SignedOut>
+                        <SignedIn>
                             <div className="flex items-center justify-between">
                                 <span className="text-sm text-gray-600">Your Account</span>
-                                <UserAvatar onOpenSubscription={() => {
-                                    setOpen(false)
-                                    setSubscriptionModalOpen(true)
-                                }} />
+                                <UserButton
+                                    afterSignOutUrl="/"
+                                    appearance={{
+                                        elements: {
+                                            avatarBox: "w-9 h-9",
+                                        },
+                                    }}
+                                >
+                                    <UserButton.MenuItems>
+                                        <UserButton.Action
+                                            label="My Subscription"
+                                            labelIcon={<Crown className="h-4 w-4" />}
+                                            onClick={() => {
+                                                setOpen(false)
+                                                setSubscriptionModalOpen(true)
+                                            }}
+                                        />
+                                    </UserButton.MenuItems>
+                                </UserButton>
                             </div>
-                        )}
+                        </SignedIn>
                     </div>
                 </SheetContent>
             </Sheet>
