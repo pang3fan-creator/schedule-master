@@ -2,7 +2,7 @@ import { PageLayout } from "@/components/PageLayout"
 
 export const metadata = {
     title: "Privacy Policy | TrySchedule",
-    description: "Privacy Policy for TrySchedule - Free Online Schedule Builder",
+    description: "Privacy Policy for TrySchedule - Free Online Schedule Builder.",
 }
 
 export default function PrivacyPage() {

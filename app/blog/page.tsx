@@ -4,7 +4,7 @@ import { BlogPageClient } from "./blog-page-client"
 
 export const metadata: Metadata = {
     title: "Blog | TrySchedule - Scheduling Tips & Productivity Guides",
-    description: "Discover scheduling tips, productivity guides, and best practices for students, managers, and teams. Learn how to optimize your time with TrySchedule.",
+    description: "Discover scheduling tips, productivity guides, and best practices. Learn how to optimize your time with TrySchedule.",
     keywords: [
         "scheduling tips",
         "productivity blog",
@@ -13,8 +13,8 @@ export const metadata: Metadata = {
         "employee scheduling guide",
     ],
     openGraph: {
-        title: "TrySchedule Blog - Scheduling Tips & Guides",
-        description: "Discover scheduling tips and productivity guides for students, managers, and teams.",
+        title: "Blog | TrySchedule - Scheduling Tips & Productivity Guides",
+        description: "Discover scheduling tips, productivity guides, and best practices.",
         type: "website",
     },
     alternates: {

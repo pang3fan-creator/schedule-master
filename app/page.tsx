@@ -14,6 +14,8 @@ import { MobileToolbar } from "@/components/MobileToolbar"
 import { MobileEventActionSheet } from "@/components/MobileEventActionSheet"
 import { useIsMobile } from "@/hooks/useMediaQuery"
 import { getWeekStart } from "@/lib/time-utils"
+import { Footer } from "@/components/Footer"
+import { HomepageSEOContent, homepageFAQs } from "@/components/HomepageSEOContent"
 
 // Dynamically import dialog components for code splitting
 // These are only loaded when the user triggers them
@@ -337,19 +339,102 @@ export default function ScheduleBuilderPage() {
     setDeleteConfirm({ event })
   }, [])
 
+  // Generate FAQ Schema for SEO
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": homepageFAQs.map((faq) => ({
+      "@type": "Question",
+      "name": faq.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": faq.answer,
+      },
+    })),
+  }
+
   return (
-    <div className={`flex flex-col bg-gray-50 ${isExporting ? '' : 'h-screen'}`}>
-      {!isExporting && <Navbar />}
-      {/* SEO: H1 Title - visually hidden but accessible for search engines */}
+    <>
+      {/* FAQ Schema JSON-LD for SEO */}
       {!isExporting && (
-        <h1 className="sr-only">Free Online Schedule Builder</h1>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
       )}
-      <div className={`flex flex-1 ${isExporting ? '' : 'overflow-hidden'}`}>
-        {/* Desktop Sidebar - Hidden on mobile */}
-        {!isExporting && !isMobile && (
-          <Sidebar
+      <div className={`flex flex-col bg-gray-50 ${isExporting ? '' : 'h-screen'}`}>
+        {/* Fixed navbar with transparency - content scrolls behind it */}
+        {!isExporting && (
+          <div className="fixed top-0 left-0 right-0 z-50">
+            <Navbar />
+          </div>
+        )}
+        {/* SEO: H1 Title - visually hidden but accessible for search engines */}
+        {!isExporting && (
+          <h1 className="sr-only">Free Online Schedule Builder</h1>
+        )}
+        {/* Content wrapper - scrollable area, starts after navbar space */}
+        <div className={`flex-1 ${isExporting ? '' : 'overflow-auto pt-16'}`}>
+          {/* Editor Section - fixed height to fill exactly one screen */}
+          <div className={`flex ${isExporting ? 'flex-1' : 'h-[calc(100vh-64px)]'}`}>
+            {/* Desktop Sidebar - Hidden on mobile */}
+            {!isExporting && !isMobile && (
+              <Sidebar
+                onReset={handleReset}
+                onToday={() => setSelectedDate(new Date())}
+                viewMode={viewMode}
+                onViewModeChange={setViewMode}
+                onAddEvent={handleAddEvent}
+                weekStart={currentWeekStart}
+                weekStartsOnSunday={settings.weekStartsOnSunday}
+                onExport={handleExport}
+                showAddDialog={showAddDialog}
+                onAddDialogClose={handleAddDialogClose}
+                initialData={addDialogInitialData}
+              />
+            )}
+            <main className={`flex-1 ${!isExporting && isMobile ? 'pb-20' : ''}`} ref={calendarRef}>
+              {viewMode === "week" ? (
+                <WeeklyCalendar
+                  events={events}
+                  selectedDate={selectedDate}
+                  onDateChange={setSelectedDate}
+                  onEventUpdate={handleEventUpdate}
+                  onEventDelete={handleEventDelete}
+                  onEventClick={handleEventClick}
+                  onEventContextMenu={handleEventContextMenu}
+                  exportMode={isExporting}
+                  onAddEvent={handleOpenAddDialog}
+                />
+              ) : (
+                <DailyCalendar
+                  events={events}
+                  selectedDate={selectedDate}
+                  onDateChange={setSelectedDate}
+                  onEventUpdate={handleEventUpdate}
+                  onEventDelete={handleEventDelete}
+                  onEventClick={handleEventClick}
+                  onEventContextMenu={handleEventContextMenu}
+                  exportMode={isExporting}
+                  onAddEvent={handleOpenAddDialog}
+                />
+              )}
+            </main>
+          </div>
+
+          {/* SEO Content Section - inside scroll container */}
+          {!isExporting && (
+            <>
+              <HomepageSEOContent />
+              <Footer />
+            </>
+          )}
+        </div>
+
+        {/* Mobile Bottom Toolbar */}
+        {!isExporting && isMobile && (
+          <MobileToolbar
             onReset={handleReset}
-            onToday={() => setSelectedDate(new Date())}
             viewMode={viewMode}
             onViewModeChange={setViewMode}
             onAddEvent={handleAddEvent}
@@ -361,122 +446,79 @@ export default function ScheduleBuilderPage() {
             initialData={addDialogInitialData}
           />
         )}
-        <main className={`flex-1 ${isExporting ? '' : 'overflow-auto'} ${!isExporting && isMobile ? 'pb-20' : ''}`} ref={calendarRef}>
-          {viewMode === "week" ? (
-            <WeeklyCalendar
-              events={events}
-              selectedDate={selectedDate}
-              onDateChange={setSelectedDate}
-              onEventUpdate={handleEventUpdate}
-              onEventDelete={handleEventDelete}
-              onEventClick={handleEventClick}
-              onEventContextMenu={handleEventContextMenu}
-              exportMode={isExporting}
-              onAddEvent={handleOpenAddDialog}
-            />
-          ) : (
-            <DailyCalendar
-              events={events}
-              selectedDate={selectedDate}
-              onDateChange={setSelectedDate}
-              onEventUpdate={handleEventUpdate}
-              onEventDelete={handleEventDelete}
-              onEventClick={handleEventClick}
-              onEventContextMenu={handleEventContextMenu}
-              exportMode={isExporting}
-              onAddEvent={handleOpenAddDialog}
-            />
-          )}
-        </main>
-      </div>
 
-      {/* Mobile Bottom Toolbar */}
-      {!isExporting && isMobile && (
-        <MobileToolbar
-          onReset={handleReset}
+        {/* Export Dialog */}
+        <ExportDialog
+          open={showExportDialog}
+          onOpenChange={setShowExportDialog}
+          calendarRef={calendarRef}
+          onExportStart={() => setIsExporting(true)}
+          onExportEnd={() => setIsExporting(false)}
+          events={events}
+          settings={{
+            workingHoursStart: settings.workingHoursStart,
+            workingHoursEnd: settings.workingHoursEnd,
+            weekStartsOnSunday: settings.weekStartsOnSunday,
+            use12HourFormat: settings.use12HourFormat,
+          }}
+          currentWeekStart={currentWeekStart}
           viewMode={viewMode}
-          onViewModeChange={setViewMode}
-          onAddEvent={handleAddEvent}
-          weekStart={currentWeekStart}
-          weekStartsOnSunday={settings.weekStartsOnSunday}
-          onExport={handleExport}
-          showAddDialog={showAddDialog}
-          onAddDialogClose={handleAddDialogClose}
-          initialData={addDialogInitialData}
+          selectedDate={selectedDate}
         />
-      )}
 
-      {/* Export Dialog */}
-      <ExportDialog
-        open={showExportDialog}
-        onOpenChange={setShowExportDialog}
-        calendarRef={calendarRef}
-        onExportStart={() => setIsExporting(true)}
-        onExportEnd={() => setIsExporting(false)}
-        events={events}
-        settings={{
-          workingHoursStart: settings.workingHoursStart,
-          workingHoursEnd: settings.workingHoursEnd,
-          weekStartsOnSunday: settings.weekStartsOnSunday,
-          use12HourFormat: settings.use12HourFormat,
-        }}
-        currentWeekStart={currentWeekStart}
-        viewMode={viewMode}
-        selectedDate={selectedDate}
-      />
+        {/* Context Menu */}
+        {contextMenu && (
+          <EventContextMenu
+            x={contextMenu.x}
+            y={contextMenu.y}
+            onEdit={handleContextMenuEdit}
+            onDelete={handleContextMenuDelete}
+            onClose={() => setContextMenu(null)}
+          />
+        )}
 
-      {/* Context Menu */}
-      {contextMenu && (
-        <EventContextMenu
-          x={contextMenu.x}
-          y={contextMenu.y}
-          onEdit={handleContextMenuEdit}
-          onDelete={handleContextMenuDelete}
-          onClose={() => setContextMenu(null)}
+        {/* Delete Confirmation Dialog */}
+        <DeleteConfirmDialog
+          open={deleteConfirm !== null}
+          onOpenChange={(open) => !open && setDeleteConfirm(null)}
+          eventTitle={deleteConfirm?.event.title || ""}
+          onConfirm={handleConfirmDelete}
         />
-      )}
 
-      {/* Delete Confirmation Dialog */}
-      <DeleteConfirmDialog
-        open={deleteConfirm !== null}
-        onOpenChange={(open) => !open && setDeleteConfirm(null)}
-        eventTitle={deleteConfirm?.event.title || ""}
-        onConfirm={handleConfirmDelete}
-      />
+        {/* Conflict Dialog */}
+        <ConflictDialog
+          open={conflictState !== null}
+          onOpenChange={(open) => !open && setConflictState(null)}
+          conflictingEvents={conflictState?.conflictingEvents || []}
+          newEventTitle={conflictState?.newEventData.title || ""}
+          onDeleteExisting={handleConflictDeleteExisting}
+          onModifyNew={handleConflictModifyNew}
+          onCancel={handleConflictCancel}
+        />
 
-      {/* Conflict Dialog */}
-      <ConflictDialog
-        open={conflictState !== null}
-        onOpenChange={(open) => !open && setConflictState(null)}
-        conflictingEvents={conflictState?.conflictingEvents || []}
-        newEventTitle={conflictState?.newEventData.title || ""}
-        onDeleteExisting={handleConflictDeleteExisting}
-        onModifyNew={handleConflictModifyNew}
-        onCancel={handleConflictCancel}
-      />
+        {/* Edit Event Dialog */}
+        <EditEventDialog
+          open={editEvent !== null}
+          onOpenChange={(open) => !open && setEditEvent(null)}
+          event={editEvent}
+          onUpdateEvent={handleEventUpdate}
+        />
 
-      {/* Edit Event Dialog */}
-      <EditEventDialog
-        open={editEvent !== null}
-        onOpenChange={(open) => !open && setEditEvent(null)}
-        event={editEvent}
-        onUpdateEvent={handleEventUpdate}
-      />
+        {/* Mobile Event Action Sheet */}
+        <MobileEventActionSheet
+          open={mobileActionEvent !== null}
+          onOpenChange={(open) => !open && setMobileActionEvent(null)}
+          event={mobileActionEvent}
+          onEdit={handleMobileActionEdit}
+          onDelete={handleMobileActionDelete}
+        />
 
-      {/* Mobile Event Action Sheet */}
-      <MobileEventActionSheet
-        open={mobileActionEvent !== null}
-        onOpenChange={(open) => !open && setMobileActionEvent(null)}
-        event={mobileActionEvent}
-        onEdit={handleMobileActionEdit}
-        onDelete={handleMobileActionDelete}
-      />
+        {/* Mobile Welcome Tip - shows once on first mobile visit */}
+        <MobileWelcomeTip />
 
-      {/* Mobile Welcome Tip - shows once on first mobile visit */}
-      <MobileWelcomeTip />
-
-      {/* Desktop Welcome Tip - shows once on first desktop visit */}
-      <DesktopWelcomeTip />
-    </div>
+        {/* Desktop Welcome Tip - shows once on first desktop visit */}
+        <DesktopWelcomeTip />
+      </div>
+    </>
   )
 }

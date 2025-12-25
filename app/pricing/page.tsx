@@ -2,8 +2,8 @@ import type { Metadata } from "next"
 import { PricingPageClient } from "./PricingPageClient"
 
 export const metadata: Metadata = {
-    title: "Pricing Plans | TrySchedule - Free Schedule Builder",
-    description: "Compare TrySchedule free and pro plans. Create schedules for free, or upgrade to Pro for PDF export, AI scheduling, and cloud sync from $4.9/week.",
+    title: "Affordable Scheduling | Pricing Plans - TrySchedule Pro",
+    description: "Start for free or unlock PDF export and AI scheduling with TrySchedule Pro. Compare plans starting from $4.9/week.",
     keywords: [
         "schedule builder pricing",
         "free schedule maker",
@@ -12,8 +12,8 @@ export const metadata: Metadata = {
         "free online schedule builder",
     ],
     openGraph: {
-        title: "Pricing Plans | TrySchedule",
-        description: "Compare TrySchedule free and pro plans. PDF export, AI scheduling from $4.9/week.",
+        title: "Affordable Scheduling | Pricing Plans - TrySchedule Pro",
+        description: "Start for free or unlock PDF export and AI scheduling with TrySchedule Pro.",
         type: "website",
     },
     alternates: {

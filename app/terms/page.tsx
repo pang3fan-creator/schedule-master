@@ -2,7 +2,7 @@ import { PageLayout } from "@/components/PageLayout"
 
 export const metadata = {
     title: "Terms of Service | TrySchedule",
-    description: "Terms of Service for TrySchedule - Free Online Schedule Builder",
+    description: "Terms of Service for TrySchedule - Free Online Schedule Builder.",
 }
 
 export default function TermsPage() {

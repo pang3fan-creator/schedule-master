@@ -12,8 +12,8 @@ import "./globals.css"
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.tryschedule.com'),
-  title: "TrySchedule | The #1 Free Schedule Builder (No Login)",
-  description: "TrySchedule is the easiest free online schedule builder for students, managers, and teams. Create beautiful schedules in minutes.",
+  title: "TrySchedule | Free Online Schedule Builder (No Login Required)",
+  description: "The easiest free online schedule builder. Drag-and-drop interface, instant PNG export. No signup needed. PDF & AI tools available for Pro users.",
   generator: "Next.js",
   manifest: "/manifest.json",
   keywords: [
@@ -29,8 +29,8 @@ export const metadata: Metadata = {
     "shift scheduler",
   ],
   openGraph: {
-    title: "TrySchedule | The #1 Free Schedule Builder (No Login)",
-    description: "TrySchedule is the easiest free online schedule builder for students, managers, and teams. Create beautiful schedules in minutes.",
+    title: "TrySchedule | Free Online Schedule Builder (No Login Required)",
+    description: "The easiest free online schedule builder. Drag-and-drop interface, instant PNG export. No signup needed. PDF & AI tools available for Pro users.",
     type: "website",
     siteName: "TrySchedule",
     images: [
@@ -44,8 +44,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "TrySchedule | The #1 Free Schedule Builder",
-    description: "TrySchedule is the easiest free online schedule builder for students, managers, and teams.",
+    title: "TrySchedule | Free Online Schedule Builder",
+    description: "The easiest free online schedule builder. Drag-and-drop interface, instant PNG export. No signup needed.",
     images: ["/opengraph-image.png"],
   },
   appleWebApp: {
@@ -96,7 +96,7 @@ export default function RootLayout({
     "name": "TrySchedule",
     "url": baseUrl,
     "logo": `${baseUrl}/logo.png`,
-    "description": "The #1 free online schedule builder for students, managers, and teams.",
+    "description": "The easiest free online schedule builder for students, managers, and gyms.",
     "sameAs": [],
     "contactPoint": {
       "@type": "ContactPoint",

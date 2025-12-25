@@ -1,14 +1,21 @@
 "use client";
 
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { CreemCheckout } from "@creem_io/nextjs";
 import { useUser } from "@clerk/nextjs";
 import { useSubscription } from "@/components/SubscriptionContext";
 import { AuthModal } from "@/components/AuthModal";
 import Link from "next/link";
+
+// Dynamically import CreemCheckout to reduce initial bundle size
+// Payment SDK is only loaded when user is signed in and eligible to purchase
+const CreemCheckout = dynamic(
+    () => import("@creem_io/nextjs").then(m => m.CreemCheckout),
+    { ssr: false }
+);
 
 /**
  * 计划等级优先级

@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "Pricing | TrySchedule - Free & Pro Plans",
-    description: "Start with our free schedule builder forever, or upgrade to Pro for AI automation, PDF export, and unlimited rosters. Professional scheduling tools for everyone.",
+    title: "Affordable Scheduling | Pricing Plans - TrySchedule Pro",
+    description: "Start for free or unlock PDF export and AI scheduling with TrySchedule Pro. Compare plans starting from $4.9/week.",
     openGraph: {
-        title: "Pricing | TrySchedule",
-        description: "Start with our free schedule builder forever, or upgrade to Pro for AI automation, PDF export, and unlimited rosters.",
+        title: "Affordable Scheduling | Pricing Plans - TrySchedule Pro",
+        description: "Start for free or unlock PDF export and AI scheduling with TrySchedule Pro. Compare plans starting from $4.9/week.",
         type: "website",
     },
 };
@@ -17,6 +17,3 @@ export default function PricingLayout({
 }) {
     return children;
 }
-
-
-

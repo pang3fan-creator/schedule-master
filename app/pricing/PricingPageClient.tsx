@@ -1,7 +1,7 @@
 "use client";
 
 import { PricingCard } from "@/components/PricingCard";
-import { FAQAccordion } from "@/components/FaqAccordion";
+import { FAQSection } from "@/components/FAQSection";
 import { PageLayout } from "@/components/PageLayout";
 import { useSearchParams } from "next/navigation";
 import { Suspense, Fragment as ReactFragment } from "react";
@@ -246,7 +246,7 @@ export function PricingPageClient({ productSchemas }: PricingPageClientProps) {
                     dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
                 />
             ))}
-            <PageLayout bgColor="bg-gradient-to-b from-violet-50/30 via-white to-white">
+            <PageLayout bgColor="bg-gradient-to-b from-violet-50/30 via-white to-white" contentPadding="pt-16">
                 {/* Success Banner */}
                 <Suspense fallback={null}>
                     <SuccessBanner />
@@ -314,15 +314,8 @@ export function PricingPageClient({ productSchemas }: PricingPageClientProps) {
                     </div>
                 </div>
 
-                {/* FAQ Section */}
-                <div className="container mx-auto px-4 max-w-5xl">
-                    <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
-                        Frequently Asked Questions
-                    </h2>
-                    <div className="bg-white rounded-xl border border-gray-200 p-6 md:p-8 shadow-sm">
-                        <FAQAccordion items={faqs} />
-                    </div>
-                </div>
+                {/* FAQ Section - using unified FAQSection component */}
+                <FAQSection items={faqs} />
             </PageLayout>
         </>
     );
