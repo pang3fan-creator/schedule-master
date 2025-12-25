@@ -153,7 +153,7 @@ export default function RootLayout({
                   c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
                   t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
                   y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-                })(window, document, "clarity", "script", "uqiwshva21");
+                })(window, document, "clarity", "script", "uqtlm9nmco");
               `,
             }}
           />
@@ -166,7 +166,7 @@ export default function RootLayout({
           </SettingsProvider>
           <Analytics />
         </body>
-        <GoogleAnalytics gaId="G-7FJ22TH53B" />
+        <GoogleAnalytics gaId="G-7GCLCCR689" />
       </html>
     </ClerkProvider>
   )
