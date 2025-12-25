@@ -56,7 +56,7 @@ export function Navbar() {
 
   return (
     <>
-      <header className="flex h-16 shrink-0 items-center justify-between border-b border-gray-200 bg-white/60 backdrop-blur-md px-4 md:px-6 shadow-sm transition-all dark:bg-black/70 dark:border-white/5">
+      <header className="relative z-50 flex h-16 shrink-0 items-center justify-between border-b border-gray-200 bg-white/60 backdrop-blur-md px-4 md:px-6 shadow-sm transition-all dark:bg-black/70 dark:border-white/5">
         {/* Mobile: Hamburger Menu */}
         <div className="md:hidden">
           <MobileNav />
