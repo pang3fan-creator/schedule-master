@@ -24,6 +24,7 @@ import {
 } from "@/lib/time-utils"
 import { useDragToCreate } from "@/hooks/useDragToCreate"
 import { useCurrentTime } from "@/hooks/useCurrentTime"
+import { useIsMobile } from "@/hooks/useMediaQuery"
 
 interface WeeklyCalendarProps {
   events: Event[]
@@ -109,6 +110,9 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
   // Current Time hook
   const currentTime = useCurrentTime()
 
+  // Mobile detection for responsive layout
+  const isMobile = useIsMobile()
+
   // Calculate the week's dates based on current week start
   const weekDates = useMemo(() => getWeekDates(currentWeekStart), [currentWeekStart])
 
@@ -146,24 +150,33 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
       if (gridRef.current) {
         const gridElement = gridRef.current
         const gridHeight = gridElement.clientHeight
-        const headerHeight = 48
-        const labelRowHeight = 24  // Last row is label-only
+        const headerHeight = 40  // Matches grid template: 40px
+        const labelRowHeight = 20  // Last row is label-only: 20px
         const availableHeight = gridHeight - headerHeight - labelRowHeight
         // Dynamic row count based on hours array (hours.length - 1 data rows, last is label only)
         const dataRowCount = hours.length - 1
         const calculatedRowHeight = availableHeight / dataRowCount
-        // Set minimum row height to prevent compression
-        const finalRowHeight = Math.max(calculatedRowHeight, 50)
+        // Set minimum row height to prevent compression (matches minmax(40px, 1fr))
+        const finalRowHeight = Math.max(calculatedRowHeight, 40)
         if (finalRowHeight > 0) {
           setRowHeight(finalRowHeight)
         }
       }
     }
 
-    updateRowHeight()
+    // Use requestAnimationFrame to ensure DOM is fully rendered before calculating
+    // This fixes the issue where rowHeight is calculated before layout is stable
+    const rafId = requestAnimationFrame(() => {
+      // Add a small delay to ensure grid is fully laid out
+      setTimeout(updateRowHeight, 50)
+    })
+
     window.addEventListener('resize', updateRowHeight)
-    return () => window.removeEventListener('resize', updateRowHeight)
-  }, [hours.length])
+    return () => {
+      cancelAnimationFrame(rafId)
+      window.removeEventListener('resize', updateRowHeight)
+    }
+  }, [hours.length, isMobile]) // Re-calculate when isMobile changes (grid layout changes)
 
   // Navigate to current week (today)
   const goToToday = () => {
@@ -197,9 +210,9 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
   }, [events])
 
   return (
-    <div className={`flex flex-col p-4 md:p-6 bg-muted/20 ${exportMode ? '' : 'h-full'}`}>
+    <div className={`flex flex-col p-2 md:p-6 bg-muted/20 ${exportMode ? '' : 'h-full'}`}>
       {/* Header with navigation - responsive layout */}
-      <div className="mb-4 flex-shrink-0">
+      <div className="mb-1 md:mb-4 flex-shrink-0">
         {/* Desktop layout */}
         <div className="hidden md:flex items-center justify-between relative">
           {/* Spacer for layout balance - hidden in export mode */}
@@ -227,7 +240,7 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
         </div>
 
         {/* Mobile layout - stacked */}
-        <div className="md:hidden flex flex-col items-center gap-2">
+        <div className="md:hidden flex flex-col items-center">
           {/* Navigation row */}
           {!exportMode && (
             <div className="flex items-center justify-center w-full">
@@ -240,33 +253,25 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
               </Button>
             </div>
           )}
-          {/* Today button - below date on mobile */}
-          {!exportMode && (
-            <Button
-              variant="outline"
-              size="sm"
-              className="border-blue-500 text-blue-600 hover:bg-blue-50 hover:text-blue-700 font-medium"
-              onClick={goToToday}
-            >
-              Today
-            </Button>
-          )}
-          {/* Mobile scroll hint */}
-          <p className="text-xs text-gray-400">← Scroll horizontally to see all days →</p>
+          {/* Today button - moved to MobileToolbar on mobile */}
         </div>
       </div>
 
       {/* Calendar Grid - in export mode, no overflow/scroll constraints */}
-      <div className={exportMode ? '' : 'flex-1 min-h-0 overflow-auto'}>
+      <div className={exportMode ? '' : 'flex-1 min-h-0 overflow-y-auto md:overflow-auto'}>
         <div
           ref={gridRef}
-          className={`grid min-w-[700px] select-none ${exportMode ? '' : 'h-full'}`}
+          className={`grid select-none weekly-calendar-grid ${exportMode ? 'min-w-[700px]' : 'w-full md:min-w-[700px] h-full'}`}
           style={{
-            gridTemplateColumns: "70px repeat(7, minmax(80px, 1fr))",
+            gridTemplateColumns: exportMode
+              ? "70px repeat(7, minmax(80px, 1fr))"
+              : isMobile
+                ? "42px repeat(7, 1fr)"
+                : "70px repeat(7, 1fr)",
             // In export mode, use fixed row heights instead of responsive ones
             gridTemplateRows: exportMode
               ? `48px repeat(${hours.length - 1}, ${EXPORT_ROW_HEIGHT}px) 24px`
-              : `48px repeat(${hours.length - 1}, minmax(50px, 1fr)) 24px`,
+              : `40px repeat(${hours.length - 1}, minmax(40px, 1fr)) 20px`,
           }}
           onContextMenu={(e) => e.preventDefault()}
         >
@@ -274,8 +279,8 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
           <div /> {/* Empty corner cell */}
           {days.map((day) => (
             <div key={day.short} className="flex flex-col items-center justify-center border-b border-gray-300">
-              <span className="text-xs font-medium text-gray-500">{day.short}</span>
-              <span className="text-sm font-semibold text-gray-900">{day.date}</span>
+              <span className="text-[10px] md:text-xs font-medium text-gray-500">{day.short}</span>
+              <span className="text-xs md:text-sm font-semibold text-gray-900">{day.date}</span>
             </div>
           ))}
 
@@ -283,8 +288,8 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
           {hours.map((hour, index) => (
             <React.Fragment key={hour}>
               {/* Time label */}
-              <div className="flex items-start justify-end pr-3">
-                <span className="text-xs font-medium text-gray-500 -translate-y-1/2 whitespace-nowrap">{formatHour(hour, use12HourFormat)}</span>
+              <div className="flex items-start justify-end pr-1 md:pr-3">
+                <span className="text-[9px] md:text-xs font-medium text-gray-500 -translate-y-1/2 whitespace-nowrap">{formatHour(hour, use12HourFormat)}</span>
               </div>
 
               {/* Day cells - only render for data rows (not the last label row) */}
@@ -345,7 +350,7 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
                         return (
                           <div
                             key={event.id}
-                            className={`group absolute left-1 right-1 z-10 rounded-lg border-l-4 ${colorConfig.border} ${colorConfig.bg} backdrop-blur-sm p-2 overflow-hidden text-center flex flex-col justify-between ${isDragging ? 'cursor-grabbing shadow-xl ring-2 ring-blue-400' : 'cursor-grab hover:shadow-lg hover:scale-[1.02] transition-all duration-200'}`}
+                            className={`group absolute left-0.5 right-0.5 md:left-1 md:right-1 z-10 rounded-md md:rounded-lg border-l-2 md:border-l-4 ${colorConfig.border} ${colorConfig.bg} backdrop-blur-sm p-0.5 md:p-2 overflow-hidden text-center flex flex-col justify-between ${isDragging ? 'cursor-grabbing shadow-xl ring-2 ring-blue-400' : 'cursor-grab hover:shadow-lg hover:scale-[1.02] transition-all duration-200'}`}
                             style={{
                               top: position.top,
                               height: position.height,
@@ -385,11 +390,10 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
                                 <X className="size-3" />
                               </button>
                             )}
-                            <p className={`text-sm font-semibold ${colorConfig.text}`}>{event.title}</p>
-                            <p className={`text-xs ${colorConfig.textSecondary}`}>{event.description}</p>
-                            <p className={`text-xs ${colorConfig.textSecondary}`}>
-                              {formatTime(displayTime.startHour, displayTime.startMinute, use12HourFormat)} -{" "}
-                              {formatTime(displayTime.endHour, displayTime.endMinute, use12HourFormat)}
+                            <p className={`text-[10px] md:text-sm font-semibold ${colorConfig.text} truncate`}>{event.title}</p>
+                            <p className={`text-[8px] md:text-xs ${colorConfig.textSecondary} truncate hidden md:block`}>{event.description}</p>
+                            <p className={`text-[8px] md:text-xs ${colorConfig.textSecondary} truncate`}>
+                              {formatTime(displayTime.startHour, displayTime.startMinute, use12HourFormat)} - {formatTime(displayTime.endHour, displayTime.endMinute, use12HourFormat)}
                             </p>
                           </div>
                         )

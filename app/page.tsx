@@ -30,6 +30,9 @@ const DesktopWelcomeTip = dynamic(() => import("@/components/DesktopWelcomeTip")
 // LocalStorage key for events
 const EVENTS_STORAGE_KEY = "schedule-builder-events"
 
+// LocalStorage key for view mode
+const VIEW_MODE_STORAGE_KEY = "schedule-builder-view-mode"
+
 // Load events from localStorage
 function loadEventsFromStorage(): Event[] {
   if (typeof window === "undefined") return []
@@ -67,6 +70,32 @@ function clearEventsFromStorage(): void {
     localStorage.removeItem(EVENTS_STORAGE_KEY)
   } catch (error) {
     console.error("Error clearing events from localStorage:", error)
+  }
+}
+
+// Load view mode from localStorage
+function loadViewModeFromStorage(): "day" | "week" {
+  if (typeof window === "undefined") return "week"
+
+  try {
+    const stored = localStorage.getItem(VIEW_MODE_STORAGE_KEY)
+    if (stored === "day" || stored === "week") {
+      return stored
+    }
+  } catch (error) {
+    console.error("Error loading view mode from localStorage:", error)
+  }
+  return "week" // Default to week view
+}
+
+// Save view mode to localStorage
+function saveViewModeToStorage(viewMode: "day" | "week"): void {
+  if (typeof window === "undefined") return
+
+  try {
+    localStorage.setItem(VIEW_MODE_STORAGE_KEY, viewMode)
+  } catch (error) {
+    console.error("Error saving view mode to localStorage:", error)
   }
 }
 
@@ -149,6 +178,9 @@ export default function ScheduleBuilderPage() {
   useEffect(() => {
     const storedEvents = loadEventsFromStorage()
     setEvents(storedEvents)
+    // Load saved view mode
+    const storedViewMode = loadViewModeFromStorage()
+    setViewMode(storedViewMode)
     setIsLoaded(true)
     // Reload settings in case template was just applied
     reloadSettings()
@@ -161,19 +193,12 @@ export default function ScheduleBuilderPage() {
     }
   }, [events, isLoaded])
 
-  // Set initial view mode to daily on mobile (after isMobile is determined)
-  const [hasSetInitialView, setHasSetInitialView] = useState(false)
+  // Save view mode to localStorage whenever it changes (after initial load)
   useEffect(() => {
-    // Only set once, after we know if it's mobile
-    if (!hasSetInitialView && typeof window !== 'undefined') {
-      // Check screen width directly for initial load
-      const isMobileScreen = window.innerWidth < 768
-      if (isMobileScreen) {
-        setViewMode("day")
-      }
-      setHasSetInitialView(true)
+    if (isLoaded) {
+      saveViewModeToStorage(viewMode)
     }
-  }, [hasSetInitialView])
+  }, [viewMode, isLoaded])
 
   const handleReset = () => {
     setEvents([])
@@ -442,6 +467,7 @@ export default function ScheduleBuilderPage() {
             weekStart={currentWeekStart}
             weekStartsOnSunday={settings.weekStartsOnSunday}
             onExport={handleExport}
+            onToday={() => setSelectedDate(new Date())}
             showAddDialog={showAddDialog}
             onAddDialogClose={handleAddDialogClose}
             initialData={addDialogInitialData}

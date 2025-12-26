@@ -4,7 +4,7 @@ import { useState } from "react"
 import dynamic from "next/dynamic"
 import { Button } from "@/components/ui/button"
 import { ViewModeToggle } from "@/components/ViewModeToggle"
-import { PlusCircle, Download, Settings, RotateCcw, Sparkles, MoreHorizontal, HelpCircle } from "lucide-react"
+import { PlusCircle, Download, Settings, RotateCcw, Sparkles, MoreHorizontal, HelpCircle, CalendarDays, CalendarRange } from "lucide-react"
 import {
     Dialog,
     DialogContent,
@@ -39,6 +39,7 @@ interface MobileToolbarProps {
     weekStart: Date
     weekStartsOnSunday: boolean
     onExport: () => void
+    onToday: () => void
     showAddDialog?: boolean
     onAddDialogClose?: () => void
     initialData?: {
@@ -56,6 +57,7 @@ export function MobileToolbar({
     weekStart,
     weekStartsOnSunday,
     onExport,
+    onToday,
     showAddDialog,
     onAddDialogClose,
     initialData,
@@ -99,45 +101,68 @@ export function MobileToolbar({
 
     return (
         <>
+            {/* Floating Add Button (FAB) - above the toolbar */}
+            <Button
+                size="lg"
+                className="fixed bottom-20 right-4 z-50 h-14 w-14 rounded-full bg-blue-600 hover:bg-blue-700 text-white shadow-lg p-0 md:hidden"
+                onClick={() => setShowAddEventDialog(true)}
+            >
+                <PlusCircle className="size-7" />
+                <span className="sr-only">Add Event</span>
+            </Button>
+
             {/* Fixed Bottom Toolbar */}
-            <div className="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-gray-200 px-2 py-2 md:hidden safe-area-pb">
-                <div className="flex items-center justify-around gap-1">
-                    {/* Day/Week Toggle */}
-                    <ViewModeToggle
-                        value={viewMode}
-                        onValueChange={onViewModeChange}
-                        size="sm"
-                        className="flex-shrink-0"
-                    />
-
-                    {/* Add Button - Primary Action */}
-                    <Button
-                        size="lg"
-                        className="h-12 w-12 rounded-full bg-blue-600 hover:bg-blue-700 text-white shadow-lg p-0"
-                        onClick={() => setShowAddEventDialog(true)}
+            <div className="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-gray-200 px-4 py-2 md:hidden safe-area-pb">
+                <div className="flex items-center justify-around">
+                    {/* Day/Week Toggle Button - single button that switches between views */}
+                    <button
+                        onClick={() => onViewModeChange(viewMode === "day" ? "week" : "day")}
+                        className="flex flex-col items-center gap-0.5 p-2 w-16 hover:bg-gray-100 rounded-lg transition-colors"
                     >
-                        <PlusCircle className="size-6" />
-                        <span className="sr-only">Add Event</span>
-                    </Button>
+                        {viewMode === "day" ? (
+                            <CalendarDays className="size-5 text-blue-600" />
+                        ) : (
+                            <CalendarRange className="size-5 text-blue-600" />
+                        )}
+                        <span className="text-xs text-gray-600 whitespace-nowrap">
+                            {viewMode === "day" ? "Day" : "Week"} <span className="text-gray-400">↔</span>
+                        </span>
+                    </button>
 
-                    {/* Quick Actions */}
-                    <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-10 w-10"
+                    {/* Today Button */}
+                    <button
+                        onClick={onToday}
+                        className="flex flex-col items-center gap-0.5 p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                    >
+                        <CalendarDays className="size-5 text-gray-600" />
+                        <span className="text-xs text-gray-600">Today</span>
+                    </button>
+
+                    {/* Export Button */}
+                    <button
                         onClick={handleExportClick}
+                        className="flex flex-col items-center gap-0.5 p-2 hover:bg-gray-100 rounded-lg transition-colors"
                     >
                         <Download className="size-5 text-gray-600" />
-                        <span className="sr-only">Export</span>
-                    </Button>
+                        <span className="text-xs text-gray-600">Export</span>
+                    </button>
+
+                    {/* Reset Button */}
+                    <button
+                        onClick={handleResetClick}
+                        className="flex flex-col items-center gap-0.5 p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                    >
+                        <RotateCcw className="size-5 text-gray-600" />
+                        <span className="text-xs text-gray-600">Reset</span>
+                    </button>
 
                     {/* More Menu */}
                     <Sheet open={showMoreSheet} onOpenChange={setShowMoreSheet}>
                         <SheetTrigger asChild>
-                            <Button variant="ghost" size="icon" className="h-10 w-10">
+                            <button className="flex flex-col items-center gap-0.5 p-2 hover:bg-gray-100 rounded-lg transition-colors">
                                 <MoreHorizontal className="size-5 text-gray-600" />
-                                <span className="sr-only">More options</span>
-                            </Button>
+                                <span className="text-xs text-gray-600">More</span>
+                            </button>
                         </SheetTrigger>
                         <SheetContent side="bottom" className="h-auto rounded-t-2xl">
                             <SheetHeader className="pb-4">
@@ -152,15 +177,6 @@ export function MobileToolbar({
                                         <Settings className="size-5 text-gray-600" />
                                     </div>
                                     <span className="text-xs text-gray-600">Settings</span>
-                                </button>
-                                <button
-                                    onClick={handleResetClick}
-                                    className="flex flex-col items-center gap-2 p-3 rounded-xl hover:bg-gray-50"
-                                >
-                                    <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center">
-                                        <RotateCcw className="size-5 text-gray-600" />
-                                    </div>
-                                    <span className="text-xs text-gray-600">Reset</span>
                                 </button>
                                 <button
                                     onClick={handleAIAutofillClick}

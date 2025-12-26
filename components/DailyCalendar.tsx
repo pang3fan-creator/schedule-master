@@ -202,9 +202,9 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
     const groupedDayEvents = useMemo(() => groupOverlappingEvents(dayEvents), [dayEvents])
 
     return (
-        <div className={`flex flex-col p-4 md:p-6 bg-muted/20 ${exportMode ? '' : 'h-full'}`}>
+        <div className={`flex flex-col p-2 md:p-6 bg-muted/20 ${exportMode ? '' : 'h-full'}`}>
             {/* Header with navigation - responsive layout */}
-            <div className="mb-4 flex-shrink-0">
+            <div className="mb-1 md:mb-4 flex-shrink-0">
                 {/* Desktop layout */}
                 <div className="hidden md:flex items-center justify-between relative">
                     {/* Spacer for layout balance - hidden in export mode */}
@@ -233,7 +233,7 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                 </div>
 
                 {/* Mobile layout - stacked */}
-                <div className="md:hidden flex flex-col items-center gap-2">
+                <div className="md:hidden flex flex-col items-center">
                     {/* Navigation row */}
                     {!exportMode && (
                         <div className="flex items-center justify-center w-full">
@@ -246,17 +246,7 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                             </Button>
                         </div>
                     )}
-                    {/* Today button - below date on mobile */}
-                    {!exportMode && (
-                        <Button
-                            variant="outline"
-                            size="sm"
-                            className="border-blue-500 text-blue-600 hover:bg-blue-50 hover:text-blue-700 font-medium"
-                            onClick={goToToday}
-                        >
-                            Today
-                        </Button>
-                    )}
+                    {/* Today button - moved to MobileToolbar on mobile */}
                 </div>
             </div>
 
