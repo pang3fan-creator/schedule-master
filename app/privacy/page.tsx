@@ -1,4 +1,5 @@
 import { PageLayout } from "@/components/PageLayout"
+import { Breadcrumb } from "@/components/Breadcrumb"
 
 export const metadata = {
     title: "Privacy Policy | TrySchedule",
@@ -9,8 +10,16 @@ export default function PrivacyPage() {
     return (
         <PageLayout bgColor="bg-white">
             <div className="container mx-auto px-4 max-w-4xl">
-                <h1 className="text-4xl font-bold text-gray-900 mb-8">Privacy Policy</h1>
-                <p className="text-sm text-gray-500 mb-8">Last updated: December 24, 2025</p>
+                {/* Breadcrumb Navigation */}
+                <div className="mb-6">
+                    <Breadcrumb items={[
+                        { label: "Home", href: "/" },
+                        { label: "Privacy" }
+                    ]} />
+                </div>
+
+                <h1 className="text-4xl font-bold text-gray-900 mb-4 text-center">Privacy Policy</h1>
+                <p className="text-sm text-gray-500 mb-12 text-center">Last updated: December 24, 2025</p>
 
                 <div className="prose prose-gray max-w-none">
                     <section className="mb-8">

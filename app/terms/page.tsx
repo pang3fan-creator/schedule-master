@@ -1,4 +1,5 @@
 import { PageLayout } from "@/components/PageLayout"
+import { Breadcrumb } from "@/components/Breadcrumb"
 
 export const metadata = {
     title: "Terms of Service | TrySchedule",
@@ -9,8 +10,16 @@ export default function TermsPage() {
     return (
         <PageLayout bgColor="bg-white">
             <div className="container mx-auto px-4 max-w-4xl">
-                <h1 className="text-4xl font-bold text-gray-900 mb-8">Terms of Service</h1>
-                <p className="text-sm text-gray-500 mb-8">Last updated: December 15, 2025</p>
+                {/* Breadcrumb Navigation */}
+                <div className="mb-6">
+                    <Breadcrumb items={[
+                        { label: "Home", href: "/" },
+                        { label: "Terms" }
+                    ]} />
+                </div>
+
+                <h1 className="text-4xl font-bold text-gray-900 mb-4 text-center">Terms of Service</h1>
+                <p className="text-sm text-gray-500 mb-12 text-center">Last updated: December 15, 2025</p>
 
                 <div className="prose prose-gray max-w-none">
                     <section className="mb-8">

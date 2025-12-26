@@ -74,7 +74,7 @@ export function AuthModal({ open, onOpenChange, defaultMode = "sign-in" }: AuthM
                     </div>
 
                     {/* Right Panel - Auth Form */}
-                    <div className="flex-1 p-8 py-12 flex flex-col justify-center">
+                    <div className="flex-1 p-8 pt-14 pb-12 flex flex-col justify-center">
                         <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as "sign-up" | "sign-in")} className="w-full h-full flex flex-col">
                             <TabsList className="grid w-full grid-cols-2 mb-6 bg-transparent gap-4 h-auto p-0">
                                 <TabsTrigger

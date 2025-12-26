@@ -12,6 +12,7 @@ import Link from "next/link"
 import { useSubscription } from "@/components/SubscriptionContext"
 import { UpgradeModal } from "@/components/UpgradeModal"
 import { FAQAccordion } from "@/components/FaqAccordion"
+import { Breadcrumb } from "@/components/Breadcrumb"
 
 // Get the date of a specific day of the week for the current week
 // dayOfWeek: 0=Sunday, 1=Monday, 2=Tuesday, etc. (JavaScript standard)
@@ -218,15 +219,13 @@ export function TemplateDetailClient({ slug }: TemplateDetailClientProps) {
     return (
         <>
             <PageLayout bgColor="bg-gray-50/50">
-                {/* Back link */}
+                {/* Breadcrumb Navigation */}
                 <div className="container mx-auto px-4 max-w-6xl">
-                    <Link
-                        href="/templates"
-                        className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 transition-colors"
-                    >
-                        <ArrowLeft className="size-4" />
-                        Back to Templates
-                    </Link>
+                    <Breadcrumb items={[
+                        { label: "Home", href: "/" },
+                        { label: "Templates", href: "/templates" },
+                        { label: template.slug }
+                    ]} />
                 </div>
 
                 {/* Page Title */}

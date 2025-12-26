@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Mail, MapPin, Clock, Send, CheckCircle } from "lucide-react"
+import { Breadcrumb } from "@/components/Breadcrumb"
 
 export default function ContactPage() {
     const [formState, setFormState] = useState({
@@ -63,6 +64,14 @@ export default function ContactPage() {
     return (
         <PageLayout bgColor="bg-gray-50">
             <div className="container mx-auto px-4 max-w-4xl">
+                {/* Breadcrumb Navigation */}
+                <div className="mb-6">
+                    <Breadcrumb items={[
+                        { label: "Home", href: "/" },
+                        { label: "Contact" }
+                    ]} />
+                </div>
+
                 {/* Header */}
                 <div className="text-center mb-16">
                     <h1 className="text-4xl font-bold text-gray-900 mb-4">Contact Us</h1>

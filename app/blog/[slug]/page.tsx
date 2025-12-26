@@ -4,6 +4,7 @@ import Image from "next/image"
 import { getAllPosts, getPostBySlug } from "@/lib/posts"
 import { PageLayout } from "@/components/PageLayout"
 import { BlogCard } from "@/components/BlogCard"
+import { Breadcrumb } from "@/components/Breadcrumb"
 import type { Metadata } from "next"
 
 interface BlogPostPageProps {
@@ -312,6 +313,15 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             <PageLayout bgColor="bg-white" contentPadding="">
                 {/* Article Header */}
                 <article className="container mx-auto px-4 py-16 max-w-3xl">
+                    {/* Breadcrumb Navigation */}
+                    <div className="mb-8">
+                        <Breadcrumb items={[
+                            { label: "Home", href: "/" },
+                            { label: "Blog", href: "/blog" },
+                            { label: slug }
+                        ]} />
+                    </div>
+
                     <div className="text-center mb-8">
                         <span className="text-sm font-medium text-blue-600 uppercase tracking-wider">
                             {post.category}

@@ -6,6 +6,8 @@ import { PageLayout } from "@/components/PageLayout";
 import { useSearchParams } from "next/navigation";
 import { Suspense, Fragment as ReactFragment } from "react";
 
+import { Breadcrumb } from "@/components/Breadcrumb";
+
 // Creem Product IDs - 需要在 Creem Dashboard 创建产品后替换
 const PRODUCT_IDS = {
     "7day": process.env.NEXT_PUBLIC_CREEM_PRODUCT_7DAY || "prod_7day_placeholder",
@@ -251,6 +253,14 @@ export function PricingPageClient({ productSchemas }: PricingPageClientProps) {
                 <Suspense fallback={null}>
                     <SuccessBanner />
                 </Suspense>
+
+                {/* Breadcrumb Navigation */}
+                <div className="container mx-auto px-4 mb-4">
+                    <Breadcrumb items={[
+                        { label: "Home", href: "/" },
+                        { label: "Pricing" }
+                    ]} />
+                </div>
 
                 {/* Hero Section */}
                 <div className="container mx-auto px-4 text-center mb-12">

@@ -12,6 +12,8 @@ import { PageHero } from "@/components/PageHero";
 import { Button } from "@/components/ui/button";
 import { ConfirmDialog } from "@/components/ConfirmDialog";
 
+import { Breadcrumb } from "@/components/Breadcrumb";
+
 // Icon mapping for templates
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
     Briefcase,
@@ -96,6 +98,14 @@ export default function TemplatesPage() {
     return (
         <>
             <PageLayout bgColor="bg-gray-50/50">
+                {/* Breadcrumb Navigation */}
+                <div className="container mx-auto px-4 max-w-6xl mb-4">
+                    <Breadcrumb items={[
+                        { label: "Home", href: "/" },
+                        { label: "Templates" }
+                    ]} />
+                </div>
+
                 {/* Hero Section */}
                 <PageHero
                     title="Schedule Templates"

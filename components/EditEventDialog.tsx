@@ -112,10 +112,10 @@ export function EditEventDialog({
                     <Button
                         variant="ghost"
                         size="icon"
-                        className="size-8 text-gray-400 hover:text-gray-600"
+                        className="size-8 sm:size-9 rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 hover:text-gray-700"
                         onClick={() => onOpenChange(false)}
                     >
-                        <X className="size-4" />
+                        <X className="size-4 sm:size-5" />
                     </Button>
                 </DialogHeader>
 

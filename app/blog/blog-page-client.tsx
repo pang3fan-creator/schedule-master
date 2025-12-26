@@ -7,6 +7,8 @@ import { CategoryFilter } from "@/components/CategoryFilter"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { PageHero } from "@/components/PageHero"
 
+import { Breadcrumb } from "@/components/Breadcrumb"
+
 interface Post {
     slug: string
     title: string
@@ -77,6 +79,14 @@ export function BlogPageClient({ posts, categories }: BlogPageClientProps) {
 
     return (
         <PageLayout bgColor="bg-gray-50/50">
+            {/* Breadcrumb Navigation */}
+            <div className="container mx-auto px-4 max-w-6xl mb-4">
+                <Breadcrumb items={[
+                    { label: "Home", href: "/" },
+                    { label: "Blog" }
+                ]} />
+            </div>
+
             {/* Hero Section */}
             <PageHero
                 title="Our Blog"
