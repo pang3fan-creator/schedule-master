@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useId } from "react"
 import dynamic from "next/dynamic"
 import Link from "next/link"
 import Image from "next/image"
@@ -43,6 +43,7 @@ const navLinks = [
 
 export function MobileNav() {
     const pathname = usePathname()
+    const sheetId = useId() // Stable ID for hydration
     const [open, setOpen] = useState(false)
     const [authModalOpen, setAuthModalOpen] = useState(false)
     const [authMode, setAuthMode] = useState<"sign-in" | "sign-up">("sign-in")
@@ -64,7 +65,7 @@ export function MobileNav() {
 
     return (
         <>
-            <Sheet open={open} onOpenChange={setOpen}>
+            <Sheet open={open} onOpenChange={setOpen} key={sheetId}>
                 <SheetTrigger asChild>
                     <Button variant="ghost" size="icon" className="md:hidden">
                         <Menu className="size-6" />

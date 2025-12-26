@@ -133,6 +133,8 @@ function parseMarkdown(content: string) {
             .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
             .replace(/\*(.*?)\*/g, "<em>$1</em>")
             .replace(/`(.*?)`/g, "<code class='bg-gray-100 px-1 rounded'>$1</code>")
+            // Add support for markdown links [text](url)
+            .replace(/\[([^\]]+)\]\(([^)]+)\)/g, "<a href='$2' class='text-blue-600 hover:underline' target='_blank' rel='noopener noreferrer'>$1</a>")
     }
 
     for (let i = 0; i < lines.length; i++) {
@@ -155,6 +157,32 @@ function parseMarkdown(content: string) {
                 <h3 key={key++} className="text-xl font-semibold text-gray-900 mt-8 mb-3">
                     {line.replace("### ", "")}
                 </h3>
+            )
+            continue
+        }
+
+        // Image - standalone line with ![alt](url)
+        const imageMatch = line.match(/^!\[([^\]]*)\]\(([^)]+)\)$/)
+        if (imageMatch) {
+            flushList()
+            const [, alt, src] = imageMatch
+            elements.push(
+                <figure key={key++} className="my-8">
+                    <div className="rounded-lg overflow-hidden border border-gray-200 shadow-sm">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                            src={src}
+                            alt={alt || "Blog image"}
+                            className="w-full h-auto object-cover"
+                            loading="lazy"
+                        />
+                    </div>
+                    {alt && (
+                        <figcaption className="mt-2 text-center text-sm text-gray-500 italic">
+                            {alt}
+                        </figcaption>
+                    )}
+                </figure>
             )
             continue
         }
@@ -187,6 +215,54 @@ function parseMarkdown(content: string) {
                 listType = "ol"
             }
             currentList.push(line.replace(/^\d+\.\s*/, ""))
+            continue
+        }
+
+        // Table parsing - detect table rows starting with |
+        if (line.trim().startsWith("|") && line.trim().endsWith("|")) {
+            flushList()
+            // Collect all table lines
+            const tableLines: string[] = [line]
+            let j = i + 1
+            while (j < lines.length && lines[j].trim().startsWith("|") && lines[j].trim().endsWith("|")) {
+                tableLines.push(lines[j])
+                j++
+            }
+            i = j - 1 // Skip processed lines
+
+            // Parse table: first line is header, second is separator (skip), rest are data rows
+            if (tableLines.length >= 2) {
+                const parseRow = (row: string) => {
+                    return row.split("|").slice(1, -1).map(cell => cell.trim())
+                }
+
+                const headerCells = parseRow(tableLines[0])
+                // Skip separator line (tableLines[1] contains :--- etc.)
+                const dataRows = tableLines.slice(2).map(parseRow)
+
+                elements.push(
+                    <div key={key++} className="my-6 overflow-x-auto rounded-lg border-2 border-gray-300 shadow-md">
+                        <table className="min-w-full border-collapse">
+                            <thead className="bg-gray-100">
+                                <tr>
+                                    {headerCells.map((cell, cellIndex) => (
+                                        <th key={cellIndex} className="border-b-2 border-r border-gray-300 last:border-r-0 px-4 py-3 text-left text-sm font-bold text-gray-800" dangerouslySetInnerHTML={{ __html: formatInline(cell) }} />
+                                    ))}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {dataRows.map((row, rowIndex) => (
+                                    <tr key={rowIndex} className={rowIndex % 2 === 0 ? "bg-white" : "bg-gray-50"}>
+                                        {row.map((cell, cellIndex) => (
+                                            <td key={cellIndex} className="border-b border-r border-gray-200 last:border-r-0 px-4 py-3 text-sm text-gray-700" dangerouslySetInnerHTML={{ __html: formatInline(cell) }} />
+                                        ))}
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                )
+            }
             continue
         }
 
@@ -240,7 +316,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                         <span className="text-sm font-medium text-blue-600 uppercase tracking-wider">
                             {post.category}
                         </span>
-                        <h1 className="mt-4 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
+                        <h1 className="mt-4 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl leading-tight">
                             {post.title}
                         </h1>
                         <div className="mt-6 flex items-center justify-center gap-4 text-sm text-gray-500">
