@@ -247,7 +247,7 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
                 <ChevronLeft className="size-6" />
               </Button>
             )}
-            <h2 className="text-xl font-semibold text-gray-900 min-w-[280px] text-center">{dateRangeString}</h2>
+            <h2 className="text-xl font-semibold text-gray-900 w-[450px] text-center">{dateRangeString}</h2>
             {!exportMode && (
               <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToNextWeek} aria-label="Go to next week">
                 <ChevronRight className="size-6" />

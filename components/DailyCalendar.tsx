@@ -234,7 +234,7 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                                 <ChevronLeft className="size-6" />
                             </Button>
                         )}
-                        <h2 className="text-xl font-semibold text-gray-900 min-w-[320px] text-center">{formatDate(selectedDate)}</h2>
+                        <h2 className="text-xl font-semibold text-gray-900 w-[450px] text-center">{formatDate(selectedDate)}</h2>
                         {!exportMode && (
                             <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToNextDay} aria-label="Go to next day">
                                 <ChevronRight className="size-6" />
