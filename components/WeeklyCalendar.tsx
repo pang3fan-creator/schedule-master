@@ -115,11 +115,19 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
     timeIncrement,  // Pass time increment for drag snapping
   })
 
-  // Drag-to-create hook
+  // Calculate the week's dates based on current week start
+  // Moved before useDragToCreate so it can be used for collision detection
+  const weekDates = useMemo(() => getWeekDates(currentWeekStart), [currentWeekStart])
+
+  // Drag-to-create hook - pass weekDates for date-based filtering
   const { creatingEvent, handleGridMouseDown: handleCreateMouseDown, handleGridTouchStart: handleCreateTouchStart } = useDragToCreate({
     onAddEvent,
     rowHeight,
-    timeIncrement
+    timeIncrement,
+    existingEvents: events,
+    workingHoursStart,
+    workingHoursEnd,
+    weekDates
   })
 
   // Current Time hook
@@ -127,9 +135,6 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
 
   // Mobile detection for responsive layout
   const isMobile = useIsMobile()
-
-  // Calculate the week's dates based on current week start
-  const weekDates = useMemo(() => getWeekDates(currentWeekStart), [currentWeekStart])
 
   // Build days array with dynamic dates
   const days = useMemo(() => {

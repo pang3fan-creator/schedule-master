@@ -1,9 +1,14 @@
 import { useState, useRef, useCallback, useEffect } from "react"
+import { type Event } from "@/lib/types"
 
 interface UseDragToCreateProps {
     onAddEvent?: (data: { startTime: string; endTime: string; day: number }) => void
     rowHeight: number
     timeIncrement: number
+    existingEvents?: Event[]     // Events for collision detection
+    workingHoursStart?: number   // View start hour boundary
+    workingHoursEnd?: number     // View end hour boundary
+    weekDates?: Date[]           // Optional: week dates array for filtering (weekly view)
 }
 
 interface CreatingEvent {
@@ -14,11 +19,69 @@ interface CreatingEvent {
     dayIndex: number
 }
 
-export function useDragToCreate({ onAddEvent, rowHeight, timeIncrement }: UseDragToCreateProps) {
+export function useDragToCreate({
+    onAddEvent,
+    rowHeight,
+    timeIncrement,
+    existingEvents = [],
+    workingHoursStart = 0,
+    workingHoursEnd = 24,
+    weekDates
+}: UseDragToCreateProps) {
     const [creatingEvent, setCreatingEvent] = useState<CreatingEvent | null>(null)
     const dragStartRef = useRef<{ y: number; originalClickY: number; hour: number; minute: number; dayIndex: number } | null>(null)
     // Track if we're using touch (to prevent mouse events from firing on touch devices)
     const isTouchRef = useRef(false)
+
+    /**
+     * Find collision boundaries for the current drag operation
+     * Returns the nearest event boundary that would block the drag
+     */
+    const findCollisionBoundary = useCallback((
+        originalStartTotal: number,
+        currentTotal: number,
+        dayIndex: number
+    ): { minStart: number; maxEnd: number } => {
+        // Default boundaries from working hours
+        let minStart = workingHoursStart * 60
+        let maxEnd = workingHoursEnd * 60
+
+        // Filter events for the specific day if weekDates is provided
+        let eventsToCheck = existingEvents
+        if (weekDates && weekDates[dayIndex]) {
+            const targetDate = weekDates[dayIndex]
+            const targetDateStr = `${targetDate.getFullYear()}-${String(targetDate.getMonth() + 1).padStart(2, '0')}-${String(targetDate.getDate()).padStart(2, '0')}`
+            eventsToCheck = existingEvents.filter(event => event.date === targetDateStr)
+        }
+
+        // Iterate through events to find blocking boundaries
+        for (const event of eventsToCheck) {
+            const eventStart = event.startHour * 60 + event.startMinute
+            const eventEnd = event.endHour * 60 + event.endMinute
+
+            const isDraggingDown = currentTotal >= originalStartTotal
+            const isDraggingUp = currentTotal < originalStartTotal
+
+            if (isDraggingDown) {
+                // Dragging down: check if event is below our start point
+                // If event starts after our original start, it's a potential blocker
+                if (eventStart >= originalStartTotal && eventStart < maxEnd) {
+                    maxEnd = eventStart
+                }
+            }
+
+            if (isDraggingUp) {
+                // Dragging up: check if event is above our end point
+                // The end point when dragging up is originalStart + 60 (1 hour)
+                const ourEndPoint = originalStartTotal + 60
+                if (eventEnd <= ourEndPoint && eventEnd > minStart) {
+                    minStart = eventEnd
+                }
+            }
+        }
+
+        return { minStart, maxEnd }
+    }, [existingEvents, workingHoursStart, workingHoursEnd])
 
     // Common function to calculate event times based on current Y position
     const calculateEventTimes = useCallback((clientY: number, isEnd: boolean = false) => {
@@ -64,9 +127,27 @@ export function useDragToCreate({ onAddEvent, rowHeight, timeIncrement }: UseDra
             }
         }
 
-        // Clamp to valid hours (0-24)
+        // Apply collision detection limits
+        const { minStart, maxEnd } = findCollisionBoundary(originalStartTotal, currentTotal, start.dayIndex)
+
+        // Clamp to collision boundaries
+        if (startTotal < minStart) startTotal = minStart
+        if (endTotal > maxEnd) endTotal = maxEnd
+
+        // Also clamp to valid hours (0-24) as fallback
         if (startTotal < 0) startTotal = 0
         if (endTotal > 24 * 60) endTotal = 24 * 60
+
+        // Ensure minimum duration after clamping
+        if (endTotal - startTotal < timeIncrement) {
+            if (currentTotal < originalStartTotal) {
+                // Dragging up but hit boundary - adjust start instead
+                startTotal = Math.max(minStart, endTotal - timeIncrement)
+            } else {
+                // Dragging down but hit boundary - adjust end instead
+                endTotal = Math.min(maxEnd, startTotal + timeIncrement)
+            }
+        }
 
         return {
             startHour: Math.floor(startTotal / 60),
@@ -74,7 +155,7 @@ export function useDragToCreate({ onAddEvent, rowHeight, timeIncrement }: UseDra
             endHour: Math.floor(endTotal / 60),
             endMinute: Math.floor(endTotal % 60),
         }
-    }, [rowHeight, timeIncrement])
+    }, [rowHeight, timeIncrement, findCollisionBoundary])
 
     // Mouse move handler
     const handleGlobalMouseMove = useCallback((e: MouseEvent) => {

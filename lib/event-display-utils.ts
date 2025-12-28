@@ -9,11 +9,18 @@ export type DisplayMode = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
 
 /**
  * Get display mode based on event card height in pixels
+ * Breakpoints:
+ * - XS: < 30px
+ * - SM: 30-60px (includes 60px)
+ * - MD: > 60px and < 80px
+ * - LG: 80-159px
+ * - XL: 160-399px
+ * - XXL: >= 400px
  */
 export function getDisplayMode(heightPx: number): DisplayMode {
     if (heightPx < 30) return 'xs'
-    if (heightPx < 50) return 'sm'
-    if (heightPx < 80) return 'md'
+    if (heightPx <= 60) return 'sm'  // SM includes 60px
+    if (heightPx < 80) return 'md'   // MD: > 60px and < 80px
     if (heightPx < 160) return 'lg'
     if (heightPx < 400) return 'xl'
     return 'xxl'

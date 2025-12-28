@@ -114,11 +114,21 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
         timeIncrement,  // Pass time increment for drag snapping
     })
 
-    // Drag-to-create hook
+    // Filter events for the selected day using date string
+    // Moved before useDragToCreate so it can be used for collision detection
+    const dayEvents = useMemo(() => {
+        const selectedDateString = formatDateString(selectedDate)
+        return events.filter(event => event.date === selectedDateString)
+    }, [events, selectedDate])
+
+    // Drag-to-create hook - pass dayEvents (already filtered) for collision detection
     const { creatingEvent, handleGridMouseDown: handleCreateMouseDown, handleGridTouchStart: handleCreateTouchStart } = useDragToCreate({
         onAddEvent,
         rowHeight,
-        timeIncrement
+        timeIncrement,
+        existingEvents: dayEvents,  // Use filtered events for this day
+        workingHoursStart,
+        workingHoursEnd
     })
 
     // Current Time hook
@@ -158,12 +168,6 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
         newDate.setDate(selectedDate.getDate() + 1)
         onDateChange(newDate)
     }
-
-    // Filter events for the selected day using date string
-    const dayEvents = useMemo(() => {
-        const selectedDateString = formatDateString(selectedDate)
-        return events.filter(event => event.date === selectedDateString)
-    }, [events, selectedDate])
 
     // Calculate actual row height based on grid dimensions and hour count
     useEffect(() => {
