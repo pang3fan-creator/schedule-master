@@ -199,13 +199,13 @@ function parseMarkdown(content: string) {
             continue
         }
 
-        // Unordered list
-        if (line.startsWith("- ")) {
+        // Unordered list (supports both "- " and "* " markers)
+        if (line.startsWith("- ") || line.startsWith("* ")) {
             if (listType !== "ul") {
                 flushList()
                 listType = "ul"
             }
-            currentList.push(line.replace("- ", ""))
+            currentList.push(line.replace(/^[-*]\s/, ""))
             continue
         }
 

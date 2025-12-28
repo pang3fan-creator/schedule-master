@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useId } from "react"
+import { useState, useEffect } from "react"
 import dynamic from "next/dynamic"
 import Link from "next/link"
 import Image from "next/image"
@@ -43,7 +43,7 @@ const navLinks = [
 
 export function MobileNav() {
     const pathname = usePathname()
-    const sheetId = useId() // Stable ID for hydration
+    const [mounted, setMounted] = useState(false)
     const [open, setOpen] = useState(false)
     const [authModalOpen, setAuthModalOpen] = useState(false)
     const [authMode, setAuthMode] = useState<"sign-in" | "sign-up">("sign-in")
@@ -51,6 +51,12 @@ export function MobileNav() {
     const [showTemplates, setShowTemplates] = useState(false)
 
     const templates = getAllTemplates()
+
+    // Ensure component is mounted before rendering Sheet to avoid hydration mismatch
+    // Radix UI generates different IDs on server vs client for aria-controls
+    useEffect(() => {
+        setMounted(true)
+    }, [])
 
     const openAuthModal = (mode: "sign-in" | "sign-up") => {
         setOpen(false)
@@ -63,9 +69,21 @@ export function MobileNav() {
 
     const isTemplatesActive = pathname.startsWith("/templates")
 
+    // Render placeholder button during SSR to avoid hydration mismatch
+    if (!mounted) {
+        return (
+            <>
+                <Button variant="ghost" size="icon" className="md:hidden">
+                    <Menu className="size-6" />
+                    <span className="sr-only">Open menu</span>
+                </Button>
+            </>
+        )
+    }
+
     return (
         <>
-            <Sheet open={open} onOpenChange={setOpen} key={sheetId}>
+            <Sheet open={open} onOpenChange={setOpen}>
                 <SheetTrigger asChild>
                     <Button variant="ghost" size="icon" className="md:hidden">
                         <Menu className="size-6" />
