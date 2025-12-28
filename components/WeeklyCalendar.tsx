@@ -327,7 +327,7 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
                   onTouchStart={(e) => handleCreateTouchStart(e, hour, dayIndex, !!dragState.eventId)}
                 >
                   {/* Hover Effect Layer - Separate from container to avoid event bubbling triggering it */}
-                  <div className="absolute inset-0 hover:bg-gray-100 transition-colors" />
+                  <div className="absolute inset-0 hover:bg-blue-50 transition-colors" />
 
                   {/* Current Time Indicator - only if date matches today and within this hour */}
                   {currentTime &&
