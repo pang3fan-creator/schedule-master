@@ -135,7 +135,7 @@ function parseMarkdown(content: string) {
             .replace(/\*(.*?)\*/g, "<em>$1</em>")
             .replace(/`(.*?)`/g, "<code class='bg-gray-100 px-1 rounded'>$1</code>")
             // Add support for markdown links [text](url)
-            .replace(/\[([^\]]+)\]\(([^)]+)\)/g, "<a href='$2' class='text-blue-600 hover:underline' target='_blank' rel='noopener noreferrer'>$1</a>")
+            .replace(/\[([^\]]+)\]\(([^)]+)\)/g, "<a href='$2' class='text-blue-600 hover:underline'>$1</a>")
     }
 
     for (let i = 0; i < lines.length; i++) {
