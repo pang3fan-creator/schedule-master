@@ -301,6 +301,7 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                                 {/* Day cell - only render for data rows (not the last label row) */}
                                 {index !== hours.length - 1 && (
                                     <div className="relative border-b border-l border-r border-gray-300"
+                                        style={{ touchAction: 'none' }}
                                         onMouseDown={(e) => handleCreateMouseDown(e, hour, currentDayIndex, !!dragState.eventId)}
                                         onTouchStart={(e) => handleCreateTouchStart(e, hour, currentDayIndex, !!dragState.eventId)}
                                     >

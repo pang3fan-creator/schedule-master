@@ -322,6 +322,7 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
                 <div
                   key={`${day.short}-${hour}`}
                   className={`relative border-b border-l border-gray-300 ${dayIndex === days.length - 1 ? "border-r" : ""}`}
+                  style={{ touchAction: 'none' }}
                   onMouseDown={(e) => handleCreateMouseDown(e, hour, dayIndex, !!dragState.eventId)}
                   onTouchStart={(e) => handleCreateTouchStart(e, hour, dayIndex, !!dragState.eventId)}
                 >
