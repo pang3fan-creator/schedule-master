@@ -23,6 +23,16 @@ import { useSettings } from "@/components/SettingsContext"
 import { useEventDrag } from "@/hooks/useEventDrag"
 import { useDragToCreate } from "@/hooks/useDragToCreate"
 import { useCurrentTime } from "@/hooks/useCurrentTime"
+import { useIsMobile } from "@/hooks/useMediaQuery"
+import {
+    getDisplayMode,
+    getContainerClasses,
+    getTitleClasses,
+    shouldShowTime,
+    getTimeClasses,
+    shouldShowDescription,
+    getDescriptionClasses
+} from "@/lib/event-display-utils"
 
 interface DailyCalendarProps {
     events: Event[]
@@ -62,6 +72,7 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
     // In export mode, use fixed row height
     const EXPORT_ROW_HEIGHT = 80
     const [rowHeight, setRowHeight] = useState(exportMode ? EXPORT_ROW_HEIGHT : 58)
+    const isMobile = useIsMobile()
 
     // Update rowHeight when exportMode changes
     useEffect(() => {
@@ -167,7 +178,9 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                 const dataRowCount = hours.length - 1
                 const calculatedRowHeight = availableHeight / dataRowCount
                 // Set minimum row height to prevent compression
-                const finalRowHeight = Math.max(calculatedRowHeight, 50)
+                // Mobile uses 60px, desktop uses 80px
+                const minRowHeight = isMobile ? 60 : 80
+                const finalRowHeight = Math.max(calculatedRowHeight, minRowHeight)
                 if (finalRowHeight > 0) {
                     setRowHeight(finalRowHeight)
                 }
@@ -177,7 +190,7 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
         updateRowHeight()
         window.addEventListener('resize', updateRowHeight)
         return () => window.removeEventListener('resize', updateRowHeight)
-    }, [hours.length])
+    }, [hours.length, isMobile])  // Re-calculate when isMobile changes
 
     // Navigate to today
     const goToToday = () => {
@@ -258,9 +271,12 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                         className={`grid w-full select-none ${exportMode ? '' : 'h-full'}`}
                         style={{
                             gridTemplateColumns: "70px 1fr",
+                            // Mobile uses 60px min, desktop uses 80px min
                             gridTemplateRows: exportMode
                                 ? `48px repeat(${hours.length - 1}, ${EXPORT_ROW_HEIGHT}px) 24px`
-                                : `48px repeat(${hours.length - 1}, minmax(50px, 1fr)) 24px`,
+                                : isMobile
+                                    ? `48px repeat(${hours.length - 1}, minmax(60px, 1fr)) 24px`
+                                    : `48px repeat(${hours.length - 1}, minmax(80px, 1fr)) 24px`,
                         }}
                         onContextMenu={(e) => e.preventDefault()}
                     >
@@ -327,6 +343,11 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                                                 const isDragging = dragState.eventId === event.id
                                                 const colorConfig = EVENT_COLORS[event.color || 'blue']
 
+                                                // Get height in pixels for adaptive display
+                                                const heightPx = parseFloat(position.height)
+                                                const displayMode = getDisplayMode(heightPx)
+                                                const containerClasses = getContainerClasses(displayMode)
+
                                                 // Dynamic style for overlap handling
                                                 const style = {
                                                     top: position.top,
@@ -340,7 +361,7 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                                                 return (
                                                     <div
                                                         key={event.id}
-                                                        className={`group absolute z-10 rounded-lg border-l-4 ${colorConfig.border} ${colorConfig.bg} backdrop-blur-sm p-2 overflow-hidden text-center flex flex-col justify-between ${isDragging ? 'cursor-grabbing shadow-xl ring-2 ring-blue-400' : 'cursor-grab hover:shadow-lg hover:scale-[1.02] transition-all duration-200'}`}
+                                                        className={`group absolute z-10 rounded-lg border-l-4 ${colorConfig.border} ${colorConfig.bg} backdrop-blur-sm overflow-hidden text-center flex flex-col ${displayMode === 'lg' || displayMode === 'xl' || displayMode === 'xxl' ? 'justify-center' : 'justify-between'} ${containerClasses} ${isDragging ? 'cursor-grabbing shadow-xl ring-2 ring-blue-400' : 'cursor-grab hover:shadow-lg hover:scale-[1.02] transition-all duration-200'}`}
                                                         style={style}
                                                         onMouseDown={(e) => handleMouseDown(e, event)}
                                                         onTouchStart={(e) => handleTouchStart(e, event)}
@@ -359,11 +380,11 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                                                             }
                                                         }}
                                                     >
-                                                        {/* Delete button - hidden on mobile (use double-tap instead) */}
-                                                        {onEventDelete && (
+                                                        {/* Delete button - hidden on mobile and in XS mode */}
+                                                        {onEventDelete && displayMode !== 'xs' && (
                                                             <button
                                                                 type="button"
-                                                                className="absolute top-1 right-1 size-5 flex items-center justify-center rounded-full bg-red-500 text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600 hidden md:flex"
+                                                                className="absolute top-0.5 right-0.5 md:top-1 md:right-1 size-4 md:size-5 flex items-center justify-center rounded-full bg-red-500 text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600 hidden md:flex"
                                                                 onClick={(e) => {
                                                                     e.stopPropagation()
                                                                     e.preventDefault()
@@ -371,15 +392,25 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                                                                 }}
                                                                 onMouseDown={(e) => e.stopPropagation()}
                                                             >
-                                                                <X className="size-3" />
+                                                                <X className="size-2.5 md:size-3" />
                                                             </button>
                                                         )}
-                                                        <p className={`text-sm font-semibold ${colorConfig.text} truncate`}>{event.title}</p>
-                                                        <p className={`text-xs ${colorConfig.textSecondary} truncate`}>{event.description}</p>
-                                                        <p className={`text-xs ${colorConfig.textSecondary} truncate`}>
-                                                            {formatTime(displayTime.startHour, displayTime.startMinute, use12HourFormat)} -{" "}
-                                                            {formatTime(displayTime.endHour, displayTime.endMinute, use12HourFormat)}
-                                                        </p>
+
+                                                        {/* Title - always shown */}
+                                                        <p className={getTitleClasses(displayMode, colorConfig.text)}>{event.title}</p>
+
+                                                        {/* Description - conditional based on mode */}
+                                                        {shouldShowDescription(displayMode, false) && event.description && (
+                                                            <p className={getDescriptionClasses(displayMode, colorConfig.textSecondary)}>{event.description}</p>
+                                                        )}
+
+                                                        {/* Time - hidden in XS mode */}
+                                                        {shouldShowTime(displayMode) && (
+                                                            <p className={getTimeClasses(displayMode, colorConfig.textSecondary)}>
+                                                                {formatTime(displayTime.startHour, displayTime.startMinute, use12HourFormat)} -{" "}
+                                                                {formatTime(displayTime.endHour, displayTime.endMinute, use12HourFormat)}
+                                                            </p>
+                                                        )}
                                                     </div>
                                                 )
                                             })}

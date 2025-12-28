@@ -25,6 +25,21 @@ import {
 import { useDragToCreate } from "@/hooks/useDragToCreate"
 import { useCurrentTime } from "@/hooks/useCurrentTime"
 import { useIsMobile } from "@/hooks/useMediaQuery"
+import {
+  getDisplayMode,
+  getContainerClasses,
+  getTitleClasses,
+  shouldShowTime,
+  getTimeClasses,
+  shouldShowDescription,
+  getDescriptionClasses,
+  // Mobile weekly view specific
+  getMobileWeeklyContainerClasses,
+  getMobileWeeklyTitleClasses,
+  getMobileWeeklyTimeClasses,
+  shouldShowMobileWeeklyDescription,
+  getMobileWeeklyDescriptionClasses
+} from "@/lib/event-display-utils"
 
 interface WeeklyCalendarProps {
   events: Event[]
@@ -156,8 +171,10 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
         // Dynamic row count based on hours array (hours.length - 1 data rows, last is label only)
         const dataRowCount = hours.length - 1
         const calculatedRowHeight = availableHeight / dataRowCount
-        // Set minimum row height to prevent compression (matches minmax(40px, 1fr))
-        const finalRowHeight = Math.max(calculatedRowHeight, 40)
+        // Set minimum row height to prevent compression
+        // Mobile uses 60px, desktop uses 80px
+        const minRowHeight = isMobile ? 60 : 80
+        const finalRowHeight = Math.max(calculatedRowHeight, minRowHeight)
         if (finalRowHeight > 0) {
           setRowHeight(finalRowHeight)
         }
@@ -269,9 +286,12 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
                 ? "42px repeat(7, 1fr)"
                 : "70px repeat(7, 1fr)",
             // In export mode, use fixed row heights instead of responsive ones
+            // Mobile uses 60px min, desktop uses 80px min
             gridTemplateRows: exportMode
               ? `48px repeat(${hours.length - 1}, ${EXPORT_ROW_HEIGHT}px) 24px`
-              : `40px repeat(${hours.length - 1}, minmax(40px, 1fr)) 20px`,
+              : isMobile
+                ? `40px repeat(${hours.length - 1}, minmax(60px, 1fr)) 20px`
+                : `40px repeat(${hours.length - 1}, minmax(80px, 1fr)) 20px`,
           }}
           onContextMenu={(e) => e.preventDefault()}
         >
@@ -347,10 +367,20 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
                         const displayTime = getDisplayTime(event)
                         const isDragging = dragState.eventId === event.id
                         const colorConfig = EVENT_COLORS[event.color || 'blue']
+
+                        // Get height in pixels for adaptive display
+                        const heightPx = parseFloat(position.height)
+                        const displayMode = getDisplayMode(heightPx)
+
+                        // Use mobile-specific or desktop functions based on device
+                        const containerClasses = isMobile
+                          ? getMobileWeeklyContainerClasses(displayMode)
+                          : getContainerClasses(displayMode)
+
                         return (
                           <div
                             key={event.id}
-                            className={`group absolute left-0.5 right-0.5 md:left-1 md:right-1 z-10 rounded-md md:rounded-lg border-l-2 md:border-l-4 ${colorConfig.border} ${colorConfig.bg} backdrop-blur-sm p-0.5 md:p-2 overflow-hidden text-center flex flex-col justify-between ${isDragging ? 'cursor-grabbing shadow-xl ring-2 ring-blue-400' : 'cursor-grab hover:shadow-lg hover:scale-[1.02] transition-all duration-200'}`}
+                            className={`group absolute left-0.5 right-0.5 md:left-1 md:right-1 z-10 rounded-md md:rounded-lg border-l-2 md:border-l-4 ${colorConfig.border} ${colorConfig.bg} backdrop-blur-sm overflow-hidden text-center flex flex-col ${isMobile ? 'justify-start' : displayMode === 'lg' || displayMode === 'xl' || displayMode === 'xxl' ? 'justify-center' : 'justify-between'} ${containerClasses} ${isDragging ? 'cursor-grabbing shadow-xl ring-2 ring-blue-400' : 'cursor-grab hover:shadow-lg hover:scale-[1.02] transition-all duration-200'}`}
                             style={{
                               top: position.top,
                               height: position.height,
@@ -376,10 +406,10 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
                             }}
                           >
                             {/* Delete button - hidden on mobile (use double-tap instead) */}
-                            {onEventDelete && (
+                            {onEventDelete && displayMode !== 'xs' && (
                               <button
                                 type="button"
-                                className="absolute top-1 right-1 size-5 flex items-center justify-center rounded-full bg-red-500 text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600 hidden md:flex"
+                                className="absolute top-0.5 right-0.5 md:top-1 md:right-1 size-4 md:size-5 flex items-center justify-center rounded-full bg-red-500 text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600 hidden md:flex"
                                 onClick={(e) => {
                                   e.stopPropagation()
                                   e.preventDefault()
@@ -387,14 +417,36 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
                                 }}
                                 onMouseDown={(e) => e.stopPropagation()}
                               >
-                                <X className="size-3" />
+                                <X className="size-2.5 md:size-3" />
                               </button>
                             )}
-                            <p className={`text-[10px] md:text-sm font-semibold ${colorConfig.text} truncate`}>{event.title}</p>
-                            <p className={`text-[8px] md:text-xs ${colorConfig.textSecondary} truncate hidden md:block`}>{event.description}</p>
-                            <p className={`text-[8px] md:text-xs ${colorConfig.textSecondary} truncate`}>
-                              {formatTime(displayTime.startHour, displayTime.startMinute, use12HourFormat)} - {formatTime(displayTime.endHour, displayTime.endMinute, use12HourFormat)}
-                            </p>
+
+                            {/* Title - always shown, with mobile-specific wrapping */}
+                            <p className={isMobile
+                              ? getMobileWeeklyTitleClasses(displayMode, colorConfig.text)
+                              : getTitleClasses(displayMode, colorConfig.text)
+                            }>{event.title}</p>
+
+                            {/* Description - conditional based on mode and device */}
+                            {(isMobile
+                              ? shouldShowMobileWeeklyDescription(displayMode)
+                              : shouldShowDescription(displayMode, isMobile)
+                            ) && event.description && (
+                                <p className={isMobile
+                                  ? getMobileWeeklyDescriptionClasses(displayMode, colorConfig.textSecondary)
+                                  : getDescriptionClasses(displayMode, colorConfig.textSecondary)
+                                }>{event.description}</p>
+                              )}
+
+                            {/* Time - hidden in XS mode, with mobile-specific wrapping */}
+                            {shouldShowTime(displayMode) && (
+                              <p className={isMobile
+                                ? getMobileWeeklyTimeClasses(displayMode, colorConfig.textSecondary)
+                                : getTimeClasses(displayMode, colorConfig.textSecondary)
+                              }>
+                                {formatTime(displayTime.startHour, displayTime.startMinute, use12HourFormat)} - {formatTime(displayTime.endHour, displayTime.endMinute, use12HourFormat)}
+                              </p>
+                            )}
                           </div>
                         )
                       })}
