@@ -1,0 +1,4 @@
+export const EVENTS_STORAGE_KEY = "schedule-builder-events"
+export const SETTINGS_STORAGE_KEY = "schedule-builder-settings"
+export const VIEW_MODE_STORAGE_KEY = "schedule-builder-view-mode"
+export const SELECTED_DATE_STORAGE_KEY = "schedule-builder-selected-date"

@@ -26,7 +26,7 @@ export function doTimesOverlap(
 }
 
 /**
- * Check if a new event would conflict with any existing events on the same date
+ * Check if a new event would conflict with any existing events on the same day
  * Returns the conflicting events if any
  */
 export function findConflictingEvents(
@@ -40,8 +40,8 @@ export function findConflictingEvents(
             return false
         }
 
-        // Must be on the same date
-        if (existing.date !== newEvent.date) {
+        // Must be on the same day of week (decoupled from specific date)
+        if (existing.day !== newEvent.day) {
             return false
         }
 
@@ -86,9 +86,9 @@ export function wouldDragConflict(
     newEndMinute: number,
     allEvents: Event[]
 ): Event | null {
-    // Find events on the same date (excluding the dragged event)
+    // Find events on the same day of week (excluding the dragged event)
     const otherEvents = allEvents.filter(
-        (e) => e.id !== draggedEvent.id && e.date === draggedEvent.date
+        (e) => e.id !== draggedEvent.id && e.day === draggedEvent.day
     )
 
     for (const other of otherEvents) {

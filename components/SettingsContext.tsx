@@ -10,6 +10,7 @@ export interface CalendarSettings {
   timeIncrement: 5 | 15 | 30 | 60  // minutes
   workingHoursStart: number    // 0-23 (default: 8)
   workingHoursEnd: number      // 0-23 (default: 17)
+  showDates: boolean           // true = show dates, false = hide dates (for template mode)
 }
 
 const DEFAULT_SETTINGS: CalendarSettings = {
@@ -18,6 +19,7 @@ const DEFAULT_SETTINGS: CalendarSettings = {
   timeIncrement: 5,
   workingHoursStart: 8,        // 8 AM
   workingHoursEnd: 17,         // 5 PM
+  showDates: true,             // Default: show dates
 }
 
 const SETTINGS_STORAGE_KEY = "schedule-builder-settings"

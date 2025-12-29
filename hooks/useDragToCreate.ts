@@ -1,5 +1,6 @@
 import { useState, useRef, useCallback, useEffect } from "react"
 import { type Event } from "@/lib/types"
+import { getActualDay } from "@/lib/time-utils"
 
 interface UseDragToCreateProps {
     onAddEvent?: (data: { startTime: string; endTime: string; day: number }) => void
@@ -9,6 +10,7 @@ interface UseDragToCreateProps {
     workingHoursStart?: number   // View start hour boundary
     workingHoursEnd?: number     // View end hour boundary
     weekDates?: Date[]           // Optional: week dates array for filtering (weekly view)
+    weekStartsOnSunday?: boolean // Week start setting for dayIndex to day mapping
 }
 
 interface CreatingEvent {
@@ -26,7 +28,8 @@ export function useDragToCreate({
     existingEvents = [],
     workingHoursStart = 0,
     workingHoursEnd = 24,
-    weekDates
+    weekDates,
+    weekStartsOnSunday = true
 }: UseDragToCreateProps) {
     const [creatingEvent, setCreatingEvent] = useState<CreatingEvent | null>(null)
     const dragStartRef = useRef<{ y: number; originalClickY: number; hour: number; minute: number; dayIndex: number } | null>(null)
@@ -46,13 +49,8 @@ export function useDragToCreate({
         let minStart = workingHoursStart * 60
         let maxEnd = workingHoursEnd * 60
 
-        // Filter events for the specific day if weekDates is provided
-        let eventsToCheck = existingEvents
-        if (weekDates && weekDates[dayIndex]) {
-            const targetDate = weekDates[dayIndex]
-            const targetDateStr = `${targetDate.getFullYear()}-${String(targetDate.getMonth() + 1).padStart(2, '0')}-${String(targetDate.getDate()).padStart(2, '0')}`
-            eventsToCheck = existingEvents.filter(event => event.date === targetDateStr)
-        }
+        // Filter events for the specific day (weekly template mode - decoupled from date)
+        const eventsToCheck = existingEvents.filter(event => event.day === dayIndex)
 
         // Iterate through events to find blocking boundaries
         for (const event of eventsToCheck) {
@@ -198,7 +196,7 @@ export function useDragToCreate({
                 onAddEvent({
                     startTime: `${f(times.startHour)}:${f(times.startMinute)}`,
                     endTime: `${f(times.endHour)}:${f(times.endMinute)}`,
-                    day: dragStartRef.current.dayIndex
+                    day: getActualDay(dragStartRef.current.dayIndex, weekStartsOnSunday)
                 })
             }
         }

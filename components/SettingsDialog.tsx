@@ -57,6 +57,10 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
         updateSettings({ workingHoursEnd: parseInt(value) })
     }
 
+    const handleShowDatesChange = (checked: boolean) => {
+        updateSettings({ showDates: checked })
+    }
+
     const handleReset = () => {
         resetSettings()
     }
@@ -133,6 +137,22 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
                         <Switch
                             checked={settings.use12HourFormat}
                             onCheckedChange={handleTimeFormatChange}
+                        />
+                    </div>
+
+                    {/* Show Dates */}
+                    <div className="flex items-center justify-between">
+                        <div className="space-y-0.5">
+                            <Label className="text-sm font-medium text-gray-900">
+                                Show dates
+                            </Label>
+                            <p className="text-xs text-gray-500">
+                                Display date numbers in calendar headers
+                            </p>
+                        </div>
+                        <Switch
+                            checked={settings.showDates}
+                            onCheckedChange={handleShowDatesChange}
                         />
                     </div>
 

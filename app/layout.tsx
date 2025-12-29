@@ -126,7 +126,7 @@ export default function RootLayout({
 
   return (
     <ClerkProvider>
-      <html lang="en">
+      <html lang="en" suppressHydrationWarning>
         <head>
           {/* Preconnect hints for critical third-party domains */}
           <link rel="preconnect" href="https://clerk.tryschedule.com" />

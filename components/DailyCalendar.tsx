@@ -5,6 +5,12 @@ import { useRef, useState, useEffect, useMemo, useCallback } from "react"
 
 import { ChevronLeft, ChevronRight, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { Calendar } from "@/components/ui/calendar"
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/popover"
 
 import { type Event, EVENT_COLORS } from "@/lib/types"
 // Utility functions imported from lib/time-utils
@@ -72,6 +78,7 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
     // In export mode, use fixed row height
     const EXPORT_ROW_HEIGHT = 80
     const [rowHeight, setRowHeight] = useState(exportMode ? EXPORT_ROW_HEIGHT : 58)
+    const [isCalendarOpen, setIsCalendarOpen] = useState(false)
     const isMobile = useIsMobile()
 
     // Update rowHeight when exportMode changes
@@ -84,7 +91,7 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
 
     // Get settings from context
     const { settings } = useSettings()
-    const { use12HourFormat, workingHoursStart, workingHoursEnd, timeIncrement } = settings
+    const { use12HourFormat, workingHoursStart, workingHoursEnd, timeIncrement, showDates } = settings
 
     // Generate hours array dynamically based on settings
     const hours = useMemo(() => {
@@ -114,11 +121,11 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
         timeIncrement,  // Pass time increment for drag snapping
     })
 
-    // Filter events for the selected day using date string
+    // Filter events for the selected day using day index (weekly template mode - decoupled from date)
     // Moved before useDragToCreate so it can be used for collision detection
     const dayEvents = useMemo(() => {
-        const selectedDateString = formatDateString(selectedDate)
-        return events.filter(event => event.date === selectedDateString)
+        const dayIndex = selectedDate.getDay()
+        return events.filter(event => event.day === dayIndex)
     }, [events, selectedDate])
 
     // Drag-to-create hook - pass dayEvents (already filtered) for collision detection
@@ -228,19 +235,63 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                     {!exportMode && <div className="w-20"></div>}
 
                     {/* Center navigation - absolute positioned for true centering */}
-                    <div className={`flex items-center ${exportMode ? 'flex-1 justify-center' : 'absolute left-1/2 -translate-x-1/2'}`}>
-                        {!exportMode && (
-                            <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToPreviousDay} aria-label="Go to previous day">
-                                <ChevronLeft className="size-6" />
-                            </Button>
-                        )}
-                        <h2 className="text-xl font-semibold text-gray-900 w-[450px] text-center">{formatDate(selectedDate)}</h2>
-                        {!exportMode && (
-                            <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToNextDay} aria-label="Go to next day">
-                                <ChevronRight className="size-6" />
-                            </Button>
-                        )}
-                    </div>
+                    {showDates && (
+                        <div className={`flex items-center ${exportMode ? 'flex-1 justify-center' : 'absolute left-1/2 -translate-x-1/2'}`}>
+                            {!exportMode && (
+                                <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToPreviousDay} aria-label="Go to previous day">
+                                    <ChevronLeft className="size-6" />
+                                </Button>
+                            )}
+                            <h2 className="text-xl font-semibold text-gray-900 w-[450px] text-center flex justify-center">
+                                {exportMode ? (
+                                    formatDate(selectedDate)
+                                ) : (
+                                    <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
+                                        <PopoverTrigger asChild>
+                                            <Button
+                                                variant="ghost"
+                                                className="text-xl font-semibold text-gray-900 hover:bg-gray-200 h-auto py-1 px-2"
+                                            >
+                                                {formatDate(selectedDate)}
+                                            </Button>
+                                        </PopoverTrigger>
+                                        <PopoverContent className="w-auto p-0" align="center">
+                                            <Calendar
+                                                mode="single"
+                                                selected={selectedDate}
+                                                defaultMonth={selectedDate}
+                                                onSelect={(date) => {
+                                                    if (date) {
+                                                        onDateChange(date)
+                                                        setIsCalendarOpen(false)
+                                                    }
+                                                }}
+                                                initialFocus
+                                            />
+                                            <div className="border-t p-3">
+                                                <Button
+                                                    variant="ghost"
+                                                    size="sm"
+                                                    className="w-full text-sm font-medium hover:bg-muted"
+                                                    onClick={() => {
+                                                        onDateChange(new Date())
+                                                        setIsCalendarOpen(false)
+                                                    }}
+                                                >
+                                                    Go to Today
+                                                </Button>
+                                            </div>
+                                        </PopoverContent>
+                                    </Popover>
+                                )}
+                            </h2>
+                            {!exportMode && (
+                                <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToNextDay} aria-label="Go to next day">
+                                    <ChevronRight className="size-6" />
+                                </Button>
+                            )}
+                        </div>
+                    )}
 
                     {/* Spacer for layout balance - already implicitly balanced by removing button on right? No, we need an empty div to balance the left spacer if the left spacer exists. 
                         Wait, lines 231 has a spacer: {!exportMode && <div className="w-20"></div>}
@@ -257,7 +308,43 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                             <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToPreviousDay} aria-label="Go to previous day">
                                 <ChevronLeft className="size-6" />
                             </Button>
-                            <h2 className="text-base font-semibold text-gray-900 text-center flex-1 px-2">{formatDate(selectedDate)}</h2>
+                            <h2 className="text-base font-semibold text-gray-900 text-center flex-1 px-2 flex justify-center">
+                                <Popover>
+                                    <PopoverTrigger asChild>
+                                        <Button
+                                            variant="ghost"
+                                            className="text-base font-semibold text-gray-900 hover:bg-gray-200 h-auto py-1 px-2"
+                                        >
+                                            {formatDate(selectedDate)}
+                                        </Button>
+                                    </PopoverTrigger>
+                                    <PopoverContent className="w-auto p-0" align="center">
+                                        <Calendar
+                                            mode="single"
+                                            selected={selectedDate}
+                                            defaultMonth={selectedDate}
+                                            onSelect={(date) => {
+                                                if (date) {
+                                                    onDateChange(date)
+                                                }
+                                            }}
+                                            initialFocus
+                                        />
+                                        <div className="border-t p-3">
+                                            <Button
+                                                variant="ghost"
+                                                size="sm"
+                                                className="w-full text-sm font-medium hover:bg-muted"
+                                                onClick={() => {
+                                                    onDateChange(new Date())
+                                                }}
+                                            >
+                                                Go to Today
+                                            </Button>
+                                        </div>
+                                    </PopoverContent>
+                                </Popover>
+                            </h2>
                             <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToNextDay} aria-label="Go to next day">
                                 <ChevronRight className="size-6" />
                             </Button>
@@ -287,8 +374,30 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                         {/* Header Row */}
                         <div /> {/* Empty corner cell */}
                         <div className="flex flex-col items-center justify-center border-b border-gray-300">
-                            <span className="text-xs font-medium text-gray-500">{shortDayName}</span>
-                            <span className="text-sm font-semibold text-gray-900">{selectedDate.getDate()}</span>
+                            {showDates ? (
+                                <>
+                                    <span className="text-xs font-medium text-gray-500">{shortDayName}</span>
+                                    <span className="text-sm font-semibold text-gray-900">{selectedDate.getDate()}</span>
+                                </>
+                            ) : (
+                                <div className="flex items-center gap-16">
+                                    <button
+                                        onClick={goToPreviousDay}
+                                        className="p-2 text-gray-400 hover:text-gray-700 hover:bg-gray-200 rounded-full transition-colors"
+                                        aria-label="Go to previous day"
+                                    >
+                                        <ChevronLeft className="size-6" />
+                                    </button>
+                                    <span className="text-xs font-medium text-gray-500 w-10 text-center">{shortDayName}</span>
+                                    <button
+                                        onClick={goToNextDay}
+                                        className="p-2 text-gray-400 hover:text-gray-700 hover:bg-gray-200 rounded-full transition-colors"
+                                        aria-label="Go to next day"
+                                    >
+                                        <ChevronRight className="size-6" />
+                                    </button>
+                                </div>
+                            )}
                         </div>
 
                         {/* Time rows - data rows with time slots, last row is label-only */}

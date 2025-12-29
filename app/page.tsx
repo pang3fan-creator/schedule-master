@@ -15,6 +15,7 @@ import { MobileEventActionSheet } from "@/components/MobileEventActionSheet"
 import { useIsMobile } from "@/hooks/useMediaQuery"
 import { getWeekStart } from "@/lib/time-utils"
 import { homepageFAQs } from "@/components/HomepageSEOContent"
+import { EVENTS_STORAGE_KEY, VIEW_MODE_STORAGE_KEY, SELECTED_DATE_STORAGE_KEY } from "@/lib/storage-keys"
 
 // Dynamically import dialog components for code splitting
 // These are only loaded when the user triggers them
@@ -27,11 +28,7 @@ const EditEventDialog = dynamic(() => import("@/components/EditEventDialog").the
 const MobileWelcomeTip = dynamic(() => import("@/components/MobileWelcomeTip").then(m => m.MobileWelcomeTip), { ssr: false })
 const DesktopWelcomeTip = dynamic(() => import("@/components/DesktopWelcomeTip").then(m => m.DesktopWelcomeTip), { ssr: false })
 
-// LocalStorage key for events
-const EVENTS_STORAGE_KEY = "schedule-builder-events"
-
-// LocalStorage key for view mode
-const VIEW_MODE_STORAGE_KEY = "schedule-builder-view-mode"
+// LocalStorage keys are now imported from @/lib/storage-keys
 
 // Load events from localStorage
 function loadEventsFromStorage(): Event[] {
@@ -96,6 +93,35 @@ function saveViewModeToStorage(viewMode: "day" | "week"): void {
     localStorage.setItem(VIEW_MODE_STORAGE_KEY, viewMode)
   } catch (error) {
     console.error("Error saving view mode to localStorage:", error)
+  }
+}
+
+// Load selected date from localStorage
+function loadSelectedDateFromStorage(): Date {
+  if (typeof window === "undefined") return new Date()
+
+  try {
+    const stored = localStorage.getItem(SELECTED_DATE_STORAGE_KEY)
+    if (stored) {
+      const date = new Date(stored)
+      if (!isNaN(date.getTime())) {
+        return date
+      }
+    }
+  } catch (error) {
+    console.error("Error loading selected date from localStorage:", error)
+  }
+  return new Date()
+}
+
+// Save selected date to localStorage
+function saveSelectedDateToStorage(date: Date): void {
+  if (typeof window === "undefined") return
+
+  try {
+    localStorage.setItem(SELECTED_DATE_STORAGE_KEY, date.toISOString())
+  } catch (error) {
+    console.error("Error saving selected date to localStorage:", error)
   }
 }
 
@@ -181,6 +207,9 @@ export default function ScheduleBuilderPage() {
     // Load saved view mode
     const storedViewMode = loadViewModeFromStorage()
     setViewMode(storedViewMode)
+    // Load saved selected date
+    const storedDate = loadSelectedDateFromStorage()
+    setSelectedDate(storedDate)
     setIsLoaded(true)
     // Reload settings in case template was just applied
     reloadSettings()
@@ -199,6 +228,13 @@ export default function ScheduleBuilderPage() {
       saveViewModeToStorage(viewMode)
     }
   }, [viewMode, isLoaded])
+
+  // Save selected date to localStorage whenever it changes (after initial load)
+  useEffect(() => {
+    if (isLoaded) {
+      saveSelectedDateToStorage(selectedDate)
+    }
+  }, [selectedDate, isLoaded])
 
   const handleReset = () => {
     setEvents([])
@@ -403,7 +439,6 @@ export default function ScheduleBuilderPage() {
           {!isExporting && !isMobile && (
             <Sidebar
               onReset={handleReset}
-              onToday={() => setSelectedDate(new Date())}
               viewMode={viewMode}
               onViewModeChange={setViewMode}
               onAddEvent={handleAddEvent}

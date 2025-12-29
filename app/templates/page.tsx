@@ -14,7 +14,8 @@ import { ConfirmDialog } from "@/components/ConfirmDialog";
 
 import { Breadcrumb } from "@/components/Breadcrumb";
 
-// Icon mapping for templates
+import { EVENTS_STORAGE_KEY, SETTINGS_STORAGE_KEY } from "@/lib/storage-keys"
+
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
     Briefcase,
     GraduationCap,
@@ -62,15 +63,34 @@ export default function TemplatesPage() {
     // Paywall is only triggered when clicking "Use This Template" button on detail page
 
     const handleBlankCanvasClick = (e: React.MouseEvent) => {
+        // Always prevent default navigation first to handle the logic
         e.preventDefault();
-        setBlankCanvasDialogOpen(true);
+
+        const stored = localStorage.getItem(EVENTS_STORAGE_KEY)
+        let hasEvents = false;
+        if (stored) {
+            try {
+                const events = JSON.parse(stored)
+                if (Array.isArray(events) && events.length > 0) {
+                    hasEvents = true;
+                }
+            } catch (error) {
+                console.error("Error parsing events for blank canvas check", error)
+            }
+        }
+
+        if (hasEvents) {
+            setBlankCanvasDialogOpen(true);
+        } else {
+            router.push("/");
+        }
     };
 
     const handleBlankCanvasConfirm = () => {
         // Clear events from localStorage
-        localStorage.removeItem("schedule-builder-events");
+        localStorage.removeItem(EVENTS_STORAGE_KEY);
         // Reset settings to defaults
-        localStorage.removeItem("schedule-builder-settings");
+        localStorage.removeItem(SETTINGS_STORAGE_KEY);
         // Close dialog and navigate
         setBlankCanvasDialogOpen(false);
         router.push("/");

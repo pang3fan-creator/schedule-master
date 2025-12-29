@@ -7,12 +7,14 @@ import { Button } from "@/components/ui/button"
 import { getTemplate, type TemplateData } from "@/lib/templates"
 import { formatDateString } from "@/lib/time-utils"
 import { EVENT_COLORS, type Event } from "@/lib/types"
-import { ArrowLeft, Calendar, Play, ChevronDown, Crown } from "lucide-react"
+import { ArrowLeft, Calendar, Play, ChevronDown, Crown, AlertTriangle } from "lucide-react"
 import Link from "next/link"
 import { useSubscription } from "@/components/SubscriptionContext"
 import { UpgradeModal } from "@/components/UpgradeModal"
 import { FAQAccordion } from "@/components/FaqAccordion"
 import { Breadcrumb } from "@/components/Breadcrumb"
+import { ConfirmDialog } from "@/components/ConfirmDialog"
+import { EVENTS_STORAGE_KEY, SETTINGS_STORAGE_KEY } from "@/lib/storage-keys"
 
 // Get the date of a specific day of the week for the current week
 // dayOfWeek: 0=Sunday, 1=Monday, 2=Tuesday, etc. (JavaScript standard)
@@ -164,6 +166,7 @@ export function TemplateDetailClient({ slug }: TemplateDetailClientProps) {
     const [template, setTemplate] = useState<TemplateData | null>(null)
     const [isLoading, setIsLoading] = useState(false)
     const [upgradeModalOpen, setUpgradeModalOpen] = useState(false)
+    const [confirmDialogOpen, setConfirmDialogOpen] = useState(false)
 
     useEffect(() => {
         const t = getTemplate(slug)
@@ -175,11 +178,36 @@ export function TemplateDetailClient({ slug }: TemplateDetailClientProps) {
     const handleUseTemplate = () => {
         if (!template) return
 
-        // Check if template requires Pro
+        // Check if template requires Pro (paywall check BEFORE confirmation dialog)
         if (template.requiresPro && !isPro) {
             setUpgradeModalOpen(true)
             return
         }
+
+        const stored = localStorage.getItem(EVENTS_STORAGE_KEY)
+        let hasEvents = false
+        if (stored) {
+            try {
+                const events = JSON.parse(stored)
+                if (Array.isArray(events) && events.length > 0) {
+                    hasEvents = true
+                }
+            } catch (error) {
+                console.error("Error parsing events for template check", error)
+            }
+        }
+
+        if (hasEvents) {
+            // Show confirmation dialog
+            setConfirmDialogOpen(true)
+        } else {
+            // Apply directly
+            handleConfirmUseTemplate()
+        }
+    }
+
+    const handleConfirmUseTemplate = () => {
+        if (!template) return
 
         setIsLoading(true)
 
@@ -187,17 +215,18 @@ export function TemplateDetailClient({ slug }: TemplateDetailClientProps) {
         const events = generateEventsFromTemplate(template)
 
         // Save to localStorage
-        localStorage.setItem("schedule-builder-events", JSON.stringify(events))
+        localStorage.setItem(EVENTS_STORAGE_KEY, JSON.stringify(events))
 
         // Apply template settings if available
         if (template.settings) {
-            const currentSettings = localStorage.getItem("schedule-builder-settings")
+            const currentSettings = localStorage.getItem(SETTINGS_STORAGE_KEY)
             const settings = currentSettings ? JSON.parse(currentSettings) : {}
             const newSettings = { ...settings, ...template.settings }
-            localStorage.setItem("schedule-builder-settings", JSON.stringify(newSettings))
+            localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(newSettings))
         }
 
-        // Navigate to main editor
+        // Close dialog and navigate to main editor
+        setConfirmDialogOpen(false)
         router.push("/")
     }
 
@@ -325,6 +354,19 @@ export function TemplateDetailClient({ slug }: TemplateDetailClientProps) {
                 open={upgradeModalOpen}
                 onOpenChange={setUpgradeModalOpen}
                 feature={template.title}
+            />
+
+            {/* Confirm Use Template Dialog */}
+            <ConfirmDialog
+                open={confirmDialogOpen}
+                onOpenChange={setConfirmDialogOpen}
+                title="Start Fresh?"
+                description="This will reset your calendar and clear all existing events. Your settings will also be restored to defaults."
+                icon={AlertTriangle}
+                iconClassName="size-5 text-amber-500"
+                confirmText="Yes, Start Fresh"
+                onConfirm={handleConfirmUseTemplate}
+                variant="blue"
             />
         </>
     )

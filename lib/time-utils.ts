@@ -123,6 +123,25 @@ export function getDayIndexFromDate(dateStr: string): number {
     return date.getDay()
 }
 
+/**
+ * Convert view column index to actual JavaScript getDay() value
+ * This handles the mapping between visual column position and event.day
+ * 
+ * @param dayIndex - The visual column index (0-6) in the calendar view
+ * @param weekStartsOnSunday - Whether the week starts on Sunday
+ * @returns The actual day value (0=Sunday, 1=Monday, ..., 6=Saturday)
+ */
+export function getActualDay(dayIndex: number, weekStartsOnSunday: boolean): number {
+    if (weekStartsOnSunday) {
+        // dayIndex 0=Sunday, 1=Monday, ..., 6=Saturday → direct mapping
+        return dayIndex
+    } else {
+        // dayIndex 0=Monday, 1=Tuesday, ..., 6=Sunday
+        // Convert: 0→1, 1→2, ..., 5→6, 6→0
+        return (dayIndex + 1) % 7
+    }
+}
+
 
 /**
  * Format date range for header (e.g., "October 21 - 27, 2025")

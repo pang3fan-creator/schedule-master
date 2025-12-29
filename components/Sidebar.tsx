@@ -4,10 +4,11 @@ import { useState } from "react"
 import dynamic from "next/dynamic"
 import { Button } from "@/components/ui/button"
 import { ViewModeToggle } from "@/components/ViewModeToggle"
-import { PlusCircle, Download, Settings, RotateCcw, Sparkles, Cloud, Calendar, CalendarCheck, HelpCircle } from "lucide-react"
+import { PlusCircle, Download, Settings, RotateCcw, Sparkles, Cloud, Calendar, HelpCircle } from "lucide-react"
 import { useSubscription } from "@/components/SubscriptionContext"
 import { ConfirmDialog } from "@/components/ConfirmDialog"
 import { type Event } from "@/lib/types"
+import { EVENTS_STORAGE_KEY } from "@/lib/storage-keys"
 
 // Dynamically import dialog components for code splitting
 const AddEventDialog = dynamic(() => import("@/components/AddEventDialog").then(m => m.AddEventDialog), { ssr: false })
@@ -20,7 +21,6 @@ import { FAQDialog } from "@/components/FAQDialog"
 
 interface SidebarProps {
   onReset: () => void
-  onToday: () => void
   viewMode: "day" | "week"
   onViewModeChange: (mode: "day" | "week") => void
   onAddEvent: (event: Omit<Event, "id">) => void
@@ -36,7 +36,7 @@ interface SidebarProps {
   }
 }
 
-export function Sidebar({ onReset, onToday, viewMode, onViewModeChange, onAddEvent, weekStart, weekStartsOnSunday, onExport, showAddDialog, onAddDialogClose, initialData }: SidebarProps) {
+export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, weekStart, weekStartsOnSunday, onExport, showAddDialog, onAddDialogClose, initialData }: SidebarProps) {
   const [showResetDialog, setShowResetDialog] = useState(false)
   const [showAddEventDialog, setShowAddEventDialog] = useState(false)
   const [showUpgradeModal, setShowUpgradeModal] = useState(false)
@@ -126,21 +126,24 @@ export function Sidebar({ onReset, onToday, viewMode, onViewModeChange, onAddEve
 
       {/* Menu Items */}
       <nav className="flex flex-col gap-1">
-        {/* Today Button */}
-        <Button
-          variant="ghost"
-          className="justify-start gap-3 text-gray-600 hover:text-gray-900"
-          onClick={onToday}
-        >
-          <CalendarCheck className="size-5" />
-          Today
-        </Button>
 
         {/* Reset Button */}
         <Button
           variant="ghost"
           className="justify-start gap-3 text-gray-600 hover:text-gray-900"
-          onClick={() => setShowResetDialog(true)}
+          onClick={() => {
+            const stored = localStorage.getItem(EVENTS_STORAGE_KEY)
+            if (stored) {
+              try {
+                const events = JSON.parse(stored)
+                if (Array.isArray(events) && events.length > 0) {
+                  setShowResetDialog(true)
+                }
+              } catch (e) {
+                console.error("Error parsing events for reset check", e)
+              }
+            }
+          }}
         >
           <RotateCcw className="size-5" />
           Reset
@@ -156,22 +159,6 @@ export function Sidebar({ onReset, onToday, viewMode, onViewModeChange, onAddEve
           confirmText="Yes, Reset"
           onConfirm={onReset}
           variant="blue"
-        />
-
-        {/* Settings */}
-        <Button
-          variant="ghost"
-          className="justify-start gap-3 text-gray-600 hover:text-gray-900"
-          onClick={() => setShowSettingsDialog(true)}
-        >
-          <Settings className="size-5" />
-          Settings
-        </Button>
-
-        {/* Settings Dialog */}
-        <SettingsDialog
-          open={showSettingsDialog}
-          onOpenChange={setShowSettingsDialog}
         />
 
         {/* Cloud Save */}
@@ -218,6 +205,22 @@ export function Sidebar({ onReset, onToday, viewMode, onViewModeChange, onAddEve
         <FAQDialog
           open={showFAQDialog}
           onOpenChange={setShowFAQDialog}
+        />
+
+        {/* Settings */}
+        <Button
+          variant="ghost"
+          className="justify-start gap-3 text-gray-600 hover:text-gray-900"
+          onClick={() => setShowSettingsDialog(true)}
+        >
+          <Settings className="size-5" />
+          Settings
+        </Button>
+
+        {/* Settings Dialog */}
+        <SettingsDialog
+          open={showSettingsDialog}
+          onOpenChange={setShowSettingsDialog}
         />
       </nav>
 

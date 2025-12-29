@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/sheet"
 import { useSubscription } from "@/components/SubscriptionContext"
 import { type Event } from "@/lib/types"
+import { EVENTS_STORAGE_KEY } from "@/lib/storage-keys"
 
 // Dynamically import dialog components for code splitting
 const AddEventDialog = dynamic(() => import("@/components/AddEventDialog").then(m => m.AddEventDialog), { ssr: false })
@@ -85,8 +86,18 @@ export function MobileToolbar({
     }
 
     const handleResetClick = () => {
-        setShowMoreSheet(false)
-        setShowResetDialog(true)
+        const stored = localStorage.getItem(EVENTS_STORAGE_KEY)
+        if (stored) {
+            try {
+                const events = JSON.parse(stored)
+                if (Array.isArray(events) && events.length > 0) {
+                    setShowMoreSheet(false)
+                    setShowResetDialog(true)
+                }
+            } catch (e) {
+                console.error("Error parsing events for reset check", e)
+            }
+        }
     }
 
     const handleSettingsClick = () => {
