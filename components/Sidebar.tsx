@@ -15,6 +15,7 @@ const AddEventDialog = dynamic(() => import("@/components/AddEventDialog").then(
 const UpgradeModal = dynamic(() => import("@/components/UpgradeModal").then(m => m.UpgradeModal), { ssr: false })
 const FeatureComingSoonModal = dynamic(() => import("@/components/FeatureComingSoonModal").then(m => m.FeatureComingSoonModal), { ssr: false })
 const SettingsDialog = dynamic(() => import("@/components/SettingsDialog").then(m => m.SettingsDialog), { ssr: false })
+const CloudSaveDialog = dynamic(() => import("@/components/CloudSaveDialog").then(m => m.CloudSaveDialog), { ssr: false })
 
 // Import FAQDialog directly (not dynamically) to ensure SEO visibility
 import { FAQDialog } from "@/components/FAQDialog"
@@ -34,15 +35,29 @@ interface SidebarProps {
     endTime?: string
     selectedDays?: number[]
   }
+  showSettingsOpen?: boolean
+  onSettingsOpenChange?: (open: boolean) => void
+  onLoadSchedule?: (events: Event[], settings: Record<string, unknown> | null) => void
 }
 
-export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, weekStart, weekStartsOnSunday, onExport, showAddDialog, onAddDialogClose, initialData }: SidebarProps) {
+export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, weekStart, weekStartsOnSunday, onExport, showAddDialog, onAddDialogClose, initialData, showSettingsOpen, onSettingsOpenChange, onLoadSchedule }: SidebarProps) {
   const [showResetDialog, setShowResetDialog] = useState(false)
   const [showAddEventDialog, setShowAddEventDialog] = useState(false)
   const [showUpgradeModal, setShowUpgradeModal] = useState(false)
   const [showSettingsDialog, setShowSettingsDialog] = useState(false)
+
+  // Sync external state if provided
+  const effectiveShowSettings = showSettingsOpen !== undefined ? showSettingsOpen : showSettingsDialog
+  const setEffectiveSettingsOpen = (open: boolean) => {
+    if (onSettingsOpenChange) {
+      onSettingsOpenChange(open)
+    } else {
+      setShowSettingsDialog(open)
+    }
+  }
   const [showComingSoonModal, setShowComingSoonModal] = useState(false)
   const [showFAQDialog, setShowFAQDialog] = useState(false)
+  const [showCloudSaveDialog, setShowCloudSaveDialog] = useState(false)
   const [upgradeFeature, setUpgradeFeature] = useState("")
   const [comingSoonFeature, setComingSoonFeature] = useState("")
 
@@ -64,9 +79,15 @@ export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, weekS
   const handleCloudSaveClick = () => {
     if (isLoading) return
 
-    // Painted Door Test - show coming soon modal for all users
-    setComingSoonFeature("Cloud Save")
-    setShowComingSoonModal(true)
+    // Paywall: Non-Pro users see upgrade modal
+    if (!isPro) {
+      setUpgradeFeature("Cloud Save")
+      setShowUpgradeModal(true)
+      return
+    }
+
+    // Pro users: Open Cloud Save dialog
+    setShowCloudSaveDialog(true)
   }
 
   const handleCalendarSyncClick = () => {
@@ -171,6 +192,17 @@ export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, weekS
           Cloud Save
         </Button>
 
+        {/* Cloud Save Dialog */}
+        <CloudSaveDialog
+          open={showCloudSaveDialog}
+          onOpenChange={setShowCloudSaveDialog}
+          onLoadSchedule={(events, settings) => {
+            if (onLoadSchedule) {
+              onLoadSchedule(events, settings)
+            }
+          }}
+        />
+
         {/* Calendar Sync */}
         <Button
           variant="ghost"
@@ -211,7 +243,7 @@ export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, weekS
         <Button
           variant="ghost"
           className="justify-start gap-3 text-gray-600 hover:text-gray-900"
-          onClick={() => setShowSettingsDialog(true)}
+          onClick={() => setEffectiveSettingsOpen(true)}
         >
           <Settings className="size-5" />
           Settings
@@ -219,8 +251,8 @@ export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, weekS
 
         {/* Settings Dialog */}
         <SettingsDialog
-          open={showSettingsDialog}
-          onOpenChange={setShowSettingsDialog}
+          open={effectiveShowSettings}
+          onOpenChange={setEffectiveSettingsOpen}
         />
       </nav>
 
@@ -235,6 +267,6 @@ export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, weekS
         <Sparkles className="size-5" />
         AI Autofill
       </Button>
-    </aside>
+    </aside >
   )
 }

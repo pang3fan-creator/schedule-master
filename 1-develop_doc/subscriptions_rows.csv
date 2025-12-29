@@ -1,0 +1,3 @@
+id,clerk_user_id,creem_customer_id,plan,status,expires_at,created_at,updated_at,bonus_days,creem_subscription_id
+7b92d81e-3898-42f8-a04e-c144092b67ba,user_36x0uPT9MbxXDZDCL4ECP9L0msL,cust_6Mq3Yq9yu2np122vW2Wj7I,lifetime,active,,2025-12-17 01:12:28.125717+00,2025-12-17 01:15:39.871+00,,
+dea05b84-c74e-4305-89f4-b432601f815c,user_36ivcN8xsXki2I15A4suC0FBRCZ,cust_20OA9uMMOIny66Ry8vuNPX,lifetime,active,,2025-12-15 02:49:41.152233+00,2025-12-15 02:49:41.054+00,,

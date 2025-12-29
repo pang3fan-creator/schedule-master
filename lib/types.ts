@@ -11,7 +11,6 @@ export interface Event {
     endHour: number
     endMinute: number
     color?: EventColor // Optional, defaults to 'blue'
-    builderType?: string // 'schedule-builder' | 'employee-schedule' | etc.
 }
 
 // Color configuration for event styling
@@ -25,3 +24,15 @@ export const EVENT_COLORS: Record<EventColor, { bg: string; border: string; text
     orange: { bg: 'bg-orange-500/15', border: 'border-orange-500', text: 'text-orange-700', textSecondary: 'text-orange-600' },
     teal: { bg: 'bg-teal-500/15', border: 'border-teal-500', text: 'text-teal-700', textSecondary: 'text-teal-600' },
 }
+
+// Cloud Save: User's saved schedule template
+export interface UserSchedule {
+    id: string
+    name: string
+    events: Event[]
+    settings: Record<string, unknown> | null
+    event_count: number
+    created_at: string
+    updated_at: string
+}
+

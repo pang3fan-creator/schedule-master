@@ -4,7 +4,7 @@ import { useState } from "react"
 import dynamic from "next/dynamic"
 import { Button } from "@/components/ui/button"
 import { ViewModeToggle } from "@/components/ViewModeToggle"
-import { PlusCircle, Download, Settings, RotateCcw, Sparkles, MoreHorizontal, HelpCircle, CalendarDays, CalendarRange } from "lucide-react"
+import { PlusCircle, Download, Settings, RotateCcw, Sparkles, MoreHorizontal, HelpCircle, CalendarDays, CalendarRange, Cloud } from "lucide-react"
 import {
     Dialog,
     DialogContent,
@@ -22,6 +22,10 @@ import {
 } from "@/components/ui/sheet"
 import { useSubscription } from "@/components/SubscriptionContext"
 import { type Event } from "@/lib/types"
+
+// Dynamically import CloudSaveDialog for code splitting
+const CloudSaveDialog = dynamic(() => import("@/components/CloudSaveDialog").then(m => m.CloudSaveDialog), { ssr: false })
+const UpgradeModal = dynamic(() => import("@/components/UpgradeModal").then(m => m.UpgradeModal), { ssr: false })
 import { EVENTS_STORAGE_KEY } from "@/lib/storage-keys"
 
 // Dynamically import dialog components for code splitting
@@ -40,7 +44,7 @@ interface MobileToolbarProps {
     weekStart: Date
     weekStartsOnSunday: boolean
     onExport: () => void
-    onToday: () => void
+    onLoadSchedule?: (events: Event[], settings: Record<string, unknown> | null) => void
     showAddDialog?: boolean
     onAddDialogClose?: () => void
     initialData?: {
@@ -48,6 +52,8 @@ interface MobileToolbarProps {
         endTime?: string
         selectedDays?: number[]
     }
+    showSettingsOpen?: boolean
+    onSettingsOpenChange?: (open: boolean) => void
 }
 
 export function MobileToolbar({
@@ -58,20 +64,35 @@ export function MobileToolbar({
     weekStart,
     weekStartsOnSunday,
     onExport,
-    onToday,
+    onLoadSchedule,
     showAddDialog,
     onAddDialogClose,
     initialData,
+    showSettingsOpen,
+    onSettingsOpenChange,
 }: MobileToolbarProps) {
     const [showResetDialog, setShowResetDialog] = useState(false)
     const [showAddEventDialog, setShowAddEventDialog] = useState(false)
     const [showSettingsDialog, setShowSettingsDialog] = useState(false)
+
+    // Sync external state if provided
+    const effectiveShowSettings = showSettingsOpen !== undefined ? showSettingsOpen : showSettingsDialog
+    const setEffectiveSettingsOpen = (open: boolean) => {
+        if (onSettingsOpenChange) {
+            onSettingsOpenChange(open)
+        } else {
+            setShowSettingsDialog(open)
+        }
+    }
     const [showComingSoonModal, setShowComingSoonModal] = useState(false)
     const [showMoreSheet, setShowMoreSheet] = useState(false)
     const [showFAQDialog, setShowFAQDialog] = useState(false)
+    const [showCloudSaveDialog, setShowCloudSaveDialog] = useState(false)
+    const [showUpgradeModal, setShowUpgradeModal] = useState(false)
+    const [upgradeFeature, setUpgradeFeature] = useState("")
     const [comingSoonFeature, setComingSoonFeature] = useState("")
 
-    const { isLoading } = useSubscription()
+    const { isPro, isLoading } = useSubscription()
 
     const handleExportClick = () => {
         setShowMoreSheet(false)
@@ -102,12 +123,26 @@ export function MobileToolbar({
 
     const handleSettingsClick = () => {
         setShowMoreSheet(false)
-        setShowSettingsDialog(true)
+        setEffectiveSettingsOpen(true)
     }
 
     const handleFAQClick = () => {
         setShowMoreSheet(false)
         setShowFAQDialog(true)
+    }
+
+    const handleCloudSaveClick = () => {
+        if (isLoading) return
+
+        // Paywall: Non-Pro users see upgrade modal
+        if (!isPro) {
+            setUpgradeFeature("Cloud Save")
+            setShowUpgradeModal(true)
+            return
+        }
+
+        // Pro users: Open Cloud Save dialog
+        setShowCloudSaveDialog(true)
     }
 
     return (
@@ -140,13 +175,13 @@ export function MobileToolbar({
                         </span>
                     </button>
 
-                    {/* Today Button */}
+                    {/* Cloud Save Button */}
                     <button
-                        onClick={onToday}
+                        onClick={handleCloudSaveClick}
                         className="flex flex-col items-center gap-0.5 p-2 hover:bg-gray-100 rounded-lg transition-colors"
                     >
-                        <CalendarDays className="size-5 text-gray-600" />
-                        <span className="text-xs text-gray-600">Today</span>
+                        <Cloud className="size-5 text-gray-600" />
+                        <span className="text-xs text-gray-600">Cloud</span>
                     </button>
 
                     {/* Export Button */}
@@ -256,8 +291,8 @@ export function MobileToolbar({
 
             {/* Settings Dialog */}
             <SettingsDialog
-                open={showSettingsDialog}
-                onOpenChange={setShowSettingsDialog}
+                open={effectiveShowSettings}
+                onOpenChange={setEffectiveSettingsOpen}
             />
 
             {/* Feature Coming Soon Modal */}
@@ -271,6 +306,24 @@ export function MobileToolbar({
             <FAQDialog
                 open={showFAQDialog}
                 onOpenChange={setShowFAQDialog}
+            />
+
+            {/* Cloud Save Dialog */}
+            <CloudSaveDialog
+                open={showCloudSaveDialog}
+                onOpenChange={setShowCloudSaveDialog}
+                onLoadSchedule={(events, settings) => {
+                    if (onLoadSchedule) {
+                        onLoadSchedule(events, settings)
+                    }
+                }}
+            />
+
+            {/* Upgrade Modal */}
+            <UpgradeModal
+                open={showUpgradeModal}
+                onOpenChange={setShowUpgradeModal}
+                feature={upgradeFeature}
             />
         </>
     )

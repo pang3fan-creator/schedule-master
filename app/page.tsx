@@ -15,7 +15,7 @@ import { MobileEventActionSheet } from "@/components/MobileEventActionSheet"
 import { useIsMobile } from "@/hooks/useMediaQuery"
 import { getWeekStart } from "@/lib/time-utils"
 import { homepageFAQs } from "@/components/HomepageSEOContent"
-import { EVENTS_STORAGE_KEY, VIEW_MODE_STORAGE_KEY, SELECTED_DATE_STORAGE_KEY } from "@/lib/storage-keys"
+import { EVENTS_STORAGE_KEY, VIEW_MODE_STORAGE_KEY, SELECTED_DATE_STORAGE_KEY, SHOULD_OPEN_SETTINGS_KEY, SETTINGS_STORAGE_KEY } from "@/lib/storage-keys"
 
 // Dynamically import dialog components for code splitting
 // These are only loaded when the user triggers them
@@ -167,6 +167,9 @@ export default function ScheduleBuilderPage() {
   // Edit event state
   const [editEvent, setEditEvent] = useState<Event | null>(null)
 
+  // Settings state (controlled from here to allow jumping from other pages)
+  const [showSettingsDialog, setShowSettingsDialog] = useState(false)
+
   // Mobile action sheet state
   const [mobileActionEvent, setMobileActionEvent] = useState<Event | null>(null)
 
@@ -210,6 +213,14 @@ export default function ScheduleBuilderPage() {
     // Load saved selected date
     const storedDate = loadSelectedDateFromStorage()
     setSelectedDate(storedDate)
+
+    // Check if we should open settings (flag set by template selection)
+    const shouldOpenSettings = localStorage.getItem(SHOULD_OPEN_SETTINGS_KEY)
+    if (shouldOpenSettings === "true") {
+      setShowSettingsDialog(true)
+      localStorage.removeItem(SHOULD_OPEN_SETTINGS_KEY)
+    }
+
     setIsLoaded(true)
     // Reload settings in case template was just applied
     reloadSettings()
@@ -448,6 +459,18 @@ export default function ScheduleBuilderPage() {
               showAddDialog={showAddDialog}
               onAddDialogClose={handleAddDialogClose}
               initialData={addDialogInitialData}
+              showSettingsOpen={showSettingsDialog}
+              onSettingsOpenChange={setShowSettingsDialog}
+              onLoadSchedule={(loadedEvents, loadedSettings) => {
+                // Update events
+                setEvents(loadedEvents)
+                saveEventsToStorage(loadedEvents)
+                // Update settings if provided
+                if (loadedSettings) {
+                  localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(loadedSettings))
+                  reloadSettings()
+                }
+              }}
             />
           )}
           <main className={`flex-1 min-h-0 overflow-auto ${!isExporting && isMobile ? 'pb-20' : ''}`} ref={calendarRef}>
@@ -502,10 +525,21 @@ export default function ScheduleBuilderPage() {
             weekStart={currentWeekStart}
             weekStartsOnSunday={settings.weekStartsOnSunday}
             onExport={handleExport}
-            onToday={() => setSelectedDate(new Date())}
+            onLoadSchedule={(loadedEvents, loadedSettings) => {
+              // Update events
+              setEvents(loadedEvents)
+              saveEventsToStorage(loadedEvents)
+              // Update settings if provided
+              if (loadedSettings) {
+                localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(loadedSettings))
+                reloadSettings()
+              }
+            }}
             showAddDialog={showAddDialog}
             onAddDialogClose={handleAddDialogClose}
             initialData={addDialogInitialData}
+            showSettingsOpen={showSettingsDialog}
+            onSettingsOpenChange={setShowSettingsDialog}
           />
         )}
 

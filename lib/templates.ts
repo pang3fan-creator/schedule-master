@@ -31,8 +31,7 @@ const createEvent = (
     startMinute: number,
     endHour: number,
     endMinute: number,
-    color: EventColor = "blue",
-    builderType?: string
+    color: EventColor = "blue"
 ): Omit<Event, "id" | "date"> => ({
     title,
     description,
@@ -41,8 +40,7 @@ const createEvent = (
     startMinute,
     endHour,
     endMinute,
-    color,
-    builderType,
+    color
 })
 
 export const TEMPLATES: Record<string, TemplateData> = {

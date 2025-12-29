@@ -56,7 +56,7 @@ export function Navbar() {
 
   return (
     <>
-      <header className="relative z-50 flex h-16 shrink-0 items-center justify-between border-b border-gray-200 bg-white/60 backdrop-blur-md px-4 md:px-6 shadow-sm transition-all dark:bg-black/70 dark:border-white/5">
+      <header className="relative z-50 flex h-16 shrink-0 items-center justify-between border-b border-gray-200 bg-blue-600 md:bg-white/60 md:backdrop-blur-md px-4 md:px-6 shadow-sm transition-all dark:bg-black/70 dark:border-white/5">
         {/* Mobile: Hamburger Menu */}
         <div className="md:hidden">
           <MobileNav />
@@ -75,6 +75,17 @@ export function Navbar() {
 
         {/* Center: Navigation Links - Hidden on mobile */}
         <nav className="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center gap-8">
+          <Link
+            href="/"
+            className={cn(
+              "text-sm font-medium transition-colors",
+              pathname === "/"
+                ? "text-blue-600 border-b-2 border-blue-600 pb-0.5"
+                : "text-gray-600 hover:text-gray-900"
+            )}
+          >
+            Home
+          </Link>
           {/* Templates Dropdown */}
           <div
             className="relative"

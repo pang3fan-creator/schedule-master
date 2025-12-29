@@ -315,78 +315,59 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
         </div>
 
         {/* Mobile layout - stacked */}
-        <div className="md:hidden flex flex-col items-center">
-          {/* Navigation row */}
-          {!exportMode && (
-            <div className="flex items-center justify-center w-full">
-              <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToPreviousWeek} aria-label="Go to previous week">
-                <ChevronLeft className="size-6" />
-              </Button>
-              <h2 className="text-sm font-semibold text-gray-900 text-center flex-1 px-1 flex justify-center">
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="ghost"
-                      className="text-sm font-semibold text-gray-900 hover:bg-gray-200 h-auto py-1 px-2"
-                    >
-                      {dateRangeString}
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="center">
-                    <Calendar
-                      mode="single"
-                      selected={selectedDate}
-                      defaultMonth={selectedDate}
-                      onSelect={(date) => {
-                        if (date) {
-                          onDateChange(date)
-                        }
-                      }}
-                      initialFocus
-                    />
-                    <div className="border-t p-3">
+        {showDates && (
+          <div className="md:hidden flex flex-col items-center">
+            {/* Navigation row */}
+            {!exportMode && (
+              <div className="flex items-center justify-center w-full">
+                <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToPreviousWeek} aria-label="Go to previous week">
+                  <ChevronLeft className="size-6" />
+                </Button>
+                <h2 className="text-sm font-semibold text-gray-900 text-center flex-1 px-1 flex justify-center">
+                  <Popover>
+                    <PopoverTrigger asChild>
                       <Button
                         variant="ghost"
-                        size="sm"
-                        className="w-full text-sm font-medium hover:bg-muted"
-                        onClick={() => {
-                          onDateChange(new Date())
-                          // Popover in mobile view (this part of logic) might not have explicit open state control like desktop?
-                          // Checking code... mobile view uses <Popover> without controlled open state in previous edits?
-                          // Let's check the context.
-                          // Wait, in previous edit for mobile, I essentially copied desktop structure but didn't introduce `isCalendarOpen` state for mobile explicitly?
-                          // The mobile part: <Popover> ... </Popover> (uncontrolled).
-                          // If uncontrolled, I cannot easily close it programmatically without Ref or changing to controlled.
-                          // Let's assume for now I will just change date. Radix Popover uncontrolled closes on interaction if configured? Not necessarily on custom button click.
-                          // Ideally I should switch mobile to controlled too or rely on user closing it.
-                          // But typically "Go to Today" should close it.
-                          // Let's check lines 268-276 in previous content.
-                          // It seems the second chunk targets lines around 295, which is inside mobile view?
-                          // Actually let's look at the file content again or assume I should make it controlled if I want to close it.
-                          // For now, let's just add the button. If it doesn't close, I'll fix in next Refactor step.
-                          // Wait, I can use Close primitive if I import it? or just leave it open?
-                          // Let's try to close it if I can.
-                          // Actually, the previous 'onselect' for mobile had: onSelect={(date) => { if(date) onDateChange(date) }} without closing?
-                          // Yes, desktop had setIsCalendarOpen(false).
-                          // So mobile header was uncontrolled.
-                          // I'll stick to just changing date for mobile for now, or if I can, use PopoverClose.
-                          // But PopoverClose requires importing from radix or using standard button inside specific structure?
-                          // Let's just Add the button.
-                        }}
+                        className="text-sm font-semibold text-gray-900 hover:bg-gray-200 h-auto py-1 px-2"
                       >
-                        Go to Today
+                        {dateRangeString}
                       </Button>
-                    </div>
-                  </PopoverContent>
-                </Popover>
-              </h2>
-              <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToNextWeek} aria-label="Go to next week">
-                <ChevronRight className="size-6" />
-              </Button>
-            </div>
-          )}
-          {/* Today button - moved to MobileToolbar on mobile */}
-        </div>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="center">
+                      <Calendar
+                        mode="single"
+                        selected={selectedDate}
+                        defaultMonth={selectedDate}
+                        onSelect={(date) => {
+                          if (date) {
+                            onDateChange(date)
+                          }
+                        }}
+                        initialFocus
+                      />
+                      <div className="border-t p-3">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="w-full text-sm font-medium hover:bg-muted"
+                          onClick={() => {
+                            onDateChange(new Date())
+                          }}
+                        >
+                          Go to Today
+                        </Button>
+                      </div>
+                    </PopoverContent>
+                  </Popover>
+                </h2>
+                <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToNextWeek} aria-label="Go to next week">
+                  <ChevronRight className="size-6" />
+                </Button>
+              </div>
+            )}
+            {/* Today button - moved to MobileToolbar on mobile */}
+          </div>
+        )}
       </div>
 
       {/* Calendar Grid - in export mode, no overflow/scroll constraints */}

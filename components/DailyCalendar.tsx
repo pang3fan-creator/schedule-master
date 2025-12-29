@@ -301,57 +301,58 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                 </div>
 
                 {/* Mobile layout - stacked */}
-                <div className="md:hidden flex flex-col items-center">
-                    {/* Navigation row */}
-                    {!exportMode && (
-                        <div className="flex items-center justify-center w-full">
-                            <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToPreviousDay} aria-label="Go to previous day">
-                                <ChevronLeft className="size-6" />
-                            </Button>
-                            <h2 className="text-base font-semibold text-gray-900 text-center flex-1 px-2 flex justify-center">
-                                <Popover>
-                                    <PopoverTrigger asChild>
-                                        <Button
-                                            variant="ghost"
-                                            className="text-base font-semibold text-gray-900 hover:bg-gray-200 h-auto py-1 px-2"
-                                        >
-                                            {formatDate(selectedDate)}
-                                        </Button>
-                                    </PopoverTrigger>
-                                    <PopoverContent className="w-auto p-0" align="center">
-                                        <Calendar
-                                            mode="single"
-                                            selected={selectedDate}
-                                            defaultMonth={selectedDate}
-                                            onSelect={(date) => {
-                                                if (date) {
-                                                    onDateChange(date)
-                                                }
-                                            }}
-                                            initialFocus
-                                        />
-                                        <div className="border-t p-3">
+                {showDates && (
+                    <div className="md:hidden flex flex-col items-center">
+                        {/* Navigation row */}
+                        {!exportMode && (
+                            <div className="flex items-center justify-center w-full">
+                                <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToPreviousDay} aria-label="Go to previous day">
+                                    <ChevronLeft className="size-6" />
+                                </Button>
+                                <h2 className="text-base font-semibold text-gray-900 text-center flex-1 px-2 flex justify-center">
+                                    <Popover>
+                                        <PopoverTrigger asChild>
                                             <Button
                                                 variant="ghost"
-                                                size="sm"
-                                                className="w-full text-sm font-medium hover:bg-muted"
-                                                onClick={() => {
-                                                    onDateChange(new Date())
-                                                }}
+                                                className="text-base font-semibold text-gray-900 hover:bg-gray-200 h-auto py-1 px-2"
                                             >
-                                                Go to Today
+                                                {formatDate(selectedDate)}
                                             </Button>
-                                        </div>
-                                    </PopoverContent>
-                                </Popover>
-                            </h2>
-                            <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToNextDay} aria-label="Go to next day">
-                                <ChevronRight className="size-6" />
-                            </Button>
-                        </div>
-                    )}
-                    {/* Today button - moved to MobileToolbar on mobile */}
-                </div>
+                                        </PopoverTrigger>
+                                        <PopoverContent className="w-auto p-0" align="center">
+                                            <Calendar
+                                                mode="single"
+                                                selected={selectedDate}
+                                                defaultMonth={selectedDate}
+                                                onSelect={(date) => {
+                                                    if (date) {
+                                                        onDateChange(date)
+                                                    }
+                                                }}
+                                                initialFocus
+                                            />
+                                            <div className="border-t p-3">
+                                                <Button
+                                                    variant="ghost"
+                                                    size="sm"
+                                                    className="w-full text-sm font-medium hover:bg-muted"
+                                                    onClick={() => {
+                                                        onDateChange(new Date())
+                                                    }}
+                                                >
+                                                    Go to Today
+                                                </Button>
+                                            </div>
+                                        </PopoverContent>
+                                    </Popover>
+                                </h2>
+                                <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToNextDay} aria-label="Go to next day">
+                                    <ChevronRight className="size-6" />
+                                </Button>
+                            </div>
+                        )}
+                    </div>
+                )}
             </div>
 
             {/* Calendar Grid - responsive width */}

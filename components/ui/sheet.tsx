@@ -48,9 +48,11 @@ function SheetContent({
   className,
   children,
   side = "right",
+  hideClose = false,
   ...props
 }: React.ComponentProps<typeof SheetPrimitive.Content> & {
   side?: "top" | "right" | "bottom" | "left"
+  hideClose?: boolean
 }) {
   return (
     <SheetPortal>
@@ -72,10 +74,12 @@ function SheetContent({
         {...props}
       >
         {children}
-        <SheetPrimitive.Close className="ring-offset-background focus-visible:ring-ring absolute top-3 right-3 flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 text-gray-500 transition-all hover:bg-gray-200 hover:text-gray-700 focus-visible:ring-2 focus-visible:ring-offset-2 focus:outline-hidden disabled:pointer-events-none sm:top-4 sm:right-4 sm:h-9 sm:w-9">
-          <XIcon className="size-4 sm:size-5" />
-          <span className="sr-only">Close</span>
-        </SheetPrimitive.Close>
+        {!hideClose && (
+          <SheetPrimitive.Close className="ring-offset-background focus-visible:ring-ring absolute top-3 right-3 flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 text-gray-500 transition-all hover:bg-gray-200 hover:text-gray-700 focus-visible:ring-2 focus-visible:ring-offset-2 focus:outline-hidden disabled:pointer-events-none sm:top-4 sm:right-4 sm:h-9 sm:w-9">
+            <XIcon className="size-4 sm:size-5" />
+            <span className="sr-only">Close</span>
+          </SheetPrimitive.Close>
+        )}
       </SheetPrimitive.Content>
     </SheetPortal>
   )
@@ -131,6 +135,7 @@ export {
   Sheet,
   SheetTrigger,
   SheetClose,
+  SheetPortal,
   SheetContent,
   SheetHeader,
   SheetFooter,
