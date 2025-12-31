@@ -87,6 +87,7 @@ interface PricingCardProps {
     productId?: string;
     isFree?: boolean;
     isLifetime?: boolean;
+    promoCode?: string;
 }
 
 export function PricingCard({
@@ -101,6 +102,7 @@ export function PricingCard({
     productId,
     isFree = false,
     isLifetime = false,
+    promoCode,
 }: PricingCardProps) {
     const { user, isSignedIn } = useUser();
     const { plan: currentPlan, isLoading } = useSubscription();
@@ -261,6 +263,7 @@ export function PricingCard({
                     productId={productId}
                     successUrl="/pricing?success=true"
                     referenceId={user?.id}
+                    discountCode={promoCode}
                     customer={user?.emailAddresses?.[0]?.emailAddress ? {
                         email: user.emailAddresses[0].emailAddress,
                         name: user.fullName || undefined,

@@ -8,6 +8,7 @@ import { GoogleAnalytics } from "@next/third-parties/google"
 import Script from "next/script"
 import { SubscriptionProvider } from "@/components/SubscriptionContext"
 import { SettingsProvider } from "@/components/SettingsContext"
+import PHBadge from "@/components/PHBadge"
 import "./globals.css"
 
 export const metadata: Metadata = {
@@ -166,6 +167,7 @@ export default function RootLayout({
             </SubscriptionProvider>
           </SettingsProvider>
           <Analytics />
+          <PHBadge />
         </body>
         <GoogleAnalytics gaId="G-7GCLCCR689" />
       </html>

@@ -4,9 +4,12 @@ import { PricingCard } from "@/components/PricingCard";
 import { FAQSection } from "@/components/FAQSection";
 import { PageLayout } from "@/components/PageLayout";
 import { useSearchParams } from "next/navigation";
-import { Suspense, Fragment as ReactFragment } from "react";
+import { Suspense, Fragment as ReactFragment, useState } from "react";
 
 import { Breadcrumb } from "@/components/Breadcrumb";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Tag } from "lucide-react";
 
 // Creem Product IDs - 需要在 Creem Dashboard 创建产品后替换
 const PRODUCT_IDS = {
@@ -37,6 +40,20 @@ interface PricingPageClientProps {
 }
 
 export function PricingPageClient({ productSchemas }: PricingPageClientProps) {
+    const [promoCode, setPromoCode] = useState("");
+    const [isPromoApplied, setIsPromoApplied] = useState(false);
+
+    const handleApplyPromo = () => {
+        if (promoCode.trim()) {
+            setIsPromoApplied(true);
+        }
+    };
+
+    const handleRemovePromo = () => {
+        setPromoCode("");
+        setIsPromoApplied(false);
+    };
+
     const plans = [
         {
             title: "Starter",
@@ -275,11 +292,65 @@ export function PricingPageClient({ productSchemas }: PricingPageClientProps) {
                     </p>
                 </div>
 
+                {/* Promo Code Section */}
+                <div className="container mx-auto px-4 mb-8">
+                    <div className="max-w-md mx-auto">
+                        {!isPromoApplied ? (
+                            <div className="flex gap-2">
+                                <div className="relative flex-1">
+                                    <Tag className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                                    <Input
+                                        type="text"
+                                        placeholder="Enter promo code"
+                                        value={promoCode}
+                                        onChange={(e) => setPromoCode(e.target.value.toUpperCase())}
+                                        className="pl-10"
+                                        onKeyDown={(e) => {
+                                            if (e.key === "Enter") {
+                                                handleApplyPromo();
+                                            }
+                                        }}
+                                    />
+                                </div>
+                                <Button
+                                    onClick={handleApplyPromo}
+                                    disabled={!promoCode.trim()}
+                                    variant="default"
+                                    className="bg-blue-600 hover:bg-blue-700"
+                                >
+                                    Apply
+                                </Button>
+                            </div>
+                        ) : (
+                            <div className="flex items-center justify-between bg-green-50 border border-green-200 rounded-lg px-4 py-3">
+                                <div className="flex items-center gap-2">
+                                    <Tag className="h-4 w-4 text-green-600" />
+                                    <span className="font-medium text-green-800">
+                                        Promo code: {promoCode}
+                                    </span>
+                                </div>
+                                <Button
+                                    onClick={handleRemovePromo}
+                                    variant="ghost"
+                                    size="sm"
+                                    className="text-green-700 hover:text-green-900 hover:bg-green-100"
+                                >
+                                    Remove
+                                </Button>
+                            </div>
+                        )}
+                    </div>
+                </div>
+
                 {/* Pricing Cards */}
                 <div className="container mx-auto px-4 mb-24">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                         {plans.map((plan) => (
-                            <PricingCard key={plan.title} {...plan} />
+                            <PricingCard
+                                key={plan.title}
+                                {...plan}
+                                promoCode={isPromoApplied ? promoCode : undefined}
+                            />
                         ))}
                     </div>
                 </div>

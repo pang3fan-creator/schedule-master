@@ -1,5 +1,6 @@
 import Link from "next/link"
 import Image from "next/image"
+import PHBadge from "./PHBadge"
 
 export function Footer() {
     return (
@@ -48,6 +49,11 @@ export function Footer() {
                 <p className="text-xs text-gray-400 italic text-center">
                     <strong className="font-medium">Try</strong>Schedule is the easiest <strong className="font-medium">free online schedule builder</strong> for students, managers, and teams.
                 </p>
+
+                {/* Product Hunt Badge for Mobile */}
+                <div className="mt-2 scale-90">
+                    <PHBadge isFixed={false} />
+                </div>
             </div>
         </footer>
     )
