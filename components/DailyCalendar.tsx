@@ -79,6 +79,7 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
     const EXPORT_ROW_HEIGHT = 80
     const [rowHeight, setRowHeight] = useState(exportMode ? EXPORT_ROW_HEIGHT : 58)
     const [isCalendarOpen, setIsCalendarOpen] = useState(false)
+    const [isMobileCalendarOpen, setIsMobileCalendarOpen] = useState(false)
     const isMobile = useIsMobile()
 
     // Update rowHeight when exportMode changes
@@ -310,7 +311,7 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                                     <ChevronLeft className="size-6" />
                                 </Button>
                                 <h2 className="text-base font-semibold text-gray-900 text-center flex-1 px-2 flex justify-center">
-                                    <Popover>
+                                    <Popover open={isMobileCalendarOpen} onOpenChange={setIsMobileCalendarOpen}>
                                         <PopoverTrigger asChild>
                                             <Button
                                                 variant="ghost"
@@ -327,6 +328,7 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                                                 onSelect={(date) => {
                                                     if (date) {
                                                         onDateChange(date)
+                                                        setIsMobileCalendarOpen(false)
                                                     }
                                                 }}
                                                 initialFocus
@@ -338,6 +340,7 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                                                     className="w-full text-sm font-medium hover:bg-muted"
                                                     onClick={() => {
                                                         onDateChange(new Date())
+                                                        setIsMobileCalendarOpen(false)
                                                     }}
                                                 >
                                                     Go to Today

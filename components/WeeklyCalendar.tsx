@@ -78,6 +78,7 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
   const EXPORT_ROW_HEIGHT = 80
   const [rowHeight, setRowHeight] = useState(exportMode ? EXPORT_ROW_HEIGHT : 58)
   const [isCalendarOpen, setIsCalendarOpen] = useState(false)
+  const [isMobileCalendarOpen, setIsMobileCalendarOpen] = useState(false)
 
   // Update rowHeight when exportMode changes
   useEffect(() => {
@@ -324,7 +325,7 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
                   <ChevronLeft className="size-6" />
                 </Button>
                 <h2 className="text-sm font-semibold text-gray-900 text-center flex-1 px-1 flex justify-center">
-                  <Popover>
+                  <Popover open={isMobileCalendarOpen} onOpenChange={setIsMobileCalendarOpen}>
                     <PopoverTrigger asChild>
                       <Button
                         variant="ghost"
@@ -341,6 +342,7 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
                         onSelect={(date) => {
                           if (date) {
                             onDateChange(date)
+                            setIsMobileCalendarOpen(false)
                           }
                         }}
                         initialFocus
@@ -352,6 +354,7 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
                           className="w-full text-sm font-medium hover:bg-muted"
                           onClick={() => {
                             onDateChange(new Date())
+                            setIsMobileCalendarOpen(false)
                           }}
                         >
                           Go to Today
