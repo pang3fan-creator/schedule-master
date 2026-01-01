@@ -300,6 +300,15 @@ export default function ScheduleBuilderPage() {
     }
   }, [events])
 
+  // Handle adding multiple events at once (from AI Autofill)
+  const handleAddEvents = useCallback((eventsData: Omit<Event, "id">[]) => {
+    const newEvents: Event[] = eventsData.map((eventData, index) => ({
+      ...eventData,
+      id: `event-${Date.now()}-${index}-${Math.random().toString(36).substr(2, 9)}`,
+    }))
+    setEvents(prevEvents => [...prevEvents, ...newEvents])
+  }, [])
+
   // Handle conflict dialog actions
   const handleConflictDeleteExisting = useCallback(() => {
     if (!conflictState) return
@@ -464,6 +473,7 @@ export default function ScheduleBuilderPage() {
                   reloadSettings()
                 }
               }}
+              onAddEvents={handleAddEvents}
             />
           )}
           <main className={`flex-1 min-h-0 overflow-auto ${!isExporting && isMobile ? 'pb-20' : ''}`} ref={calendarRef}>
@@ -533,6 +543,7 @@ export default function ScheduleBuilderPage() {
             initialData={addDialogInitialData}
             showSettingsOpen={showSettingsDialog}
             onSettingsOpenChange={setShowSettingsDialog}
+            onAddEvents={handleAddEvents}
           />
         )}
 

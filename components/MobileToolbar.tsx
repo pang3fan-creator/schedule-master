@@ -29,13 +29,14 @@ const UpgradeModal = dynamic(() => import("@/components/UpgradeModal").then(m =>
 const CalendarSyncDialog = dynamic(() => import("@/components/CalendarSyncDialog").then(m => m.CalendarSyncDialog), { ssr: false })
 import { EVENTS_STORAGE_KEY } from "@/lib/storage-keys"
 
-// Dynamically import dialog components for code splitting
 const AddEventDialog = dynamic(() => import("@/components/AddEventDialog").then(m => m.AddEventDialog), { ssr: false })
 const FeatureComingSoonModal = dynamic(() => import("@/components/FeatureComingSoonModal").then(m => m.FeatureComingSoonModal), { ssr: false })
 const SettingsDialog = dynamic(() => import("@/components/SettingsDialog").then(m => m.SettingsDialog), { ssr: false })
+const AIAutofillDialog = dynamic(() => import("@/components/AIAutofillDialog").then(m => m.AIAutofillDialog), { ssr: false })
 
 // Import FAQDialog directly (not dynamically) to ensure SEO visibility
 import { FAQDialog } from "@/components/FAQDialog"
+
 
 interface MobileToolbarProps {
     onReset: () => void
@@ -55,6 +56,7 @@ interface MobileToolbarProps {
     }
     showSettingsOpen?: boolean
     onSettingsOpenChange?: (open: boolean) => void
+    onAddEvents?: (events: Omit<Event, "id">[]) => void
 }
 
 export function MobileToolbar({
@@ -71,6 +73,7 @@ export function MobileToolbar({
     initialData,
     showSettingsOpen,
     onSettingsOpenChange,
+    onAddEvents,
 }: MobileToolbarProps) {
     const [showResetDialog, setShowResetDialog] = useState(false)
     const [showAddEventDialog, setShowAddEventDialog] = useState(false)
@@ -93,6 +96,7 @@ export function MobileToolbar({
     const [showUpgradeModal, setShowUpgradeModal] = useState(false)
     const [upgradeFeature, setUpgradeFeature] = useState("")
     const [comingSoonFeature, setComingSoonFeature] = useState("")
+    const [showAIAutofillDialog, setShowAIAutofillDialog] = useState(false)
 
     const { isPro, isLoading } = useSubscription()
 
@@ -104,8 +108,16 @@ export function MobileToolbar({
     const handleAIAutofillClick = () => {
         if (isLoading) return
         setShowMoreSheet(false)
-        setComingSoonFeature("AI Autofill")
-        setShowComingSoonModal(true)
+
+        // Paywall: Non-Pro users see upgrade modal
+        if (!isPro) {
+            setUpgradeFeature("AI Autofill")
+            setShowUpgradeModal(true)
+            return
+        }
+
+        // Pro users: Open AI Autofill dialog
+        setShowAIAutofillDialog(true)
     }
 
     const handleResetClick = () => {
@@ -365,6 +377,22 @@ export function MobileToolbar({
                 onOpenChange={setShowCalendarSyncDialog}
                 weekStart={weekStart}
                 weekStartsOnSunday={weekStartsOnSunday}
+            />
+
+
+
+            {/* AI Autofill Dialog */}
+            <AIAutofillDialog
+                open={showAIAutofillDialog}
+                onOpenChange={setShowAIAutofillDialog}
+                onAddEvents={(events) => {
+                    if (onAddEvents) {
+                        onAddEvents(events)
+                    }
+                }}
+                weekStart={weekStart}
+                weekStartsOnSunday={weekStartsOnSunday}
+                onReset={onReset}
             />
         </>
     )

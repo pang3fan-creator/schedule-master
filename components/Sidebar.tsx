@@ -17,6 +17,7 @@ const FeatureComingSoonModal = dynamic(() => import("@/components/FeatureComingS
 const SettingsDialog = dynamic(() => import("@/components/SettingsDialog").then(m => m.SettingsDialog), { ssr: false })
 const CloudSaveDialog = dynamic(() => import("@/components/CloudSaveDialog").then(m => m.CloudSaveDialog), { ssr: false })
 const CalendarSyncDialog = dynamic(() => import("@/components/CalendarSyncDialog").then(m => m.CalendarSyncDialog), { ssr: false })
+const AIAutofillDialog = dynamic(() => import("@/components/AIAutofillDialog").then(m => m.AIAutofillDialog), { ssr: false })
 
 // Import FAQDialog directly (not dynamically) to ensure SEO visibility
 import { FAQDialog } from "@/components/FAQDialog"
@@ -39,9 +40,10 @@ interface SidebarProps {
   showSettingsOpen?: boolean
   onSettingsOpenChange?: (open: boolean) => void
   onLoadSchedule?: (events: Event[], settings: Record<string, unknown> | null) => void
+  onAddEvents?: (events: Omit<Event, "id">[]) => void
 }
 
-export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, weekStart, weekStartsOnSunday, onExport, showAddDialog, onAddDialogClose, initialData, showSettingsOpen, onSettingsOpenChange, onLoadSchedule }: SidebarProps) {
+export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, weekStart, weekStartsOnSunday, onExport, showAddDialog, onAddDialogClose, initialData, showSettingsOpen, onSettingsOpenChange, onLoadSchedule, onAddEvents }: SidebarProps) {
   const [showResetDialog, setShowResetDialog] = useState(false)
   const [showAddEventDialog, setShowAddEventDialog] = useState(false)
   const [showUpgradeModal, setShowUpgradeModal] = useState(false)
@@ -60,6 +62,7 @@ export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, weekS
   const [showFAQDialog, setShowFAQDialog] = useState(false)
   const [showCloudSaveDialog, setShowCloudSaveDialog] = useState(false)
   const [showCalendarSyncDialog, setShowCalendarSyncDialog] = useState(false)
+  const [showAIAutofillDialog, setShowAIAutofillDialog] = useState(false)
   const [upgradeFeature, setUpgradeFeature] = useState("")
   const [comingSoonFeature, setComingSoonFeature] = useState("")
 
@@ -73,9 +76,15 @@ export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, weekS
   const handleAIAutofillClick = () => {
     if (isLoading) return
 
-    // Painted Door Test - show coming soon modal for all users
-    setComingSoonFeature("AI Autofill")
-    setShowComingSoonModal(true)
+    // Paywall: Non-Pro users see upgrade modal
+    if (!isPro) {
+      setUpgradeFeature("AI Autofill")
+      setShowUpgradeModal(true)
+      return
+    }
+
+    // Pro users: Open AI Autofill dialog
+    setShowAIAutofillDialog(true)
   }
 
   const handleCloudSaveClick = () => {
@@ -283,6 +292,22 @@ export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, weekS
         <Sparkles className="size-5" />
         AI Autofill
       </Button>
+
+
+
+      {/* AI Autofill Dialog */}
+      <AIAutofillDialog
+        open={showAIAutofillDialog}
+        onOpenChange={setShowAIAutofillDialog}
+        onAddEvents={(events) => {
+          if (onAddEvents) {
+            onAddEvents(events)
+          }
+        }}
+        weekStart={weekStart}
+        weekStartsOnSunday={weekStartsOnSunday}
+        onReset={onReset}
+      />
     </aside >
   )
 }
