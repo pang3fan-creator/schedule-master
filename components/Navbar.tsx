@@ -15,6 +15,7 @@ import {
 } from "@clerk/nextjs"
 import { getAllTemplates } from "@/lib/templates"
 import { MobileNav } from "@/components/MobileNav"
+import PHBadge from "@/components/PHBadge"
 
 // Dynamically import modals to reduce initial bundle size
 // These are only loaded when user triggers authentication or subscription actions
@@ -72,6 +73,9 @@ export function Navbar() {
             <span className="font-bold">Try</span><span className="font-normal">Schedule</span>
           </span>
         </Link>
+
+        {/* Product Hunt Badge - Desktop only, inside navbar flow for correct layering */}
+        <PHBadge variant="navbar" />
 
         {/* Center: Navigation Links - Hidden on mobile */}
         <nav className="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center gap-8">

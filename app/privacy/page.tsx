@@ -19,7 +19,7 @@ export default function PrivacyPage() {
                 </div>
 
                 <h1 className="text-4xl font-bold text-gray-900 mb-4 text-center">Privacy Policy</h1>
-                <p className="text-sm text-gray-500 mb-12 text-center">Last updated: December 24, 2025</p>
+                <p className="text-sm text-gray-500 mb-12 text-center">Last updated: January 1, 2026</p>
 
                 <div className="prose prose-gray max-w-none">
                     <section className="mb-8">
@@ -110,14 +110,45 @@ export default function PrivacyPage() {
                     </section>
 
                     <section className="mb-8">
-                        <h2 className="text-2xl font-semibold text-gray-900 mb-4">6. Data Security</h2>
+                        <h2 className="text-2xl font-semibold text-gray-900 mb-4">6. Google User Data</h2>
+                        <p className="text-gray-600 mb-4">
+                            TrySchedule uses Google OAuth to allow you to connect your Google account and sync your local schedule with Google Calendar.
+                        </p>
+                        <h3 className="text-lg font-medium text-gray-800 mb-3">Information We Access</h3>
+                        <p className="text-gray-600 mb-4">
+                            When you connect your Google account, we request the following permissions:
+                        </p>
+                        <ul className="list-disc list-inside text-gray-600 space-y-2 mb-4">
+                            <li><strong>View your calendar settings:</strong> We use this to detect your primary Google Calendar timezone, ensuring synchronized events appear at the correct time.</li>
+                            <li><strong>View and edit events on your calendars:</strong> We use this to create, update, and manage the schedule events you choose to sync from TrySchedule to your Google Calendar.</li>
+                        </ul>
+                        <h3 className="text-lg font-medium text-gray-800 mb-3">How We Use This Data</h3>
+                        <p className="text-gray-600 mb-4">
+                            Our use of information received from Google APIs is strictly limited to providing and improving the Calendar Sync feature. We do not store your Google Calendar data on our servers, nor do we use it for advertising or share it with any third parties except as necessary to provide the service.
+                        </p>
+                        <h3 className="text-lg font-medium text-gray-800 mb-3">Google API Limited Use Policy</h3>
+                        <p className="text-gray-600 mb-4">
+                            TrySchedule's use and transfer to any other app of information received from Google APIs will adhere to the{" "}
+                            <a
+                                href="https://developers.google.com/terms/api-services-user-data-policy#additional_requirements_for_specific_api_scopes"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-blue-600 hover:text-blue-700 hover:underline cursor-pointer transition-colors font-medium"
+                            >
+                                Google API Services User Data Policy
+                            </a>, including the Limited Use requirements.
+                        </p>
+                    </section>
+
+                    <section className="mb-8">
+                        <h2 className="text-2xl font-semibold text-gray-900 mb-4">7. Data Security</h2>
                         <p className="text-gray-600 mb-4">
                             We implement industry-standard security measures to protect your data, including encryption, secure servers, and regular security assessments. However, no method of transmission over the Internet is 100% secure.
                         </p>
                     </section>
 
                     <section className="mb-8">
-                        <h2 className="text-2xl font-semibold text-gray-900 mb-4">7. Your Rights</h2>
+                        <h2 className="text-2xl font-semibold text-gray-900 mb-4">8. Your Rights</h2>
                         <p className="text-gray-600 mb-4">Depending on your location, you may have the right to:</p>
                         <ul className="list-disc list-inside text-gray-600 space-y-2 mb-4">
                             <li>Access your personal data</li>
@@ -130,28 +161,28 @@ export default function PrivacyPage() {
                     </section>
 
                     <section className="mb-8">
-                        <h2 className="text-2xl font-semibold text-gray-900 mb-4">8. Cookies</h2>
+                        <h2 className="text-2xl font-semibold text-gray-900 mb-4">9. Cookies</h2>
                         <p className="text-gray-600 mb-4">
                             We use cookies and similar technologies to enhance your experience, analyze usage, and deliver personalized content. You can control cookie preferences through your browser settings.
                         </p>
                     </section>
 
                     <section className="mb-8">
-                        <h2 className="text-2xl font-semibold text-gray-900 mb-4">9. Children's Privacy</h2>
+                        <h2 className="text-2xl font-semibold text-gray-900 mb-4">10. Children's Privacy</h2>
                         <p className="text-gray-600 mb-4">
                             Our Service is not intended for children under 13. We do not knowingly collect personal information from children under 13. If you believe we have collected such information, please contact us immediately.
                         </p>
                     </section>
 
                     <section className="mb-8">
-                        <h2 className="text-2xl font-semibold text-gray-900 mb-4">10. Changes to This Policy</h2>
+                        <h2 className="text-2xl font-semibold text-gray-900 mb-4">11. Changes to This Policy</h2>
                         <p className="text-gray-600 mb-4">
                             We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last updated" date.
                         </p>
                     </section>
 
                     <section className="mb-8">
-                        <h2 className="text-2xl font-semibold text-gray-900 mb-4">11. Contact Us</h2>
+                        <h2 className="text-2xl font-semibold text-gray-900 mb-4">12. Contact Us</h2>
                         <p className="text-gray-600">
                             If you have questions about this Privacy Policy, please contact us at{" "}
                             <a

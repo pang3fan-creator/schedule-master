@@ -19,7 +19,7 @@ export default function TermsPage() {
                 </div>
 
                 <h1 className="text-4xl font-bold text-gray-900 mb-4 text-center">Terms of Service</h1>
-                <p className="text-sm text-gray-500 mb-12 text-center">Last updated: December 15, 2025</p>
+                <p className="text-sm text-gray-500 mb-12 text-center">Last updated: January 1, 2026</p>
 
                 <div className="prose prose-gray max-w-none">
                     <section className="mb-8">
@@ -69,28 +69,38 @@ export default function TermsPage() {
                     </section>
 
                     <section className="mb-8">
-                        <h2 className="text-2xl font-semibold text-gray-900 mb-4">6. Intellectual Property</h2>
+                        <h2 className="text-2xl font-semibold text-gray-900 mb-4">6. Third-Party Services</h2>
+                        <p className="text-gray-600 mb-4">
+                            Our Service allows you to connect with third-party services, such as Google Calendar, to enhance your scheduling experience. By using these integrations, you agree to comply with the terms and privacy policies of those third-party services.
+                        </p>
+                        <p className="text-gray-600 mb-4">
+                            We are not responsible for the content, privacy policies, or practices of any third-party services. We encourage you to review the terms and privacy policies of any third-party service before connecting it to TrySchedule.
+                        </p>
+                    </section>
+
+                    <section className="mb-8">
+                        <h2 className="text-2xl font-semibold text-gray-900 mb-4">7. Intellectual Property</h2>
                         <p className="text-gray-600 mb-4">
                             The Service and its original content, features, and functionality are owned by TrySchedule and are protected by international copyright, trademark, and other intellectual property laws.
                         </p>
                     </section>
 
                     <section className="mb-8">
-                        <h2 className="text-2xl font-semibold text-gray-900 mb-4">7. Limitation of Liability</h2>
+                        <h2 className="text-2xl font-semibold text-gray-900 mb-4">8. Limitation of Liability</h2>
                         <p className="text-gray-600 mb-4">
                             In no event shall TrySchedule be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use of or inability to use the Service.
                         </p>
                     </section>
 
                     <section className="mb-8">
-                        <h2 className="text-2xl font-semibold text-gray-900 mb-4">8. Changes to Terms</h2>
+                        <h2 className="text-2xl font-semibold text-gray-900 mb-4">9. Changes to Terms</h2>
                         <p className="text-gray-600 mb-4">
                             We reserve the right to modify these terms at any time. We will notify users of significant changes via email or through the Service. Continued use of the Service after changes constitutes acceptance of the new terms.
                         </p>
                     </section>
 
                     <section className="mb-8">
-                        <h2 className="text-2xl font-semibold text-gray-900 mb-4">9. Contact Information</h2>
+                        <h2 className="text-2xl font-semibold text-gray-900 mb-4">10. Contact Information</h2>
                         <p className="text-gray-600">
                             If you have any questions about these Terms, please contact us at{" "}
                             <a

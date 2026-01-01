@@ -15,7 +15,7 @@ import { MobileEventActionSheet } from "@/components/MobileEventActionSheet"
 import { useIsMobile } from "@/hooks/useMediaQuery"
 import { getWeekStart } from "@/lib/time-utils"
 import { homepageFAQs } from "@/components/HomepageSEOContent"
-import { EVENTS_STORAGE_KEY, VIEW_MODE_STORAGE_KEY, SELECTED_DATE_STORAGE_KEY, SHOULD_OPEN_SETTINGS_KEY, SETTINGS_STORAGE_KEY } from "@/lib/storage-keys"
+import { EVENTS_STORAGE_KEY, VIEW_MODE_STORAGE_KEY, SELECTED_DATE_STORAGE_KEY, SETTINGS_STORAGE_KEY } from "@/lib/storage-keys"
 
 // Dynamically import dialog components for code splitting
 // These are only loaded when the user triggers them
@@ -213,13 +213,6 @@ export default function ScheduleBuilderPage() {
     // Load saved selected date
     const storedDate = loadSelectedDateFromStorage()
     setSelectedDate(storedDate)
-
-    // Check if we should open settings (flag set by template selection)
-    const shouldOpenSettings = localStorage.getItem(SHOULD_OPEN_SETTINGS_KEY)
-    if (shouldOpenSettings === "true") {
-      setShowSettingsDialog(true)
-      localStorage.removeItem(SHOULD_OPEN_SETTINGS_KEY)
-    }
 
     setIsLoaded(true)
     // Reload settings in case template was just applied

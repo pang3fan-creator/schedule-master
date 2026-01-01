@@ -16,6 +16,7 @@ const UpgradeModal = dynamic(() => import("@/components/UpgradeModal").then(m =>
 const FeatureComingSoonModal = dynamic(() => import("@/components/FeatureComingSoonModal").then(m => m.FeatureComingSoonModal), { ssr: false })
 const SettingsDialog = dynamic(() => import("@/components/SettingsDialog").then(m => m.SettingsDialog), { ssr: false })
 const CloudSaveDialog = dynamic(() => import("@/components/CloudSaveDialog").then(m => m.CloudSaveDialog), { ssr: false })
+const CalendarSyncDialog = dynamic(() => import("@/components/CalendarSyncDialog").then(m => m.CalendarSyncDialog), { ssr: false })
 
 // Import FAQDialog directly (not dynamically) to ensure SEO visibility
 import { FAQDialog } from "@/components/FAQDialog"
@@ -58,6 +59,7 @@ export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, weekS
   const [showComingSoonModal, setShowComingSoonModal] = useState(false)
   const [showFAQDialog, setShowFAQDialog] = useState(false)
   const [showCloudSaveDialog, setShowCloudSaveDialog] = useState(false)
+  const [showCalendarSyncDialog, setShowCalendarSyncDialog] = useState(false)
   const [upgradeFeature, setUpgradeFeature] = useState("")
   const [comingSoonFeature, setComingSoonFeature] = useState("")
 
@@ -93,9 +95,15 @@ export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, weekS
   const handleCalendarSyncClick = () => {
     if (isLoading) return
 
-    // Painted Door Test - show coming soon modal for all users
-    setComingSoonFeature("Calendar Sync")
-    setShowComingSoonModal(true)
+    // Paywall: Non-Pro users see upgrade modal
+    if (!isPro) {
+      setUpgradeFeature("Calendar Sync")
+      setShowUpgradeModal(true)
+      return
+    }
+
+    // Pro users: Open Calendar Sync dialog
+    setShowCalendarSyncDialog(true)
   }
 
   return (
@@ -212,6 +220,14 @@ export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, weekS
           <Calendar className="size-5" />
           Calendar Sync
         </Button>
+
+        {/* Calendar Sync Dialog */}
+        <CalendarSyncDialog
+          open={showCalendarSyncDialog}
+          onOpenChange={setShowCalendarSyncDialog}
+          weekStart={weekStart}
+          weekStartsOnSunday={weekStartsOnSunday}
+        />
 
         {/* Export/Download */}
         <Button

@@ -4,7 +4,7 @@ import { useState } from "react"
 import dynamic from "next/dynamic"
 import { Button } from "@/components/ui/button"
 import { ViewModeToggle } from "@/components/ViewModeToggle"
-import { PlusCircle, Download, Settings, RotateCcw, Sparkles, MoreHorizontal, HelpCircle, CalendarDays, CalendarRange, Cloud } from "lucide-react"
+import { PlusCircle, Download, Settings, RotateCcw, Sparkles, MoreHorizontal, HelpCircle, CalendarDays, CalendarRange, Cloud, Calendar } from "lucide-react"
 import {
     Dialog,
     DialogContent,
@@ -23,9 +23,10 @@ import {
 import { useSubscription } from "@/components/SubscriptionContext"
 import { type Event } from "@/lib/types"
 
-// Dynamically import CloudSaveDialog for code splitting
+// Dynamically import dialog components for code splitting
 const CloudSaveDialog = dynamic(() => import("@/components/CloudSaveDialog").then(m => m.CloudSaveDialog), { ssr: false })
 const UpgradeModal = dynamic(() => import("@/components/UpgradeModal").then(m => m.UpgradeModal), { ssr: false })
+const CalendarSyncDialog = dynamic(() => import("@/components/CalendarSyncDialog").then(m => m.CalendarSyncDialog), { ssr: false })
 import { EVENTS_STORAGE_KEY } from "@/lib/storage-keys"
 
 // Dynamically import dialog components for code splitting
@@ -88,6 +89,7 @@ export function MobileToolbar({
     const [showMoreSheet, setShowMoreSheet] = useState(false)
     const [showFAQDialog, setShowFAQDialog] = useState(false)
     const [showCloudSaveDialog, setShowCloudSaveDialog] = useState(false)
+    const [showCalendarSyncDialog, setShowCalendarSyncDialog] = useState(false)
     const [showUpgradeModal, setShowUpgradeModal] = useState(false)
     const [upgradeFeature, setUpgradeFeature] = useState("")
     const [comingSoonFeature, setComingSoonFeature] = useState("")
@@ -145,6 +147,21 @@ export function MobileToolbar({
         setShowCloudSaveDialog(true)
     }
 
+    const handleCalendarSyncClick = () => {
+        if (isLoading) return
+        setShowMoreSheet(false)
+
+        // Paywall: Non-Pro users see upgrade modal
+        if (!isPro) {
+            setUpgradeFeature("Calendar Sync")
+            setShowUpgradeModal(true)
+            return
+        }
+
+        // Pro users: Open Calendar Sync dialog
+        setShowCalendarSyncDialog(true)
+    }
+
     return (
         <>
             {/* Floating Add Button (FAB) - above the toolbar */}
@@ -160,7 +177,25 @@ export function MobileToolbar({
             {/* Fixed Bottom Toolbar */}
             <div className="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-gray-200 px-4 py-2 md:hidden safe-area-pb">
                 <div className="flex items-center justify-around">
-                    {/* Day/Week Toggle Button - single button that switches between views */}
+                    {/* Reset Button (4) */}
+                    <button
+                        onClick={handleResetClick}
+                        className="flex flex-col items-center gap-0.5 p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                    >
+                        <RotateCcw className="size-5 text-gray-600" />
+                        <span className="text-xs text-gray-600">Reset</span>
+                    </button>
+
+                    {/* Export Button (3) */}
+                    <button
+                        onClick={handleExportClick}
+                        className="flex flex-col items-center gap-0.5 p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                    >
+                        <Download className="size-5 text-gray-600" />
+                        <span className="text-xs text-gray-600">Export</span>
+                    </button>
+
+                    {/* Day/Week Toggle Button (1) */}
                     <button
                         onClick={() => onViewModeChange(viewMode === "day" ? "week" : "day")}
                         className="flex flex-col items-center gap-0.5 p-2 w-16 hover:bg-gray-100 rounded-lg transition-colors"
@@ -175,7 +210,7 @@ export function MobileToolbar({
                         </span>
                     </button>
 
-                    {/* Cloud Save Button */}
+                    {/* Cloud Save Button (2) */}
                     <button
                         onClick={handleCloudSaveClick}
                         className="flex flex-col items-center gap-0.5 p-2 hover:bg-gray-100 rounded-lg transition-colors"
@@ -184,25 +219,7 @@ export function MobileToolbar({
                         <span className="text-xs text-gray-600">Cloud</span>
                     </button>
 
-                    {/* Export Button */}
-                    <button
-                        onClick={handleExportClick}
-                        className="flex flex-col items-center gap-0.5 p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                    >
-                        <Download className="size-5 text-gray-600" />
-                        <span className="text-xs text-gray-600">Export</span>
-                    </button>
-
-                    {/* Reset Button */}
-                    <button
-                        onClick={handleResetClick}
-                        className="flex flex-col items-center gap-0.5 p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                    >
-                        <RotateCcw className="size-5 text-gray-600" />
-                        <span className="text-xs text-gray-600">Reset</span>
-                    </button>
-
-                    {/* More Menu */}
+                    {/* More Menu (5) */}
                     <Sheet open={showMoreSheet} onOpenChange={setShowMoreSheet}>
                         <SheetTrigger asChild>
                             <button className="flex flex-col items-center gap-0.5 p-2 hover:bg-gray-100 rounded-lg transition-colors">
@@ -215,15 +232,18 @@ export function MobileToolbar({
                                 <SheetTitle>More Options</SheetTitle>
                             </SheetHeader>
                             <div className="grid grid-cols-4 gap-4 pb-6">
+                                {/* Sync Button (4) */}
                                 <button
-                                    onClick={handleSettingsClick}
+                                    onClick={handleCalendarSyncClick}
                                     className="flex flex-col items-center gap-2 p-3 rounded-xl hover:bg-gray-50"
                                 >
                                     <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center">
-                                        <Settings className="size-5 text-gray-600" />
+                                        <Calendar className="size-5 text-gray-600" />
                                     </div>
-                                    <span className="text-xs text-gray-600">Settings</span>
+                                    <span className="text-xs text-gray-600">Sync</span>
                                 </button>
+
+                                {/* AI Fill Button (2) */}
                                 <button
                                     onClick={handleAIAutofillClick}
                                     className="flex flex-col items-center gap-2 p-3 rounded-xl hover:bg-gray-50"
@@ -233,6 +253,19 @@ export function MobileToolbar({
                                     </div>
                                     <span className="text-xs text-gray-600">AI Fill</span>
                                 </button>
+
+                                {/* Settings Button (1) */}
+                                <button
+                                    onClick={handleSettingsClick}
+                                    className="flex flex-col items-center gap-2 p-3 rounded-xl hover:bg-gray-50"
+                                >
+                                    <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center">
+                                        <Settings className="size-5 text-gray-600" />
+                                    </div>
+                                    <span className="text-xs text-gray-600">Settings</span>
+                                </button>
+
+                                {/* FAQ Button (3) */}
                                 <button
                                     onClick={handleFAQClick}
                                     className="flex flex-col items-center gap-2 p-3 rounded-xl hover:bg-gray-50"
@@ -324,6 +357,14 @@ export function MobileToolbar({
                 open={showUpgradeModal}
                 onOpenChange={setShowUpgradeModal}
                 feature={upgradeFeature}
+            />
+
+            {/* Calendar Sync Dialog */}
+            <CalendarSyncDialog
+                open={showCalendarSyncDialog}
+                onOpenChange={setShowCalendarSyncDialog}
+                weekStart={weekStart}
+                weekStartsOnSunday={weekStartsOnSunday}
             />
         </>
     )

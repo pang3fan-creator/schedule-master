@@ -51,8 +51,8 @@ export function Footer() {
                 </p>
 
                 {/* Product Hunt Badge for Mobile */}
-                <div className="mt-2 scale-90">
-                    <PHBadge isFixed={false} />
+                <div className="mt-2">
+                    <PHBadge variant="inline" />
                 </div>
             </div>
         </footer>

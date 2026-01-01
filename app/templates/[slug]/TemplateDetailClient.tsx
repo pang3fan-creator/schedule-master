@@ -14,7 +14,7 @@ import { UpgradeModal } from "@/components/UpgradeModal"
 import { FAQAccordion } from "@/components/FaqAccordion"
 import { Breadcrumb } from "@/components/Breadcrumb"
 import { ConfirmDialog } from "@/components/ConfirmDialog"
-import { EVENTS_STORAGE_KEY, SETTINGS_STORAGE_KEY, SHOULD_OPEN_SETTINGS_KEY } from "@/lib/storage-keys"
+import { EVENTS_STORAGE_KEY, SETTINGS_STORAGE_KEY } from "@/lib/storage-keys"
 
 // Get the date of a specific day of the week for the current week
 // dayOfWeek: 0=Sunday, 1=Monday, 2=Tuesday, etc. (JavaScript standard)
@@ -216,9 +216,6 @@ export function TemplateDetailClient({ slug }: TemplateDetailClientProps) {
 
         // Save to localStorage
         localStorage.setItem(EVENTS_STORAGE_KEY, JSON.stringify(events))
-
-        // Set flag to open settings on homepage
-        localStorage.setItem(SHOULD_OPEN_SETTINGS_KEY, "true")
 
         // Apply template settings if available
         if (template.settings) {
