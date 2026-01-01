@@ -16,12 +16,14 @@ interface FeatureComingSoonModalProps {
     open: boolean;
     onOpenChange: (open: boolean) => void;
     featureName: string;
+    description?: React.ReactNode;
 }
 
 export function FeatureComingSoonModal({
     open,
     onOpenChange,
-    featureName
+    featureName,
+    description
 }: FeatureComingSoonModalProps) {
     const [email, setEmail] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -90,7 +92,11 @@ export function FeatureComingSoonModal({
                         {featureName} - Coming Soon!
                     </DialogTitle>
                     <DialogDescription className="text-center">
-                        This Pro feature is currently in development. Be the first to know when it launches and get an exclusive <span className="font-semibold text-violet-600">50% discount</span>!
+                        {description || (
+                            <>
+                                This Pro feature is currently in development. Be the first to know when it launches and get an exclusive <span className="font-semibold text-violet-600">50% discount</span>!
+                            </>
+                        )}
                     </DialogDescription>
                 </DialogHeader>
 

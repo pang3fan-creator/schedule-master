@@ -65,6 +65,7 @@ export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, weekS
   const [showAIAutofillDialog, setShowAIAutofillDialog] = useState(false)
   const [upgradeFeature, setUpgradeFeature] = useState("")
   const [comingSoonFeature, setComingSoonFeature] = useState("")
+  const [comingSoonDescription, setComingSoonDescription] = useState<React.ReactNode>(null)
 
   const { isPro, isLoading } = useSubscription()
 
@@ -102,6 +103,12 @@ export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, weekS
   }
 
   const handleCalendarSyncClick = () => {
+    // Painted Door Test - Intercept all requests
+    setComingSoonFeature("Calendar Sync")
+    setComingSoonDescription("This feature is included in the Pro version and will be available soon! Enter your email to get notified first when it launches.")
+    setShowComingSoonModal(true)
+    return
+
     if (isLoading) return
 
     // Paywall: Non-Pro users see upgrade modal
@@ -153,6 +160,7 @@ export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, weekS
         open={showComingSoonModal}
         onOpenChange={setShowComingSoonModal}
         featureName={comingSoonFeature}
+        description={comingSoonDescription}
       />
 
       {/* Day/Week Toggle */}

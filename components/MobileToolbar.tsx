@@ -96,6 +96,7 @@ export function MobileToolbar({
     const [showUpgradeModal, setShowUpgradeModal] = useState(false)
     const [upgradeFeature, setUpgradeFeature] = useState("")
     const [comingSoonFeature, setComingSoonFeature] = useState("")
+    const [comingSoonDescription, setComingSoonDescription] = useState<React.ReactNode>(null)
     const [showAIAutofillDialog, setShowAIAutofillDialog] = useState(false)
 
     const { isPro, isLoading } = useSubscription()
@@ -160,6 +161,12 @@ export function MobileToolbar({
     }
 
     const handleCalendarSyncClick = () => {
+        // Painted Door Test - Intercept all requests
+        setComingSoonFeature("Calendar Sync")
+        setComingSoonDescription("This feature is included in the Pro version and will be available soon! Enter your email to get notified first when it launches.")
+        setShowComingSoonModal(true)
+        return
+
         if (isLoading) return
         setShowMoreSheet(false)
 
@@ -345,6 +352,7 @@ export function MobileToolbar({
                 open={showComingSoonModal}
                 onOpenChange={setShowComingSoonModal}
                 featureName={comingSoonFeature}
+                description={comingSoonDescription}
             />
 
             {/* FAQ Dialog */}
