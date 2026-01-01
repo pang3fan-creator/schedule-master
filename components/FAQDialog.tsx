@@ -52,7 +52,7 @@ export function FAQDialog({ open, onOpenChange }: FAQDialogProps) {
                         {/* Row 1: Logo + Brand + Copyright */}
                         <div className="flex items-center gap-2 flex-wrap justify-center">
                             <Link href="/" className="flex items-center gap-1.5 hover:opacity-80 transition-opacity">
-                                <Image src="/logo.png" alt="TrySchedule - Free Online Schedule Builder" width={18} height={18} className="object-contain" />
+                                <Image src="/icon.svg" alt="TrySchedule - Free Online Schedule Builder" width={18} height={18} className="object-contain" />
                                 <span className="text-blue-600"><span className="font-bold">Try</span><span className="font-normal">Schedule</span></span>
                             </Link>
                             <span className="text-gray-400">© 2025 TrySchedule. All rights reserved.</span>

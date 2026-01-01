@@ -48,7 +48,7 @@ export function AuthModal({ open, onOpenChange, defaultMode = "sign-in" }: AuthM
                         {/* Content */}
                         <div className="relative z-10 text-center">
                             <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
-                                <Image src="/logo.png" alt="TrySchedule" width={40} height={40} className="object-contain" />
+                                <Image src="/icon.svg" alt="TrySchedule" width={40} height={40} className="object-contain" />
                             </div>
                             <h2 className="text-2xl font-bold text-white mb-3">
                                 {activeTab === "sign-in" ? "Welcome back!" : "Join TrySchedule"}

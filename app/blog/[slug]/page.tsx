@@ -85,7 +85,7 @@ function generateArticleSchema(post: ReturnType<typeof getPostBySlug>, slug: str
             "name": "TrySchedule",
             "logo": {
                 "@type": "ImageObject",
-                "url": `${baseUrl}/logo.png`,
+                "url": `${baseUrl}/icon.svg`,
             },
         },
         "datePublished": post.date,

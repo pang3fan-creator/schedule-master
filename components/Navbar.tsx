@@ -68,7 +68,7 @@ export function Navbar() {
           href="/"
           className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0"
         >
-          <Image src="/logo.png" alt="TrySchedule - Free Online Schedule Builder" width={32} height={32} className="object-contain" priority />
+          <Image src="/icon.svg" alt="TrySchedule - Free Online Schedule Builder" width={32} height={32} className="object-contain" priority />
           <span className="text-lg text-blue-600 hidden sm:inline">
             <span className="font-bold">Try</span><span className="font-normal">Schedule</span>
           </span>

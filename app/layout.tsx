@@ -68,7 +68,7 @@ export const metadata: Metadata = {
         type: "image/svg+xml",
       },
     ],
-    apple: "/logo.png",
+    apple: "/icon.svg",
   },
 }
 
@@ -95,7 +95,7 @@ export default function RootLayout({
     "@type": "Organization",
     "name": "TrySchedule",
     "url": baseUrl,
-    "logo": `${baseUrl}/logo.png`,
+    "logo": `${baseUrl}/icon.svg`,
     "description": "The easiest free online schedule builder for students, managers, and gyms.",
     "sameAs": [],
     "contactPoint": {

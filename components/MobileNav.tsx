@@ -115,7 +115,7 @@ export function MobileNav() {
                     <SheetContent side="left" className="w-[300px] p-0 z-[60]" hideClose>
                         <SheetHeader className="border-b px-4 h-16 flex items-center">
                             <SheetTitle className="flex items-center gap-2">
-                                <Image src="/logo.png" alt="TrySchedule" width={28} height={28} className="object-contain" />
+                                <Image src="/icon.svg" alt="TrySchedule" width={28} height={28} className="object-contain" />
                                 <span className="text-lg text-blue-600">
                                     <span className="font-bold">Try</span>
                                     <span className="font-normal">Schedule</span>
