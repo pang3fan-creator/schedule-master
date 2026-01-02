@@ -226,7 +226,7 @@ export function AIAutofillDialog({
         return grouped
     }, [generatedEvents])
 
-    const isLimitReached = usage && usage.remaining === 0
+    const isLimitReached = usage?.remaining === 0
 
     return (
         <>
