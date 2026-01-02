@@ -177,6 +177,7 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
   // Calculate actual row height based on grid dimensions and hour count
   useEffect(() => {
     const updateRowHeight = () => {
+      if (exportMode) return // Skip dynamic calculation in export mode to keep fixed 80px
       if (gridRef.current) {
         const gridElement = gridRef.current
         const gridHeight = gridElement.clientHeight
@@ -208,7 +209,7 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
       cancelAnimationFrame(rafId)
       window.removeEventListener('resize', updateRowHeight)
     }
-  }, [hours.length, isMobile]) // Re-calculate when isMobile changes (grid layout changes)
+  }, [hours.length, isMobile, exportMode]) // Re-calculate when isMobile or exportMode changes
 
   // Navigate to current week (today)
   const goToToday = () => {

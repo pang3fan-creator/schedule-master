@@ -87,7 +87,7 @@ async function addWatermarkToDataUrl(
 
             ctx.drawImage(img, 0, 0)
 
-            const fontSize = Math.max(32, Math.floor(canvas.width / 28))
+            const fontSize = Math.max(24, Math.floor(canvas.width / 50))
             ctx.font = `bold ${fontSize}px Arial, sans-serif`
             ctx.fillStyle = "rgba(100, 116, 139, 0.65)"
             ctx.textAlign = "right"

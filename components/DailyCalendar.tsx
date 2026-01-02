@@ -180,6 +180,7 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
     // Calculate actual row height based on grid dimensions and hour count
     useEffect(() => {
         const updateRowHeight = () => {
+            if (exportMode) return
             if (gridRef.current) {
                 const gridElement = gridRef.current
                 const gridHeight = gridElement.clientHeight
@@ -202,7 +203,7 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
         updateRowHeight()
         window.addEventListener('resize', updateRowHeight)
         return () => window.removeEventListener('resize', updateRowHeight)
-    }, [hours.length, isMobile])  // Re-calculate when isMobile changes
+    }, [hours.length, isMobile, exportMode])  // Re-calculate when hours, mobile status, or export mode changes
 
     // Navigate to today
     const goToToday = () => {

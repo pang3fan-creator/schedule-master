@@ -60,8 +60,8 @@ export function ExportDialog({
         // Trigger export mode in parent to re-render calendar without scroll constraints
         onExportStart?.()
 
-        // Wait for React to re-render with export mode (needs time for rowHeight to update)
-        await new Promise(resolve => setTimeout(resolve, 300))
+        // Wait slightly longer for layout to stabilize (e.g. from 300ms to 500ms)
+        await new Promise(resolve => setTimeout(resolve, 500))
 
         try {
             if (selectedFormat === "pdf") {
@@ -105,7 +105,7 @@ export function ExportDialog({
                     filename: generateFilename("schedule"),
                     format: selectedFormat,
                     scale: 2,
-                    watermark: !isPro ? "www.TrySchedule.com" : undefined,
+                    watermark: !isPro ? "Created with TrySchedule.com" : undefined,
                 })
             }
             onOpenChange(false)
