@@ -15,6 +15,8 @@ export interface TemplateData {
         workingHoursStart?: number
         workingHoursEnd?: number
         timeIncrement?: 5 | 10 | 15 | 30 | 60 // Time increment in minutes
+        showDates?: boolean
+        allowOverlap?: boolean
     }
     faq?: {
         question: string
@@ -50,7 +52,7 @@ export const TEMPLATES: Record<string, TemplateData> = {
     "employee-schedule-builder": {
         slug: "employee-schedule-builder",
         title: "Employee Schedule Builder",
-        description: "Create and manage employee work schedules with ease. Perfect for managers and HR professionals.",
+        description: "Free employee schedule builder for managers. Create and share work schedules with your team in minutes.",
         longDescription: `Managing employee schedules doesn't have to be complicated. Our Free Employee Schedule Builder helps managers and business owners create, organize, and share work schedules in minutes. 
 
 Whether you're running a retail store, restaurant, healthcare facility, or any business with shift workers, this tool makes scheduling simple. Set up morning, afternoon, and night shifts, assign employees to specific time slots, and ensure proper coverage throughout the week.
@@ -59,11 +61,13 @@ Key benefits include drag-and-drop scheduling, color-coded shifts for easy visua
         category: "Business",
         icon: "Briefcase",
         settings: {
-            weekStartsOnSunday: true,
+            weekStartsOnSunday: false,
             use12HourFormat: true,
             workingHoursStart: 6,
             workingHoursEnd: 22,
             timeIncrement: 30,
+            showDates: false,
+            allowOverlap: false,
         },
         events: [
             // Monday (day 1 when weekStartsOnSunday)
@@ -108,7 +112,7 @@ Key benefits include drag-and-drop scheduling, color-coded shifts for easy visua
     "college-class-schedule-builder": {
         slug: "college-class-schedule-builder",
         title: "College Class Schedule Builder",
-        description: "Plan your college semester with our easy-to-use class schedule planner. Perfect for students.",
+        description: "Free college class schedule builder for students. Plan your semester with our easy-to-use visual planner.",
         longDescription: `Planning your college semester just got easier. Our Free College Class Schedule Builder helps students organize their classes, study sessions, and campus activities in one visual timetable.
 
 Designed specifically for university and college students, this tool features a Monday-Friday view with 15-minute time increments, making it perfect for fitting in those back-to-back lectures and lab sessions.
@@ -117,11 +121,13 @@ Use color coding to differentiate between subjects, add room numbers and profess
         category: "Education",
         icon: "GraduationCap",
         settings: {
-            weekStartsOnSunday: true,
+            weekStartsOnSunday: false,
             use12HourFormat: true,
             workingHoursStart: 8,
             workingHoursEnd: 18,
             timeIncrement: 15,
+            showDates: true,
+            allowOverlap: false,
         },
         events: [
             // Monday (day 1 when weekStartsOnSunday)
@@ -173,7 +179,7 @@ Use color coding to differentiate between subjects, add room numbers and profess
     "workout-schedule-builder": {
         slug: "workout-schedule-builder",
         title: "Workout Schedule Builder",
-        description: "Plan your weekly fitness routine with our visual workout planner. Great for gym-goers and fitness enthusiasts.",
+        description: "Free workout schedule builder for fitness enthusiasts. Plan your weekly gym routine with our visual planner.",
         longDescription: `Take your fitness journey to the next level with our Free Workout Schedule Builder. Whether you're following a push-pull-legs routine, training for a marathon, or just trying to stay active, this visual planner helps you organize your workouts for the week.
 
 Designed with fitness enthusiasts in mind, this tool lets you schedule specific muscle groups, cardio sessions, rest days, and meal prep times. Color-code your workouts to distinguish between chest day, back day, leg day, and cardio sessions.
@@ -187,6 +193,8 @@ Perfect for beginners creating their first workout plan or experienced athletes 
             workingHoursStart: 5,
             workingHoursEnd: 21,
             timeIncrement: 30,
+            showDates: false,
+            allowOverlap: true,
         },
         events: [
             // Sunday (Day 0 when weekStartsOnSunday)
@@ -243,13 +251,13 @@ Perfect for beginners creating their first workout plan or experienced athletes 
     "visual-schedule-builder": {
         slug: "visual-schedule-builder",
         title: "Visual Schedule Builder",
-        description: "Create beautiful, color-coded visual schedules. Perfect for visual learners and creative planners.",
+        description: "Free visual schedule builder for creative planners. Create beautiful, color-coded schedules at a glance.",
         longDescription: `Transform your schedule from a boring list into a beautiful visual masterpiece. Our Free Visual Schedule Builder uses colors, blocks, and intuitive design to help you see your week at a glance.
 
 Perfect for visual learners, creative professionals, and anyone who prefers seeing their schedule rather than reading it. The drag-and-drop interface makes it easy to arrange and rearrange your plans, while the color-coding system helps you instantly identify different types of activities.
 
 Whether you're planning a creative project, managing multiple clients, or organizing your personal life, this visual approach to scheduling helps you spot conflicts, find free time, and maintain balance across all areas of your life.`,
-        category: "Visual",
+        category: "Personal",
         icon: "Palette",
         settings: {
             weekStartsOnSunday: true,
@@ -257,6 +265,8 @@ Whether you're planning a creative project, managing multiple clients, or organi
             workingHoursStart: 7,
             workingHoursEnd: 20,
             timeIncrement: 30,
+            showDates: false,
+            allowOverlap: true,
         },
         events: [
             // Monday
@@ -313,11 +323,13 @@ Whether you're a busy professional trying to maximize productivity, a student ba
         icon: "Sparkles",
         requiresPro: true,
         settings: {
-            weekStartsOnSunday: true,
-            use12HourFormat: true,
+            weekStartsOnSunday: false,
+            use12HourFormat: false,
             workingHoursStart: 8,
             workingHoursEnd: 18,
             timeIncrement: 15,
+            showDates: true,
+            allowOverlap: false,
         },
         events: [
             // AI-optimized schedule example
@@ -371,7 +383,7 @@ Whether you're a busy professional trying to maximize productivity, a student ba
     "work-shift-schedule-builder": {
         slug: "work-shift-schedule-builder",
         title: "Work Shift Schedule Builder",
-        description: "Build rotating work shifts with ease. Perfect for managers scheduling morning, afternoon, and night shifts.",
+        description: "Free work shift schedule builder for managers. Build rotating shifts for morning, afternoon, and night crews.",
         longDescription: `Simplify your shift scheduling with our Free Work Shift Schedule Builder. Designed for managers, supervisors, and business owners who need to coordinate rotating work shifts across teams.
 
 Whether you're managing a 24/7 operation, a restaurant with split shifts, a healthcare facility with rotating nurses, or a manufacturing plant with day and night crews, this visual shift planner makes it easy to organize coverage and communicate schedules clearly.
@@ -383,10 +395,12 @@ Stop wrestling with spreadsheets and start building professional shift schedules
         icon: "Briefcase",
         settings: {
             weekStartsOnSunday: true,
-            use12HourFormat: true,
+            use12HourFormat: false,
             workingHoursStart: 0,  // 24/7 coverage view
             workingHoursEnd: 24,
             timeIncrement: 30,
+            showDates: true,
+            allowOverlap: false,
         },
         events: [
             // Sunday (Day 0) - Weekend skeleton crew
@@ -449,7 +463,7 @@ Stop wrestling with spreadsheets and start building professional shift schedules
     "homeschool-schedule-builder": {
         slug: "homeschool-schedule-builder",
         title: "Homeschool Schedule Builder",
-        description: "Design flexible homeschool schedules for your family. Perfect for home-educating parents who want a structured yet adaptable learning plan.",
+        description: "Free homeschool schedule builder for families. Design flexible learning routines that work for your home education journey.",
         longDescription: `Create the perfect homeschool schedule with our Free Homeschool Schedule Builder, designed specifically for home-educating families. Whether you're teaching one child or managing multiple grade levels, this visual planner helps you organize subjects, breaks, and activities into a balanced weekly routine.
 
 Our warm, family-friendly interface makes it easy to plan core subjects like Math, Reading, Science, and History alongside enrichment activities such as Art, Music, and Physical Education. Color-code different subjects for quick visual reference, and schedule regular breaks to keep your children engaged and refreshed.
@@ -460,11 +474,13 @@ Perfect for new homeschool families starting their journey or experienced educat
         category: "Education",
         icon: "Home",
         settings: {
-            weekStartsOnSunday: true,
+            weekStartsOnSunday: false,
             use12HourFormat: true,
             workingHoursStart: 8,
             workingHoursEnd: 16,
             timeIncrement: 15,
+            showDates: false,
+            allowOverlap: true,
         },
         events: [
             // Monday (day 1 when weekStartsOnSunday)
@@ -544,7 +560,7 @@ Perfect for new homeschool families starting their journey or experienced educat
     "cleaning-schedule-builder": {
         slug: "cleaning-schedule-builder",
         title: "Cleaning Schedule Builder",
-        description: "Create printable cleaning schedules and chore charts. Perfect for busy households, roommates, and anyone who wants a tidy home.",
+        description: "Free printable cleaning schedule builder for households. Create chore charts and cleaning routines for your family or roommates.",
         longDescription: `Keep your home sparkling clean with our Free Cleaning Schedule Builder. Whether you're a busy parent managing household chores, roommates splitting cleaning duties, or anyone who wants to stay on top of housework, this visual planner makes cleaning manageable and organized.
 
 Our checklist-style schedule builder helps you break down cleaning tasks into daily, weekly, and monthly routines. Assign specific tasks to different days, rotate responsibilities among household members, and never forget about those easy-to-miss deep cleaning jobs.
@@ -559,7 +575,9 @@ Perfect for establishing cleaning routines, teaching kids responsibility, coordi
             use12HourFormat: true,
             workingHoursStart: 7,
             workingHoursEnd: 21,
-            timeIncrement: 30,
+            timeIncrement: 60,
+            showDates: false,
+            allowOverlap: false,
         },
         events: [
             // Sunday (day 0) - Weekly deep clean
