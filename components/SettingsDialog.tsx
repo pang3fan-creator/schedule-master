@@ -61,6 +61,10 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
         updateSettings({ showDates: checked })
     }
 
+    const handleAllowOverlapChange = (checked: boolean) => {
+        updateSettings({ allowEventOverlap: checked })
+    }
+
     const handleReset = () => {
         resetSettings()
     }
@@ -153,6 +157,22 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
                         <Switch
                             checked={settings.showDates}
                             onCheckedChange={handleShowDatesChange}
+                        />
+                    </div>
+
+                    {/* Allow Event Overlap */}
+                    <div className="flex items-center justify-between">
+                        <div className="space-y-0.5">
+                            <Label className="text-sm font-medium text-gray-900">
+                                Allow overlapping events
+                            </Label>
+                            <p className="text-xs text-gray-500">
+                                When enabled, events can overlap in the calendar
+                            </p>
+                        </div>
+                        <Switch
+                            checked={settings.allowEventOverlap}
+                            onCheckedChange={handleAllowOverlapChange}
                         />
                     </div>
 

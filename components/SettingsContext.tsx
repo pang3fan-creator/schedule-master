@@ -11,6 +11,7 @@ export interface CalendarSettings {
   workingHoursStart: number    // 0-23 (default: 8)
   workingHoursEnd: number      // 0-23 (default: 17)
   showDates: boolean           // true = show dates, false = hide dates (for template mode)
+  allowEventOverlap: boolean   // true = allow overlapping events, false = enable conflict detection
 }
 
 const DEFAULT_SETTINGS: CalendarSettings = {
@@ -20,6 +21,7 @@ const DEFAULT_SETTINGS: CalendarSettings = {
   workingHoursStart: 8,        // 8 AM
   workingHoursEnd: 17,         // 5 PM
   showDates: true,             // Default: show dates
+  allowEventOverlap: false,    // Default: disallow overlap (conflict detection enabled)
 }
 
 const SETTINGS_STORAGE_KEY = "schedule-builder-settings"

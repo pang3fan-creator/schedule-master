@@ -3,7 +3,7 @@
 import { useState } from "react"
 import dynamic from "next/dynamic"
 import { Button } from "@/components/ui/button"
-import { Crown, ChevronDown, Briefcase, GraduationCap, Dumbbell, Palette, Sparkles } from "lucide-react"
+import { Crown, ChevronDown, Briefcase, GraduationCap, Dumbbell, Palette, Sparkles, Home, SprayCan } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
@@ -29,6 +29,8 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Dumbbell,
   Palette,
   Sparkles,
+  Home,
+  SprayCan,
 }
 
 const navLinks = [
@@ -138,9 +140,6 @@ export function Navbar() {
                                 PRO
                               </span>
                             )}
-                          </div>
-                          <div className="text-xs text-gray-500 truncate">
-                            {template.description}
                           </div>
                         </div>
                       </Link>

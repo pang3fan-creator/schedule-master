@@ -27,7 +27,9 @@ import {
   formatDateRange,
   getActualDay,
   DAY_NAMES_MONDAY_START,
-  DAY_NAMES_SUNDAY_START
+  DAY_NAMES_SUNDAY_START,
+  groupOverlappingEvents,
+  type GroupedEvent
 } from "@/lib/time-utils"
 import { useDragToCreate } from "@/hooks/useDragToCreate"
 import { useCurrentTime } from "@/hooks/useCurrentTime"
@@ -90,7 +92,7 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
 
   // Get settings from context
   const { settings } = useSettings()
-  const { weekStartsOnSunday, use12HourFormat, workingHoursStart, workingHoursEnd, timeIncrement, showDates } = settings
+  const { weekStartsOnSunday, use12HourFormat, workingHoursStart, workingHoursEnd, timeIncrement, showDates, allowEventOverlap } = settings
 
   // Generate hours array dynamically based on settings
   const hours = useMemo(() => {
@@ -122,6 +124,7 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
     maxHour: workingHoursEnd,
     events,  // Pass events for collision detection during drag
     timeIncrement,  // Pass time increment for drag snapping
+    allowEventOverlap,  // Skip collision detection when overlap is allowed
   })
 
   // Calculate the week's dates based on current week start
@@ -137,7 +140,8 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
     workingHoursStart,
     workingHoursEnd,
     weekDates,
-    weekStartsOnSunday
+    weekStartsOnSunday,
+    allowEventOverlap,  // Skip collision detection when overlap is allowed
   })
 
   // Current Time hook
@@ -230,7 +234,9 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
   }
 
   // Optimize: Group events by day index for weekly template mode (decoupled from date)
+  // Use groupOverlappingEvents for side-by-side display of overlapping events
   const eventsByDay = useMemo(() => {
+    // First collect events by day
     const map = new Map<number, Event[]>()
     events.forEach(event => {
       const dayKey = event.day
@@ -239,7 +245,12 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
       }
       map.get(dayKey)!.push(event)
     })
-    return map
+    // Apply groupOverlappingEvents to each day's events for overlap layout
+    const result = new Map<number, GroupedEvent[]>()
+    map.forEach((dayEvents, dayKey) => {
+      result.set(dayKey, groupOverlappingEvents(dayEvents))
+    })
+    return result
   }, [events])
 
   return (
@@ -481,10 +492,12 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
                         return (
                           <div
                             key={event.id}
-                            className={`group absolute left-0.5 right-0.5 md:left-1 md:right-1 z-10 rounded-md md:rounded-lg border-l-2 md:border-l-4 ${colorConfig.border} ${colorConfig.bg} backdrop-blur-sm overflow-hidden text-center flex flex-col ${isMobile ? 'justify-start' : displayMode === 'lg' || displayMode === 'xl' || displayMode === 'xxl' ? 'justify-center' : 'justify-between'} ${containerClasses} ${isDragging ? 'cursor-grabbing shadow-xl ring-2 ring-blue-400' : 'cursor-grab hover:shadow-lg hover:scale-[1.02] transition-all duration-200'}`}
+                            className={`group absolute z-10 rounded-md md:rounded-lg border-l-2 md:border-l-4 ${colorConfig.border} ${colorConfig.bg} backdrop-blur-sm overflow-hidden text-center flex flex-col ${isMobile ? 'justify-start' : displayMode === 'lg' || displayMode === 'xl' || displayMode === 'xxl' ? 'justify-center' : 'justify-between'} ${containerClasses} ${isDragging ? 'cursor-grabbing shadow-xl ring-2 ring-blue-400' : 'cursor-grab hover:shadow-lg hover:scale-[1.02] transition-all duration-200'}`}
                             style={{
                               top: position.top,
                               height: position.height,
+                              left: `${event.left}%`,
+                              width: `${event.width}%`,
                               transition: isDragging ? 'none' : 'top 0.1s ease-out, height 0.1s ease-out',
                               userSelect: 'none',
                             }}

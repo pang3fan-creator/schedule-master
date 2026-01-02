@@ -18,6 +18,7 @@ interface UseEventDragOptions {
     maxHour?: number
     events?: Event[]  // All events for collision detection
     timeIncrement?: number  // Snap to this many minutes (5, 15, 30, or 60)
+    allowEventOverlap?: boolean  // Skip collision detection when true
 }
 
 interface UseEventDragReturn {
@@ -46,6 +47,7 @@ export function useEventDrag({
     maxHour = 17,
     events = [],
     timeIncrement = 5,
+    allowEventOverlap = false,
 }: UseEventDragOptions): UseEventDragReturn {
     const [dragState, setDragState] = useState<DragState>({
         eventId: null,
@@ -70,16 +72,25 @@ export function useEventDrag({
     })
 
     // Calculate collision bounds when drag starts
+    // When allowEventOverlap is true, only bound by min/max hours
     const calculateCollisionBounds = useCallback((event: Event) => {
-        const sameDateEvents = events.filter(
-            (e) => e.id !== event.id && e.date === event.date
-        )
-
-        let minOffset = -Infinity
-        let maxOffset = Infinity
         const eventDurationMinutes = (event.endHour * 60 + event.endMinute) -
             (event.startHour * 60 + event.startMinute)
         const eventStartMinutes = event.startHour * 60 + event.startMinute
+
+        // Start with min/max hour bounds
+        let minOffset = (((minHour * 60) - eventStartMinutes) / 60) * rowHeight
+        let maxOffset = ((((maxHour * 60) - eventDurationMinutes) - eventStartMinutes) / 60) * rowHeight
+
+        // Skip event collision detection if overlap is allowed
+        if (allowEventOverlap) {
+            return { minOffset, maxOffset }
+        }
+
+        // Check collisions with other events on the same date
+        const sameDateEvents = events.filter(
+            (e) => e.id !== event.id && e.date === event.date
+        )
 
         for (const other of sameDateEvents) {
             const otherStartMinutes = other.startHour * 60 + other.startMinute
@@ -103,14 +114,8 @@ export function useEventDrag({
             }
         }
 
-        // Also clamp to min/max hours
-        const minStartOffsetMinutes = (minHour * 60) - eventStartMinutes
-        const maxStartOffsetMinutes = ((maxHour * 60) - eventDurationMinutes) - eventStartMinutes
-        minOffset = Math.max(minOffset, (minStartOffsetMinutes / 60) * rowHeight)
-        maxOffset = Math.min(maxOffset, (maxStartOffsetMinutes / 60) * rowHeight)
-
         return { minOffset, maxOffset }
-    }, [events, rowHeight, minHour, maxHour])
+    }, [events, rowHeight, minHour, maxHour, allowEventOverlap])
 
     // Handle mouse down on event card
     const handleMouseDown = useCallback((e: React.MouseEvent, event: Event) => {

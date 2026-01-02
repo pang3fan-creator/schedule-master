@@ -11,6 +11,7 @@ interface UseDragToCreateProps {
     workingHoursEnd?: number     // View end hour boundary
     weekDates?: Date[]           // Optional: week dates array for filtering (weekly view)
     weekStartsOnSunday?: boolean // Week start setting for dayIndex to day mapping
+    allowEventOverlap?: boolean  // Skip collision detection when true
 }
 
 interface CreatingEvent {
@@ -29,7 +30,8 @@ export function useDragToCreate({
     workingHoursStart = 0,
     workingHoursEnd = 24,
     weekDates,
-    weekStartsOnSunday = true
+    weekStartsOnSunday = true,
+    allowEventOverlap = false
 }: UseDragToCreateProps) {
     const [creatingEvent, setCreatingEvent] = useState<CreatingEvent | null>(null)
     const dragStartRef = useRef<{ y: number; originalClickY: number; hour: number; minute: number; dayIndex: number } | null>(null)
@@ -39,6 +41,7 @@ export function useDragToCreate({
     /**
      * Find collision boundaries for the current drag operation
      * Returns the nearest event boundary that would block the drag
+     * When allowEventOverlap is true, returns working hours boundaries only
      */
     const findCollisionBoundary = useCallback((
         originalStartTotal: number,
@@ -48,6 +51,11 @@ export function useDragToCreate({
         // Default boundaries from working hours
         let minStart = workingHoursStart * 60
         let maxEnd = workingHoursEnd * 60
+
+        // Skip event collision detection if overlap is allowed
+        if (allowEventOverlap) {
+            return { minStart, maxEnd }
+        }
 
         // Filter events for the specific day (weekly template mode - decoupled from date)
         const eventsToCheck = existingEvents.filter(event => event.day === dayIndex)
@@ -79,7 +87,7 @@ export function useDragToCreate({
         }
 
         return { minStart, maxEnd }
-    }, [existingEvents, workingHoursStart, workingHoursEnd])
+    }, [existingEvents, workingHoursStart, workingHoursEnd, allowEventOverlap])
 
     // Common function to calculate event times based on current Y position
     const calculateEventTimes = useCallback((clientY: number, isEnd: boolean = false) => {

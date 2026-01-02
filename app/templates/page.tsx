@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { PageLayout } from "@/components/PageLayout";
 import Link from "next/link";;
-import { Briefcase, GraduationCap, Dumbbell, Palette, Sparkles, Calendar, Crown, ChevronLeft, ChevronRight, AlertTriangle, Search } from "lucide-react";
+import { Briefcase, GraduationCap, Dumbbell, Palette, Sparkles, Calendar, Crown, ChevronLeft, ChevronRight, AlertTriangle, Search, Home, SprayCan } from "lucide-react";
 import { getAllTemplates } from "@/lib/templates";
 import { CategoryFilter } from "@/components/CategoryFilter";
 import { FAQSection } from "@/components/FAQSection";
@@ -23,6 +23,8 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
     Palette,
     Sparkles,
     Calendar,
+    Home,
+    SprayCan,
 };
 
 const TEMPLATES_PER_PAGE = 18;

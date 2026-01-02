@@ -92,7 +92,7 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
 
     // Get settings from context
     const { settings } = useSettings()
-    const { use12HourFormat, workingHoursStart, workingHoursEnd, timeIncrement, showDates } = settings
+    const { use12HourFormat, workingHoursStart, workingHoursEnd, timeIncrement, showDates, allowEventOverlap } = settings
 
     // Generate hours array dynamically based on settings
     const hours = useMemo(() => {
@@ -120,6 +120,7 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
         maxHour: workingHoursEnd,
         events,  // Pass events for collision detection during drag
         timeIncrement,  // Pass time increment for drag snapping
+        allowEventOverlap,  // Skip collision detection when overlap is allowed
     })
 
     // Filter events for the selected day using day index (weekly template mode - decoupled from date)
@@ -136,7 +137,8 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
         timeIncrement,
         existingEvents: dayEvents,  // Use filtered events for this day
         workingHoursStart,
-        workingHoursEnd
+        workingHoursEnd,
+        allowEventOverlap,  // Skip collision detection when overlap is allowed
     })
 
     // Current Time hook

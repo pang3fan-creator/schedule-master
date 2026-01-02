@@ -249,7 +249,8 @@ export default function ScheduleBuilderPage() {
   // skipConflictCheck is true when called from drag operations (conflict already prevented during drag)
   const handleEventUpdate = useCallback((updatedEvent: Event, skipConflictCheck?: boolean) => {
     // For drag operations, skip conflict check since we already prevented conflicts during drag
-    if (skipConflictCheck) {
+    // Also skip if allowEventOverlap is enabled
+    if (skipConflictCheck || settings.allowEventOverlap) {
       setEvents(prevEvents =>
         prevEvents.map(event =>
           event.id === updatedEvent.id ? updatedEvent : event
@@ -277,10 +278,20 @@ export default function ScheduleBuilderPage() {
         )
       )
     }
-  }, [events])
+  }, [events, settings.allowEventOverlap])
 
   // Handle adding a new event (with conflict detection)
   const handleAddEvent = useCallback((eventData: Omit<Event, "id">) => {
+    // Skip conflict check if allowEventOverlap is enabled
+    if (settings.allowEventOverlap) {
+      const newEvent: Event = {
+        ...eventData,
+        id: `event-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+      }
+      setEvents(prevEvents => [...prevEvents, newEvent])
+      return
+    }
+
     // Check for conflicts
     const conflicts = findConflictingEvents(eventData, events)
 
@@ -298,7 +309,7 @@ export default function ScheduleBuilderPage() {
       }
       setEvents(prevEvents => [...prevEvents, newEvent])
     }
-  }, [events])
+  }, [events, settings.allowEventOverlap])
 
   // Handle adding multiple events at once (from AI Autofill)
   const handleAddEvents = useCallback((eventsData: Omit<Event, "id">[]) => {
