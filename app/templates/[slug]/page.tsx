@@ -38,20 +38,6 @@ function generateJsonLd(slug: string) {
 
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.tryschedule.com'
 
-    // FAQPage Schema
-    const faqSchema = template.faq && template.faq.length > 0 ? {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": template.faq.map((item) => ({
-            "@type": "Question",
-            "name": item.question,
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": item.answer,
-            },
-        })),
-    } : null
-
     // WebApplication Schema
     const webAppSchema = {
         "@context": "https://schema.org",
@@ -88,7 +74,7 @@ function generateJsonLd(slug: string) {
         ],
     }
 
-    return { faqSchema, webAppSchema }
+    return { webAppSchema }
 }
 
 export default async function TemplatePage({ params }: TemplatePageProps) {
@@ -104,12 +90,6 @@ export default async function TemplatePage({ params }: TemplatePageProps) {
     return (
         <>
             {/* JSON-LD Structured Data */}
-            {jsonLd?.faqSchema && (
-                <script
-                    type="application/ld+json"
-                    dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd.faqSchema) }}
-                />
-            )}
             {jsonLd?.webAppSchema && (
                 <script
                     type="application/ld+json"

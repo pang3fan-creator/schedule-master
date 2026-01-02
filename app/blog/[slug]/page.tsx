@@ -69,6 +69,7 @@ function generateArticleSchema(post: ReturnType<typeof getPostBySlug>, slug: str
     if (!post) return null
 
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.tryschedule.com'
+    const dateStr = post.date ? new Date(post.date).toISOString() : undefined
 
     return {
         "@context": "https://schema.org",
@@ -79,6 +80,7 @@ function generateArticleSchema(post: ReturnType<typeof getPostBySlug>, slug: str
         "author": {
             "@type": "Person",
             "name": post.author,
+            "url": `${baseUrl}/blog`,
         },
         "publisher": {
             "@type": "Organization",
@@ -88,8 +90,8 @@ function generateArticleSchema(post: ReturnType<typeof getPostBySlug>, slug: str
                 "url": `${baseUrl}/icon.svg`,
             },
         },
-        "datePublished": post.date,
-        "dateModified": post.date,
+        "datePublished": dateStr,
+        "dateModified": dateStr,
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": `${baseUrl}/blog/${slug}`,
