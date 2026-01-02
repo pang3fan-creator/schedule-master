@@ -5,7 +5,7 @@ import dynamic from "next/dynamic"
 import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
-import { Menu, Crown, Briefcase, GraduationCap, Dumbbell, Palette, Sparkles, ChevronRight } from "lucide-react"
+import { Menu, Crown, Briefcase, GraduationCap, Dumbbell, Palette, Sparkles, ChevronRight, Home, SprayCan, Calendar } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
     Sheet,
@@ -35,6 +35,9 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
     Dumbbell,
     Palette,
     Sparkles,
+    Home,
+    SprayCan,
+    Calendar,
 }
 
 const navLinks = [
