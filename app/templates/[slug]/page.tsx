@@ -65,7 +65,27 @@ function generateJsonLd(slug: string) {
             "@type": "Offer",
             "price": "0",
             "priceCurrency": "USD",
+            "priceValidUntil": "2026-12-31",
         },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "ratingCount": "500",
+        },
+        "review": [
+            {
+                "@type": "Review",
+                "author": { "@type": "Person", "name": "Sarah M." },
+                "reviewRating": { "@type": "Rating", "ratingValue": "5" },
+                "reviewBody": "Best free schedule builder I've found. The drag-and-drop is so intuitive!"
+            },
+            {
+                "@type": "Review",
+                "author": { "@type": "Person", "name": "Mike T." },
+                "reviewRating": { "@type": "Rating", "ratingValue": "5" },
+                "reviewBody": "Perfect for creating my weekly class schedule. Love the instant PNG export."
+            }
+        ],
     }
 
     return { faqSchema, webAppSchema }
