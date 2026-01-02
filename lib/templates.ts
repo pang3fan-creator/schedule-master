@@ -364,6 +364,84 @@ Whether you're a busy professional trying to maximize productivity, a student ba
             },
         ],
     },
+
+    // ============================================
+    // PRD Keyword Template 6: Work Shift Schedule Builder
+    // ============================================
+    "work-shift-schedule-builder": {
+        slug: "work-shift-schedule-builder",
+        title: "Work Shift Schedule Builder",
+        description: "Build rotating work shifts with ease. Perfect for managers scheduling morning, afternoon, and night shifts.",
+        longDescription: `Simplify your shift scheduling with our Free Work Shift Schedule Builder. Designed for managers, supervisors, and business owners who need to coordinate rotating work shifts across teams.
+
+Whether you're managing a 24/7 operation, a restaurant with split shifts, a healthcare facility with rotating nurses, or a manufacturing plant with day and night crews, this visual shift planner makes it easy to organize coverage and communicate schedules clearly.
+
+Our intuitive schedule builder features color-coded shifts to distinguish between morning (day), afternoon (swing), and night (graveyard) shifts at a glance. The drag-and-drop interface lets you quickly assign employees, swap shifts, and ensure proper coverage. Highlight overnight shifts in purple for instant visibility, and export your completed roster to share with your team via email or print for the break room.
+
+Stop wrestling with spreadsheets and start building professional shift schedules in minutes.`,
+        category: "Business",
+        icon: "Briefcase",
+        settings: {
+            weekStartsOnSunday: true,
+            use12HourFormat: true,
+            workingHoursStart: 0,  // 24/7 coverage view
+            workingHoursEnd: 24,
+            timeIncrement: 30,
+        },
+        events: [
+            // Sunday (Day 0) - Weekend skeleton crew
+            createEvent("Night Shift - Team C", "Overnight coverage", 0, 0, 0, 8, 0, "purple"),
+            createEvent("Day Shift - Team A", "Morning crew", 0, 8, 0, 16, 0, "blue"),
+            createEvent("Swing Shift - Team B", "Afternoon/evening", 0, 16, 0, 24, 0, "orange"),
+            // Monday (Day 1)
+            createEvent("Night Shift - Team C", "Graveyard shift", 1, 0, 0, 8, 0, "purple"),
+            createEvent("Day Shift - Team A", "Morning operations", 1, 8, 0, 16, 0, "blue"),
+            createEvent("Swing Shift - Team B", "Afternoon/evening", 1, 16, 0, 24, 0, "orange"),
+            // Tuesday (Day 2) - Rotation example
+            createEvent("Night Shift - Team A", "Rotating to nights", 2, 0, 0, 8, 0, "purple"),
+            createEvent("Day Shift - Team B", "Rotating to days", 2, 8, 0, 16, 0, "blue"),
+            createEvent("Swing Shift - Team C", "Rotating to swing", 2, 16, 0, 24, 0, "orange"),
+            // Wednesday (Day 3)
+            createEvent("Night Shift - Team A", "Night crew", 3, 0, 0, 8, 0, "purple"),
+            createEvent("Day Shift - Team B", "Day crew", 3, 8, 0, 16, 0, "blue"),
+            createEvent("Swing Shift - Team C", "Evening crew", 3, 16, 0, 24, 0, "orange"),
+            // Thursday (Day 4)
+            createEvent("Night Shift - Team A", "Night crew", 4, 0, 0, 8, 0, "purple"),
+            createEvent("Day Shift - Team B", "Day crew", 4, 8, 0, 16, 0, "blue"),
+            createEvent("All-Hands Meeting", "Monthly team sync", 4, 14, 0, 15, 0, "red"),
+            createEvent("Swing Shift - Team C", "Evening crew", 4, 16, 0, 24, 0, "orange"),
+            // Friday (Day 5)
+            createEvent("Night Shift - Team B", "Rotating to nights", 5, 0, 0, 8, 0, "purple"),
+            createEvent("Day Shift - Team C", "Rotating to days", 5, 8, 0, 16, 0, "blue"),
+            createEvent("Swing Shift - Team A", "Rotating to swing", 5, 16, 0, 24, 0, "orange"),
+            // Saturday (Day 6) - Weekend
+            createEvent("Night Shift - Team B", "Weekend nights", 6, 0, 0, 8, 0, "purple"),
+            createEvent("Day Shift - Team C", "Weekend days", 6, 8, 0, 16, 0, "blue"),
+            createEvent("Swing Shift - Team A", "Weekend evenings", 6, 16, 0, 24, 0, "orange"),
+        ],
+        faq: [
+            {
+                question: "How do I set up rotating shifts for my team?",
+                answer: "Create shift blocks for each team and assign them to different time slots across the week. Use our drag-and-drop interface to rotate teams through day, swing, and night shifts. Color-code each team for instant visibility.",
+            },
+            {
+                question: "Can I highlight night shifts differently?",
+                answer: "Yes! We recommend using purple or dark colors for night/graveyard shifts to make them stand out. This helps employees quickly identify overnight assignments on the schedule.",
+            },
+            {
+                question: "How do I handle 24/7 shift coverage?",
+                answer: "Set the working hours to cover the full day (our shift template is pre-configured for this). Create three 8-hour shift blocks: Day (8am-4pm), Swing (4pm-12am), and Night (12am-8am) to ensure continuous coverage.",
+            },
+            {
+                question: "Can I create split shifts or irregular schedules?",
+                answer: "Absolutely! Simply create multiple shift blocks for the same employee on the same day. For example, a restaurant split shift might have blocks from 11am-2pm and 5pm-10pm.",
+            },
+            {
+                question: "How do I share the shift schedule with my team?",
+                answer: "Click Export to download your shift schedule as a PNG or JPG image. Share it via email, team messaging apps, or print it for the break room. Pro users can export as PDF for professional printing.",
+            },
+        ],
+    },
 }
 
 export function getTemplate(slug: string): TemplateData | undefined {

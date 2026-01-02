@@ -12,6 +12,9 @@ import "./globals.css"
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.tryschedule.com'),
+  alternates: {
+    canonical: "/",
+  },
   title: "TrySchedule | Free Online Schedule Builder (No Login Required)",
   description: "The easiest free online schedule builder. Drag-and-drop interface, instant PNG export. No signup needed. PDF & AI tools available for Pro users.",
   generator: "Next.js",

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { PageLayout } from "@/components/PageLayout";
 import Link from "next/link";;
-import { Briefcase, GraduationCap, Dumbbell, Palette, Sparkles, Calendar, Crown, ChevronLeft, ChevronRight, AlertTriangle } from "lucide-react";
+import { Briefcase, GraduationCap, Dumbbell, Palette, Sparkles, Calendar, Crown, ChevronLeft, ChevronRight, AlertTriangle, Search } from "lucide-react";
 import { getAllTemplates } from "@/lib/templates";
 import { CategoryFilter } from "@/components/CategoryFilter";
 import { FAQSection } from "@/components/FAQSection";
@@ -25,7 +25,7 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
     Calendar,
 };
 
-const TEMPLATES_PER_PAGE = 6;
+const TEMPLATES_PER_PAGE = 18;
 const templatesFAQs = [
     {
         question: "Are these templates really free?",
@@ -55,22 +55,58 @@ export default function TemplatesPage() {
     const [blankCanvasDialogOpen, setBlankCanvasDialogOpen] = useState(false);
     const [activeCategory, setActiveCategory] = useState("All");
     const [currentPage, setCurrentPage] = useState(1);
+    const [searchQuery, setSearchQuery] = useState("");
 
     // Get unique categories from templates
     const categories = ["All", ...Array.from(new Set(allTemplates.map(t => t.category)))];
 
-    // Filter templates by category
-    const filteredTemplates = activeCategory === "All"
-        ? allTemplates
-        : allTemplates.filter(t => t.category === activeCategory);
+    // Define blank template as a virtual template for search/filter purposes
+    const blankTemplate = {
+        title: "Blank Schedule",
+        description: "Start fresh with a blank schedule. Create your own custom layout from scratch.",
+        category: "Blank Canvas"
+    };
 
-    // Pagination logic
-    const totalPages = Math.ceil(filteredTemplates.length / TEMPLATES_PER_PAGE);
-    const startIndex = (currentPage - 1) * TEMPLATES_PER_PAGE;
-    const paginatedTemplates = filteredTemplates.slice(startIndex, startIndex + TEMPLATES_PER_PAGE);
+    // Check if blank template matches current filters
+    const blankTemplateMatches = (() => {
+        const matchesCategory = activeCategory === "All";
+        const matchesSearch = searchQuery.trim() === "" ||
+            blankTemplate.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            blankTemplate.description.toLowerCase().includes(searchQuery.toLowerCase());
+        return matchesCategory && matchesSearch;
+    })();
+
+    // Filter templates by category and search query
+    const filteredTemplates = allTemplates.filter(t => {
+        const matchesCategory = activeCategory === "All" || t.category === activeCategory;
+        const matchesSearch = searchQuery.trim() === "" ||
+            t.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            t.description.toLowerCase().includes(searchQuery.toLowerCase());
+        return matchesCategory && matchesSearch;
+    });
+
+    // Calculate total items including blank template if it matches
+    const totalFilteredItems = filteredTemplates.length + (blankTemplateMatches ? 1 : 0);
+
+    // Pagination logic - account for blank template in first position
+    const totalPages = Math.ceil(totalFilteredItems / TEMPLATES_PER_PAGE);
+
+    // Calculate which templates to show on current page
+    // Blank template takes first slot on page 1 if it matches
+    const showBlankOnThisPage = blankTemplateMatches && currentPage === 1;
+    const templatesPerPageAdjusted = showBlankOnThisPage ? TEMPLATES_PER_PAGE - 1 : TEMPLATES_PER_PAGE;
+    const startIndex = blankTemplateMatches
+        ? (currentPage === 1 ? 0 : (currentPage - 1) * TEMPLATES_PER_PAGE - 1)
+        : (currentPage - 1) * TEMPLATES_PER_PAGE;
+    const paginatedTemplates = filteredTemplates.slice(startIndex, startIndex + templatesPerPageAdjusted);
 
     const handleCategoryChange = (category: string) => {
         setActiveCategory(category);
+        setCurrentPage(1);
+    };
+
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchQuery(e.target.value);
         setCurrentPage(1);
     };
 
@@ -173,7 +209,7 @@ export default function TemplatesPage() {
                 />
 
                 {/* Category Filter */}
-                <div className="container mx-auto px-4 mb-12">
+                <div className="container mx-auto px-4 mb-8">
                     <CategoryFilter
                         categories={categories}
                         activeCategory={activeCategory}
@@ -181,12 +217,35 @@ export default function TemplatesPage() {
                     />
                 </div>
 
+                {/* Search Box */}
+                <div className="container mx-auto px-4 max-w-6xl mb-8">
+                    <div className="relative max-w-md mx-auto">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-5 text-gray-400" />
+                        <input
+                            type="text"
+                            placeholder="Search templates by keyword..."
+                            value={searchQuery}
+                            onChange={handleSearchChange}
+                            className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-200 bg-white text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                        />
+                        {searchQuery && (
+                            <button
+                                onClick={() => { setSearchQuery(""); setCurrentPage(1); }}
+                                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                                aria-label="Clear search"
+                            >
+                                ✕
+                            </button>
+                        )}
+                    </div>
+                </div>
+
                 {/* Templates Grid */}
                 <div className="container mx-auto px-4 max-w-6xl">
                     {paginatedTemplates.length > 0 || activeCategory === "All" ? (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {/* Blank Schedule Builder - First Card (only show on first page of "All" category) */}
-                            {activeCategory === "All" && currentPage === 1 && (
+                            {/* Blank Schedule Builder - Show when it matches search/filter criteria */}
+                            {showBlankOnThisPage && (
                                 <Link
                                     href="/"
                                     onClick={handleBlankCanvasClick}
