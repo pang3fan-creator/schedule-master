@@ -130,7 +130,7 @@ export function PricingPageClient({ productSchemas }: PricingPageClientProps) {
                 "Yes! Our free online schedule maker allows you to create, edit, and download schedules as images without paying a dime. You only pay if you need advanced features like PDF export or AI automation.",
         },
         {
-            question: "How does the AI schedule generator work?",
+            question: "How does the AI schedule builder work?",
             answer:
                 "Our AI scheduler analyzes your input (tasks, employees, time slots) and automatically generates an optimized roster, saving you hours of manual planning.",
         },
@@ -205,7 +205,7 @@ export function PricingPageClient({ productSchemas }: PricingPageClientProps) {
         },
         {
             category: "Advanced Power",
-            feature: "AI Schedule Generator",
+            feature: "AI Schedule Builder",
             free: false,
             pass: true,
             pro: true,

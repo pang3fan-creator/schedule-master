@@ -298,17 +298,17 @@ Whether you're planning a creative project, managing multiple clients, or organi
     },
 
     // ============================================
-    // PRD Keyword Template 5: AI Schedule Generator
+    // PRD Keyword Template 5: AI Schedule Builder
     // ============================================
-    "ai-schedule-generator": {
-        slug: "ai-schedule-generator",
-        title: "AI Schedule Generator",
+    "ai-schedule-builder": {
+        slug: "ai-schedule-builder",
+        title: "AI Schedule Builder",
         description: "Let AI help you create the perfect schedule. Smart scheduling powered by intelligent algorithms.",
-        longDescription: `Experience the future of scheduling with our AI-powered Schedule Generator. Using smart algorithms, this tool helps you create optimized schedules that balance work, rest, and personal time.
+        longDescription: `Experience the future of scheduling with our AI-powered Schedule Builder. Using smart algorithms, this tool helps you create optimized schedules that balance work, rest, and personal time.
 
 Simply tell the AI what you need to accomplish, and watch as it generates a color-coded weekly plan tailored to your needs. Our intelligent system considers factors like energy levels throughout the day, task dependencies, and the importance of breaks to create schedules that actually work.
 
-Whether you're a busy professional trying to maximize productivity, a student balancing classes and extracurriculars, or anyone looking for a smarter way to plan their week, our AI Schedule Generator takes the guesswork out of scheduling.`,
+Whether you're a busy professional trying to maximize productivity, a student balancing classes and extracurriculars, or anyone looking for a smarter way to plan their week, our AI Schedule Builder takes the guesswork out of scheduling.`,
         category: "AI",
         icon: "Sparkles",
         requiresPro: true,
@@ -347,7 +347,7 @@ Whether you're a busy professional trying to maximize productivity, a student ba
         ],
         faq: [
             {
-                question: "How does the AI schedule generator work?",
+                question: "How does the AI schedule builder work?",
                 answer: "Our AI uses smart algorithms to analyze optimal scheduling patterns. It considers factors like task complexity, energy levels throughout the day, and the importance of breaks to suggest a balanced schedule.",
             },
             {

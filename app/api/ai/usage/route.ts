@@ -4,6 +4,7 @@ import { isPro } from "@/lib/subscription";
 import { NextResponse } from "next/server";
 
 const MONTHLY_LIMIT = 100;
+const TRIAL_LIMIT = 3;
 
 /**
  * Get current month in YYYY-MM format
@@ -14,7 +15,7 @@ function getCurrentMonthYear(): string {
 }
 
 /**
- * GET: Get current user's AI usage for this month
+ * GET: Get current user's AI usage for this month (Pro) or lifetime trial (Free)
  */
 export async function GET() {
     try {
@@ -24,20 +25,12 @@ export async function GET() {
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
         }
 
-        // Check Pro status
-        const userIsPro = await isPro();
-        if (!userIsPro) {
-            return NextResponse.json(
-                {
-                    isPro: false,
-                    usage: { used: 0, limit: 0, remaining: 0 },
-                },
-                { status: 200 }
-            );
-        }
-
         const supabase = await createClient();
-        const monthYear = getCurrentMonthYear();
+        const userIsPro = await isPro();
+
+        // If Pro, track per month. If Free, track lifetime trial.
+        const monthYear = userIsPro ? getCurrentMonthYear() : "lifetime_trial";
+        const limit = userIsPro ? MONTHLY_LIMIT : TRIAL_LIMIT;
 
         const { data } = await supabase
             .from("ai_usage")
@@ -49,11 +42,11 @@ export async function GET() {
         const usedCount = data?.usage_count || 0;
 
         return NextResponse.json({
-            isPro: true,
+            isPro: userIsPro,
             usage: {
                 used: usedCount,
-                limit: MONTHLY_LIMIT,
-                remaining: Math.max(0, MONTHLY_LIMIT - usedCount),
+                limit: limit,
+                remaining: Math.max(0, limit - usedCount),
             },
         });
     } catch (error) {

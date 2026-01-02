@@ -44,9 +44,9 @@ title: Free Visual Schedule Builder | TrySchedule Templates
 
 description: Create beautiful, color-coded visual schedules. No signup needed to start. Perfect for visual learners and creative planners.
 
-## AI 生成器 (AI Generator)
+## AI 搭建器 (AI Schedule Builder)
 
-title: AI Schedule Generator | TrySchedule Templates
+title: AI Schedule Builder | TrySchedule Templates
 
 description: Let AI help you create the perfect schedule. Smart scheduling powered by intelligent algorithms for Pro users.
 

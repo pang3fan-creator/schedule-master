@@ -21,9 +21,11 @@ import {
     SheetTrigger,
 } from "@/components/ui/sheet"
 import { useSubscription } from "@/components/SubscriptionContext"
+import { useAuth } from "@clerk/nextjs"
 import { type Event } from "@/lib/types"
 
 // Dynamically import dialog components for code splitting
+const AuthModal = dynamic(() => import("@/components/AuthModal").then(m => m.AuthModal), { ssr: false })
 const CloudSaveDialog = dynamic(() => import("@/components/CloudSaveDialog").then(m => m.CloudSaveDialog), { ssr: false })
 const UpgradeModal = dynamic(() => import("@/components/UpgradeModal").then(m => m.UpgradeModal), { ssr: false })
 const CalendarSyncDialog = dynamic(() => import("@/components/CalendarSyncDialog").then(m => m.CalendarSyncDialog), { ssr: false })
@@ -75,6 +77,8 @@ export function MobileToolbar({
     onSettingsOpenChange,
     onAddEvents,
 }: MobileToolbarProps) {
+    const { userId } = useAuth()
+    const [showAuthModal, setShowAuthModal] = useState(false)
     const [showResetDialog, setShowResetDialog] = useState(false)
     const [showAddEventDialog, setShowAddEventDialog] = useState(false)
     const [showSettingsDialog, setShowSettingsDialog] = useState(false)
@@ -110,14 +114,13 @@ export function MobileToolbar({
         if (isLoading) return
         setShowMoreSheet(false)
 
-        // Paywall: Non-Pro users see upgrade modal
-        if (!isPro) {
-            setUpgradeFeature("AI Autofill")
-            setShowUpgradeModal(true)
+        // Requirement: Unauthenticated users see login prompt
+        if (!userId) {
+            setShowAuthModal(true)
             return
         }
 
-        // Pro users: Open AI Autofill dialog
+        // Authenticated users (Free or Pro) open the dialog
         setShowAIAutofillDialog(true)
     }
 
@@ -401,6 +404,13 @@ export function MobileToolbar({
                 weekStart={weekStart}
                 weekStartsOnSunday={weekStartsOnSunday}
                 onReset={onReset}
+            />
+
+            {/* Auth Modal */}
+            <AuthModal
+                open={showAuthModal}
+                onOpenChange={setShowAuthModal}
+                defaultMode="sign-up"
             />
         </>
     )

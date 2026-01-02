@@ -5,6 +5,7 @@ import { generateSchedule, type GeneratedEvent } from "@/lib/deepseek";
 import { NextResponse } from "next/server";
 
 const MONTHLY_LIMIT = 100;
+const TRIAL_LIMIT = 3;
 const MAX_PROMPT_LENGTH = 2000;
 
 /**
@@ -24,12 +25,6 @@ export async function POST(request: Request) {
 
         if (!userId) {
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-        }
-
-        // Check Pro status
-        const userIsPro = await isPro();
-        if (!userIsPro) {
-            return NextResponse.json({ error: "Pro subscription required" }, { status: 403 });
         }
 
         // Parse request body
@@ -55,7 +50,11 @@ export async function POST(request: Request) {
         }
 
         const supabase = await createClient();
-        const monthYear = getCurrentMonthYear();
+        const userIsPro = await isPro();
+
+        // Tiered logic: Pro gets monthly limit, Free gets lifetime trial
+        const monthYear = userIsPro ? getCurrentMonthYear() : "lifetime_trial";
+        const limit = userIsPro ? MONTHLY_LIMIT : TRIAL_LIMIT;
 
         // Check usage limit
         const { data: usageData } = await supabase
@@ -67,13 +66,15 @@ export async function POST(request: Request) {
 
         const currentUsage = usageData?.usage_count || 0;
 
-        if (currentUsage >= MONTHLY_LIMIT) {
+        if (currentUsage >= limit) {
             return NextResponse.json(
                 {
-                    error: "Monthly usage limit reached",
+                    error: userIsPro
+                        ? "Monthly usage limit reached"
+                        : "Trial limit reached. Please upgrade to Pro for more AI generations.",
                     code: "USAGE_LIMIT_EXCEEDED",
                     usage: currentUsage,
-                    limit: MONTHLY_LIMIT,
+                    limit: limit,
                 },
                 { status: 429 }
             );
@@ -128,8 +129,8 @@ export async function POST(request: Request) {
             settings,
             usage: {
                 used: currentUsage + 1,
-                limit: MONTHLY_LIMIT,
-                remaining: MONTHLY_LIMIT - currentUsage - 1,
+                limit: limit,
+                remaining: limit - currentUsage - 1,
             },
         });
     } catch (error) {

@@ -7,11 +7,13 @@ import { ViewModeToggle } from "@/components/ViewModeToggle"
 import { PlusCircle, Download, Settings, RotateCcw, Sparkles, Cloud, Calendar, HelpCircle } from "lucide-react"
 import { useSubscription } from "@/components/SubscriptionContext"
 import { ConfirmDialog } from "@/components/ConfirmDialog"
+import { useAuth } from "@clerk/nextjs"
 import { type Event } from "@/lib/types"
 import { EVENTS_STORAGE_KEY } from "@/lib/storage-keys"
 
 // Dynamically import dialog components for code splitting
 const AddEventDialog = dynamic(() => import("@/components/AddEventDialog").then(m => m.AddEventDialog), { ssr: false })
+const AuthModal = dynamic(() => import("@/components/AuthModal").then(m => m.AuthModal), { ssr: false })
 const UpgradeModal = dynamic(() => import("@/components/UpgradeModal").then(m => m.UpgradeModal), { ssr: false })
 const FeatureComingSoonModal = dynamic(() => import("@/components/FeatureComingSoonModal").then(m => m.FeatureComingSoonModal), { ssr: false })
 const SettingsDialog = dynamic(() => import("@/components/SettingsDialog").then(m => m.SettingsDialog), { ssr: false })
@@ -44,6 +46,8 @@ interface SidebarProps {
 }
 
 export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, weekStart, weekStartsOnSunday, onExport, showAddDialog, onAddDialogClose, initialData, showSettingsOpen, onSettingsOpenChange, onLoadSchedule, onAddEvents }: SidebarProps) {
+  const { userId } = useAuth()
+  const [showAuthModal, setShowAuthModal] = useState(false)
   const [showResetDialog, setShowResetDialog] = useState(false)
   const [showAddEventDialog, setShowAddEventDialog] = useState(false)
   const [showUpgradeModal, setShowUpgradeModal] = useState(false)
@@ -77,14 +81,14 @@ export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, weekS
   const handleAIAutofillClick = () => {
     if (isLoading) return
 
-    // Paywall: Non-Pro users see upgrade modal
-    if (!isPro) {
-      setUpgradeFeature("AI Autofill")
-      setShowUpgradeModal(true)
+    // Requirement: Unauthenticated users see login prompt
+    if (!userId) {
+      setShowAuthModal(true)
       return
     }
 
-    // Pro users: Open AI Autofill dialog
+    // Authenticated users (Free or Pro) open the dialog
+    // The dialog itself will handle tiered usage and trial paywalls
     setShowAIAutofillDialog(true)
   }
 
@@ -303,7 +307,6 @@ export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, weekS
 
 
 
-      {/* AI Autofill Dialog */}
       <AIAutofillDialog
         open={showAIAutofillDialog}
         onOpenChange={setShowAIAutofillDialog}
@@ -315,6 +318,13 @@ export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, weekS
         weekStart={weekStart}
         weekStartsOnSunday={weekStartsOnSunday}
         onReset={onReset}
+      />
+
+      {/* Auth Modal */}
+      <AuthModal
+        open={showAuthModal}
+        onOpenChange={setShowAuthModal}
+        defaultMode="sign-up"
       />
     </aside >
   )
