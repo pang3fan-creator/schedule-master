@@ -11,7 +11,10 @@ import {
     Info,
     Palette,
 } from "lucide-react"
-import { type EventColor, EVENT_COLORS } from "@/lib/types"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import React from "react"
+import { ICON_OPTIONS } from "@/lib/icons"
+import { type EventColor, type EventPriority, EVENT_COLORS, PRIORITY_COLORS } from "@/lib/types"
 
 // ============== Time Utility Functions ==============
 
@@ -130,6 +133,9 @@ interface EventFormProps {
 
     selectedColor: EventColor
     onColorChange: (color: EventColor) => void
+
+    selectedIcon?: string
+    onIconChange: (icon: string | undefined) => void
 }
 
 export function EventForm({
@@ -147,9 +153,19 @@ export function EventForm({
     onDescriptionChange,
     selectedColor,
     onColorChange,
+    selectedIcon,
+    onIconChange,
 }: EventFormProps) {
     // Available color options
     const colorOptions: EventColor[] = ['blue', 'green', 'red', 'yellow', 'purple', 'pink', 'orange', 'teal']
+
+    // Available icon options (preceded by a "None" option)
+    const iconOptions = [
+        { name: 'None', icon: Tag },
+        ...ICON_OPTIONS
+    ]
+
+    const SelectedIconComponent = iconOptions.find(i => i.name === selectedIcon)?.icon || Tag
 
     return (
         <div className="space-y-4 md:space-y-5">
@@ -160,13 +176,40 @@ export function EventForm({
                     <div className="flex items-center justify-center size-9 border border-gray-200 rounded-md bg-gray-50">
                         <Tag className="size-4 text-gray-500" />
                     </div>
-                    <Input
-                        placeholder="Event title"
-                        value={title}
-                        onChange={(e) => onTitleChange(e.target.value)}
-                        className="flex-1 h-9 border-gray-200 focus:border-blue-500 focus:ring-blue-500/20"
-                        style={{ wordBreak: 'break-all' }}
-                    />
+                    <div className="flex gap-2 flex-1">
+                        <Input
+                            placeholder="Event title"
+                            value={title}
+                            onChange={(e) => onTitleChange(e.target.value)}
+                            className="flex-1 h-9 border-gray-200 focus:border-blue-500 focus:ring-blue-500/20"
+                            style={{ wordBreak: 'break-all' }}
+                        />
+                        <Popover>
+                            <PopoverTrigger asChild>
+                                <Button
+                                    variant="outline"
+                                    size="icon"
+                                    className="size-9 shrink-0 border-gray-200 hover:bg-gray-50"
+                                >
+                                    <SelectedIconComponent className="size-4 text-gray-500" />
+                                </Button>
+                            </PopoverTrigger>
+                            <PopoverContent className="w-64 p-2 grid grid-cols-6 gap-1" align="end">
+                                {iconOptions.map((opt) => (
+                                    <Button
+                                        key={opt.name}
+                                        variant="ghost"
+                                        size="icon"
+                                        className={`size-9 rounded-md ${selectedIcon === opt.name || (!selectedIcon && opt.name === 'None') ? 'bg-blue-50 text-blue-600' : 'text-gray-500'}`}
+                                        onClick={() => onIconChange(opt.name === 'None' ? undefined : opt.name)}
+                                        title={opt.name}
+                                    >
+                                        <opt.icon className="size-4" />
+                                    </Button>
+                                ))}
+                            </PopoverContent>
+                        </Popover>
+                    </div>
                 </div>
             </div>
 

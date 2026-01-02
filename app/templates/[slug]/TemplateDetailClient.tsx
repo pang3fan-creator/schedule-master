@@ -218,10 +218,14 @@ export function TemplateDetailClient({ slug }: TemplateDetailClientProps) {
         localStorage.setItem(EVENTS_STORAGE_KEY, JSON.stringify(events))
 
         // Apply template settings if available
-        if (template.settings) {
+        if (template.settings || template.slug) {
             const currentSettings = localStorage.getItem(SETTINGS_STORAGE_KEY)
             const settings = currentSettings ? JSON.parse(currentSettings) : {}
-            const newSettings = { ...settings, ...template.settings }
+            const newSettings = {
+                ...settings,
+                ...template.settings,
+                activeTemplateSlug: template.slug
+            }
             localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(newSettings))
         }
 

@@ -5,6 +5,9 @@ import dynamic from "next/dynamic"
 import { Button } from "@/components/ui/button"
 import { ViewModeToggle } from "@/components/ViewModeToggle"
 import { PlusCircle, Download, Settings, RotateCcw, Sparkles, Cloud, Calendar, HelpCircle } from "lucide-react"
+import { useSettings } from "@/components/SettingsContext"
+import { TaskModeToggle } from "@/components/templates/TaskModeToggle"
+import { PriorityModeToggle } from "@/components/templates/PriorityModeToggle"
 import { useSubscription } from "@/components/SubscriptionContext"
 import { ConfirmDialog } from "@/components/ConfirmDialog"
 import { useAuth } from "@clerk/nextjs"
@@ -72,6 +75,7 @@ export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, weekS
   const [comingSoonDescription, setComingSoonDescription] = useState<React.ReactNode>(null)
 
   const { isPro, isLoading } = useSubscription()
+  const { settings, updateSettings } = useSettings()
 
   const handleExportClick = () => {
     // Open export dialog in parent
@@ -285,6 +289,14 @@ export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, weekS
           <Settings className="size-5" />
           Settings
         </Button>
+
+        <div className="h-px bg-gray-100 my-2 mx-1" />
+
+        {/* Task Mode Toggle - Only for Cleaning Template */}
+        {settings.activeTemplateSlug === 'cleaning-schedule-builder' && <TaskModeToggle />}
+
+        {/* Priority Mode Toggle - Only for AI Schedule Builder */}
+        {settings.activeTemplateSlug === 'ai-schedule-builder' && <PriorityModeToggle />}
 
         {/* Settings Dialog */}
         <SettingsDialog

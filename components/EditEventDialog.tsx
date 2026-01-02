@@ -40,6 +40,7 @@ export function EditEventDialog({
     const [endTime, setEndTime] = useState("09:00")
     const [description, setDescription] = useState("")
     const [selectedColor, setSelectedColor] = useState<EventColor>("blue")
+    const [selectedIcon, setSelectedIcon] = useState<string | undefined>(undefined)
 
     // Working hours boundaries (A and B)
     const minStartMinutes = settings.workingHoursStart * 60 // A in minutes
@@ -62,6 +63,7 @@ export function EditEventDialog({
             setEndTime(formatTimeString(event.endHour, event.endMinute))
             setDescription(event.description || "")
             setSelectedColor(event.color || "blue")
+            setSelectedIcon(event.icon)
         }
     }, [event, open])
 
@@ -91,6 +93,7 @@ export function EditEventDialog({
             endHour: end.hour,
             endMinute: end.minute,
             color: selectedColor,
+            icon: selectedIcon,
         })
 
         onOpenChange(false)
@@ -136,6 +139,8 @@ export function EditEventDialog({
                         onDescriptionChange={setDescription}
                         selectedColor={selectedColor}
                         onColorChange={setSelectedColor}
+                        selectedIcon={selectedIcon}
+                        onIconChange={setSelectedIcon}
                     />
                 </div>
 
@@ -151,3 +156,4 @@ export function EditEventDialog({
         </Dialog>
     )
 }
+

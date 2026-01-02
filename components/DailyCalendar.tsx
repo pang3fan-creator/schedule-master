@@ -3,7 +3,13 @@
 import * as React from "react"
 import { useRef, useState, useEffect, useMemo, useCallback } from "react"
 
-import { ChevronLeft, ChevronRight, X } from "lucide-react"
+import {
+    ChevronLeft,
+    ChevronRight,
+    X,
+    Check,
+} from "lucide-react"
+import { EVENT_ICON_MAP } from "@/lib/icons"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import {
@@ -12,7 +18,7 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover"
 
-import { type Event, EVENT_COLORS } from "@/lib/types"
+import { type Event, EVENT_COLORS, PRIORITY_COLORS } from "@/lib/types"
 // Utility functions imported from lib/time-utils
 import {
     formatDateString,
@@ -55,6 +61,9 @@ interface DailyCalendarProps {
 const dayNames = DAY_NAMES
 const shortDayNames = SHORT_DAY_NAMES
 
+// Icon map for event icons
+const eventIconMap = EVENT_ICON_MAP
+
 
 
 // Format date for header (e.g., "Thursday, December 11, 2025")
@@ -92,7 +101,7 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
 
     // Get settings from context
     const { settings } = useSettings()
-    const { use12HourFormat, workingHoursStart, workingHoursEnd, timeIncrement, showDates, allowEventOverlap } = settings
+    const { use12HourFormat, workingHoursStart, workingHoursEnd, timeIncrement, showDates, allowEventOverlap, taskModeEnabled, priorityModeEnabled } = settings
 
     // Generate hours array dynamically based on settings
     const hours = useMemo(() => {
@@ -517,8 +526,45 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                                                             </button>
                                                         )}
 
+                                                        {/* Priority Indicator - colored dot in top-left (only when priorityModeEnabled and event has priority) */}
+                                                        {priorityModeEnabled && event.priority && (
+                                                            <div className={`absolute top-1 left-1 size-2.5 rounded-full ${PRIORITY_COLORS[event.priority].dot}`} title={`${PRIORITY_COLORS[event.priority].label} Priority`} />
+                                                        )}
+
+                                                        {/* Checkbox for task mode events */}
+                                                        {taskModeEnabled && (
+                                                            <button
+                                                                type="button"
+                                                                className={`absolute top-1 ${event.priority ? 'left-5' : 'left-1'} size-5 flex items-center justify-center rounded border transition-colors ${event.task?.isCompleted ? 'bg-green-500 border-green-600 text-white' : 'bg-white border-gray-300 hover:border-gray-400'}`}
+                                                                onClick={(e) => {
+                                                                    e.stopPropagation()
+                                                                    if (onEventUpdate) {
+                                                                        onEventUpdate({
+                                                                            ...event,
+                                                                            task: {
+                                                                                isCheckable: true,
+                                                                                isCompleted: !event.task?.isCompleted
+                                                                            }
+                                                                        })
+                                                                    }
+                                                                }}
+                                                                onMouseDown={(e) => e.stopPropagation()}
+                                                                onTouchStart={(e) => e.stopPropagation()}
+                                                            >
+                                                                {event.task?.isCompleted && <Check className="size-3" />}
+                                                            </button>
+                                                        )}
+
                                                         {/* Title - always shown */}
-                                                        <p className={getTitleClasses(displayMode, colorConfig.text)}>{event.title}</p>
+                                                        <div className="flex items-center justify-center gap-1 overflow-hidden px-1">
+                                                            {event.icon && eventIconMap[event.icon] && (
+                                                                <span className="shrink-0 scale-75 md:scale-90">
+                                                                    {React.createElement(eventIconMap[event.icon], { className: `size-3 md:size-3.5 ${colorConfig.text}` })}
+                                                                </span>
+                                                            )}
+                                                            <p className={`${getTitleClasses(displayMode, colorConfig.text)} ${event.task?.isCompleted ? 'line-through opacity-60' : ''} truncate`}>{event.title}</p>
+                                                        </div>
+
 
                                                         {/* Description - conditional based on mode */}
                                                         {shouldShowDescription(displayMode, false) && event.description && (

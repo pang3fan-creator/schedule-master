@@ -12,6 +12,9 @@ export interface CalendarSettings {
   workingHoursEnd: number      // 0-23 (default: 17)
   showDates: boolean           // true = show dates, false = hide dates (for template mode)
   allowEventOverlap: boolean   // true = allow overlapping events, false = enable conflict detection
+  taskModeEnabled: boolean     // true = show checkboxes on all events (global task mode)
+  priorityModeEnabled: boolean // true = show priority indicators on all events
+  activeTemplateSlug?: string  // Track which template is currently active
 }
 
 const DEFAULT_SETTINGS: CalendarSettings = {
@@ -22,6 +25,9 @@ const DEFAULT_SETTINGS: CalendarSettings = {
   workingHoursEnd: 17,         // 5 PM
   showDates: true,             // Default: show dates
   allowEventOverlap: false,    // Default: disallow overlap (conflict detection enabled)
+  taskModeEnabled: false,      // Default: task mode disabled
+  priorityModeEnabled: false,  // Default: priority mode disabled
+  activeTemplateSlug: undefined, // Default: no active template
 }
 
 const SETTINGS_STORAGE_KEY = "schedule-builder-settings"

@@ -45,6 +45,7 @@ export function AddEventDialog({
     const [endTime, setEndTime] = useState("09:00")
     const [description, setDescription] = useState("")
     const [selectedColor, setSelectedColor] = useState<EventColor>("blue")
+    const [selectedIcon, setSelectedIcon] = useState<string | undefined>(undefined)
 
     // Working hours boundaries (A and B)
     const minStartMinutes = settings.workingHoursStart * 60 // A in minutes
@@ -104,6 +105,14 @@ export function AddEventDialog({
                 endHour: end.hour,
                 endMinute: end.minute,
                 color: selectedColor,
+                icon: selectedIcon,
+                // Add template-specific features automatically
+                ...(settings.activeTemplateSlug === 'cleaning-schedule-builder' ? {
+                    task: { isCheckable: true, isCompleted: false }
+                } : {}),
+                ...(settings.activeTemplateSlug === 'ai-schedule-builder' ? {
+                    priority: 'medium' as const
+                } : {}),
             })
         })
 
@@ -119,6 +128,7 @@ export function AddEventDialog({
         setEndTime("09:00")
         setDescription("")
         setSelectedColor("blue")
+        setSelectedIcon(undefined)
     }
 
     const handleCopy = () => {
@@ -174,6 +184,8 @@ export function AddEventDialog({
                         onDescriptionChange={setDescription}
                         selectedColor={selectedColor}
                         onColorChange={setSelectedColor}
+                        selectedIcon={selectedIcon}
+                        onIconChange={setSelectedIcon}
                     />
                 </div>
 

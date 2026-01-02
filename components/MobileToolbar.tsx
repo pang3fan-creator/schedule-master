@@ -30,6 +30,9 @@ const CloudSaveDialog = dynamic(() => import("@/components/CloudSaveDialog").the
 const UpgradeModal = dynamic(() => import("@/components/UpgradeModal").then(m => m.UpgradeModal), { ssr: false })
 const CalendarSyncDialog = dynamic(() => import("@/components/CalendarSyncDialog").then(m => m.CalendarSyncDialog), { ssr: false })
 import { EVENTS_STORAGE_KEY } from "@/lib/storage-keys"
+import { useSettings } from "@/components/SettingsContext"
+import { TaskModeToggle } from "@/components/templates/TaskModeToggle"
+import { PriorityModeToggle } from "@/components/templates/PriorityModeToggle"
 
 const AddEventDialog = dynamic(() => import("@/components/AddEventDialog").then(m => m.AddEventDialog), { ssr: false })
 const FeatureComingSoonModal = dynamic(() => import("@/components/FeatureComingSoonModal").then(m => m.FeatureComingSoonModal), { ssr: false })
@@ -104,6 +107,7 @@ export function MobileToolbar({
     const [showAIAutofillDialog, setShowAIAutofillDialog] = useState(false)
 
     const { isPro, isLoading } = useSubscription()
+    const { settings } = useSettings()
 
     const handleExportClick = () => {
         setShowMoreSheet(false)
@@ -186,15 +190,32 @@ export function MobileToolbar({
 
     return (
         <>
-            {/* Floating Add Button (FAB) - above the toolbar */}
-            <Button
-                size="lg"
-                className="fixed bottom-20 right-4 z-50 h-14 w-14 rounded-full bg-blue-600 hover:bg-blue-700 text-white shadow-lg p-0 md:hidden"
-                onClick={() => setShowAddEventDialog(true)}
-            >
-                <PlusCircle className="size-7" />
-                <span className="sr-only">Add Event</span>
-            </Button>
+            {/* Floating Template & Action Buttons - Stacked on the right */}
+            <div className="fixed bottom-20 right-4 z-50 flex flex-col gap-3 items-center md:hidden pointer-events-none">
+                {/* Task Mode Toggle - Only for Cleaning Template */}
+                {settings.activeTemplateSlug === 'cleaning-schedule-builder' && (
+                    <div className="pointer-events-auto">
+                        <TaskModeToggle variant="compact" />
+                    </div>
+                )}
+
+                {/* Priority Mode Toggle - Only for AI Schedule Builder */}
+                {settings.activeTemplateSlug === 'ai-schedule-builder' && (
+                    <div className="pointer-events-auto">
+                        <PriorityModeToggle variant="compact" />
+                    </div>
+                )}
+
+                {/* Floating Add Button (FAB) */}
+                <Button
+                    size="lg"
+                    className="size-14 rounded-full bg-blue-600 hover:bg-blue-700 text-white shadow-lg p-0 pointer-events-auto transition-all duration-300 active:scale-95"
+                    onClick={() => setShowAddEventDialog(true)}
+                >
+                    <PlusCircle className="size-7" />
+                    <span className="sr-only">Add Event</span>
+                </Button>
+            </div>
 
             {/* Fixed Bottom Toolbar */}
             <div className="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-gray-200 px-4 py-2 md:hidden safe-area-pb">

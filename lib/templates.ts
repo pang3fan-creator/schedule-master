@@ -1,4 +1,4 @@
-import type { Event, EventColor } from "@/lib/types"
+import type { Event, EventColor, EventPriority } from "@/lib/types"
 
 export interface TemplateData {
     slug: string
@@ -24,6 +24,16 @@ export interface TemplateData {
     }[]
 }
 
+// Extended event options for templates
+interface EventOptions {
+    icon?: string
+    task?: {
+        isCheckable: boolean
+        isCompleted: boolean
+    }
+    priority?: EventPriority
+}
+
 // Helper to create consistent event structure
 const createEvent = (
     title: string,
@@ -33,7 +43,8 @@ const createEvent = (
     startMinute: number,
     endHour: number,
     endMinute: number,
-    color: EventColor = "blue"
+    color: EventColor = "blue",
+    options?: EventOptions
 ): Omit<Event, "id" | "date"> => ({
     title,
     description,
@@ -42,7 +53,35 @@ const createEvent = (
     startMinute,
     endHour,
     endMinute,
-    color
+    color,
+    ...options
+})
+
+// Helper for checkable events (cleaning tasks, checklists)
+const createCheckableEvent = (
+    title: string,
+    description: string,
+    day: number,
+    startHour: number,
+    startMinute: number,
+    endHour: number,
+    endMinute: number,
+    color: EventColor = "blue",
+    icon?: string
+): Omit<Event, "id" | "date"> => ({
+    title,
+    description,
+    day,
+    startHour,
+    startMinute,
+    endHour,
+    endMinute,
+    color,
+    icon,
+    task: {
+        isCheckable: true,
+        isCompleted: false
+    }
 })
 
 export const TEMPLATES: Record<string, TemplateData> = {
@@ -71,8 +110,8 @@ Key benefits include drag-and-drop scheduling, color-coded shifts for easy visua
         },
         events: [
             // Monday (day 1 when weekStartsOnSunday)
-            createEvent("John - Morning", "Front desk", 1, 6, 0, 14, 0, "blue"),
-            createEvent("Sarah - Afternoon", "Front desk", 1, 14, 0, 22, 0, "green"),
+            createEvent("John - Morning", "Front desk", 1, 6, 0, 14, 0, "blue", { icon: "Briefcase" }),
+            createEvent("Sarah - Afternoon", "Front desk", 1, 14, 0, 22, 0, "green", { icon: "User" }),
             // Tuesday (day 2)
             createEvent("Mike - Morning", "Warehouse", 2, 6, 0, 14, 0, "orange"),
             createEvent("Lisa - Afternoon", "Warehouse", 2, 14, 0, 22, 0, "purple"),
@@ -131,10 +170,10 @@ Use color coding to differentiate between subjects, add room numbers and profess
         },
         events: [
             // Monday (day 1 when weekStartsOnSunday)
-            createEvent("Calculus 101", "Room 201 - Prof. Smith", 1, 8, 0, 9, 30, "blue"),
-            createEvent("Physics Lab", "Science Building 305", 1, 10, 0, 12, 0, "green"),
-            createEvent("Lunch Break", "Student Center", 1, 12, 0, 13, 0, "yellow"),
-            createEvent("English Composition", "Humanities 102", 1, 14, 0, 15, 30, "purple"),
+            createEvent("Calculus 101", "Room 201 - Prof. Smith", 1, 8, 0, 9, 30, "blue", { icon: "Calculator" }),
+            createEvent("Physics Lab", "Science Building 305", 1, 10, 0, 12, 0, "green", { icon: "FlaskConical" }),
+            createEvent("Lunch Break", "Student Center", 1, 12, 0, 13, 0, "yellow", { icon: "Coffee" }),
+            createEvent("English Composition", "Humanities 102", 1, 14, 0, 15, 30, "purple", { icon: "PenTool" }),
             // Tuesday (day 2)
             createEvent("Chemistry", "Science Building 201", 2, 9, 0, 10, 30, "orange"),
             createEvent("Study Group", "Library", 2, 11, 0, 12, 0, "teal"),
@@ -201,9 +240,9 @@ Perfect for beginners creating their first workout plan or experienced athletes 
             createEvent("Rest Day", "Active recovery, stretching", 0, 8, 0, 9, 0, "teal"),
             createEvent("Light Walk", "30 min outdoor walk", 0, 17, 0, 17, 30, "green"),
             // Monday
-            createEvent("Chest & Triceps", "Bench press, dips, pushups", 1, 6, 0, 7, 30, "red"),
-            createEvent("Protein Meal", "Post-workout nutrition", 1, 8, 0, 8, 30, "yellow"),
-            createEvent("Evening Cardio", "20 min light jog", 1, 18, 0, 18, 30, "green"),
+            createEvent("Chest & Triceps", "Bench press, dips, pushups", 1, 6, 0, 7, 30, "red", { icon: "Dumbbell" }),
+            createEvent("Protein Meal", "Post-workout nutrition", 1, 8, 0, 8, 30, "yellow", { icon: "Zap" }),
+            createEvent("Evening Cardio", "20 min light jog", 1, 18, 0, 18, 30, "green", { icon: "Activity" }),
             // Tuesday
             createEvent("Back & Biceps", "Pull-ups, rows, curls", 2, 6, 0, 7, 30, "blue"),
             createEvent("Protein Meal", "Post-workout nutrition", 2, 8, 0, 8, 30, "yellow"),
@@ -334,28 +373,28 @@ Whether you're a busy professional trying to maximize productivity, a student ba
         events: [
             // AI-optimized schedule example
             // Monday (day 1 when weekStartsOnSunday) - High energy morning tasks
-            createEvent("Deep Work Block", "AI suggests: tackle complex tasks", 1, 9, 0, 11, 30, "blue"),
-            createEvent("Break", "AI suggests: step away from screen", 1, 11, 30, 12, 0, "teal"),
+            createEvent("Deep Work Block", "AI suggests: tackle complex tasks", 1, 9, 0, 11, 30, "blue", { priority: "high" }),
+            createEvent("Break", "AI suggests: step away from screen", 1, 11, 30, 12, 0, "teal", { priority: "low" }),
             createEvent("Lunch", "AI suggests: healthy meal", 1, 12, 0, 13, 0, "yellow"),
-            createEvent("Meetings", "AI suggests: schedule calls post-lunch", 1, 14, 0, 16, 0, "purple"),
+            createEvent("Meetings", "AI suggests: schedule calls post-lunch", 1, 14, 0, 16, 0, "purple", { priority: "medium" }),
             // Tuesday (day 2)
-            createEvent("Creative Tasks", "AI suggests: morning creativity peak", 2, 9, 0, 12, 0, "pink"),
+            createEvent("Creative Tasks", "AI suggests: morning creativity peak", 2, 9, 0, 12, 0, "pink", { priority: "high" }),
             createEvent("Lunch", "AI suggests: light meal", 2, 12, 0, 13, 0, "yellow"),
-            createEvent("Admin Work", "AI suggests: low-energy task time", 2, 14, 0, 16, 0, "green"),
+            createEvent("Admin Work", "AI suggests: low-energy task time", 2, 14, 0, 16, 0, "green", { priority: "low" }),
             // Wednesday (day 3)
-            createEvent("Deep Work Block", "AI suggests: mid-week focus", 3, 9, 0, 12, 0, "blue"),
+            createEvent("Deep Work Block", "AI suggests: mid-week focus", 3, 9, 0, 12, 0, "blue", { priority: "high" }),
             createEvent("Lunch", "AI suggests: social lunch", 3, 12, 0, 13, 0, "yellow"),
-            createEvent("Team Sync", "AI suggests: collaboration time", 3, 14, 0, 15, 0, "orange"),
-            createEvent("Learning", "AI suggests: skill development", 3, 15, 0, 17, 0, "red"),
+            createEvent("Team Sync", "AI suggests: collaboration time", 3, 14, 0, 15, 0, "orange", { priority: "medium" }),
+            createEvent("Learning", "AI suggests: skill development", 3, 15, 0, 17, 0, "red", { priority: "medium" }),
             // Thursday (day 4)
-            createEvent("Project Work", "AI suggests: execution day", 4, 9, 0, 12, 0, "blue"),
+            createEvent("Project Work", "AI suggests: execution day", 4, 9, 0, 12, 0, "blue", { priority: "high" }),
             createEvent("Lunch", "AI suggests: meal prep day", 4, 12, 0, 13, 0, "yellow"),
-            createEvent("Review & Plan", "AI suggests: mid-week check", 4, 14, 0, 15, 30, "purple"),
+            createEvent("Review & Plan", "AI suggests: mid-week check", 4, 14, 0, 15, 30, "purple", { priority: "medium" }),
             // Friday (day 5)
-            createEvent("Priority Tasks", "AI suggests: finish key items", 5, 9, 0, 12, 0, "blue"),
+            createEvent("Priority Tasks", "AI suggests: finish key items", 5, 9, 0, 12, 0, "blue", { priority: "high" }),
             createEvent("Lunch", "AI suggests: team lunch", 5, 12, 0, 13, 0, "yellow"),
-            createEvent("Week Review", "AI suggests: reflect & plan", 5, 14, 0, 15, 0, "orange"),
-            createEvent("Flex Time", "AI suggests: catch up or early finish", 5, 15, 0, 17, 0, "teal"),
+            createEvent("Week Review", "AI suggests: reflect & plan", 5, 14, 0, 15, 0, "orange", { priority: "medium" }),
+            createEvent("Flex Time", "AI suggests: catch up or early finish", 5, 15, 0, 17, 0, "teal", { priority: "low" }),
         ],
         faq: [
             {
@@ -486,7 +525,7 @@ Perfect for new homeschool families starting their journey or experienced educat
             // Monday (day 1 when weekStartsOnSunday)
             createEvent("Morning Circle", "Calendar, weather, read-aloud", 1, 8, 30, 9, 0, "yellow"),
             createEvent("Math", "Lesson + practice problems", 1, 9, 0, 10, 0, "blue"),
-            createEvent("Snack Break", "Healthy snack time", 1, 10, 0, 10, 15, "teal"),
+            createEvent("Snack Break", "Healthy snack time", 1, 10, 0, 10, 30, "teal"),
             createEvent("Reading", "Phonics / literature", 1, 10, 15, 11, 15, "green"),
             createEvent("Science", "Hands-on experiments", 1, 11, 15, 12, 0, "orange"),
             createEvent("Lunch & Free Play", "Family lunch break", 1, 12, 0, 13, 0, "pink"),
@@ -495,7 +534,7 @@ Perfect for new homeschool families starting their journey or experienced educat
             // Tuesday (day 2)
             createEvent("Morning Circle", "Daily routine", 2, 8, 30, 9, 0, "yellow"),
             createEvent("Math", "New concepts + review", 2, 9, 0, 10, 0, "blue"),
-            createEvent("Snack Break", "Movement break", 2, 10, 0, 10, 15, "teal"),
+            createEvent("Snack Break", "Movement break", 2, 10, 0, 10, 30, "teal"),
             createEvent("Reading", "Silent reading time", 2, 10, 15, 11, 15, "green"),
             createEvent("History", "Story of the World", 2, 11, 15, 12, 0, "orange"),
             createEvent("Lunch & Free Play", "Outdoor time", 2, 12, 0, 13, 0, "pink"),
@@ -504,7 +543,7 @@ Perfect for new homeschool families starting their journey or experienced educat
             // Wednesday (day 3)
             createEvent("Morning Circle", "Poetry memorization", 3, 8, 30, 9, 0, "yellow"),
             createEvent("Math", "Games + worksheets", 3, 9, 0, 10, 0, "blue"),
-            createEvent("Snack Break", "Reading corner", 3, 10, 0, 10, 15, "teal"),
+            createEvent("Snack Break", "Reading corner", 3, 10, 0, 10, 30, "teal"),
             createEvent("Reading", "Book discussion", 3, 10, 15, 11, 15, "green"),
             createEvent("Nature Study", "Outdoor exploration", 3, 11, 15, 12, 30, "orange"),
             createEvent("Lunch & Free Play", "Picnic if weather permits", 3, 12, 30, 13, 30, "pink"),
@@ -512,7 +551,7 @@ Perfect for new homeschool families starting their journey or experienced educat
             // Thursday (day 4)
             createEvent("Morning Circle", "Calendar activities", 4, 8, 30, 9, 0, "yellow"),
             createEvent("Math", "Problem solving", 4, 9, 0, 10, 0, "blue"),
-            createEvent("Snack Break", "Stretch break", 4, 10, 0, 10, 15, "teal"),
+            createEvent("Snack Break", "Stretch break", 4, 10, 0, 10, 30, "teal"),
             createEvent("Reading", "Reading aloud together", 4, 10, 15, 11, 15, "green"),
             createEvent("Geography", "Map skills + culture", 4, 11, 15, 12, 0, "orange"),
             createEvent("Lunch & Free Play", "Indoor games", 4, 12, 0, 13, 0, "pink"),
@@ -521,7 +560,7 @@ Perfect for new homeschool families starting their journey or experienced educat
             // Friday (day 5)
             createEvent("Morning Circle", "Week review", 5, 8, 30, 9, 0, "yellow"),
             createEvent("Math", "Math games / review", 5, 9, 0, 10, 0, "blue"),
-            createEvent("Snack Break", "Celebration snack", 5, 10, 0, 10, 15, "teal"),
+            createEvent("Snack Break", "Celebration snack", 5, 10, 0, 10, 30, "teal"),
             createEvent("Reading", "Free choice reading", 5, 10, 15, 11, 0, "green"),
             createEvent("Show & Tell", "Share what we learned", 5, 11, 0, 11, 30, "orange"),
             createEvent("Field Trip / Co-op", "Group activities", 5, 12, 0, 15, 0, "pink"),
@@ -581,34 +620,34 @@ Perfect for establishing cleaning routines, teaching kids responsibility, coordi
         },
         events: [
             // Sunday (day 0) - Weekly deep clean
-            createEvent("Weekly Laundry", "Wash, dry, fold all clothes", 0, 9, 0, 11, 0, "blue"),
-            createEvent("Change Bed Sheets", "All bedrooms", 0, 11, 0, 12, 0, "purple"),
-            createEvent("Meal Prep & Kitchen Deep Clean", "Clean appliances, organize fridge", 0, 14, 0, 16, 0, "green"),
+            createCheckableEvent("Weekly Laundry", "Wash, dry, fold all clothes", 0, 9, 0, 11, 0, "blue", "WashingMachine"),
+            createCheckableEvent("Change Bed Sheets", "All bedrooms", 0, 11, 0, 12, 0, "purple", "Bed"),
+            createCheckableEvent("Meal Prep & Kitchen Deep Clean", "Clean appliances, organize fridge", 0, 14, 0, 16, 0, "green", "ChefHat"),
             // Monday (day 1)
-            createEvent("Morning Tidy", "Make beds, quick pickup", 1, 7, 0, 7, 30, "yellow"),
-            createEvent("Kitchen Clean", "Dishes, wipe counters, sweep", 1, 19, 0, 19, 30, "green"),
-            createEvent("Take Out Trash", "All rooms", 1, 20, 0, 20, 15, "red"),
+            createCheckableEvent("Morning Tidy", "Make beds, quick pickup", 1, 7, 0, 7, 30, "yellow"),
+            createCheckableEvent("Kitchen Clean", "Dishes, wipe counters, sweep", 1, 19, 0, 19, 30, "green", "Utensils"),
+            createCheckableEvent("Take Out Trash", "All rooms", 1, 20, 0, 20, 30, "red", "Trash2"),
             // Tuesday (day 2)
-            createEvent("Morning Tidy", "Make beds, quick pickup", 2, 7, 0, 7, 30, "yellow"),
-            createEvent("Bathroom Clean", "Scrub toilet, sink, mirror", 2, 19, 0, 19, 45, "teal"),
-            createEvent("Vacuum Living Room", "Floors and rugs", 2, 20, 0, 20, 30, "orange"),
+            createCheckableEvent("Morning Tidy", "Make beds, quick pickup", 2, 7, 0, 7, 30, "yellow"),
+            createCheckableEvent("Bathroom Clean", "Scrub toilet, sink, mirror", 2, 19, 0, 19, 45, "teal", "Bath"),
+            createCheckableEvent("Vacuum Living Room", "Floors and rugs", 2, 20, 0, 20, 30, "orange"),
             // Wednesday (day 3)
-            createEvent("Morning Tidy", "Make beds, quick pickup", 3, 7, 0, 7, 30, "yellow"),
-            createEvent("Kitchen Clean", "Dishes, wipe counters", 3, 19, 0, 19, 30, "green"),
-            createEvent("Dust Surfaces", "Living room & bedrooms", 3, 20, 0, 20, 30, "pink"),
+            createCheckableEvent("Morning Tidy", "Make beds, quick pickup", 3, 7, 0, 7, 30, "yellow"),
+            createCheckableEvent("Kitchen Clean", "Dishes, wipe counters", 3, 19, 0, 19, 30, "green", "Utensils"),
+            createCheckableEvent("Dust Surfaces", "Living room & bedrooms", 3, 20, 0, 20, 30, "pink"),
             // Thursday (day 4)
-            createEvent("Morning Tidy", "Make beds, quick pickup", 4, 7, 0, 7, 30, "yellow"),
-            createEvent("Mop Floors", "Kitchen & bathroom", 4, 19, 0, 19, 45, "blue"),
-            createEvent("Wipe Appliances", "Microwave, stovetop", 4, 20, 0, 20, 30, "green"),
+            createCheckableEvent("Morning Tidy", "Make beds, quick pickup", 4, 7, 0, 7, 30, "yellow"),
+            createCheckableEvent("Mop Floors", "Kitchen & bathroom", 4, 19, 0, 19, 45, "blue"),
+            createCheckableEvent("Wipe Appliances", "Microwave, stovetop", 4, 20, 0, 20, 30, "green"),
             // Friday (day 5)
-            createEvent("Morning Tidy", "Make beds, quick pickup", 5, 7, 0, 7, 30, "yellow"),
-            createEvent("Quick Bathroom Wipe", "Sink and mirror", 5, 19, 0, 19, 15, "teal"),
-            createEvent("Vacuum Bedrooms", "All bedroom floors", 5, 19, 30, 20, 0, "orange"),
-            createEvent("Take Out Trash", "Trash day prep", 5, 20, 0, 20, 15, "red"),
+            createCheckableEvent("Morning Tidy", "Make beds, quick pickup", 5, 7, 0, 7, 30, "yellow"),
+            createCheckableEvent("Quick Bathroom Wipe", "Sink and mirror", 5, 19, 0, 19, 30, "teal"),
+            createCheckableEvent("Vacuum Bedrooms", "All bedroom floors", 5, 19, 30, 20, 0, "orange"),
+            createCheckableEvent("Take Out Trash", "Trash day prep", 5, 20, 0, 20, 30, "red", "Trash2"),
             // Saturday (day 6)
-            createEvent("Deep Clean Task", "Rotate: windows, baseboards, etc.", 6, 10, 0, 11, 30, "purple"),
-            createEvent("Organize & Declutter", "One room focus", 6, 14, 0, 15, 30, "pink"),
-            createEvent("Grocery & Restock", "Cleaning supplies check", 6, 16, 0, 17, 0, "blue"),
+            createCheckableEvent("Deep Clean Task", "Rotate: windows, baseboards, etc.", 6, 10, 0, 11, 30, "purple", "Sparkles"),
+            createCheckableEvent("Organize & Declutter", "One room focus", 6, 14, 0, 15, 30, "pink", "FolderOpen"),
+            createCheckableEvent("Grocery & Restock", "Cleaning supplies check", 6, 16, 0, 17, 0, "blue", "ShoppingCart"),
         ],
         faq: [
             {
