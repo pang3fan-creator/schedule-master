@@ -127,7 +127,7 @@ export function AIAutofillDialog({
 
             if (!res.ok) {
                 if (data.code === "USAGE_LIMIT_EXCEEDED") {
-                    setError(`You've reached the monthly limit of ${data.limit || 30} AI generations. Limit resets next month.`)
+                    setError(`You've reached the monthly limit of ${data.limit || 100} AI generations. Limit resets next month.`)
                 } else {
                     setError(data.error || "Failed to generate schedule")
                 }

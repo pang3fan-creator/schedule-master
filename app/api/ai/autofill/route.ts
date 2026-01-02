@@ -4,7 +4,7 @@ import { isPro } from "@/lib/subscription";
 import { generateSchedule, type GeneratedEvent } from "@/lib/deepseek";
 import { NextResponse } from "next/server";
 
-const MONTHLY_LIMIT = 30;
+const MONTHLY_LIMIT = 100;
 const MAX_PROMPT_LENGTH = 2000;
 
 /**
