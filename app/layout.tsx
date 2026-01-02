@@ -120,8 +120,8 @@ export default function RootLayout({
     },
     "aggregateRating": {
       "@type": "AggregateRating",
-      "ratingValue": "4.8",
-      "ratingCount": "500",
+      "ratingValue": "4.7",
+      "ratingCount": "526",
     },
     "review": [
       {
