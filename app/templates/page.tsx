@@ -4,17 +4,15 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { PageLayout } from "@/components/PageLayout";
 import Link from "next/link";;
-import { Briefcase, GraduationCap, Dumbbell, Palette, Sparkles, Calendar, Crown, ChevronLeft, ChevronRight, AlertTriangle, Search, Home, SprayCan } from "lucide-react";
+import { Briefcase, GraduationCap, Dumbbell, Palette, Sparkles, Crown, ChevronLeft, ChevronRight, Search, Home, SprayCan, HardHat } from "lucide-react";
 import { getAllTemplates } from "@/lib/templates";
 import { CategoryFilter } from "@/components/CategoryFilter";
 import { FAQSection } from "@/components/FAQSection";
 import { PageHero } from "@/components/PageHero";
 import { Button } from "@/components/ui/button";
-import { ConfirmDialog } from "@/components/ConfirmDialog";
+import { Input } from "@/components/ui/input";
 
 import { Breadcrumb } from "@/components/Breadcrumb";
-
-import { EVENTS_STORAGE_KEY, SETTINGS_STORAGE_KEY } from "@/lib/storage-keys"
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
     Briefcase,
@@ -22,9 +20,9 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
     Dumbbell,
     Palette,
     Sparkles,
-    Calendar,
     Home,
     SprayCan,
+    HardHat,
 };
 
 const TEMPLATES_PER_PAGE = 18;
@@ -54,29 +52,12 @@ const templatesFAQs = [
 export default function TemplatesPage() {
     const router = useRouter();
     const allTemplates = getAllTemplates();
-    const [blankCanvasDialogOpen, setBlankCanvasDialogOpen] = useState(false);
     const [activeCategory, setActiveCategory] = useState("All");
     const [currentPage, setCurrentPage] = useState(1);
     const [searchQuery, setSearchQuery] = useState("");
 
     // Get unique categories from templates
     const categories = ["All", ...Array.from(new Set(allTemplates.map(t => t.category)))];
-
-    // Define blank template as a virtual template for search/filter purposes
-    const blankTemplate = {
-        title: "Blank Schedule Builder",
-        description: "Start fresh with a blank schedule. Create your own custom layout from scratch.",
-        category: "Blank Canvas"
-    };
-
-    // Check if blank template matches current filters
-    const blankTemplateMatches = (() => {
-        const matchesCategory = activeCategory === "All";
-        const matchesSearch = searchQuery.trim() === "" ||
-            blankTemplate.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            blankTemplate.description.toLowerCase().includes(searchQuery.toLowerCase());
-        return matchesCategory && matchesSearch;
-    })();
 
     // Filter templates by category and search query
     const filteredTemplates = allTemplates.filter(t => {
@@ -87,20 +68,10 @@ export default function TemplatesPage() {
         return matchesCategory && matchesSearch;
     });
 
-    // Calculate total items including blank template if it matches
-    const totalFilteredItems = filteredTemplates.length + (blankTemplateMatches ? 1 : 0);
-
-    // Pagination logic - account for blank template in first position
-    const totalPages = Math.ceil(totalFilteredItems / TEMPLATES_PER_PAGE);
-
-    // Calculate which templates to show on current page
-    // Blank template takes first slot on page 1 if it matches
-    const showBlankOnThisPage = blankTemplateMatches && currentPage === 1;
-    const templatesPerPageAdjusted = showBlankOnThisPage ? TEMPLATES_PER_PAGE - 1 : TEMPLATES_PER_PAGE;
-    const startIndex = blankTemplateMatches
-        ? (currentPage === 1 ? 0 : (currentPage - 1) * TEMPLATES_PER_PAGE - 1)
-        : (currentPage - 1) * TEMPLATES_PER_PAGE;
-    const paginatedTemplates = filteredTemplates.slice(startIndex, startIndex + templatesPerPageAdjusted);
+    // Pagination logic
+    const totalPages = Math.ceil(filteredTemplates.length / TEMPLATES_PER_PAGE);
+    const startIndex = (currentPage - 1) * TEMPLATES_PER_PAGE;
+    const paginatedTemplates = filteredTemplates.slice(startIndex, startIndex + TEMPLATES_PER_PAGE);
 
     const handleCategoryChange = (category: string) => {
         setActiveCategory(category);
@@ -117,43 +88,6 @@ export default function TemplatesPage() {
             setCurrentPage(page);
             window.scrollTo({ top: 200, behavior: 'smooth' });
         }
-    };
-
-    // Removed paywall check on template link click - users can now view all templates
-    // Paywall is only triggered when clicking "Use This Template" button on detail page
-
-    const handleBlankCanvasClick = (e: React.MouseEvent) => {
-        // Always prevent default navigation first to handle the logic
-        e.preventDefault();
-
-        const stored = localStorage.getItem(EVENTS_STORAGE_KEY)
-        let hasEvents = false;
-        if (stored) {
-            try {
-                const events = JSON.parse(stored)
-                if (Array.isArray(events) && events.length > 0) {
-                    hasEvents = true;
-                }
-            } catch (error) {
-                console.error("Error parsing events for blank canvas check", error)
-            }
-        }
-
-        if (hasEvents) {
-            setBlankCanvasDialogOpen(true);
-        } else {
-            router.push("/");
-        }
-    };
-
-    const handleBlankCanvasConfirm = () => {
-        // Clear events from localStorage
-        localStorage.removeItem(EVENTS_STORAGE_KEY);
-        // Reset settings to defaults
-        localStorage.removeItem(SETTINGS_STORAGE_KEY);
-        // Close dialog and navigate
-        setBlankCanvasDialogOpen(false);
-        router.push("/");
     };
 
     // Generate page numbers to display
@@ -210,25 +144,16 @@ export default function TemplatesPage() {
                     description="Get started quickly with professionally designed templates. Choose one that fits your needs."
                 />
 
-                {/* Category Filter */}
-                <div className="container mx-auto px-4 mb-8">
-                    <CategoryFilter
-                        categories={categories}
-                        activeCategory={activeCategory}
-                        onCategoryChange={handleCategoryChange}
-                    />
-                </div>
-
                 {/* Search Box */}
                 <div className="container mx-auto px-4 max-w-6xl mb-8">
                     <div className="relative max-w-md mx-auto">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-5 text-gray-400" />
-                        <input
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                        <Input
                             type="text"
                             placeholder="Search templates by keyword..."
                             value={searchQuery}
                             onChange={handleSearchChange}
-                            className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-200 bg-white text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                            className="pl-10 pr-10"
                         />
                         {searchQuery && (
                             <button
@@ -242,36 +167,19 @@ export default function TemplatesPage() {
                     </div>
                 </div>
 
+                {/* Category Filter */}
+                <div className="container mx-auto px-4 mb-8">
+                    <CategoryFilter
+                        categories={categories}
+                        activeCategory={activeCategory}
+                        onCategoryChange={handleCategoryChange}
+                    />
+                </div>
+
                 {/* Templates Grid */}
                 <div className="container mx-auto px-4 max-w-6xl">
-                    {paginatedTemplates.length > 0 || activeCategory === "All" ? (
+                    {paginatedTemplates.length > 0 ? (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {/* Blank Schedule Builder - Show when it matches search/filter criteria */}
-                            {showBlankOnThisPage && (
-                                <Link
-                                    href="/"
-                                    onClick={handleBlankCanvasClick}
-                                    className="group bg-gradient-to-br from-blue-50 to-indigo-100 rounded-xl border-2 border-blue-200 p-6 hover:shadow-lg hover:border-blue-400 transition-all duration-200 relative h-full flex flex-col"
-                                >
-                                    <div className="flex items-start gap-4 flex-1">
-                                        <div className="p-3 bg-blue-600 rounded-lg group-hover:bg-blue-700 transition-colors shrink-0 mt-1">
-                                            <Calendar className="size-6 text-white" />
-                                        </div>
-                                        <div className="flex-1 min-w-0">
-                                            <span className="text-xs font-medium text-blue-700 uppercase tracking-wide">
-                                                BLANK CANVAS
-                                            </span>
-                                            <h3 className="text-lg font-semibold text-gray-900 mt-1 group-hover:text-blue-700 transition-colors">
-                                                Blank Schedule Builder
-                                            </h3>
-                                            <p className="text-sm text-gray-600 mt-2 line-clamp-2">
-                                                Start fresh with a blank schedule. Create your own custom layout from scratch.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </Link>
-                            )}
-
                             {paginatedTemplates.map((template) => {
                                 const Icon = template.icon ? iconMap[template.icon] : Briefcase;
                                 return (
@@ -366,19 +274,6 @@ export default function TemplatesPage() {
                     />
                 </div>
             </PageLayout>
-
-            {/* Blank Canvas Confirmation Dialog */}
-            <ConfirmDialog
-                open={blankCanvasDialogOpen}
-                onOpenChange={setBlankCanvasDialogOpen}
-                title="Start Fresh?"
-                description="This will reset your calendar and clear all existing events. Your settings will also be restored to defaults."
-                icon={AlertTriangle}
-                iconClassName="size-5 text-amber-500"
-                confirmText="Yes, Start Fresh"
-                onConfirm={handleBlankCanvasConfirm}
-                variant="blue"
-            />
         </>
     );
 }

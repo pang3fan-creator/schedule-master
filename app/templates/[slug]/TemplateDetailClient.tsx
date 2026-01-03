@@ -7,14 +7,16 @@ import { Button } from "@/components/ui/button"
 import { getTemplate, type TemplateData } from "@/lib/templates"
 import { formatDateString } from "@/lib/time-utils"
 import { EVENT_COLORS, type Event } from "@/lib/types"
-import { ArrowLeft, Calendar, Play, ChevronDown, Crown, AlertTriangle } from "lucide-react"
+import { ArrowLeft, Calendar, Play, ChevronDown, Crown, RotateCcw, Sparkles } from "lucide-react"
 import Link from "next/link"
 import { useSubscription } from "@/components/SubscriptionContext"
 import { UpgradeModal } from "@/components/UpgradeModal"
 import { FAQAccordion } from "@/components/FaqAccordion"
 import { Breadcrumb } from "@/components/Breadcrumb"
 import { ConfirmDialog } from "@/components/ConfirmDialog"
+import { hasDataToResetFromStorage } from "@/components/ResetButton"
 import { EVENTS_STORAGE_KEY, SETTINGS_STORAGE_KEY } from "@/lib/storage-keys"
+import { useSettings, DEFAULT_SETTINGS } from "@/components/SettingsContext"
 
 // Get the date of a specific day of the week for the current week
 // dayOfWeek: 0=Sunday, 1=Monday, 2=Tuesday, etc. (JavaScript standard)
@@ -88,7 +90,20 @@ function TemplatePreview({ template }: { template: TemplateData }) {
     }, {} as Record<number, Event[]>)
 
     return (
-        <div className="border border-gray-200 rounded-lg overflow-hidden bg-white">
+        <div className="border border-gray-200 rounded-lg overflow-hidden bg-white relative">
+            {/* AI Overlay for empty templates */}
+            {template.events.length === 0 && (
+                <div className="absolute inset-0 z-20 flex items-center justify-center bg-gradient-to-br from-violet-50/90 to-blue-50/90 backdrop-blur-[1px]">
+                    <div className="text-center">
+                        <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-violet-500 to-blue-500 flex items-center justify-center">
+                            <Sparkles className="size-8 text-white" />
+                        </div>
+                        <p className="text-lg font-medium text-gray-700">Let AI create your perfect schedule</p>
+                        <p className="text-sm text-gray-500 mt-1">Click "Use This Template" to get started</p>
+                    </div>
+                </div>
+            )}
+
             {/* Day headers */}
             <div className="grid grid-cols-8 border-b border-gray-200">
                 <div className="p-2 text-xs text-gray-400"></div>
@@ -163,6 +178,7 @@ interface TemplateDetailClientProps {
 export function TemplateDetailClient({ slug }: TemplateDetailClientProps) {
     const router = useRouter()
     const { isPro } = useSubscription()
+    const { settings } = useSettings()
     const [template, setTemplate] = useState<TemplateData | null>(null)
     const [isLoading, setIsLoading] = useState(false)
     const [upgradeModalOpen, setUpgradeModalOpen] = useState(false)
@@ -184,24 +200,12 @@ export function TemplateDetailClient({ slug }: TemplateDetailClientProps) {
             return
         }
 
-        const stored = localStorage.getItem(EVENTS_STORAGE_KEY)
-        let hasEvents = false
-        if (stored) {
-            try {
-                const events = JSON.parse(stored)
-                if (Array.isArray(events) && events.length > 0) {
-                    hasEvents = true
-                }
-            } catch (error) {
-                console.error("Error parsing events for template check", error)
-            }
-        }
-
-        if (hasEvents) {
-            // Show confirmation dialog
+        // Use shared reset check logic from ResetButton
+        if (hasDataToResetFromStorage(settings)) {
+            // Show confirmation dialog if there is data to reset
             setConfirmDialogOpen(true)
         } else {
-            // Apply directly
+            // Apply directly if everything is already at default/empty
             handleConfirmUseTemplate()
         }
     }
@@ -217,16 +221,17 @@ export function TemplateDetailClient({ slug }: TemplateDetailClientProps) {
         // Save to localStorage
         localStorage.setItem(EVENTS_STORAGE_KEY, JSON.stringify(events))
 
-        // Apply template settings if available
-        if (template.settings || template.slug) {
-            const currentSettings = localStorage.getItem(SETTINGS_STORAGE_KEY)
-            const settings = currentSettings ? JSON.parse(currentSettings) : {}
-            const newSettings = {
-                ...settings,
-                ...template.settings,
-                activeTemplateSlug: template.slug
-            }
-            localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(newSettings))
+        // Apply template settings - start with DEFAULT_SETTINGS for a clean reset
+        const newSettings = {
+            ...DEFAULT_SETTINGS,
+            ...template.settings,
+            activeTemplateSlug: template.slug
+        }
+        localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(newSettings))
+
+        // For AI Schedule Builder, set flag to auto-open AI Autofill dialog
+        if (template.slug === 'ai-schedule-builder') {
+            localStorage.setItem('schedule-builder-should-open-ai-autofill', 'true')
         }
 
         // Close dialog and navigate to main editor
@@ -304,7 +309,10 @@ export function TemplateDetailClient({ slug }: TemplateDetailClientProps) {
                         <TemplatePreview template={template} />
 
                         <p className="text-sm text-gray-500 mt-4 text-center">
-                            This preview shows sample events. When you use this template, events will be scheduled for the current week.
+                            {template.slug === 'ai-schedule-builder'
+                                ? "This preview shows the AI generator canvas. When you use this template, our AI assistant will help you build your personalized schedule."
+                                : "This preview shows sample events. When you use this template, events will be scheduled for the current week."
+                            }
                         </p>
                     </div>
                 </section>
@@ -316,9 +324,14 @@ export function TemplateDetailClient({ slug }: TemplateDetailClientProps) {
                     </h2>
                     <div className="grid md:grid-cols-3 gap-6">
                         <div className="p-6 rounded-xl bg-white border border-gray-200">
-                            <h3 className="font-semibold text-gray-900 mb-2">Pre-configured Events</h3>
+                            <h3 className="font-semibold text-gray-900 mb-2">
+                                {template.slug === 'ai-schedule-builder' ? 'Smart AI Generation' : 'Pre-configured Events'}
+                            </h3>
                             <p className="text-sm text-gray-600">
-                                {template.events.length} sample events with appropriate colors and timing
+                                {template.slug === 'ai-schedule-builder'
+                                    ? 'Access to the AI Autofill assistant to build your routine from scratch'
+                                    : `${template.events.length} sample events with appropriate colors and timing`
+                                }
                             </p>
                         </div>
                         <div className="p-6 rounded-xl bg-white border border-gray-200">
@@ -364,11 +377,10 @@ export function TemplateDetailClient({ slug }: TemplateDetailClientProps) {
             <ConfirmDialog
                 open={confirmDialogOpen}
                 onOpenChange={setConfirmDialogOpen}
-                title="Start Fresh?"
-                description="This will reset your calendar and clear all existing events. Your settings will also be restored to defaults."
-                icon={AlertTriangle}
-                iconClassName="size-5 text-amber-500"
-                confirmText="Yes, Start Fresh"
+                title="Reset Everything"
+                description="This will clear all sidebar template features, restore your settings to default, and delete all events from the calendar. This action cannot be undone."
+                icon={RotateCcw}
+                confirmText="Yes, Reset"
                 onConfirm={handleConfirmUseTemplate}
                 variant="blue"
             />

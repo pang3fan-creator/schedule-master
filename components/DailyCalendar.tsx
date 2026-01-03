@@ -114,6 +114,21 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
 
 
 
+    // Filter events based on working hours visibility
+    // d <= a: event end <= working start -> hidden
+    // c >= b: event start >= working end -> hidden
+    const visibleEvents = useMemo(() => {
+        return events.filter(event => {
+            const eventStart = event.startHour + (event.startMinute / 60)
+            const eventEnd = event.endHour + (event.endMinute / 60)
+
+            if (eventEnd <= workingHoursStart) return false
+            if (eventStart >= workingHoursEnd) return false
+
+            return true
+        })
+    }, [events, workingHoursStart, workingHoursEnd])
+
     // Use the event drag hook for drag-and-drop with touch support
     const {
         dragState,
@@ -127,7 +142,7 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
         rowHeight,
         minHour: workingHoursStart,
         maxHour: workingHoursEnd,
-        events,  // Pass events for collision detection during drag
+        events: visibleEvents,  // Pass filtered events for collision detection
         timeIncrement,  // Pass time increment for drag snapping
         allowEventOverlap,  // Skip collision detection when overlap is allowed
     })
@@ -136,8 +151,8 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
     // Moved before useDragToCreate so it can be used for collision detection
     const dayEvents = useMemo(() => {
         const dayIndex = selectedDate.getDay()
-        return events.filter(event => event.day === dayIndex)
-    }, [events, selectedDate])
+        return visibleEvents.filter(event => event.day === dayIndex) // Use visibleEvents
+    }, [visibleEvents, selectedDate])
 
     // Drag-to-create hook - pass dayEvents (already filtered) for collision detection
     const { creatingEvent, handleGridMouseDown: handleCreateMouseDown, handleGridTouchStart: handleCreateTouchStart } = useDragToCreate({

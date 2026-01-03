@@ -17,7 +17,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-import { Settings, RotateCcw, X } from "lucide-react"
+import { Settings, X } from "lucide-react"
 import { useSettings, type CalendarSettings } from "@/components/SettingsContext"
 
 interface SettingsDialogProps {
@@ -26,7 +26,7 @@ interface SettingsDialogProps {
 }
 
 export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
-    const { settings, updateSettings, resetSettings } = useSettings()
+    const { settings, updateSettings } = useSettings()
 
     const handleWeekStartChange = (checked: boolean) => {
         updateSettings({ weekStartsOnSunday: checked })
@@ -59,14 +59,6 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
 
     const handleShowDatesChange = (checked: boolean) => {
         updateSettings({ showDates: checked })
-    }
-
-    const handleAllowOverlapChange = (checked: boolean) => {
-        updateSettings({ allowEventOverlap: checked })
-    }
-
-    const handleReset = () => {
-        resetSettings()
     }
 
     // Generate hour options for start time (A): 0-23 (12 AM to 11 PM)
@@ -160,22 +152,6 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
                         />
                     </div>
 
-                    {/* Allow Event Overlap */}
-                    <div className="flex items-center justify-between">
-                        <div className="space-y-0.5">
-                            <Label className="text-sm font-medium text-gray-900">
-                                Allow overlapping events
-                            </Label>
-                            <p className="text-xs text-gray-500">
-                                When enabled, events can overlap in the calendar
-                            </p>
-                        </div>
-                        <Switch
-                            checked={settings.allowEventOverlap}
-                            onCheckedChange={handleAllowOverlapChange}
-                        />
-                    </div>
-
                     {/* Time Increment */}
                     <div className="space-y-2">
                         <Label className="text-sm font-medium text-gray-900">
@@ -192,7 +168,6 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
                                 <SelectItem value="5">5 minutes</SelectItem>
                                 <SelectItem value="15">15 minutes</SelectItem>
                                 <SelectItem value="30">30 minutes</SelectItem>
-                                <SelectItem value="60">1 hour</SelectItem>
                             </SelectContent>
                         </Select>
                     </div>
@@ -238,17 +213,6 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
                     </div>
                 </div>
 
-                {/* Footer */}
-                <div className="flex border-t border-gray-100">
-                    <Button
-                        variant="ghost"
-                        className="flex-1 h-12 rounded-none text-gray-600 hover:text-gray-900 hover:bg-gray-50 font-medium gap-2"
-                        onClick={handleReset}
-                    >
-                        <RotateCcw className="size-4" />
-                        Reset to defaults
-                    </Button>
-                </div>
             </DialogContent>
         </Dialog>
     )

@@ -4,18 +4,19 @@ import { useState } from "react"
 import dynamic from "next/dynamic"
 import { Button } from "@/components/ui/button"
 import { ViewModeToggle } from "@/components/ViewModeToggle"
-import { PlusCircle, Download, Settings, RotateCcw, Sparkles, Cloud, Calendar, HelpCircle } from "lucide-react"
+import { Download, Settings, Sparkles, Cloud, Calendar, HelpCircle } from "lucide-react"
 import { useSettings } from "@/components/SettingsContext"
 import { TaskModeToggle } from "@/components/templates/TaskModeToggle"
-import { PriorityModeToggle } from "@/components/templates/PriorityModeToggle"
+import { AIQuickActions } from "@/components/templates/AIQuickActions"
+import { ProjectDashboard } from "@/components/templates/ProjectDashboard"
+
 import { useSubscription } from "@/components/SubscriptionContext"
-import { ConfirmDialog } from "@/components/ConfirmDialog"
+import { ResetButton } from "@/components/ResetButton"
 import { useAuth } from "@clerk/nextjs"
 import { type Event } from "@/lib/types"
-import { EVENTS_STORAGE_KEY } from "@/lib/storage-keys"
 
-// Dynamically import dialog components for code splitting
-const AddEventDialog = dynamic(() => import("@/components/AddEventDialog").then(m => m.AddEventDialog), { ssr: false })
+
+
 const AuthModal = dynamic(() => import("@/components/AuthModal").then(m => m.AuthModal), { ssr: false })
 const UpgradeModal = dynamic(() => import("@/components/UpgradeModal").then(m => m.UpgradeModal), { ssr: false })
 const FeatureComingSoonModal = dynamic(() => import("@/components/FeatureComingSoonModal").then(m => m.FeatureComingSoonModal), { ssr: false })
@@ -28,31 +29,24 @@ const AIAutofillDialog = dynamic(() => import("@/components/AIAutofillDialog").t
 import { FAQDialog } from "@/components/FAQDialog"
 
 interface SidebarProps {
+  events: Event[]
   onReset: () => void
   viewMode: "day" | "week"
   onViewModeChange: (mode: "day" | "week") => void
-  onAddEvent: (event: Omit<Event, "id">) => void
   weekStart: Date
   weekStartsOnSunday: boolean
   onExport: () => void
-  showAddDialog?: boolean  // External control to show add dialog
-  onAddDialogClose?: () => void  // Callback when add dialog closes
-  initialData?: {          // Initial data used when showAddDialog is true
-    startTime?: string
-    endTime?: string
-    selectedDays?: number[]
-  }
   showSettingsOpen?: boolean
   onSettingsOpenChange?: (open: boolean) => void
   onLoadSchedule?: (events: Event[], settings: Record<string, unknown> | null) => void
   onAddEvents?: (events: Omit<Event, "id">[]) => void
+  showAIAutofillOpen?: boolean
+  onAIAutofillOpenChange?: (open: boolean) => void
 }
 
-export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, weekStart, weekStartsOnSunday, onExport, showAddDialog, onAddDialogClose, initialData, showSettingsOpen, onSettingsOpenChange, onLoadSchedule, onAddEvents }: SidebarProps) {
+export function Sidebar({ events, onReset, viewMode, onViewModeChange, weekStart, weekStartsOnSunday, onExport, showSettingsOpen, onSettingsOpenChange, onLoadSchedule, onAddEvents, showAIAutofillOpen, onAIAutofillOpenChange }: SidebarProps) {
   const { userId } = useAuth()
   const [showAuthModal, setShowAuthModal] = useState(false)
-  const [showResetDialog, setShowResetDialog] = useState(false)
-  const [showAddEventDialog, setShowAddEventDialog] = useState(false)
   const [showUpgradeModal, setShowUpgradeModal] = useState(false)
   const [showSettingsDialog, setShowSettingsDialog] = useState(false)
 
@@ -70,6 +64,16 @@ export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, weekS
   const [showCloudSaveDialog, setShowCloudSaveDialog] = useState(false)
   const [showCalendarSyncDialog, setShowCalendarSyncDialog] = useState(false)
   const [showAIAutofillDialog, setShowAIAutofillDialog] = useState(false)
+
+  // Sync external AI Autofill state if provided
+  const effectiveShowAIAutofill = showAIAutofillOpen !== undefined ? showAIAutofillOpen : showAIAutofillDialog
+  const setEffectiveAIAutofillOpen = (open: boolean) => {
+    if (onAIAutofillOpenChange) {
+      onAIAutofillOpenChange(open)
+    } else {
+      setShowAIAutofillDialog(open)
+    }
+  }
   const [upgradeFeature, setUpgradeFeature] = useState("")
   const [comingSoonFeature, setComingSoonFeature] = useState("")
   const [comingSoonDescription, setComingSoonDescription] = useState<React.ReactNode>(null)
@@ -93,7 +97,7 @@ export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, weekS
 
     // Authenticated users (Free or Pro) open the dialog
     // The dialog itself will handle tiered usage and trial paywalls
-    setShowAIAutofillDialog(true)
+    setEffectiveAIAutofillOpen(true)
   }
 
   const handleCloudSaveClick = () => {
@@ -132,30 +136,6 @@ export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, weekS
 
   return (
     <aside className="hidden md:flex w-[230px] h-full shrink-0 flex-col border-r border-gray-200 bg-white p-4 overflow-hidden">
-      {/* Add New Item Button */}
-      <Button
-        className="mb-4 w-full bg-blue-600 hover:bg-blue-700 text-white gap-2 shadow-md hover:shadow-lg transition-all duration-300"
-        onClick={() => setShowAddEventDialog(true)}
-      >
-        <PlusCircle className="size-5" />
-        Add New Item
-      </Button>
-
-      {/* Add Event Dialog */}
-      <AddEventDialog
-        open={showAddEventDialog || showAddDialog || false}
-        onOpenChange={(open) => {
-          setShowAddEventDialog(open)
-          if (!open && onAddDialogClose) {
-            onAddDialogClose()
-          }
-        }}
-        onAddEvent={onAddEvent}
-        weekStart={weekStart}
-        weekStartsOnSunday={weekStartsOnSunday}
-        initialData={initialData}
-      />
-
       {/* Upgrade Modal */}
       <UpgradeModal
         open={showUpgradeModal}
@@ -182,38 +162,8 @@ export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, weekS
       <nav className="flex flex-col gap-1">
 
         {/* Reset Button */}
-        <Button
-          variant="ghost"
-          className="justify-start gap-3 text-gray-600 hover:text-gray-900"
-          onClick={() => {
-            const stored = localStorage.getItem(EVENTS_STORAGE_KEY)
-            if (stored) {
-              try {
-                const events = JSON.parse(stored)
-                if (Array.isArray(events) && events.length > 0) {
-                  setShowResetDialog(true)
-                }
-              } catch (e) {
-                console.error("Error parsing events for reset check", e)
-              }
-            }
-          }}
-        >
-          <RotateCcw className="size-5" />
-          Reset
-        </Button>
+        <ResetButton events={events} onReset={onReset} />
 
-        {/* Reset Dialog */}
-        <ConfirmDialog
-          open={showResetDialog}
-          onOpenChange={setShowResetDialog}
-          title="Reset Schedule"
-          description="Are you sure you want to delete all events from the calendar? This action cannot be undone."
-          icon={RotateCcw}
-          confirmText="Yes, Reset"
-          onConfirm={onReset}
-          variant="blue"
-        />
 
         {/* Cloud Save */}
         <Button
@@ -295,8 +245,20 @@ export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, weekS
         {/* Task Mode Toggle - Only for Cleaning Template */}
         {settings.activeTemplateSlug === 'cleaning-schedule-builder' && <TaskModeToggle />}
 
-        {/* Priority Mode Toggle - Only for AI Schedule Builder */}
-        {settings.activeTemplateSlug === 'ai-schedule-builder' && <PriorityModeToggle />}
+        {/* AI Quick Actions - Only for AI Schedule Builder Template */}
+        {settings.activeTemplateSlug === 'ai-schedule-builder' && (
+          <AIQuickActions
+            onRegenerateSchedule={() => setEffectiveAIAutofillOpen(true)}
+            onClearSchedule={onReset}
+          />
+        )}
+
+        {/* Project Dashboard - Only for Construction Template */}
+        {settings.activeTemplateSlug === 'construction-schedule-builder' && (
+          <ProjectDashboard />
+        )}
+
+
 
         {/* Settings Dialog */}
         <SettingsDialog
@@ -320,8 +282,8 @@ export function Sidebar({ onReset, viewMode, onViewModeChange, onAddEvent, weekS
 
 
       <AIAutofillDialog
-        open={showAIAutofillDialog}
-        onOpenChange={setShowAIAutofillDialog}
+        open={effectiveShowAIAutofill}
+        onOpenChange={setEffectiveAIAutofillOpen}
         onAddEvents={(events) => {
           if (onAddEvents) {
             onAddEvents(events)

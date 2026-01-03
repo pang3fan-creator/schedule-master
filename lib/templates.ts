@@ -16,12 +16,7 @@ export interface TemplateData {
         workingHoursEnd?: number
         timeIncrement?: 5 | 10 | 15 | 30 | 60 // Time increment in minutes
         showDates?: boolean
-        allowOverlap?: boolean
     }
-    faq?: {
-        question: string
-        answer: string
-    }[]
 }
 
 // Extended event options for templates
@@ -106,7 +101,6 @@ Key benefits include drag-and-drop scheduling, color-coded shifts for easy visua
             workingHoursEnd: 22,
             timeIncrement: 30,
             showDates: false,
-            allowOverlap: false,
         },
         events: [
             // Monday (day 1 when weekStartsOnSunday)
@@ -124,24 +118,6 @@ Key benefits include drag-and-drop scheduling, color-coded shifts for easy visua
             // Friday (day 5)
             createEvent("All Staff Meeting", "Conference Room", 5, 9, 0, 10, 0, "red"),
             createEvent("John - Day Shift", "Front desk", 5, 10, 0, 18, 0, "blue"),
-        ],
-        faq: [
-            {
-                question: "How do I add employees to the schedule?",
-                answer: "Simply click on any time slot in the calendar to create a new event. Enter the employee's name and assign them to a specific shift. You can also drag existing events to move them around.",
-            },
-            {
-                question: "Can I create recurring weekly schedules?",
-                answer: "Yes! Once you set up your weekly schedule, it's saved in your browser. You can export it as an image and use it as a template for future weeks.",
-            },
-            {
-                question: "How do I share the schedule with my team?",
-                answer: "Click the 'Export' button to download your schedule as a PNG or JPG image. You can then share it via email, print it, or post it in your workplace.",
-            },
-            {
-                question: "Is this employee scheduling tool really free?",
-                answer: "Yes, the basic schedule builder is completely free. You can create schedules, add employees, and export as images with a watermark. Upgrade to Pro for watermark-free exports and PDF downloads.",
-            },
         ],
     },
 
@@ -166,7 +142,6 @@ Use color coding to differentiate between subjects, add room numbers and profess
             workingHoursEnd: 18,
             timeIncrement: 15,
             showDates: true,
-            allowOverlap: false,
         },
         events: [
             // Monday (day 1 when weekStartsOnSunday)
@@ -192,24 +167,6 @@ Use color coding to differentiate between subjects, add room numbers and profess
             createEvent("Calculus 101", "Room 201 - Prof. Smith", 5, 8, 0, 9, 30, "blue"),
             createEvent("Physics Lecture", "Science Building 101", 5, 10, 0, 11, 30, "green"),
         ],
-        faq: [
-            {
-                question: "How do I add my classes to the schedule?",
-                answer: "Click on any time slot to create a new class block. Enter the course name, room number, and professor information. Drag the edges to adjust the duration.",
-            },
-            {
-                question: "Can I color-code different subjects?",
-                answer: "Absolutely! Each class block can be assigned a different color. We recommend using one color per subject to quickly visualize your schedule at a glance.",
-            },
-            {
-                question: "Does this work for college and university schedules?",
-                answer: "Yes! The schedule builder works for any educational institution. It features 15-minute time increments and a Monday-Friday view that's perfect for academic schedules.",
-            },
-            {
-                question: "Can I plan for multiple semesters?",
-                answer: "You can export your current schedule as an image, then clear the calendar and create a new schedule for the next semester. Each schedule is saved in your browser.",
-            },
-        ],
     },
 
     // ============================================
@@ -233,7 +190,6 @@ Perfect for beginners creating their first workout plan or experienced athletes 
             workingHoursEnd: 21,
             timeIncrement: 30,
             showDates: false,
-            allowOverlap: true,
         },
         events: [
             // Sunday (Day 0 when weekStartsOnSunday)
@@ -264,24 +220,6 @@ Perfect for beginners creating their first workout plan or experienced athletes 
             createEvent("Meal Prep", "Prepare week's meals", 6, 11, 0, 13, 0, "pink"),
             createEvent("Outdoor Activity", "Hiking or sports", 6, 15, 0, 17, 0, "green"),
         ],
-        faq: [
-            {
-                question: "How do I create a push-pull-legs routine?",
-                answer: "Simply add workout blocks for each day. Use colors to represent different muscle groups: red for push (chest/shoulders/triceps), blue for pull (back/biceps), and purple for legs. Schedule rest days between intense sessions.",
-            },
-            {
-                question: "Can I add rest days to my workout schedule?",
-                answer: "Yes! Create a block labeled 'Rest Day' or 'Active Recovery' to remind yourself when to take a break. Rest is crucial for muscle recovery and growth.",
-            },
-            {
-                question: "How do I track cardio and strength training separately?",
-                answer: "Use different colors for cardio (we suggest green) and strength training (red, blue, etc.). This visual distinction helps you balance your weekly routine.",
-            },
-            {
-                question: "Can I save my workout plan for the gym?",
-                answer: "Export your schedule as an image and save it to your phone. You can reference it at the gym without needing internet access.",
-            },
-        ],
     },
 
     // ============================================
@@ -305,7 +243,6 @@ Whether you're planning a creative project, managing multiple clients, or organi
             workingHoursEnd: 20,
             timeIncrement: 30,
             showDates: false,
-            allowOverlap: true,
         },
         events: [
             // Monday
@@ -326,24 +263,6 @@ Whether you're planning a creative project, managing multiple clients, or organi
             createEvent("Project Review", "Team sync", 5, 9, 0, 10, 30, "blue"),
             createEvent("Creative Work", "Finish projects", 5, 11, 0, 15, 0, "pink"),
         ],
-        faq: [
-            {
-                question: "Why use a visual schedule instead of a regular calendar?",
-                answer: "Visual schedules use colors and blocks to help you see patterns in your week instantly. This is especially helpful for visual learners, creatives, and anyone who struggles with traditional text-based calendars.",
-            },
-            {
-                question: "How many colors can I use?",
-                answer: "We offer 10 distinct colors to help you categorize different types of activities. Use consistent colors for similar tasks (e.g., blue for meetings, pink for creative work) to build visual habits.",
-            },
-            {
-                question: "Can I create a schedule for my kids or students?",
-                answer: "Absolutely! Visual schedules are especially effective for children. Use bright, distinct colors and simple labels to create routines they can follow independently.",
-            },
-            {
-                question: "How do I make my schedule look more professional?",
-                answer: "Stick to 3-4 complementary colors, use consistent naming conventions, and export as a high-quality image. Pro users can remove the watermark for a cleaner look.",
-            },
-        ],
     },
 
     // ============================================
@@ -351,13 +270,13 @@ Whether you're planning a creative project, managing multiple clients, or organi
     // ============================================
     "ai-schedule-builder": {
         slug: "ai-schedule-builder",
-        title: "AI Schedule Builder",
-        description: "Let AI help you create the perfect schedule. Smart scheduling powered by intelligent algorithms.",
-        longDescription: `Experience the future of scheduling with our AI-powered Schedule Builder. Using smart algorithms, this tool helps you create optimized schedules that balance work, rest, and personal time.
+        title: "AI Schedule Builder ",
+        description: "Generate a custom weekly schedule in seconds with AI. Smart, automated scheduling tailored to your productivity, energy levels, and goals.",
+        longDescription: `Experience the future of time management with our AI Schedule Builder. Instead of starting with a rigid template, this tool uses advanced algorithms to help you generate an optimized weekly plan from scratch.
 
-Simply tell the AI what you need to accomplish, and watch as it generates a color-coded weekly plan tailored to your needs. Our intelligent system considers factors like energy levels throughout the day, task dependencies, and the importance of breaks to create schedules that actually work.
+Simply apply this template, and our AI Autofill assistant will guide you through creating a schedule that balances deep work, rest, and personal priorities. Our intelligent system considers productivity best practices—like tackling complex tasks during your peak energy hours—to create a routine that actually sticks.
 
-Whether you're a busy professional trying to maximize productivity, a student balancing classes and extracurriculars, or anyone looking for a smarter way to plan their week, our AI Schedule Builder takes the guesswork out of scheduling.`,
+Whether you're a busy founder maximizing output, a student balancing heavy course loads, or anyone looking to reclaim their time, our AI Schedule Generator takes the heavy lifting out of planning your week.`,
         category: "AI",
         icon: "Sparkles",
         requiresPro: true,
@@ -368,51 +287,9 @@ Whether you're a busy professional trying to maximize productivity, a student ba
             workingHoursEnd: 18,
             timeIncrement: 15,
             showDates: true,
-            allowOverlap: false,
         },
         events: [
-            // AI-optimized schedule example
-            // Monday (day 1 when weekStartsOnSunday) - High energy morning tasks
-            createEvent("Deep Work Block", "AI suggests: tackle complex tasks", 1, 9, 0, 11, 30, "blue", { priority: "high" }),
-            createEvent("Break", "AI suggests: step away from screen", 1, 11, 30, 12, 0, "teal", { priority: "low" }),
-            createEvent("Lunch", "AI suggests: healthy meal", 1, 12, 0, 13, 0, "yellow"),
-            createEvent("Meetings", "AI suggests: schedule calls post-lunch", 1, 14, 0, 16, 0, "purple", { priority: "medium" }),
-            // Tuesday (day 2)
-            createEvent("Creative Tasks", "AI suggests: morning creativity peak", 2, 9, 0, 12, 0, "pink", { priority: "high" }),
-            createEvent("Lunch", "AI suggests: light meal", 2, 12, 0, 13, 0, "yellow"),
-            createEvent("Admin Work", "AI suggests: low-energy task time", 2, 14, 0, 16, 0, "green", { priority: "low" }),
-            // Wednesday (day 3)
-            createEvent("Deep Work Block", "AI suggests: mid-week focus", 3, 9, 0, 12, 0, "blue", { priority: "high" }),
-            createEvent("Lunch", "AI suggests: social lunch", 3, 12, 0, 13, 0, "yellow"),
-            createEvent("Team Sync", "AI suggests: collaboration time", 3, 14, 0, 15, 0, "orange", { priority: "medium" }),
-            createEvent("Learning", "AI suggests: skill development", 3, 15, 0, 17, 0, "red", { priority: "medium" }),
-            // Thursday (day 4)
-            createEvent("Project Work", "AI suggests: execution day", 4, 9, 0, 12, 0, "blue", { priority: "high" }),
-            createEvent("Lunch", "AI suggests: meal prep day", 4, 12, 0, 13, 0, "yellow"),
-            createEvent("Review & Plan", "AI suggests: mid-week check", 4, 14, 0, 15, 30, "purple", { priority: "medium" }),
-            // Friday (day 5)
-            createEvent("Priority Tasks", "AI suggests: finish key items", 5, 9, 0, 12, 0, "blue", { priority: "high" }),
-            createEvent("Lunch", "AI suggests: team lunch", 5, 12, 0, 13, 0, "yellow"),
-            createEvent("Week Review", "AI suggests: reflect & plan", 5, 14, 0, 15, 0, "orange", { priority: "medium" }),
-            createEvent("Flex Time", "AI suggests: catch up or early finish", 5, 15, 0, 17, 0, "teal", { priority: "low" }),
-        ],
-        faq: [
-            {
-                question: "How does the AI schedule builder work?",
-                answer: "Our AI uses smart algorithms to analyze optimal scheduling patterns. It considers factors like task complexity, energy levels throughout the day, and the importance of breaks to suggest a balanced schedule.",
-            },
-            {
-                question: "Can I customize the AI-generated schedule?",
-                answer: "Absolutely! The AI-generated schedule is just a starting point. You can drag, resize, edit, and delete any blocks to perfectly match your needs. Think of it as a smart template.",
-            },
-            {
-                question: "Will AI replace my personal scheduling decisions?",
-                answer: "No, the AI serves as a helpful assistant, not a replacement. It provides suggestions based on productivity research and best practices, but you always have full control over your schedule.",
-            },
-            {
-                question: "Is the AI scheduling feature free?",
-                answer: "Yes! You can use the AI-generated template for free. The schedule is fully editable and can be exported as an image. Pro features include advanced AI customization and PDF export.",
-            },
+            // Empty - AI will generate the schedule for you!
         ],
     },
 
@@ -439,7 +316,6 @@ Stop wrestling with spreadsheets and start building professional shift schedules
             workingHoursEnd: 24,
             timeIncrement: 30,
             showDates: true,
-            allowOverlap: false,
         },
         events: [
             // Sunday (Day 0) - Weekend skeleton crew
@@ -472,28 +348,6 @@ Stop wrestling with spreadsheets and start building professional shift schedules
             createEvent("Day Shift - Team C", "Weekend days", 6, 8, 0, 16, 0, "blue"),
             createEvent("Swing Shift - Team A", "Weekend evenings", 6, 16, 0, 24, 0, "orange"),
         ],
-        faq: [
-            {
-                question: "How do I set up rotating shifts for my team?",
-                answer: "Create shift blocks for each team and assign them to different time slots across the week. Use our drag-and-drop interface to rotate teams through day, swing, and night shifts. Color-code each team for instant visibility.",
-            },
-            {
-                question: "Can I highlight night shifts differently?",
-                answer: "Yes! We recommend using purple or dark colors for night/graveyard shifts to make them stand out. This helps employees quickly identify overnight assignments on the schedule.",
-            },
-            {
-                question: "How do I handle 24/7 shift coverage?",
-                answer: "Set the working hours to cover the full day (our shift template is pre-configured for this). Create three 8-hour shift blocks: Day (8am-4pm), Swing (4pm-12am), and Night (12am-8am) to ensure continuous coverage.",
-            },
-            {
-                question: "Can I create split shifts or irregular schedules?",
-                answer: "Absolutely! Simply create multiple shift blocks for the same employee on the same day. For example, a restaurant split shift might have blocks from 11am-2pm and 5pm-10pm.",
-            },
-            {
-                question: "How do I share the shift schedule with my team?",
-                answer: "Click Export to download your shift schedule as a PNG or JPG image. Share it via email, team messaging apps, or print it for the break room. Pro users can export as PDF for professional printing.",
-            },
-        ],
     },
 
     // ============================================
@@ -519,14 +373,13 @@ Perfect for new homeschool families starting their journey or experienced educat
             workingHoursEnd: 16,
             timeIncrement: 15,
             showDates: false,
-            allowOverlap: true,
         },
         events: [
             // Monday (day 1 when weekStartsOnSunday)
             createEvent("Morning Circle", "Calendar, weather, read-aloud", 1, 8, 30, 9, 0, "yellow"),
             createEvent("Math", "Lesson + practice problems", 1, 9, 0, 10, 0, "blue"),
             createEvent("Snack Break", "Healthy snack time", 1, 10, 0, 10, 30, "teal"),
-            createEvent("Reading", "Phonics / literature", 1, 10, 15, 11, 15, "green"),
+            createEvent("Reading", "Phonics / literature", 1, 10, 30, 11, 15, "green"),
             createEvent("Science", "Hands-on experiments", 1, 11, 15, 12, 0, "orange"),
             createEvent("Lunch & Free Play", "Family lunch break", 1, 12, 0, 13, 0, "pink"),
             createEvent("Writing", "Journal / handwriting", 1, 13, 0, 13, 45, "purple"),
@@ -535,7 +388,7 @@ Perfect for new homeschool families starting their journey or experienced educat
             createEvent("Morning Circle", "Daily routine", 2, 8, 30, 9, 0, "yellow"),
             createEvent("Math", "New concepts + review", 2, 9, 0, 10, 0, "blue"),
             createEvent("Snack Break", "Movement break", 2, 10, 0, 10, 30, "teal"),
-            createEvent("Reading", "Silent reading time", 2, 10, 15, 11, 15, "green"),
+            createEvent("Reading", "Silent reading time", 2, 10, 30, 11, 15, "green"),
             createEvent("History", "Story of the World", 2, 11, 15, 12, 0, "orange"),
             createEvent("Lunch & Free Play", "Outdoor time", 2, 12, 0, 13, 0, "pink"),
             createEvent("Music", "Instrument practice", 2, 13, 0, 13, 45, "purple"),
@@ -544,7 +397,7 @@ Perfect for new homeschool families starting their journey or experienced educat
             createEvent("Morning Circle", "Poetry memorization", 3, 8, 30, 9, 0, "yellow"),
             createEvent("Math", "Games + worksheets", 3, 9, 0, 10, 0, "blue"),
             createEvent("Snack Break", "Reading corner", 3, 10, 0, 10, 30, "teal"),
-            createEvent("Reading", "Book discussion", 3, 10, 15, 11, 15, "green"),
+            createEvent("Reading", "Book discussion", 3, 10, 30, 11, 15, "green"),
             createEvent("Nature Study", "Outdoor exploration", 3, 11, 15, 12, 30, "orange"),
             createEvent("Lunch & Free Play", "Picnic if weather permits", 3, 12, 30, 13, 30, "pink"),
             createEvent("Library Visit", "Weekly library trip", 3, 14, 0, 15, 30, "purple"),
@@ -552,7 +405,7 @@ Perfect for new homeschool families starting their journey or experienced educat
             createEvent("Morning Circle", "Calendar activities", 4, 8, 30, 9, 0, "yellow"),
             createEvent("Math", "Problem solving", 4, 9, 0, 10, 0, "blue"),
             createEvent("Snack Break", "Stretch break", 4, 10, 0, 10, 30, "teal"),
-            createEvent("Reading", "Reading aloud together", 4, 10, 15, 11, 15, "green"),
+            createEvent("Reading", "Reading aloud together", 4, 10, 30, 11, 15, "green"),
             createEvent("Geography", "Map skills + culture", 4, 11, 15, 12, 0, "orange"),
             createEvent("Lunch & Free Play", "Indoor games", 4, 12, 0, 13, 0, "pink"),
             createEvent("Writing", "Creative writing", 4, 13, 0, 13, 45, "purple"),
@@ -561,40 +414,56 @@ Perfect for new homeschool families starting their journey or experienced educat
             createEvent("Morning Circle", "Week review", 5, 8, 30, 9, 0, "yellow"),
             createEvent("Math", "Math games / review", 5, 9, 0, 10, 0, "blue"),
             createEvent("Snack Break", "Celebration snack", 5, 10, 0, 10, 30, "teal"),
-            createEvent("Reading", "Free choice reading", 5, 10, 15, 11, 0, "green"),
-            createEvent("Show & Tell", "Share what we learned", 5, 11, 0, 11, 30, "orange"),
+            createEvent("Reading", "Free choice reading", 5, 10, 30, 11, 15, "green"),
+            createEvent("Show & Tell", "Share what we learned", 5, 11, 15, 12, 0, "orange"),
             createEvent("Field Trip / Co-op", "Group activities", 5, 12, 0, 15, 0, "pink"),
-        ],
-        faq: [
-            {
-                question: "How do I create a homeschool schedule for multiple children?",
-                answer: "Use color coding to assign subjects to different children, or create separate calendar views for each child. You can also schedule overlapping times for subjects you teach together and individual blocks for one-on-one instruction.",
-            },
-            {
-                question: "Can I adjust the schedule for different learning styles?",
-                answer: "Absolutely! Drag and drop to move subjects around. Place challenging subjects during your child's peak focus times, and add breaks as needed. The template is just a starting point—customize it to match your family's rhythm.",
-            },
-            {
-                question: "How much time should each subject take in homeschool?",
-                answer: "This varies by age and subject. Elementary students typically need 15-30 minutes per subject, while older students may need 45-60 minutes. Our template uses 45-minute blocks by default, but you can easily resize events to fit your needs.",
-            },
-            {
-                question: "What if we don't follow a strict schedule?",
-                answer: "Many homeschool families prefer a flexible routine over a rigid schedule. Use this tool as a guide rather than a strict timetable. You can create a general flow for the day while leaving room for spontaneous learning moments.",
-            },
-            {
-                question: "Can I add extracurriculars and co-op activities?",
-                answer: "Yes! Add any activities to your schedule including co-op classes, sports, music lessons, field trips, and playdates. This helps you see your full week at a glance and avoid over-scheduling.",
-            },
-            {
-                question: "Is the homeschool schedule builder really free?",
-                answer: "Yes! The homeschool schedule builder is completely free to use. Create schedules, customize them for your family, and export as images. Pro users can remove watermarks and export to PDF for a polished printable version.",
-            },
         ],
     },
 
     // ============================================
-    // PRD Keyword Template 8: Cleaning Schedule Builder
+    // PRD Keyword Template 8: Construction Schedule Builder
+    // ============================================
+    "construction-schedule-builder": {
+        slug: "construction-schedule-builder",
+        title: "Construction Schedule Builder",
+        description: "Professional construction schedule builder for contractors and project managers. Plan timelines, track milestones, and manage crews efficiently.",
+        longDescription: `Master your construction projects with our Professional Construction Schedule Builder. Designed specifically for general contractors, site managers, and construction teams who need robust timeline management without the complexity of legacy software.
+
+Plan every phase of your build from site preparation to final walkthrough. Our Gantt-style visual approach helps you identify critical paths, manage crew handoffs, and ensure materials arrive exactly when needed.
+
+Key features include phase-based tracking (Demolition, Foundation, Framing, Utilities), resource allocation, and milestone monitoring. The intuitive timeline view allows you to spot potential delays early, coordinate subcontractors effectively, and keep clients updated with professional progress reports.
+
+Perfect for residential builds, renovation projects, and commercial fit-outs. Take control of your job site with a schedule that works as hard as your crew.`,
+        category: "Business",
+        icon: "HardHat",
+        requiresPro: true,
+        settings: {
+            weekStartsOnSunday: false,
+            use12HourFormat: true,
+            workingHoursStart: 6,
+            workingHoursEnd: 18,
+            timeIncrement: 60, // Coarser increment for project phases
+            showDates: true,
+        },
+        events: [
+            // Week 1: Site Prep & Foundation
+            createEvent("Site Preparation", "Excavation and leveling", 1, 6, 0, 16, 0, "orange", { icon: "TrendingUp" }), // Mon
+            createEvent("Site Preparation", "Excavation and leveling", 2, 6, 0, 16, 0, "orange", { icon: "TrendingUp" }), // Tue
+            createEvent("Foundation Forms", "Setting concrete forms", 3, 7, 0, 17, 0, "teal", { icon: "Maximize" }), // Wed
+            createEvent("Foundation Pour", "Concrete truck arrival", 4, 7, 0, 12, 0, "teal", { icon: "Maximize" }), // Thu
+            createEvent("Curing Period", "No heavy traffic", 5, 6, 0, 18, 0, "yellow", { icon: "Clock" }), // Fri (Work day coverage)
+
+            // Overlapping tasks simulation (Gantt style)
+            createEvent("Material Delivery", "Lumber package drop", 4, 13, 0, 15, 0, "blue", { icon: "Truck" }), // Thu
+            createEvent("Site Meeting", "Owner walkthrough", 5, 9, 0, 10, 0, "red", { icon: "Users" }), // Fri
+
+            // Weekend Security
+            createEvent("Site Security Check", "Weekly perimeter check", 6, 9, 0, 10, 0, "purple", { icon: "Shield" }), // Sat
+        ],
+    },
+
+    // ============================================
+    // PRD Keyword Template 9: Cleaning Schedule Builder
     // ============================================
     "cleaning-schedule-builder": {
         slug: "cleaning-schedule-builder",
@@ -614,9 +483,8 @@ Perfect for establishing cleaning routines, teaching kids responsibility, coordi
             use12HourFormat: true,
             workingHoursStart: 7,
             workingHoursEnd: 21,
-            timeIncrement: 60,
+            timeIncrement: 30,
             showDates: false,
-            allowOverlap: false,
         },
         events: [
             // Sunday (day 0) - Weekly deep clean
@@ -648,32 +516,6 @@ Perfect for establishing cleaning routines, teaching kids responsibility, coordi
             createCheckableEvent("Deep Clean Task", "Rotate: windows, baseboards, etc.", 6, 10, 0, 11, 30, "purple", "Sparkles"),
             createCheckableEvent("Organize & Declutter", "One room focus", 6, 14, 0, 15, 30, "pink", "FolderOpen"),
             createCheckableEvent("Grocery & Restock", "Cleaning supplies check", 6, 16, 0, 17, 0, "blue", "ShoppingCart"),
-        ],
-        faq: [
-            {
-                question: "How do I create a cleaning schedule for roommates?",
-                answer: "Use color coding to assign different colors to each roommate. Create recurring tasks and rotate assignments weekly. Export the schedule and share it digitally or print it for the common area so everyone stays accountable.",
-            },
-            {
-                question: "What cleaning tasks should I do daily vs weekly?",
-                answer: "Daily tasks include making beds, doing dishes, and quick tidying. Weekly tasks include vacuuming, mopping, bathroom deep cleaning, and laundry. Monthly tasks include cleaning appliances, washing windows, and organizing closets. Our template includes a balanced mix of all three.",
-            },
-            {
-                question: "Can I print this cleaning schedule as a checklist?",
-                answer: "Yes! Export your schedule as a PNG or JPG image and print it. Many users hang their printable cleaning schedule on the refrigerator or inside a cabinet door for easy reference.",
-            },
-            {
-                question: "How do I stay motivated to follow the cleaning schedule?",
-                answer: "Break tasks into small, manageable chunks spread throughout the week. Use the color-coded visual to see your progress. Having a schedule removes decision fatigue—you just follow the plan instead of wondering what needs to be done.",
-            },
-            {
-                question: "Can I customize the schedule for a larger home?",
-                answer: "Absolutely! Add more time blocks for additional rooms or split tasks across multiple days. You can also schedule deep cleaning tasks for specific rooms on rotation (e.g., deep clean one room per week).",
-            },
-            {
-                question: "Is this cleaning schedule builder free?",
-                answer: "Yes! The cleaning schedule builder is completely free. Create your schedule, customize it for your household, and export as a printable image. Pro users can remove watermarks and export to PDF.",
-            },
         ],
     },
 }

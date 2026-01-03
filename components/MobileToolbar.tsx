@@ -4,7 +4,7 @@ import { useState } from "react"
 import dynamic from "next/dynamic"
 import { Button } from "@/components/ui/button"
 import { ViewModeToggle } from "@/components/ViewModeToggle"
-import { PlusCircle, Download, Settings, RotateCcw, Sparkles, MoreHorizontal, HelpCircle, CalendarDays, CalendarRange, Cloud, Calendar } from "lucide-react"
+import { Download, Settings, RotateCcw, Sparkles, MoreHorizontal, HelpCircle, CalendarDays, CalendarRange, Cloud, Calendar } from "lucide-react"
 import {
     Dialog,
     DialogContent,
@@ -32,35 +32,30 @@ const CalendarSyncDialog = dynamic(() => import("@/components/CalendarSyncDialog
 import { EVENTS_STORAGE_KEY } from "@/lib/storage-keys"
 import { useSettings } from "@/components/SettingsContext"
 import { TaskModeToggle } from "@/components/templates/TaskModeToggle"
-import { PriorityModeToggle } from "@/components/templates/PriorityModeToggle"
+import { AIQuickActions } from "@/components/templates/AIQuickActions"
+import { ProjectDashboard } from "@/components/templates/ProjectDashboard"
 
-const AddEventDialog = dynamic(() => import("@/components/AddEventDialog").then(m => m.AddEventDialog), { ssr: false })
 const FeatureComingSoonModal = dynamic(() => import("@/components/FeatureComingSoonModal").then(m => m.FeatureComingSoonModal), { ssr: false })
 const SettingsDialog = dynamic(() => import("@/components/SettingsDialog").then(m => m.SettingsDialog), { ssr: false })
 const AIAutofillDialog = dynamic(() => import("@/components/AIAutofillDialog").then(m => m.AIAutofillDialog), { ssr: false })
 
 // Import FAQDialog directly (not dynamically) to ensure SEO visibility
 import { FAQDialog } from "@/components/FAQDialog"
+import { DEFAULT_SETTINGS } from "@/components/SettingsContext"
 
 
 interface MobileToolbarProps {
     onReset: () => void
     viewMode: "day" | "week"
     onViewModeChange: (mode: "day" | "week") => void
-    onAddEvent: (event: Omit<Event, "id">) => void
     weekStart: Date
     weekStartsOnSunday: boolean
     onExport: () => void
     onLoadSchedule?: (events: Event[], settings: Record<string, unknown> | null) => void
-    showAddDialog?: boolean
-    onAddDialogClose?: () => void
-    initialData?: {
-        startTime?: string
-        endTime?: string
-        selectedDays?: number[]
-    }
     showSettingsOpen?: boolean
     onSettingsOpenChange?: (open: boolean) => void
+    showAIAutofillOpen?: boolean
+    onAIAutofillOpenChange?: (open: boolean) => void
     onAddEvents?: (events: Omit<Event, "id">[]) => void
 }
 
@@ -68,22 +63,19 @@ export function MobileToolbar({
     onReset,
     viewMode,
     onViewModeChange,
-    onAddEvent,
     weekStart,
     weekStartsOnSunday,
     onExport,
     onLoadSchedule,
-    showAddDialog,
-    onAddDialogClose,
-    initialData,
     showSettingsOpen,
     onSettingsOpenChange,
+    showAIAutofillOpen,
+    onAIAutofillOpenChange,
     onAddEvents,
 }: MobileToolbarProps) {
     const { userId } = useAuth()
     const [showAuthModal, setShowAuthModal] = useState(false)
     const [showResetDialog, setShowResetDialog] = useState(false)
-    const [showAddEventDialog, setShowAddEventDialog] = useState(false)
     const [showSettingsDialog, setShowSettingsDialog] = useState(false)
 
     // Sync external state if provided
@@ -106,6 +98,16 @@ export function MobileToolbar({
     const [comingSoonDescription, setComingSoonDescription] = useState<React.ReactNode>(null)
     const [showAIAutofillDialog, setShowAIAutofillDialog] = useState(false)
 
+    // Sync external AI Autofill state if provided
+    const effectiveShowAIAutofill = showAIAutofillOpen !== undefined ? showAIAutofillOpen : showAIAutofillDialog
+    const setEffectiveAIAutofillOpen = (open: boolean) => {
+        if (onAIAutofillOpenChange) {
+            onAIAutofillOpenChange(open)
+        } else {
+            setShowAIAutofillDialog(open)
+        }
+    }
+
     const { isPro, isLoading } = useSubscription()
     const { settings } = useSettings()
 
@@ -125,22 +127,33 @@ export function MobileToolbar({
         }
 
         // Authenticated users (Free or Pro) open the dialog
-        setShowAIAutofillDialog(true)
+        setEffectiveAIAutofillOpen(true)
     }
 
     const handleResetClick = () => {
+        const hasActiveTemplate = !!settings.activeTemplateSlug
         const stored = localStorage.getItem(EVENTS_STORAGE_KEY)
+        let hasEvents = false
         if (stored) {
             try {
                 const events = JSON.parse(stored)
-                if (Array.isArray(events) && events.length > 0) {
-                    setShowMoreSheet(false)
-                    setShowResetDialog(true)
-                }
+                hasEvents = Array.isArray(events) && events.length > 0
             } catch (e) {
                 console.error("Error parsing events for reset check", e)
             }
         }
+
+        const isDefaultSettings = Object.keys(DEFAULT_SETTINGS).every(key => {
+            if (key === 'activeTemplateSlug') return true
+            return (settings as any)[key] === (DEFAULT_SETTINGS as any)[key]
+        })
+
+        if (!hasActiveTemplate && isDefaultSettings && !hasEvents) {
+            return
+        }
+
+        setShowMoreSheet(false)
+        setShowResetDialog(true)
     }
 
     const handleSettingsClick = () => {
@@ -190,7 +203,7 @@ export function MobileToolbar({
 
     return (
         <>
-            {/* Floating Template & Action Buttons - Stacked on the right */}
+            {/* Floating Template Toggle Buttons - Stacked on the right */}
             <div className="fixed bottom-20 right-4 z-50 flex flex-col gap-3 items-center md:hidden pointer-events-none">
                 {/* Task Mode Toggle - Only for Cleaning Template */}
                 {settings.activeTemplateSlug === 'cleaning-schedule-builder' && (
@@ -199,23 +212,25 @@ export function MobileToolbar({
                     </div>
                 )}
 
-                {/* Priority Mode Toggle - Only for AI Schedule Builder */}
+                {/* AI Quick Actions - Only for AI Schedule Builder Template */}
                 {settings.activeTemplateSlug === 'ai-schedule-builder' && (
                     <div className="pointer-events-auto">
-                        <PriorityModeToggle variant="compact" />
+                        <AIQuickActions
+                            variant="compact"
+                            onRegenerateSchedule={() => setEffectiveAIAutofillOpen(true)}
+                            onClearSchedule={onReset}
+                        />
                     </div>
                 )}
 
-                {/* Floating Add Button (FAB) */}
-                <Button
-                    size="lg"
-                    className="size-14 rounded-full bg-blue-600 hover:bg-blue-700 text-white shadow-lg p-0 pointer-events-auto transition-all duration-300 active:scale-95"
-                    onClick={() => setShowAddEventDialog(true)}
-                >
-                    <PlusCircle className="size-7" />
-                    <span className="sr-only">Add Event</span>
-                </Button>
+                {/* Project Dashboard - Only for Construction Template */}
+                {settings.activeTemplateSlug === 'construction-schedule-builder' && (
+                    <div className="pointer-events-auto">
+                        <ProjectDashboard variant="compact" />
+                    </div>
+                )}
             </div>
+
 
             {/* Fixed Bottom Toolbar */}
             <div className="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-gray-200 px-4 py-2 md:hidden safe-area-pb">
@@ -324,28 +339,15 @@ export function MobileToolbar({
                 </div>
             </div>
 
-            {/* Add Event Dialog */}
-            <AddEventDialog
-                open={showAddEventDialog || showAddDialog || false}
-                onOpenChange={(open) => {
-                    setShowAddEventDialog(open)
-                    if (!open && onAddDialogClose) {
-                        onAddDialogClose()
-                    }
-                }}
-                onAddEvent={onAddEvent}
-                weekStart={weekStart}
-                weekStartsOnSunday={weekStartsOnSunday}
-                initialData={initialData}
-            />
+
 
             {/* Reset Dialog */}
             <Dialog open={showResetDialog} onOpenChange={setShowResetDialog}>
                 <DialogContent>
                     <DialogHeader>
-                        <DialogTitle>Reset Schedule</DialogTitle>
+                        <DialogTitle>Reset Everything</DialogTitle>
                         <DialogDescription>
-                            Are you sure you want to delete all events from the calendar? This action cannot be undone.
+                            This will clear all sidebar template features, restore your settings to default, and delete all events from the calendar. This action cannot be undone.
                         </DialogDescription>
                     </DialogHeader>
                     <DialogFooter className="gap-2">
@@ -415,8 +417,8 @@ export function MobileToolbar({
 
             {/* AI Autofill Dialog */}
             <AIAutofillDialog
-                open={showAIAutofillDialog}
-                onOpenChange={setShowAIAutofillDialog}
+                open={effectiveShowAIAutofill}
+                onOpenChange={setEffectiveAIAutofillOpen}
                 onAddEvents={(events) => {
                     if (onAddEvents) {
                         onAddEvents(events)

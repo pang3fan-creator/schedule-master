@@ -349,11 +349,14 @@ export function groupOverlappingEvents(events: Event[]): GroupedEvent[] {
         })
 
         const totalColumns = columns.length
+        // Add horizontal padding (1% on each side)
+        const padding = 1
+        const availableWidth = 100 - (padding * 2)
 
         columns.forEach((column, colIndex) => {
             column.forEach(event => {
-                event.left = (colIndex / totalColumns) * 100
-                event.width = (1 / totalColumns) * 100
+                event.left = padding + (colIndex / totalColumns) * availableWidth
+                event.width = (1 / totalColumns) * availableWidth
                 result.push(event)
             })
         })

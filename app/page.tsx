@@ -15,7 +15,7 @@ import { MobileEventActionSheet } from "@/components/MobileEventActionSheet"
 import { useIsMobile } from "@/hooks/useMediaQuery"
 import { getWeekStart } from "@/lib/time-utils"
 import { homepageFAQs } from "@/components/HomepageSEOContent"
-import { EVENTS_STORAGE_KEY, VIEW_MODE_STORAGE_KEY, SELECTED_DATE_STORAGE_KEY, SETTINGS_STORAGE_KEY } from "@/lib/storage-keys"
+import { EVENTS_STORAGE_KEY, VIEW_MODE_STORAGE_KEY, SELECTED_DATE_STORAGE_KEY, SETTINGS_STORAGE_KEY, SHOULD_OPEN_AI_AUTOFILL_KEY } from "@/lib/storage-keys"
 
 // Dynamically import dialog components for code splitting
 // These are only loaded when the user triggers them
@@ -23,6 +23,7 @@ const ExportDialog = dynamic(() => import("@/components/ExportDialog").then(m =>
 const DeleteConfirmDialog = dynamic(() => import("@/components/DeleteConfirmDialog").then(m => m.DeleteConfirmDialog), { ssr: false })
 const ConflictDialog = dynamic(() => import("@/components/ConflictDialog").then(m => m.ConflictDialog), { ssr: false })
 const EditEventDialog = dynamic(() => import("@/components/EditEventDialog").then(m => m.EditEventDialog), { ssr: false })
+const AddEventDialog = dynamic(() => import("@/components/AddEventDialog").then(m => m.AddEventDialog), { ssr: false })
 
 // Dynamically import welcome tip components (shown once per user)
 const MobileWelcomeTip = dynamic(() => import("@/components/MobileWelcomeTip").then(m => m.MobileWelcomeTip), { ssr: false })
@@ -132,7 +133,7 @@ export default function ScheduleBuilderPage() {
   const [viewMode, setViewMode] = useState<"day" | "week">("week")
   const [selectedDate, setSelectedDate] = useState<Date>(() => new Date())
   // Get settings from context
-  const { settings, reloadSettings } = useSettings()
+  const { settings, reloadSettings, resetSettings } = useSettings()
 
   // Calculate current week start based on selected date and settings
   // This ensures the "Add Event" dialog uses the correct week reference
@@ -183,6 +184,9 @@ export default function ScheduleBuilderPage() {
     selectedDays?: number[]
   } | undefined>(undefined)
 
+  // AI Autofill dialog state (can be triggered externally by AI template)
+  const [showAIAutofillDialog, setShowAIAutofillDialog] = useState(false)
+
   // Handle opening add dialog with specific data
   const handleOpenAddDialog = useCallback((data: { startTime: string; endTime: string; day: number }) => {
     setAddDialogInitialData({
@@ -217,6 +221,16 @@ export default function ScheduleBuilderPage() {
     setIsLoaded(true)
     // Reload settings in case template was just applied
     reloadSettings()
+
+    // Check if AI Autofill should be opened (from AI template application)
+    const shouldOpenAIAutofill = localStorage.getItem(SHOULD_OPEN_AI_AUTOFILL_KEY)
+    if (shouldOpenAIAutofill === 'true') {
+      localStorage.removeItem(SHOULD_OPEN_AI_AUTOFILL_KEY)
+      // Delay slightly to ensure page is fully loaded
+      setTimeout(() => {
+        setShowAIAutofillDialog(true)
+      }, 100)
+    }
   }, [reloadSettings])
 
   // Save events to localStorage whenever events change (after initial load)
@@ -240,10 +254,11 @@ export default function ScheduleBuilderPage() {
     }
   }, [selectedDate, isLoaded])
 
-  const handleReset = () => {
+  const handleReset = useCallback(() => {
     setEvents([])
     clearEventsFromStorage()
-  }
+    resetSettings()
+  }, [resetSettings])
 
   // Handle event update when dragged or edited (with conflict detection)
   // skipConflictCheck is true when called from drag operations (conflict already prevented during drag)
@@ -462,16 +477,13 @@ export default function ScheduleBuilderPage() {
           {/* Desktop Sidebar - Hidden on mobile */}
           {!isExporting && !isMobile && (
             <Sidebar
+              events={events}
               onReset={handleReset}
               viewMode={viewMode}
               onViewModeChange={setViewMode}
-              onAddEvent={handleAddEvent}
               weekStart={currentWeekStart}
               weekStartsOnSunday={settings.weekStartsOnSunday}
               onExport={handleExport}
-              showAddDialog={showAddDialog}
-              onAddDialogClose={handleAddDialogClose}
-              initialData={addDialogInitialData}
               showSettingsOpen={showSettingsDialog}
               onSettingsOpenChange={setShowSettingsDialog}
               onLoadSchedule={(loadedEvents, loadedSettings) => {
@@ -485,6 +497,8 @@ export default function ScheduleBuilderPage() {
                 }
               }}
               onAddEvents={handleAddEvents}
+              showAIAutofillOpen={showAIAutofillDialog}
+              onAIAutofillOpenChange={setShowAIAutofillDialog}
             />
           )}
           <main className={`flex-1 min-h-0 overflow-auto ${!isExporting && isMobile ? 'pb-20' : ''}`} ref={calendarRef}>
@@ -535,7 +549,6 @@ export default function ScheduleBuilderPage() {
             onReset={handleReset}
             viewMode={viewMode}
             onViewModeChange={setViewMode}
-            onAddEvent={handleAddEvent}
             weekStart={currentWeekStart}
             weekStartsOnSunday={settings.weekStartsOnSunday}
             onExport={handleExport}
@@ -549,11 +562,10 @@ export default function ScheduleBuilderPage() {
                 reloadSettings()
               }
             }}
-            showAddDialog={showAddDialog}
-            onAddDialogClose={handleAddDialogClose}
-            initialData={addDialogInitialData}
             showSettingsOpen={showSettingsDialog}
             onSettingsOpenChange={setShowSettingsDialog}
+            showAIAutofillOpen={showAIAutofillDialog}
+            onAIAutofillOpenChange={setShowAIAutofillDialog}
             onAddEvents={handleAddEvents}
           />
         )}
@@ -613,6 +625,18 @@ export default function ScheduleBuilderPage() {
           onOpenChange={(open) => !open && setEditEvent(null)}
           event={editEvent}
           onUpdateEvent={handleEventUpdate}
+        />
+
+        {/* Add Event Dialog (for click/drag on calendar grid) */}
+        <AddEventDialog
+          open={showAddDialog}
+          onOpenChange={(open) => {
+            if (!open) handleAddDialogClose()
+          }}
+          onAddEvent={handleAddEvent}
+          weekStart={currentWeekStart}
+          weekStartsOnSunday={settings.weekStartsOnSunday}
+          initialData={addDialogInitialData}
         />
 
         {/* Mobile Event Action Sheet */}

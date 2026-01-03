@@ -6,7 +6,7 @@ export const metadata: Metadata = {
     description: "Start for free or unlock PDF export and AI scheduling with TrySchedule Pro. Compare plans starting from $4.9/week.",
     keywords: [
         "schedule builder pricing",
-        "free schedule maker",
+        "free schedule builder",
         "scheduling software cost",
         "scheduling app pricing",
         "free online schedule builder",

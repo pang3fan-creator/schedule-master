@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   manifest: "/manifest.json",
   keywords: [
     "free schedule builder",
-    "online schedule maker",
+    "online schedule builder",
     "schedule builder",
     "free online schedule builder",
     "visual schedule builder",

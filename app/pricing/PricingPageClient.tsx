@@ -127,7 +127,7 @@ export function PricingPageClient({ productSchemas }: PricingPageClientProps) {
         {
             question: "Is the schedule builder really free?",
             answer:
-                "Yes! Our free online schedule maker allows you to create, edit, and download schedules as images without paying a dime. You only pay if you need advanced features like PDF export or AI automation.",
+                "Yes! Our free online schedule builder allows you to create, edit, and download schedules as images without paying a dime. You only pay if you need advanced features like PDF export or AI automation.",
         },
         {
             question: "How does the AI schedule builder work?",

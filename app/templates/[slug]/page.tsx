@@ -24,10 +24,17 @@ export async function generateMetadata({ params }: TemplatePageProps): Promise<M
         }
     }
 
+    const baseKeywords = [template.slug.replace(/-/g, ' '), 'schedule builder', 'free template', template.category.toLowerCase()]
+    const aiKeywords = template.slug === 'ai-schedule-builder'
+        ? ['ai schedule generator', 'automated scheduling', 'smart planner', 'productivity ai']
+        : template.slug === 'construction-schedule-builder'
+            ? ['construction schedule builder', 'construction project management', 'gantt chart', 'contractor tools', 'site timeline']
+            : []
+
     return {
         title: `${template.title} | TrySchedule Templates`,
         description: template.description,
-        keywords: [template.slug.replace(/-/g, ' '), 'schedule builder', 'free template', template.category.toLowerCase()],
+        keywords: [...baseKeywords, ...aiKeywords],
     }
 }
 
@@ -74,7 +81,33 @@ function generateJsonLd(slug: string) {
         ],
     }
 
-    return { webAppSchema }
+    // Breadcrumb Schema
+    const breadcrumbSchema = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": baseUrl
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Templates",
+                "item": `${baseUrl}/templates`
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": template.title,
+                "item": `${baseUrl}/templates/${template.slug}`
+            }
+        ]
+    }
+
+    return { webAppSchema, breadcrumbSchema }
 }
 
 export default async function TemplatePage({ params }: TemplatePageProps) {
@@ -85,15 +118,21 @@ export default async function TemplatePage({ params }: TemplatePageProps) {
         notFound()
     }
 
-    const jsonLd = generateJsonLd(slug)
+    const { webAppSchema, breadcrumbSchema } = generateJsonLd(slug) || {}
 
     return (
         <>
             {/* JSON-LD Structured Data */}
-            {jsonLd?.webAppSchema && (
+            {webAppSchema && (
                 <script
                     type="application/ld+json"
-                    dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd.webAppSchema) }}
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppSchema) }}
+                />
+            )}
+            {breadcrumbSchema && (
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
                 />
             )}
             <TemplateDetailClient slug={slug} />

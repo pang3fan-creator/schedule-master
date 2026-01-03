@@ -118,6 +118,21 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
   // Calculate current week start from selectedDate
   const currentWeekStart = useMemo(() => getWeekStart(selectedDate, weekStartsOnSunday), [selectedDate, weekStartsOnSunday])
 
+  // Filter events based on working hours visibility
+  // d <= a: event end <= working start -> hidden
+  // c >= b: event start >= working end -> hidden
+  const visibleEvents = useMemo(() => {
+    return events.filter(event => {
+      const eventStart = event.startHour + (event.startMinute / 60)
+      const eventEnd = event.endHour + (event.endMinute / 60)
+
+      if (eventEnd <= workingHoursStart) return false
+      if (eventStart >= workingHoursEnd) return false
+
+      return true
+    })
+  }, [events, workingHoursStart, workingHoursEnd])
+
   // Use the event drag hook for drag-and-drop with touch support
   const {
     dragState,
@@ -131,7 +146,7 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
     rowHeight,
     minHour: workingHoursStart,
     maxHour: workingHoursEnd,
-    events,  // Pass events for collision detection during drag
+    events: visibleEvents,  // Pass filtered events for collision detection
     timeIncrement,  // Pass time increment for drag snapping
     allowEventOverlap,  // Skip collision detection when overlap is allowed
   })
@@ -145,7 +160,7 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
     onAddEvent,
     rowHeight,
     timeIncrement,
-    existingEvents: events,
+    existingEvents: visibleEvents, // Use filtered events
     workingHoursStart,
     workingHoursEnd,
     weekDates,
@@ -247,7 +262,7 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
   const eventsByDay = useMemo(() => {
     // First collect events by day
     const map = new Map<number, Event[]>()
-    events.forEach(event => {
+    visibleEvents.forEach(event => {
       const dayKey = event.day
       if (!map.has(dayKey)) {
         map.set(dayKey, [])
@@ -260,7 +275,7 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
       result.set(dayKey, groupOverlappingEvents(dayEvents))
     })
     return result
-  }, [events])
+  }, [visibleEvents])
 
   return (
     <div className={`flex flex-col p-2 md:p-6 bg-muted/20 ${exportMode ? '' : 'h-full'}`}>
@@ -395,7 +410,7 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
       </div>
 
       {/* Calendar Grid - in export mode, no overflow/scroll constraints */}
-      <div className={exportMode ? '' : 'flex-1 min-h-0 overflow-y-auto md:overflow-auto'}>
+      <div className={exportMode ? '' : 'flex-1 min-h-0 overflow-y-auto overflow-x-hidden md:overflow-auto'}>
         <div
           ref={gridRef}
           className={`grid select-none weekly-calendar-grid ${exportMode ? 'min-w-[700px]' : 'w-full md:min-w-[700px] h-full'}`}

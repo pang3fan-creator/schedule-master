@@ -14,7 +14,7 @@ export const homepageFAQs = [
         answer: "Step 1: Drag and drop on the calendar grid to create time blocks for your activities.\n\nStep 2: Customize each block with many vibrant colors to categorize work, study, fitness, or personal time.\n\nStep 3: Click 'Export' to download your finished schedule as PNG, JPG, or PDF – ready to print or share.\n\nThe entire process takes less than 5 minutes, no design skills needed."
     },
     {
-        question: "Who needs a schedule maker like TrySchedule?",
+        question: "Who needs a schedule builder like TrySchedule?",
         answer: "TrySchedule is designed for everyone who values their time:\n\n• Students – organizing class timetables and study sessions\n• Shift Managers – creating employee work rotations\n• Gym Goers – planning weekly workout routines\n• Freelancers – balancing multiple client projects and deadlines\n\nWhether you need a simple daily planner or a complex weekly schedule, our visual builder adapts to your needs."
     },
     {

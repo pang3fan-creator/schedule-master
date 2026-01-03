@@ -17,14 +17,14 @@ export interface CalendarSettings {
   activeTemplateSlug?: string  // Track which template is currently active
 }
 
-const DEFAULT_SETTINGS: CalendarSettings = {
+export const DEFAULT_SETTINGS: CalendarSettings = {
   weekStartsOnSunday: true,    // PRD requirement: US default is Sunday
   use12HourFormat: true,       // PRD requirement: US default is 12h AM/PM
   timeIncrement: 5,
   workingHoursStart: 8,        // 8 AM
   workingHoursEnd: 17,         // 5 PM
   showDates: true,             // Default: show dates
-  allowEventOverlap: false,    // Default: disallow overlap (conflict detection enabled)
+  allowEventOverlap: true,     // Always enabled: allow overlapping events
   taskModeEnabled: false,      // Default: task mode disabled
   priorityModeEnabled: false,  // Default: priority mode disabled
   activeTemplateSlug: undefined, // Default: no active template
