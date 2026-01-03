@@ -41,6 +41,17 @@ const nextConfig: NextConfig = {
       },
     ]
   },
+
+  // Redirects
+  async redirects() {
+    return [
+      {
+        source: '/templates/ai-schedule-generator',
+        destination: '/templates/ai-schedule-builder',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
