@@ -5,7 +5,7 @@ export const metadata = {
     title: "Privacy Policy | TrySchedule",
     description: "Privacy Policy for TrySchedule - Free Online Schedule Builder.",
     alternates: {
-        canonical: `${process.env.NEXT_PUBLIC_BASE_URL}/privacy`,
+        canonical: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://www.tryschedule.com'}/privacy`,
     },
 }
 

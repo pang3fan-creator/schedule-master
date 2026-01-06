@@ -8,7 +8,7 @@ export const metadata: Metadata = {
         description: "Browse our collection of 20+ free printable schedule templates for work, class, and workout.",
     },
     alternates: {
-        canonical: `${process.env.NEXT_PUBLIC_BASE_URL}/templates`,
+        canonical: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://www.tryschedule.com'}/templates`,
     },
 }
 

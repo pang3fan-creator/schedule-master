@@ -5,7 +5,7 @@ export const metadata = {
     title: "Terms of Service | TrySchedule",
     description: "Terms of Service for TrySchedule - Free Online Schedule Builder.",
     alternates: {
-        canonical: `${process.env.NEXT_PUBLIC_BASE_URL}/terms`,
+        canonical: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://www.tryschedule.com'}/terms`,
     },
 }
 

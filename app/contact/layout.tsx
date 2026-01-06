@@ -8,7 +8,7 @@ export const metadata: Metadata = {
         description: "Have questions or feedback about TrySchedule? Contact our support team for help.",
     },
     alternates: {
-        canonical: `${process.env.NEXT_PUBLIC_BASE_URL}/contact`,
+        canonical: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://www.tryschedule.com'}/contact`,
     },
 }
 
