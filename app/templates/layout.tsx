@@ -7,6 +7,9 @@ export const metadata: Metadata = {
         title: "Free Schedule Templates Library | TrySchedule",
         description: "Browse our collection of 20+ free printable schedule templates for work, class, and workout.",
     },
+    alternates: {
+        canonical: `${process.env.NEXT_PUBLIC_BASE_URL}/templates`,
+    },
 }
 
 export default function TemplatesLayout({

@@ -4,6 +4,9 @@ import { Breadcrumb } from "@/components/Breadcrumb"
 export const metadata = {
     title: "Terms of Service | TrySchedule",
     description: "Terms of Service for TrySchedule - Free Online Schedule Builder.",
+    alternates: {
+        canonical: `${process.env.NEXT_PUBLIC_BASE_URL}/terms`,
+    },
 }
 
 export default function TermsPage() {

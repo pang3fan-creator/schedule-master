@@ -3,6 +3,8 @@ import { getTemplate, getAllTemplateSlugs } from "@/lib/templates"
 import { TemplateDetailClient } from "./TemplateDetailClient"
 import type { Metadata } from "next"
 
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.tryschedule.com'
+
 interface TemplatePageProps {
     params: Promise<{ slug: string }>
 }
@@ -35,6 +37,9 @@ export async function generateMetadata({ params }: TemplatePageProps): Promise<M
         title: `${template.title} | TrySchedule Templates`,
         description: template.description,
         keywords: [...baseKeywords, ...aiKeywords],
+        alternates: {
+            canonical: `${baseUrl}/templates/${slug}`,
+        },
     }
 }
 
@@ -42,8 +47,6 @@ export async function generateMetadata({ params }: TemplatePageProps): Promise<M
 function generateJsonLd(slug: string) {
     const template = getTemplate(slug)
     if (!template) return null
-
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.tryschedule.com'
 
     // WebApplication Schema
     const webAppSchema = {

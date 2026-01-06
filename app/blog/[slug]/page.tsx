@@ -20,6 +20,8 @@ export async function generateStaticParams() {
     }))
 }
 
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.tryschedule.com'
+
 // Generate dynamic metadata for SEO
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
     const { slug } = await params
@@ -31,7 +33,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
         }
     }
 
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.tryschedule.com'
+
 
     return {
         title: `${post.title} | TrySchedule Blog`,
@@ -68,7 +70,6 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 function generateArticleSchema(post: ReturnType<typeof getPostBySlug>, slug: string) {
     if (!post) return null
 
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.tryschedule.com'
     const dateStr = post.date ? new Date(post.date).toISOString() : undefined
 
     return {
@@ -371,7 +372,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                             <span className="text-sm font-medium text-gray-700">Share:</span>
                             <div className="flex gap-3">
                                 <a
-                                    href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(`${process.env.NEXT_PUBLIC_SITE_URL || 'https://www.tryschedule.com'}/blog/${slug}`)}`}
+                                    href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(`${baseUrl}/blog/${slug}`)}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
@@ -382,7 +383,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                                     </svg>
                                 </a>
                                 <a
-                                    href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`${process.env.NEXT_PUBLIC_SITE_URL || 'https://www.tryschedule.com'}/blog/${slug}`)}`}
+                                    href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`${baseUrl}/blog/${slug}`)}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"

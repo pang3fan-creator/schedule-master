@@ -10,8 +10,10 @@ import { SubscriptionProvider } from "@/components/SubscriptionContext"
 import { SettingsProvider } from "@/components/SettingsContext"
 import "./globals.css"
 
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.tryschedule.com'
+
 export const metadata: Metadata = {
-  metadataBase: new URL('https://www.tryschedule.com'),
+  metadataBase: new URL(baseUrl),
   alternates: {
     canonical: "/",
   },
@@ -90,8 +92,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.tryschedule.com'
-
   // Organization Schema for brand recognition
   const organizationSchema = {
     "@context": "https://schema.org",

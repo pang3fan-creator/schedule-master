@@ -1,6 +1,8 @@
 import type { Metadata } from "next"
 import { PricingPageClient } from "./PricingPageClient"
 
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.tryschedule.com'
+
 export const metadata: Metadata = {
     title: "Affordable Scheduling | Pricing Plans - TrySchedule Pro",
     description: "Start for free or unlock PDF export and AI scheduling with TrySchedule Pro. Compare plans starting from $4.9/week.",
@@ -17,14 +19,12 @@ export const metadata: Metadata = {
         type: "website",
     },
     alternates: {
-        canonical: "https://www.tryschedule.com/pricing",
+        canonical: `${baseUrl}/pricing`,
     },
 }
 
 // Generate Product Schema for structured data
 function generateProductSchemas() {
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.tryschedule.com'
-
     return [
         {
             "@context": "https://schema.org",
