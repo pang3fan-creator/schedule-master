@@ -65,8 +65,8 @@ function generateJsonLd(slug: string) {
         },
         "aggregateRating": {
             "@type": "AggregateRating",
-            "ratingValue": "4.8",
-            "ratingCount": "500",
+            "ratingValue": "4.9",
+            "ratingCount": "126",
         },
         "review": [
             {
