@@ -7,7 +7,7 @@ import { Home, Search } from "lucide-react"
 
 export default function NotFound() {
   return (
-    <PageLayout bgColor="bg-gray-50" contentPadding="">
+    <PageLayout contentPadding="">
       <div className="flex-1 flex items-center justify-center px-4 py-16">
         <div className="text-center max-w-2xl mx-auto">
           {/* 404 Number */}

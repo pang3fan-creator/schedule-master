@@ -265,7 +265,7 @@ export function PricingPageClient({ productSchemas }: PricingPageClientProps) {
                     dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
                 />
             ))}
-            <PageLayout bgColor="bg-gradient-to-b from-violet-50/30 via-white to-white" contentPadding="pt-16">
+            <PageLayout contentPadding="pt-16">
                 {/* Success Banner */}
                 <Suspense fallback={null}>
                     <SuccessBanner />

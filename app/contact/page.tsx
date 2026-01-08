@@ -62,7 +62,7 @@ export default function ContactPage() {
     }
 
     return (
-        <PageLayout bgColor="bg-gray-50">
+        <PageLayout>
             <div className="container mx-auto px-4 max-w-4xl">
                 {/* Breadcrumb Navigation */}
                 <div className="mb-6">

@@ -78,7 +78,7 @@ export function BlogPageClient({ posts, categories }: BlogPageClientProps) {
     }
 
     return (
-        <PageLayout bgColor="bg-gray-50/50">
+        <PageLayout>
             {/* Breadcrumb Navigation */}
             <div className="container mx-auto px-4 max-w-6xl mb-4">
                 <Breadcrumb items={[

@@ -313,7 +313,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                     dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
                 />
             )}
-            <PageLayout bgColor="bg-white" contentPadding="">
+            <PageLayout contentPadding="">
                 {/* Article Header */}
                 <article className="container mx-auto px-4 py-16 max-w-3xl">
                     {/* Breadcrumb Navigation */}
@@ -341,41 +341,44 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                         </div>
                     </div>
 
-                    {/* Cover Image */}
-                    <div className="mb-12 rounded-xl overflow-hidden aspect-[16/9] relative">
-                        {post.coverImage ? (
-                            <Image
-                                src={post.coverImage}
-                                alt={post.title}
-                                fill
-                                className="object-cover"
-                                sizes="(max-width: 768px) 100vw, 800px"
-                                priority
-                            />
-                        ) : (
-                            <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center text-blue-300">
-                                <svg className="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                </svg>
-                            </div>
-                        )}
-                    </div>
+                    {/* Article Card Wrapper */}
+                    <div className="bg-white rounded-2xl border border-gray-100 p-6 md:p-10 shadow-sm mb-12">
+                        {/* Cover Image */}
+                        <div className="mb-10 rounded-xl overflow-hidden aspect-[16/9] relative">
+                            {post.coverImage ? (
+                                <Image
+                                    src={post.coverImage}
+                                    alt={post.title}
+                                    fill
+                                    className="object-cover"
+                                    sizes="(max-width: 768px) 100vw, 800px"
+                                    priority
+                                />
+                            ) : (
+                                <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center text-blue-300">
+                                    <svg className="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    </svg>
+                                </div>
+                            )}
+                        </div>
 
-                    {/* Article Content */}
-                    <div className="prose prose-lg max-w-none">
-                        {parseMarkdown(post.content)}
+                        {/* Article Content */}
+                        <div className="prose prose-lg max-w-none prose-headings:text-gray-900 prose-p:text-gray-600 prose-a:text-blue-600 hover:prose-a:text-blue-700">
+                            {parseMarkdown(post.content)}
+                        </div>
                     </div>
 
                     {/* Share Section */}
-                    <div className="mt-12 pt-8 border-t border-gray-200">
+                    <div className="pt-8 border-t border-gray-100 flex items-center justify-between">
                         <div className="flex items-center gap-4">
-                            <span className="text-sm font-medium text-gray-700">Share:</span>
-                            <div className="flex gap-3">
+                            <span className="text-sm font-medium text-gray-500 uppercase tracking-wider">Share</span>
+                            <div className="flex gap-2">
                                 <a
                                     href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(`${baseUrl}/blog/${slug}`)}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
+                                    className="p-2.5 rounded-full bg-gray-50 text-gray-400 hover:bg-blue-50 hover:text-blue-600 transition-all"
                                     aria-label="Share on Twitter"
                                 >
                                     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -386,7 +389,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                                     href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`${baseUrl}/blog/${slug}`)}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
+                                    className="p-2.5 rounded-full bg-gray-50 text-gray-400 hover:bg-blue-50 hover:text-blue-600 transition-all"
                                     aria-label="Share on LinkedIn"
                                 >
                                     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">

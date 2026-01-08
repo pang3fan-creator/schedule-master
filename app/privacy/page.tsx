@@ -11,7 +11,7 @@ export const metadata = {
 
 export default function PrivacyPage() {
     return (
-        <PageLayout bgColor="bg-white">
+        <PageLayout>
             <div className="container mx-auto px-4 max-w-4xl">
                 {/* Breadcrumb Navigation */}
                 <div className="mb-6">

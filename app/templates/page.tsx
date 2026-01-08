@@ -129,7 +129,7 @@ export default function TemplatesPage() {
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
             />
-            <PageLayout bgColor="bg-gray-50/50">
+            <PageLayout>
                 {/* Breadcrumb Navigation */}
                 <div className="container mx-auto px-4 max-w-6xl mb-4">
                     <Breadcrumb items={[
@@ -270,7 +270,6 @@ export default function TemplatesPage() {
                 <div className="mt-16">
                     <FAQSection
                         items={templatesFAQs}
-                        bgColor="bg-gray-50/50"
                     />
                 </div>
             </PageLayout>

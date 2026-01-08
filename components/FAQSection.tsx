@@ -14,7 +14,7 @@ interface FAQSectionProps {
     subtitle?: string
     /** FAQ items to display */
     items: FAQItem[]
-    /** Background color class, defaults to "bg-gray-50" */
+    /** Background color class, defaults to "bg-white" */
     bgColor?: string
 }
 
@@ -36,7 +36,7 @@ export function FAQSection({
     title = "Frequently Asked Questions",
     subtitle,
     items,
-    bgColor = "bg-gray-50",
+    bgColor = "bg-white",
 }: FAQSectionProps) {
     if (items.length === 0) return null
 
