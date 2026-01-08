@@ -119,7 +119,7 @@ export default function ContactPage() {
                 </div>
 
                 {/* Contact Form */}
-                <div className="bg-white rounded-xl p-8 border border-gray-200">
+                <div className="bg-white rounded-xl p-8 border border-gray-100 shadow-sm">
                     {isSubmitted ? (
                         <div className="text-center py-12">
                             <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
