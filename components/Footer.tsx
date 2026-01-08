@@ -1,6 +1,7 @@
 import Link from "next/link"
 import Image from "next/image"
-import PHBadge from "./PHBadge"
+import PHBadge from "@/components/PHBadge"
+
 
 export function Footer() {
     return (
@@ -18,7 +19,13 @@ export function Footer() {
                     </div>
                     <p className="text-xs text-gray-500 italic"><strong className="font-medium">Try</strong>Schedule is the easiest <strong className="font-medium">free online schedule builder</strong> for students, managers, and teams.</p>
                 </div>
-                <div className="flex gap-6">
+                <div className="flex gap-6 items-center">
+                    <div className="flex items-center gap-4">
+                        <PHBadge variant="inline" className="translate-y-0" />
+                        <a href="https://www.nxgntools.com/tools/tryschedule?utm_source=tryschedule" target="_blank" rel="noopener" className="inline-block w-auto transition-transform hover:scale-105">
+                            <img src="https://www.nxgntools.com/api/embed/tryschedule?type=LAUNCHING_SOON_ON" alt="NextGen Tools Badge - The #1 AI Tools Directory & Launch Platform" className="h-[38px] w-auto" />
+                        </a>
+                    </div>
                     <Link href="/pricing" className="hover:text-violet-600 transition-colors">Pricing</Link>
                     <Link href="/terms" className="hover:text-violet-600 transition-colors">Terms</Link>
                     <Link href="/privacy" className="hover:text-violet-600 transition-colors">Privacy</Link>
@@ -50,9 +57,12 @@ export function Footer() {
                     <strong className="font-medium">Try</strong>Schedule is the easiest <strong className="font-medium">free online schedule builder</strong> for students, managers, and teams.
                 </p>
 
-                {/* Product Hunt Badge for Mobile */}
-                <div className="mt-2">
+                {/* Badges for Mobile */}
+                <div className="mt-2 flex flex-col items-center gap-3">
                     <PHBadge variant="inline" />
+                    <a href="https://www.nxgntools.com/tools/tryschedule?utm_source=tryschedule" target="_blank" rel="noopener" className="inline-block w-auto transition-transform hover:scale-105">
+                        <img src="https://www.nxgntools.com/api/embed/tryschedule?type=LAUNCHING_SOON_ON" alt="NextGen Tools Badge - The #1 AI Tools Directory & Launch Platform" className="h-[42px] w-auto" />
+                    </a>
                 </div>
             </div>
         </footer>

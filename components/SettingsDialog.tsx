@@ -85,7 +85,7 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent className="sm:max-w-[420px] p-0 gap-0 overflow-hidden" showCloseButton={false}>
                 {/* Header */}
-                <DialogHeader className="flex flex-row items-center justify-between px-6 py-4 border-b border-gray-100">
+                <DialogHeader className="flex flex-row items-center justify-between px-6 pt-5 pb-2.5 border-b border-gray-100">
                     <div className="flex items-center gap-3">
                         <Settings className="size-5 text-blue-600" />
                         <DialogTitle className="text-lg font-semibold text-gray-900">
@@ -103,7 +103,7 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
                 </DialogHeader>
 
                 {/* Settings Content */}
-                <div className="px-6 py-5 space-y-6">
+                <div className="px-6 pt-3.5 pb-6 space-y-6">
                     {/* Week Start Day */}
                     <div className="flex items-center justify-between">
                         <div className="space-y-0.5">

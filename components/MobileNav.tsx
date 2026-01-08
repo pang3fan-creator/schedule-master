@@ -116,8 +116,8 @@ export function MobileNav() {
                             aria-hidden="true"
                         />
                     )}
-                    <SheetContent side="left" className="w-[300px] p-0 z-[60]" hideClose>
-                        <SheetHeader className="border-b px-4 h-16 flex items-center">
+                    <SheetContent side="left" className="w-[300px] p-0 z-[60] gap-0 flex flex-col h-full" hideClose>
+                        <SheetHeader className="border-b px-4 h-16 flex items-center shrink-0">
                             <SheetTitle className="flex items-center gap-2">
                                 <Image src="/icon.svg" alt="TrySchedule" width={28} height={28} className="object-contain" />
                                 <span className="text-lg text-blue-600">
@@ -127,93 +127,95 @@ export function MobileNav() {
                             </SheetTitle>
                         </SheetHeader>
 
-                        <nav className="flex flex-col gap-1 p-4">
-                            {/* Home Link */}
-                            <SheetClose asChild>
-                                <Link
-                                    href="/"
-                                    className={cn(
-                                        "py-3 px-2 rounded-lg font-medium",
-                                        pathname === "/" ? "bg-blue-50 text-blue-600" : "hover:bg-gray-50 text-gray-700"
-                                    )}
-                                >
-                                    Home
-                                </Link>
-                            </SheetClose>
+                        <div className="flex-1 overflow-y-auto overscroll-contain">
+                            <nav className="flex flex-col gap-1 p-4">
+                                {/* Home Link */}
+                                <SheetClose asChild>
+                                    <Link
+                                        href="/"
+                                        className={cn(
+                                            "py-3 px-2 rounded-lg font-medium",
+                                            pathname === "/" ? "bg-blue-50 text-blue-600" : "hover:bg-gray-50 text-gray-700"
+                                        )}
+                                    >
+                                        Home
+                                    </Link>
+                                </SheetClose>
 
-                            {/* Templates Section */}
-                            <div>
-                                <button
-                                    onClick={() => setShowTemplates(!showTemplates)}
-                                    className={cn(
-                                        "flex items-center justify-between w-full py-3 px-2 rounded-lg text-left",
-                                        isTemplatesActive ? "bg-blue-50 text-blue-600" : "hover:bg-gray-50"
-                                    )}
-                                >
-                                    <span className="font-medium">Templates</span>
-                                    <ChevronRight className={cn(
-                                        "size-4 transition-transform",
-                                        showTemplates && "rotate-90"
-                                    )} />
-                                </button>
+                                {/* Templates Section */}
+                                <div>
+                                    <button
+                                        onClick={() => setShowTemplates(!showTemplates)}
+                                        className={cn(
+                                            "flex items-center justify-between w-full py-3 px-2 rounded-lg text-left",
+                                            isTemplatesActive ? "bg-blue-50 text-blue-600" : "hover:bg-gray-50"
+                                        )}
+                                    >
+                                        <span className="font-medium">Templates</span>
+                                        <ChevronRight className={cn(
+                                            "size-4 transition-transform",
+                                            showTemplates && "rotate-90"
+                                        )} />
+                                    </button>
 
-                                {showTemplates && (
-                                    <div className="mt-2 ml-2 space-y-1">
-                                        {templates.map((template) => {
-                                            const IconComponent = template.icon ? iconMap[template.icon] : Briefcase
-                                            return (
-                                                <SheetClose asChild key={template.slug}>
-                                                    <Link
-                                                        href={`/templates/${template.slug}`}
-                                                        className="flex items-center gap-3 py-2 px-3 rounded-lg hover:bg-gray-50"
-                                                    >
-                                                        <div className="p-1 bg-blue-50 rounded shrink-0">
-                                                            <IconComponent className="size-4 text-blue-600" />
-                                                        </div>
-                                                        <span className="text-sm text-gray-700 flex-1 truncate min-w-0">{template.title}</span>
-                                                        {template.requiresPro && (
-                                                            <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[10px] font-semibold bg-gradient-to-r from-amber-400 to-orange-500 text-white shrink-0">
-                                                                <Crown className="size-2.5" />
-                                                                PRO
-                                                            </span>
-                                                        )}
-                                                    </Link>
-                                                </SheetClose>
-                                            )
-                                        })}
-                                        <SheetClose asChild>
+                                    {showTemplates && (
+                                        <div className="mt-2 ml-2 space-y-1">
+                                            {templates.map((template) => {
+                                                const IconComponent = template.icon ? iconMap[template.icon] : Briefcase
+                                                return (
+                                                    <SheetClose asChild key={template.slug}>
+                                                        <Link
+                                                            href={`/templates/${template.slug}`}
+                                                            className="flex items-center gap-3 py-2 px-3 rounded-lg hover:bg-gray-50"
+                                                        >
+                                                            <div className="p-1 bg-blue-50 rounded shrink-0">
+                                                                <IconComponent className="size-4 text-blue-600" />
+                                                            </div>
+                                                            <span className="text-sm text-gray-700 flex-1 truncate min-w-0">{template.title}</span>
+                                                            {template.requiresPro && (
+                                                                <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[10px] font-semibold bg-gradient-to-r from-amber-400 to-orange-500 text-white shrink-0">
+                                                                    <Crown className="size-2.5" />
+                                                                    PRO
+                                                                </span>
+                                                            )}
+                                                        </Link>
+                                                    </SheetClose>
+                                                )
+                                            })}
+                                            <SheetClose asChild>
+                                                <Link
+                                                    href="/templates"
+                                                    className="block py-2 px-3 text-sm text-blue-600 font-medium"
+                                                >
+                                                    View All Templates
+                                                </Link>
+                                            </SheetClose>
+                                        </div>
+                                    )}
+                                </div>
+
+                                {/* Other nav links */}
+                                {navLinks.map((link) => {
+                                    const isActive = pathname === link.href
+                                    return (
+                                        <SheetClose asChild key={link.href}>
                                             <Link
-                                                href="/templates"
-                                                className="block py-2 px-3 text-sm text-blue-600 font-medium"
+                                                href={link.href}
+                                                className={cn(
+                                                    "py-3 px-2 rounded-lg font-medium",
+                                                    isActive ? "bg-blue-50 text-blue-600" : "hover:bg-gray-50 text-gray-700"
+                                                )}
                                             >
-                                                View All Templates
+                                                {link.label}
                                             </Link>
                                         </SheetClose>
-                                    </div>
-                                )}
-                            </div>
-
-                            {/* Other nav links */}
-                            {navLinks.map((link) => {
-                                const isActive = pathname === link.href
-                                return (
-                                    <SheetClose asChild key={link.href}>
-                                        <Link
-                                            href={link.href}
-                                            className={cn(
-                                                "py-3 px-2 rounded-lg font-medium",
-                                                isActive ? "bg-blue-50 text-blue-600" : "hover:bg-gray-50 text-gray-700"
-                                            )}
-                                        >
-                                            {link.label}
-                                        </Link>
-                                    </SheetClose>
-                                )
-                            })}
-                        </nav>
+                                    )
+                                })}
+                            </nav>
+                        </div>
 
                         {/* Auth buttons at bottom */}
-                        <div className="mt-auto border-t border-gray-200 px-4 py-2 safe-area-pb bg-white">
+                        <div className="border-t border-gray-200 px-4 py-2 safe-area-pb bg-white shrink-0">
                             <SignedOut>
                                 <div className="flex flex-col gap-2 py-2">
                                     <Button
