@@ -52,7 +52,7 @@ export function BlogCard({
         return (
             <Link
                 href={`/blog/${slug}`}
-                className="group block rounded-2xl border border-gray-100 bg-white shadow-sm overflow-hidden hover:shadow-md transition-shadow"
+                className="group block rounded-2xl border border-slate-200 bg-gray-50 shadow-sm overflow-hidden hover:shadow-md transition-shadow"
             >
                 <div className="grid md:grid-cols-2 gap-0">
                     <div className="relative aspect-[4/3] md:aspect-auto md:min-h-[280px]">
@@ -76,7 +76,7 @@ export function BlogCard({
     return (
         <Link
             href={`/blog/${slug}`}
-            className="group block rounded-xl border border-gray-100 bg-white shadow-sm overflow-hidden hover:shadow-md transition-shadow"
+            className="group block rounded-xl border border-slate-200 bg-gray-50 shadow-sm overflow-hidden hover:shadow-md transition-shadow"
         >
             <div className="relative aspect-[16/10]">
                 <CoverImage src={coverImage} alt={title} />

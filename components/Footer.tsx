@@ -5,7 +5,7 @@ import PHBadge from "@/components/PHBadge"
 
 export function Footer() {
     return (
-        <footer className="border-t border-gray-200 bg-gray-50 py-6 md:py-8">
+        <footer className="border-t border-gray-200 bg-white py-6 md:py-8">
 
             {/* Desktop Layout - horizontal (hidden on mobile) */}
             <div className="hidden md:flex container mx-auto px-4 flex-row justify-between items-center gap-4 text-sm text-gray-500">

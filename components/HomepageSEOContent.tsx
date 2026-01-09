@@ -38,6 +38,7 @@ export function HomepageSEOContent() {
             <FAQSection
                 subtitle="Everything you need to know about our free schedule builder."
                 items={homepageFAQs}
+                bgColor="bg-white"
             />
         </div>
     )

@@ -82,7 +82,7 @@ export default function ContactPage() {
 
                 {/* Contact Info Cards - Horizontal Row */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                    <div className="bg-white rounded-xl p-6 border border-gray-200 text-center">
+                    <div className="bg-gray-50 rounded-xl p-6 border border-slate-200 text-center">
                         <div className="p-3 bg-blue-50 rounded-lg w-fit mx-auto mb-4">
                             <Mail className="w-6 h-6 text-blue-600" />
                         </div>
@@ -93,7 +93,7 @@ export default function ContactPage() {
                         </a>
                     </div>
 
-                    <div className="bg-white rounded-xl p-6 border border-gray-200 text-center">
+                    <div className="bg-gray-50 rounded-xl p-6 border border-slate-200 text-center">
                         <div className="p-3 bg-blue-50 rounded-lg w-fit mx-auto mb-4">
                             <MapPin className="w-6 h-6 text-blue-600" />
                         </div>
@@ -105,7 +105,7 @@ export default function ContactPage() {
                         </p>
                     </div>
 
-                    <div className="bg-white rounded-xl p-6 border border-gray-200 text-center">
+                    <div className="bg-gray-50 rounded-xl p-6 border border-slate-200 text-center">
                         <div className="p-3 bg-blue-50 rounded-lg w-fit mx-auto mb-4">
                             <Clock className="w-6 h-6 text-blue-600" />
                         </div>
@@ -119,7 +119,7 @@ export default function ContactPage() {
                 </div>
 
                 {/* Contact Form */}
-                <div className="bg-white rounded-xl p-8 border border-gray-100 shadow-sm">
+                <div className="bg-gray-50 rounded-xl p-8 border border-slate-200 shadow-sm">
                     {isSubmitted ? (
                         <div className="text-center py-12">
                             <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />

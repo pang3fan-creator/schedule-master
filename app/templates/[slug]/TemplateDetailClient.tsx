@@ -275,7 +275,7 @@ export function TemplateDetailClient({ slug }: TemplateDetailClientProps) {
 
                 {/* Template header and preview - combined */}
                 <section className="container mx-auto px-4 max-w-6xl mt-8">
-                    <div className="bg-white rounded-xl border border-gray-100 p-6 md:p-8 shadow-sm">
+                    <div className="bg-gray-50 rounded-xl border border-slate-200 p-6 md:p-8 shadow-sm">
                         {/* Header */}
                         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
                             <div>
@@ -323,7 +323,7 @@ export function TemplateDetailClient({ slug }: TemplateDetailClientProps) {
                         What's Included
                     </h2>
                     <div className="grid md:grid-cols-3 gap-6">
-                        <div className="p-6 rounded-xl bg-white border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                        <div className="p-6 rounded-xl bg-gray-50 border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
                             <h3 className="font-semibold text-gray-900 mb-2">
                                 {template.slug === 'ai-schedule-builder' ? 'Smart AI Generation' : 'Pre-configured Events'}
                             </h3>
@@ -334,13 +334,13 @@ export function TemplateDetailClient({ slug }: TemplateDetailClientProps) {
                                 }
                             </p>
                         </div>
-                        <div className="p-6 rounded-xl bg-white border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                        <div className="p-6 rounded-xl bg-gray-50 border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
                             <h3 className="font-semibold text-gray-900 mb-2">Optimized Settings</h3>
                             <p className="text-sm text-gray-600">
                                 Time format and working hours configured for this use case
                             </p>
                         </div>
-                        <div className="p-6 rounded-xl bg-white border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                        <div className="p-6 rounded-xl bg-gray-50 border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
                             <h3 className="font-semibold text-gray-900 mb-2">Fully Customizable</h3>
                             <p className="text-sm text-gray-600">
                                 Edit, add, or remove events after applying the template
@@ -354,7 +354,7 @@ export function TemplateDetailClient({ slug }: TemplateDetailClientProps) {
                     <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">
                         About This Template
                     </h2>
-                    <div className="bg-white rounded-xl border border-gray-100 p-8 md:p-12 shadow-sm">
+                    <div className="bg-gray-50 rounded-xl border border-slate-200 p-8 md:p-12 shadow-sm">
                         <div className="prose prose-gray max-w-none">
                             {template.longDescription.split('\n\n').map((paragraph, idx) => (
                                 <p key={idx} className="text-gray-600 mb-4">

@@ -186,7 +186,7 @@ export default function TemplatesPage() {
                                     <Link
                                         key={template.slug}
                                         href={`/templates/${template.slug}`}
-                                        className="group bg-white rounded-xl border border-gray-100 p-6 shadow-sm hover:shadow-lg hover:border-blue-200 transition-all duration-200 relative h-full flex flex-col"
+                                        className="group bg-gray-50 rounded-xl border border-slate-200 p-6 shadow-sm hover:shadow-lg hover:border-blue-200 transition-all duration-200 relative h-full flex flex-col"
                                     >
                                         {/* Pro Badge */}
                                         {template.requiresPro && (
@@ -270,6 +270,7 @@ export default function TemplatesPage() {
                 <div className="mt-16">
                     <FAQSection
                         items={templatesFAQs}
+                        bgColor="bg-white"
                     />
                 </div>
             </PageLayout>

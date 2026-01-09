@@ -396,7 +396,7 @@ export function PricingPageClient({ productSchemas }: PricingPageClientProps) {
                 </div>
 
                 {/* FAQ Section - using unified FAQSection component */}
-                <FAQSection items={faqs} />
+                <FAQSection items={faqs} bgColor="bg-white" />
             </PageLayout>
         </>
     );

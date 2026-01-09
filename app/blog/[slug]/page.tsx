@@ -315,7 +315,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             )}
             <PageLayout contentPadding="">
                 {/* Article Header */}
-                <article className="container mx-auto px-4 py-16 max-w-3xl">
+                <article className="container mx-auto px-4 py-16 max-w-4xl">
                     {/* Breadcrumb Navigation */}
                     <div className="mb-8">
                         <Breadcrumb items={[
@@ -342,7 +342,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                     </div>
 
                     {/* Article Card Wrapper */}
-                    <div className="bg-white rounded-2xl border border-gray-100 p-6 md:p-10 shadow-sm mb-12">
+                    <div className="bg-gray-50 rounded-2xl border border-slate-200 p-6 md:p-10 shadow-sm mb-12">
                         {/* Cover Image */}
                         <div className="mb-10 rounded-xl overflow-hidden aspect-[16/9] relative">
                             {post.coverImage ? (
@@ -403,7 +403,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
                 {/* Related Articles */}
                 {relatedPosts.length > 0 && (
-                    <section className="bg-gray-50 py-16">
+                    <section className="bg-white py-16">
                         <div className="container mx-auto px-4 max-w-4xl">
                             <h2 className="text-2xl font-bold text-center text-gray-900 mb-8">
                                 Related Articles
