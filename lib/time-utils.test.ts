@@ -374,8 +374,9 @@ describe('groupOverlappingEvents', () => {
         const events = [createTestEvent('1', 9, 0, 10, 0)]
         const result = groupOverlappingEvents(events)
         expect(result).toHaveLength(1)
-        expect(result[0].width).toBe(100)
-        expect(result[0].left).toBe(0)
+        // Width is 98% due to 1% padding on each side (100 - 2 = 98)
+        expect(result[0].width).toBe(98)
+        expect(result[0].left).toBe(1) // 1% padding from left
     })
 
     it('should handle non-overlapping events', () => {
@@ -385,9 +386,9 @@ describe('groupOverlappingEvents', () => {
         ]
         const result = groupOverlappingEvents(events)
         expect(result).toHaveLength(2)
-        // Non-overlapping events should each have full width
-        expect(result[0].width).toBe(100)
-        expect(result[1].width).toBe(100)
+        // Non-overlapping events should each have full width (98% with padding)
+        expect(result[0].width).toBe(98)
+        expect(result[1].width).toBe(98)
     })
 
     it('should split width for overlapping events', () => {
@@ -397,10 +398,12 @@ describe('groupOverlappingEvents', () => {
         ]
         const result = groupOverlappingEvents(events)
         expect(result).toHaveLength(2)
-        // Overlapping events should share width
-        expect(result[0].width).toBe(50)
-        expect(result[1].width).toBe(50)
-        expect(result[0].left + result[1].left).toBe(50) // 0 + 50
+        // Overlapping events should share width (98% / 2 = 49% each)
+        expect(result[0].width).toBe(49)
+        expect(result[1].width).toBe(49)
+        // First event starts at 1% (left padding), second at 50% (1 + 49)
+        expect(result[0].left).toBe(1)
+        expect(result[1].left).toBe(50)
     })
 
     it('should handle three overlapping events', () => {
@@ -411,9 +414,9 @@ describe('groupOverlappingEvents', () => {
         ]
         const result = groupOverlappingEvents(events)
         expect(result).toHaveLength(3)
-        // All should share width (roughly 33.33%)
+        // All should share width (98% / 3 ≈ 32.67% each)
         result.forEach(event => {
-            expect(event.width).toBeCloseTo(33.33, 0)
+            expect(event.width).toBeCloseTo(32.67, 1)
         })
     })
 })

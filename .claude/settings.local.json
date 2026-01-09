@@ -1,7 +1,25 @@
 {
   "permissions": {
     "allow": [
-      "WebSearch"
-    ]
-  }
+      "WebSearch",
+      "Bash(dir:*)",
+      "Bash(cmd /c \"dir /s /b C:\\\\Users\\\\pang1fan\\\\AppData\\\\Roaming\\\\claude 2>nul\")",
+      "Bash(where:*)",
+      "Bash(export:*)",
+      "Bash(node:*)",
+      "Bash(timeout:*)",
+      "Bash(find:*)",
+      "Bash(echo:*)",
+      "mcp__plugin_claude-mem_mcp-search__search",
+      "Read(C:\\Users\\pang1fan\\.claude\\CLAUDE.md)",
+      "Edit",
+      "Bash(npm:*)",
+      "Bash(curl:*)"
+    ],
+    "deny": []
+  },
+  "enabledPlugins": {
+    "claude-mem@thedotmack": true
+  },
+  "model": "opus"
 }
