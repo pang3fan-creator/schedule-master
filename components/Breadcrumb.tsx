@@ -26,13 +26,13 @@ interface BreadcrumbProps {
 export function Breadcrumb({ items, className = "" }: BreadcrumbProps) {
     return (
         <nav className={`mb-6 ${className}`} aria-label="Breadcrumb">
-            <ol className="flex items-center justify-center gap-2 text-sm text-gray-500 flex-wrap">
+            <ol className="flex items-center justify-center gap-2 text-sm text-gray-500 dark:text-gray-400 flex-wrap">
                 {items.map((item, index) => (
                     <Fragment key={index}>
-                        {index > 0 && <li className="text-gray-400">&gt;</li>}
-                        <li className={index === items.length - 1 ? "text-gray-900 font-medium" : ""}>
+                        {index > 0 && <li className="text-gray-400 dark:text-gray-500">&gt;</li>}
+                        <li className={index === items.length - 1 ? "text-gray-900 dark:text-white font-medium" : ""}>
                             {item.href ? (
-                                <Link href={item.href} className="hover:text-blue-600 transition-colors">
+                                <Link href={item.href} className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                                     {item.label}
                                 </Link>
                             ) : (

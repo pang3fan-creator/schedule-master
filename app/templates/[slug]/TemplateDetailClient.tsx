@@ -90,25 +90,25 @@ function TemplatePreview({ template }: { template: TemplateData }) {
     }, {} as Record<number, Event[]>)
 
     return (
-        <div className="border border-gray-200 rounded-lg overflow-hidden bg-white relative">
+        <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden bg-white dark:bg-gray-800/80 relative">
             {/* AI Overlay for empty templates */}
             {template.events.length === 0 && (
-                <div className="absolute inset-0 z-20 flex items-center justify-center bg-gradient-to-br from-violet-50/90 to-blue-50/90 backdrop-blur-[1px]">
+                <div className="absolute inset-0 z-20 flex items-center justify-center bg-gradient-to-br from-violet-50/90 dark:from-violet-950/90 to-blue-50/90 dark:to-blue-950/90 backdrop-blur-[1px]">
                     <div className="text-center">
                         <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r from-violet-500 to-blue-500 flex items-center justify-center">
                             <Sparkles className="size-8 text-white" />
                         </div>
-                        <p className="text-lg font-medium text-gray-700">Let AI create your perfect schedule</p>
-                        <p className="text-sm text-gray-500 mt-1">Click "Use This Template" to get started</p>
+                        <p className="text-lg font-medium text-gray-700 dark:text-gray-200">Let AI create your perfect schedule</p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Click "Use This Template" to get started</p>
                     </div>
                 </div>
             )}
 
             {/* Day headers */}
-            <div className="grid grid-cols-8 border-b border-gray-200">
-                <div className="p-2 text-xs text-gray-400"></div>
+            <div className="grid grid-cols-8 border-b border-gray-200 dark:border-gray-700">
+                <div className="p-2 text-xs text-gray-400 dark:text-gray-500"></div>
                 {days.map((day) => (
-                    <div key={day} className="p-2 text-center text-xs font-medium text-gray-600 border-l border-gray-200">
+                    <div key={day} className="p-2 text-center text-xs font-medium text-gray-600 dark:text-gray-400 border-l border-gray-200 dark:border-gray-700">
                         {day}
                     </div>
                 ))}
@@ -119,7 +119,7 @@ function TemplatePreview({ template }: { template: TemplateData }) {
                 {hours.map((hour, hourIndex) => (
                     <React.Fragment key={hour}>
                         {/* Hour label */}
-                        <div key={`hour-${hour}`} className="p-1 text-xs text-gray-400 text-right pr-2 border-t border-gray-100">
+                        <div key={`hour-${hour}`} className="p-1 text-xs text-gray-400 dark:text-gray-500 text-right pr-2 border-t border-gray-200 dark:border-gray-700">
                             {formatHour(hour)}
                         </div>
 
@@ -130,7 +130,7 @@ function TemplatePreview({ template }: { template: TemplateData }) {
                             return (
                                 <div
                                     key={`${hour}-${dayIndex}`}
-                                    className="relative border-l border-t border-gray-100"
+                                    className="relative border-l border-t border-gray-200 dark:border-gray-700"
                                 >
                                     {/* Render events that start at this hour */}
                                     {hourIndex === 0 && eventsBySemanticDay[semanticDay]?.map((event) => {
@@ -244,8 +244,8 @@ export function TemplateDetailClient({ slug }: TemplateDetailClientProps) {
             <PageLayout contentPadding="">
                 <div className="flex-1 flex items-center justify-center">
                     <div className="text-center">
-                        <h1 className="text-2xl font-bold text-gray-900 mb-4">Template Not Found</h1>
-                        <Link href="/templates" className="text-blue-600 hover:underline">
+                        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">Template Not Found</h1>
+                        <Link href="/templates" className="text-blue-600 dark:text-blue-400 hover:underline">
                             ← Back to Templates
                         </Link>
                     </div>
@@ -268,18 +268,18 @@ export function TemplateDetailClient({ slug }: TemplateDetailClientProps) {
 
                 {/* Page Title */}
                 <div className="container mx-auto px-4 max-w-6xl text-center mt-6">
-                    <h1 className="text-3xl md:text-4xl font-bold text-gray-900">
+                    <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100">
                         {template.title}
                     </h1>
                 </div>
 
                 {/* Template header and preview - combined */}
                 <section className="container mx-auto px-4 max-w-6xl mt-8">
-                    <div className="bg-gray-50 rounded-xl border border-slate-200 p-6 md:p-8 shadow-sm">
+                    <div className="bg-gray-50 dark:bg-gray-800/80 rounded-xl border border-gray-200 dark:border-gray-700 p-6 md:p-8 shadow-sm">
                         {/* Header */}
                         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
                             <div>
-                                <span className="text-sm font-medium text-blue-600 uppercase tracking-wide">
+                                <span className="text-sm font-medium text-blue-600 dark:text-blue-400 uppercase tracking-wide">
                                     {template.category}
                                 </span>
                                 {template.requiresPro && (
@@ -288,14 +288,14 @@ export function TemplateDetailClient({ slug }: TemplateDetailClientProps) {
                                         PRO
                                     </span>
                                 )}
-                                <p className="text-gray-600 mt-2 max-w-2xl">
+                                <p className="text-gray-600 dark:text-gray-300 mt-2 max-w-2xl">
                                     {template.description}
                                 </p>
                             </div>
                             <div className="shrink-0">
                                 <Button
                                     size="lg"
-                                    className="gap-2 bg-blue-600 hover:bg-blue-700"
+                                    className="gap-2 bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
                                     onClick={handleUseTemplate}
                                     disabled={isLoading}
                                 >
@@ -308,7 +308,7 @@ export function TemplateDetailClient({ slug }: TemplateDetailClientProps) {
                         {/* Preview */}
                         <TemplatePreview template={template} />
 
-                        <p className="text-sm text-gray-500 mt-4 text-center">
+                        <p className="text-sm text-gray-500 dark:text-gray-400 mt-4 text-center">
                             {template.slug === 'ai-schedule-builder'
                                 ? "This preview shows the AI generator canvas. When you use this template, our AI assistant will help you build your personalized schedule."
                                 : "This preview shows sample events. When you use this template, events will be scheduled for the current week."
@@ -319,30 +319,30 @@ export function TemplateDetailClient({ slug }: TemplateDetailClientProps) {
 
                 {/* What's Included */}
                 <section className="container mx-auto px-4 py-12 max-w-6xl">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">
+                    <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-8 text-center">
                         What's Included
                     </h2>
                     <div className="grid md:grid-cols-3 gap-6">
-                        <div className="p-6 rounded-xl bg-gray-50 border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
-                            <h3 className="font-semibold text-gray-900 mb-2">
+                        <div className="p-6 rounded-xl bg-gray-50 dark:bg-gray-800/80 border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md transition-shadow">
+                            <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">
                                 {template.slug === 'ai-schedule-builder' ? 'Smart AI Generation' : 'Pre-configured Events'}
                             </h3>
-                            <p className="text-sm text-gray-600">
+                            <p className="text-sm text-gray-600 dark:text-gray-300">
                                 {template.slug === 'ai-schedule-builder'
                                     ? 'Access to the AI Autofill assistant to build your routine from scratch'
                                     : `${template.events.length} sample events with appropriate colors and timing`
                                 }
                             </p>
                         </div>
-                        <div className="p-6 rounded-xl bg-gray-50 border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
-                            <h3 className="font-semibold text-gray-900 mb-2">Optimized Settings</h3>
-                            <p className="text-sm text-gray-600">
+                        <div className="p-6 rounded-xl bg-gray-50 dark:bg-gray-800/80 border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md transition-shadow">
+                            <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">Optimized Settings</h3>
+                            <p className="text-sm text-gray-600 dark:text-gray-300">
                                 Time format and working hours configured for this use case
                             </p>
                         </div>
-                        <div className="p-6 rounded-xl bg-gray-50 border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
-                            <h3 className="font-semibold text-gray-900 mb-2">Fully Customizable</h3>
-                            <p className="text-sm text-gray-600">
+                        <div className="p-6 rounded-xl bg-gray-50 dark:bg-gray-800/80 border border-gray-200 dark:border-gray-700 shadow-sm hover:shadow-md transition-shadow">
+                            <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">Fully Customizable</h3>
+                            <p className="text-sm text-gray-600 dark:text-gray-300">
                                 Edit, add, or remove events after applying the template
                             </p>
                         </div>
@@ -351,13 +351,13 @@ export function TemplateDetailClient({ slug }: TemplateDetailClientProps) {
 
                 {/* About This Template */}
                 <section className="container mx-auto px-4 max-w-6xl">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">
+                    <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-8 text-center">
                         About This Template
                     </h2>
-                    <div className="bg-gray-50 rounded-xl border border-slate-200 p-8 md:p-12 shadow-sm">
+                    <div className="bg-gray-50 dark:bg-gray-800/80 rounded-xl border border-gray-200 dark:border-gray-700 p-8 md:p-12 shadow-sm">
                         <div className="prose prose-gray max-w-none">
                             {template.longDescription.split('\n\n').map((paragraph, idx) => (
-                                <p key={idx} className="text-gray-600 mb-4">
+                                <p key={idx} className="text-gray-600 dark:text-gray-300 mb-4">
                                     {paragraph}
                                 </p>
                             ))}

@@ -147,7 +147,7 @@ export default function TemplatesPage() {
                 {/* Search Box */}
                 <div className="container mx-auto px-4 max-w-6xl mb-8">
                     <div className="relative max-w-md mx-auto">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 dark:text-gray-500" />
                         <Input
                             type="text"
                             placeholder="Search templates by keyword..."
@@ -158,7 +158,7 @@ export default function TemplatesPage() {
                         {searchQuery && (
                             <button
                                 onClick={() => { setSearchQuery(""); setCurrentPage(1); }}
-                                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 transition-colors"
                                 aria-label="Clear search"
                             >
                                 ✕
@@ -186,7 +186,7 @@ export default function TemplatesPage() {
                                     <Link
                                         key={template.slug}
                                         href={`/templates/${template.slug}`}
-                                        className="group bg-gray-50 rounded-xl border border-slate-200 p-6 shadow-sm hover:shadow-lg hover:border-blue-200 transition-all duration-200 relative h-full flex flex-col"
+                                        className="group bg-gray-50 dark:bg-gray-800/80 rounded-xl border border-slate-200 dark:border-gray-600 p-6 shadow-sm hover:shadow-lg hover:border-blue-200 dark:hover:border-blue-500 transition-all duration-200 relative h-full flex flex-col"
                                     >
                                         {/* Pro Badge */}
                                         {template.requiresPro && (
@@ -198,17 +198,17 @@ export default function TemplatesPage() {
                                             </div>
                                         )}
                                         <div className="flex items-start gap-4 flex-1">
-                                            <div className="p-3 bg-blue-50 rounded-lg group-hover:bg-blue-100 transition-colors shrink-0 mt-1">
-                                                <Icon className="size-6 text-blue-600" />
+                                            <div className="p-3 bg-blue-50 dark:bg-blue-900/30 rounded-lg group-hover:bg-blue-100 dark:group-hover:bg-blue-900/40 transition-colors shrink-0 mt-1">
+                                                <Icon className="size-6 text-blue-600 dark:text-blue-300" />
                                             </div>
                                             <div className="flex-1 min-w-0">
-                                                <span className="text-xs font-medium text-blue-600 uppercase tracking-wide">
+                                                <span className="text-xs font-medium text-blue-600 dark:text-blue-300 uppercase tracking-wide">
                                                     {template.category}
                                                 </span>
-                                                <h3 className="text-lg font-semibold text-gray-900 mt-1 group-hover:text-blue-600 transition-colors line-clamp-1">
+                                                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mt-1 group-hover:text-blue-600 dark:group-hover:text-blue-300 transition-colors line-clamp-1">
                                                     {template.title}
                                                 </h3>
-                                                <p className="text-sm text-gray-500 mt-2 line-clamp-2">
+                                                <p className="text-sm text-gray-500 dark:text-gray-300 mt-2 line-clamp-2">
                                                     {template.description}
                                                 </p>
                                             </div>
@@ -218,7 +218,7 @@ export default function TemplatesPage() {
                             })}
                         </div>
                     ) : (
-                        <div className="text-center py-12 text-gray-500">
+                        <div className="text-center py-12 text-gray-500 dark:text-gray-400">
                             No templates found in this category.
                         </div>
                     )}
@@ -229,7 +229,7 @@ export default function TemplatesPage() {
                             <button
                                 onClick={() => handlePageChange(currentPage - 1)}
                                 disabled={currentPage === 1}
-                                className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                                className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                                 aria-label="Previous page"
                             >
                                 <ChevronLeft className="w-5 h-5" />
@@ -242,13 +242,13 @@ export default function TemplatesPage() {
                                         onClick={() => handlePageChange(page)}
                                         className={`w-10 h-10 flex items-center justify-center rounded-lg text-sm font-medium transition-colors ${currentPage === page
                                             ? 'bg-blue-600 text-white'
-                                            : 'border border-gray-200 bg-white text-gray-700 hover:bg-gray-50'
+                                            : 'border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'
                                             }`}
                                     >
                                         {page}
                                     </button>
                                 ) : (
-                                    <span key={index} className="w-10 h-10 flex items-center justify-center text-gray-400">
+                                    <span key={index} className="w-10 h-10 flex items-center justify-center text-gray-400 dark:text-gray-600">
                                         {page}
                                     </span>
                                 )
@@ -257,7 +257,7 @@ export default function TemplatesPage() {
                             <button
                                 onClick={() => handlePageChange(currentPage + 1)}
                                 disabled={currentPage === totalPages}
-                                className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                                className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                                 aria-label="Next page"
                             >
                                 <ChevronRight className="w-5 h-5" />
@@ -270,7 +270,6 @@ export default function TemplatesPage() {
                 <div className="mt-16">
                     <FAQSection
                         items={templatesFAQs}
-                        bgColor="bg-white"
                     />
                 </div>
             </PageLayout>

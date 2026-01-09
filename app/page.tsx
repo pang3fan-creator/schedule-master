@@ -461,7 +461,7 @@ export default function ScheduleBuilderPage() {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
         />
       )}
-      <div className={`flex flex-col bg-gray-50 ${isExporting ? '' : 'h-screen overflow-hidden'}`}>
+      <div className={`flex flex-col bg-gray-50 dark:bg-gray-950 ${isExporting ? '' : 'h-screen overflow-hidden'}`}>
         {/* Fixed navbar with transparency - content scrolls behind it */}
         {!isExporting && (
           <div className="fixed top-0 left-0 right-0 z-50">

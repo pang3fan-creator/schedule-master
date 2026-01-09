@@ -327,20 +327,20 @@ export function CloudSaveDialog({ open, onOpenChange, onLoadSchedule }: CloudSav
     return (
         <>
             <Dialog open={open} onOpenChange={onOpenChange}>
-                <DialogContent className="sm:max-w-lg max-h-[80vh] overflow-hidden flex flex-col">
+                <DialogContent className="sm:max-w-lg max-h-[80vh] overflow-hidden flex flex-col bg-white dark:bg-gray-900">
                     <DialogHeader>
-                        <DialogTitle className="flex items-center gap-2">
-                            <Cloud className="size-5 text-blue-600" />
+                        <DialogTitle className="flex items-center gap-2 text-gray-900 dark:text-gray-100">
+                            <Cloud className="size-5 text-blue-600 dark:text-blue-400" />
                             Cloud Save
                         </DialogTitle>
-                        <DialogDescription className="text-left">
+                        <DialogDescription className="text-left text-gray-600 dark:text-gray-400">
                             Save your schedule to the cloud or load a saved template.
                         </DialogDescription>
                     </DialogHeader>
 
                     <div className="flex-1 overflow-hidden flex flex-col gap-4">
                         {/* Template count and actions */}
-                        <div className="flex items-center justify-between text-sm text-gray-500">
+                        <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
                             <span>{totalCount}/{maxTemplates} templates used</span>
                             <div className="flex items-center gap-2">
                                 {/* Sort selector */}
@@ -375,8 +375,8 @@ export function CloudSaveDialog({ open, onOpenChange, onLoadSchedule }: CloudSav
 
                         {/* Save input */}
                         {showSaveInput && (
-                            <div className="space-y-2 p-3 bg-blue-50 rounded-lg border border-blue-200">
-                                <Label htmlFor="save-name">Template Name</Label>
+                            <div className="space-y-2 p-3 bg-blue-50 dark:bg-blue-900/30 rounded-lg border border-blue-200 dark:border-blue-800">
+                                <Label htmlFor="save-name" className="text-gray-900 dark:text-gray-100">Template Name</Label>
                                 <div className="flex gap-2">
                                     <Input
                                         id="save-name"
@@ -421,7 +421,7 @@ export function CloudSaveDialog({ open, onOpenChange, onLoadSchedule }: CloudSav
 
                         {/* Error display */}
                         {error && (
-                            <div className="p-3 bg-red-50 text-red-700 rounded-lg text-sm flex items-center gap-2">
+                            <div className="p-3 bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-300 rounded-lg text-sm flex items-center gap-2 border border-red-200 dark:border-red-800">
                                 <AlertCircle className="size-4" />
                                 {error}
                             </div>
@@ -430,11 +430,11 @@ export function CloudSaveDialog({ open, onOpenChange, onLoadSchedule }: CloudSav
                         {/* Templates list */}
                         <div className="flex-1 overflow-y-auto min-h-0">
                             {isLoading && schedules.length === 0 ? (
-                                <div className="flex items-center justify-center py-8 text-gray-500">
+                                <div className="flex items-center justify-center py-8 text-gray-500 dark:text-gray-400">
                                     <Loader2 className="size-6 animate-spin" />
                                 </div>
                             ) : schedules.length === 0 ? (
-                                <div className="flex flex-col items-center justify-center py-8 text-gray-500">
+                                <div className="flex flex-col items-center justify-center py-8 text-gray-500 dark:text-gray-400">
                                     <Calendar className="size-12 mb-2 opacity-50" />
                                     <p>No saved templates yet</p>
                                     <p className="text-sm">Save your first schedule to the cloud!</p>
@@ -444,7 +444,7 @@ export function CloudSaveDialog({ open, onOpenChange, onLoadSchedule }: CloudSav
                                     {schedules.map((schedule: ScheduleListItem) => (
                                         <div
                                             key={schedule.id}
-                                            className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg border border-gray-200 hover:border-gray-300 transition-colors"
+                                            className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 transition-colors"
                                         >
                                             {renamingId === schedule.id ? (
                                                 <div className="flex-1 flex gap-2">
@@ -476,8 +476,8 @@ export function CloudSaveDialog({ open, onOpenChange, onLoadSchedule }: CloudSav
                                             ) : (
                                                 <>
                                                     <div className="flex-1 min-w-0">
-                                                        <p className="font-medium truncate">{schedule.name}</p>
-                                                        <p className="text-sm text-gray-500">
+                                                        <p className="font-medium text-gray-900 dark:text-gray-100 truncate">{schedule.name}</p>
+                                                        <p className="text-sm text-gray-500 dark:text-gray-400">
                                                             {schedule.event_count} events • Updated {formatDate(schedule.updated_at)}
                                                         </p>
                                                     </div>
@@ -505,7 +505,7 @@ export function CloudSaveDialog({ open, onOpenChange, onLoadSchedule }: CloudSav
                                                             size="sm"
                                                             variant="ghost"
                                                             onClick={() => setDeleteTarget(schedule)}
-                                                            className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                                                            className="text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 hover:bg-red-50 dark:hover:bg-red-900/30"
                                                             title="Delete"
                                                         >
                                                             <Trash2 className="size-4" />
@@ -521,7 +521,7 @@ export function CloudSaveDialog({ open, onOpenChange, onLoadSchedule }: CloudSav
 
                         {/* Pagination controls */}
                         {totalPages > 1 && (
-                            <div className="flex items-center justify-center gap-2 pt-2 border-t">
+                            <div className="flex items-center justify-center gap-2 pt-2 border-t border-gray-200 dark:border-gray-700">
                                 <Button
                                     size="sm"
                                     variant="outline"
@@ -531,7 +531,7 @@ export function CloudSaveDialog({ open, onOpenChange, onLoadSchedule }: CloudSav
                                 >
                                     <ChevronLeft className="size-4" />
                                 </Button>
-                                <span className="text-sm text-gray-600 min-w-[80px] text-center">
+                                <span className="text-sm text-gray-600 dark:text-gray-400 min-w-[80px] text-center">
                                     Page {page} of {totalPages}
                                 </span>
                                 <Button

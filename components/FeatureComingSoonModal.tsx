@@ -83,18 +83,18 @@ export function FeatureComingSoonModal({
 
     return (
         <Dialog open={open} onOpenChange={handleClose}>
-            <DialogContent className="sm:max-w-md">
+            <DialogContent className="sm:max-w-md bg-white dark:bg-gray-900">
                 <DialogHeader className="text-center">
-                    <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-r from-violet-100 to-blue-100">
-                        <Sparkles className="h-7 w-7 text-violet-600" />
+                    <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-r from-violet-100 to-blue-100 dark:from-violet-900/30 dark:to-blue-900/30">
+                        <Sparkles className="h-7 w-7 text-violet-600 dark:text-violet-400" />
                     </div>
-                    <DialogTitle className="text-xl text-center">
+                    <DialogTitle className="text-xl text-center text-gray-900 dark:text-gray-100">
                         {featureName} - Coming Soon!
                     </DialogTitle>
-                    <DialogDescription className="text-center">
+                    <DialogDescription className="text-center text-gray-600 dark:text-gray-400">
                         {description || (
                             <>
-                                This Pro feature is currently in development. Be the first to know when it launches and get an exclusive <span className="font-semibold text-violet-600">50% discount</span>!
+                                This Pro feature is currently in development. Be the first to know when it launches and get an exclusive <span className="font-semibold text-violet-600 dark:text-violet-400">50% discount</span>!
                             </>
                         )}
                     </DialogDescription>
@@ -102,13 +102,13 @@ export function FeatureComingSoonModal({
 
                 {isSubmitted ? (
                     <div className="flex flex-col items-center py-6">
-                        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-green-100 mb-3">
-                            <Check className="h-6 w-6 text-green-600" />
+                        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30 mb-3">
+                            <Check className="h-6 w-6 text-green-600 dark:text-green-400" />
                         </div>
-                        <p className="text-sm font-medium text-green-600">
+                        <p className="text-sm font-medium text-green-600 dark:text-green-400">
                             You&apos;re on the list! 🎉
                         </p>
-                        <p className="text-xs text-gray-500 mt-1">
+                        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                             We&apos;ll notify you when it&apos;s ready.
                         </p>
                     </div>
@@ -121,12 +121,12 @@ export function FeatureComingSoonModal({
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
-                                className="w-full"
+                                className="w-full border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
                             />
                         </div>
                         <Button
                             type="submit"
-                            className="w-full bg-gradient-to-r from-violet-500 to-blue-500 hover:from-violet-600 hover:to-blue-600"
+                            className="w-full bg-gradient-to-r from-violet-500 to-blue-500 hover:from-violet-600 hover:to-blue-600 dark:from-violet-600 dark:to-blue-600 dark:hover:from-violet-700 dark:hover:to-blue-700"
                             disabled={isSubmitting || !email}
                         >
                             {isSubmitting ? (
@@ -141,7 +141,7 @@ export function FeatureComingSoonModal({
                         <Button
                             type="button"
                             variant="ghost"
-                            className="w-full"
+                            className="w-full text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
                             onClick={() => onOpenChange(false)}
                         >
                             Maybe Later
@@ -149,7 +149,7 @@ export function FeatureComingSoonModal({
                     </form>
                 )}
 
-                <p className="text-center text-xs text-gray-400 mt-2">
+                <p className="text-center text-xs text-gray-400 dark:text-gray-500 mt-2">
                     No spam, unsubscribe anytime.
                 </p>
             </DialogContent>

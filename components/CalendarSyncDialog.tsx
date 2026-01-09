@@ -138,13 +138,13 @@ export function CalendarSyncDialog({ open, onOpenChange, weekStart, weekStartsOn
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="sm:max-w-md">
+            <DialogContent className="sm:max-w-md bg-white dark:bg-gray-900">
                 <DialogHeader>
-                    <DialogTitle className="flex items-center gap-2">
-                        <Calendar className="size-5 text-blue-600" />
+                    <DialogTitle className="flex items-center gap-2 text-gray-900 dark:text-gray-100">
+                        <Calendar className="size-5 text-blue-600 dark:text-blue-400" />
                         Google Calendar Sync
                     </DialogTitle>
-                    <DialogDescription className="text-left">
+                    <DialogDescription className="text-left text-gray-600 dark:text-gray-400">
                         Sync your schedule to Google Calendar for easy access on all devices.
                     </DialogDescription>
                 </DialogHeader>
@@ -152,18 +152,18 @@ export function CalendarSyncDialog({ open, onOpenChange, weekStart, weekStartsOn
                 <div className="py-4">
                     {loading ? (
                         <div className="flex items-center justify-center py-8">
-                            <Loader2 className="size-6 animate-spin text-gray-400" />
+                            <Loader2 className="size-6 animate-spin text-gray-400 dark:text-gray-500" />
                         </div>
                     ) : !status?.connected ? (
                         // 未关联 Google 账号
                         <div className="text-center py-6">
-                            <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gray-100 flex items-center justify-center">
-                                <Link2 className="size-8 text-gray-400" />
+                            <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+                                <Link2 className="size-8 text-gray-400 dark:text-gray-500" />
                             </div>
-                            <h3 className="font-medium text-gray-900 mb-2">
+                            <h3 className="font-medium text-gray-900 dark:text-gray-100 mb-2">
                                 Connect Your Google Account
                             </h3>
-                            <p className="text-sm text-gray-500 mb-6">
+                            <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
                                 Link your Google account to sync events to your calendar.
                             </p>
                             <Button
@@ -195,11 +195,11 @@ export function CalendarSyncDialog({ open, onOpenChange, weekStart, weekStartsOn
                         // 已关联 Google 账号
                         <div className="space-y-4">
                             {/* 连接状态 */}
-                            <div className="flex items-center gap-3 p-3 bg-green-50 rounded-lg border border-green-200">
-                                <CheckCircle className="size-5 text-green-600 shrink-0" />
+                            <div className="flex items-center gap-3 p-3 bg-green-50 dark:bg-green-900/30 rounded-lg border border-green-200 dark:border-green-800">
+                                <CheckCircle className="size-5 text-green-600 dark:text-green-400 shrink-0" />
                                 <div className="flex-1 min-w-0">
-                                    <p className="text-sm font-medium text-green-800">Connected</p>
-                                    <p className="text-xs text-green-600 truncate">{status.email}</p>
+                                    <p className="text-sm font-medium text-green-800 dark:text-green-100">Connected</p>
+                                    <p className="text-xs text-green-600 dark:text-green-300 truncate">{status.email}</p>
                                 </div>
                             </div>
 
@@ -207,25 +207,25 @@ export function CalendarSyncDialog({ open, onOpenChange, weekStart, weekStartsOn
                             {syncResult && (
                                 <div
                                     className={`p-3 rounded-lg border ${syncResult.success
-                                        ? "bg-blue-50 border-blue-200"
-                                        : "bg-red-50 border-red-200"
+                                        ? "bg-blue-50 dark:bg-blue-900/30 border-blue-200 dark:border-blue-800"
+                                        : "bg-red-50 dark:bg-red-900/30 border-red-200 dark:border-red-800"
                                         }`}
                                 >
                                     <div className="flex items-center gap-2">
                                         {syncResult.success ? (
-                                            <CheckCircle className="size-4 text-blue-600" />
+                                            <CheckCircle className="size-4 text-blue-600 dark:text-blue-400" />
                                         ) : (
-                                            <AlertCircle className="size-4 text-red-600" />
+                                            <AlertCircle className="size-4 text-red-600 dark:text-red-400" />
                                         )}
                                         <span
-                                            className={`text-sm font-medium ${syncResult.success ? "text-blue-800" : "text-red-800"
+                                            className={`text-sm font-medium ${syncResult.success ? "text-blue-800 dark:text-blue-100" : "text-red-800 dark:text-red-100"
                                                 }`}
                                         >
                                             {syncResult.success ? "Sync Complete" : "Sync Failed"}
                                         </span>
                                     </div>
                                     <p
-                                        className={`text-xs mt-1 ${syncResult.success ? "text-blue-600" : "text-red-600"
+                                        className={`text-xs mt-1 ${syncResult.success ? "text-blue-600 dark:text-blue-300" : "text-red-600 dark:text-red-300"
                                             }`}
                                     >
                                         {syncResult.synced} event(s) synced

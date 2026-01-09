@@ -74,43 +74,43 @@ export default function ContactPage() {
 
                 {/* Header */}
                 <div className="text-center mb-16">
-                    <h1 className="text-4xl font-bold text-gray-900 mb-4">Contact Us</h1>
-                    <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                    <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">Contact Us</h1>
+                    <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
                         Have questions or feedback? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
                     </p>
                 </div>
 
                 {/* Contact Info Cards - Horizontal Row */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                    <div className="bg-gray-50 rounded-xl p-6 border border-slate-200 text-center">
-                        <div className="p-3 bg-blue-50 rounded-lg w-fit mx-auto mb-4">
-                            <Mail className="w-6 h-6 text-blue-600" />
+                    <div className="bg-gray-50 dark:bg-gray-800/80 rounded-xl p-6 border border-slate-200 dark:border-gray-700 text-center">
+                        <div className="p-3 bg-blue-50 dark:bg-blue-900/30 rounded-lg w-fit mx-auto mb-4">
+                            <Mail className="w-6 h-6 text-blue-600 dark:text-blue-300" />
                         </div>
-                        <h3 className="font-semibold text-gray-900 mb-2">Email</h3>
-                        <p className="text-gray-500 text-sm mb-2">For general inquiries</p>
-                        <a href="mailto:support@tryschedule.com" className="text-blue-600 hover:underline text-sm">
+                        <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Email</h3>
+                        <p className="text-gray-500 dark:text-gray-400 text-sm mb-2">For general inquiries</p>
+                        <a href="mailto:support@tryschedule.com" className="text-blue-600 dark:text-blue-400 hover:underline text-sm">
                             support@tryschedule.com
                         </a>
                     </div>
 
-                    <div className="bg-gray-50 rounded-xl p-6 border border-slate-200 text-center">
-                        <div className="p-3 bg-blue-50 rounded-lg w-fit mx-auto mb-4">
-                            <MapPin className="w-6 h-6 text-blue-600" />
+                    <div className="bg-gray-50 dark:bg-gray-800/80 rounded-xl p-6 border border-slate-200 dark:border-gray-700 text-center">
+                        <div className="p-3 bg-blue-50 dark:bg-blue-900/30 rounded-lg w-fit mx-auto mb-4">
+                            <MapPin className="w-6 h-6 text-blue-600 dark:text-blue-300" />
                         </div>
-                        <h3 className="font-semibold text-gray-900 mb-2">Office</h3>
-                        <p className="text-gray-500 text-sm">
+                        <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Office</h3>
+                        <p className="text-gray-500 dark:text-gray-400 text-sm">
                             123 Tech Street<br />
                             San Francisco, CA 94102<br />
                             United States
                         </p>
                     </div>
 
-                    <div className="bg-gray-50 rounded-xl p-6 border border-slate-200 text-center">
-                        <div className="p-3 bg-blue-50 rounded-lg w-fit mx-auto mb-4">
-                            <Clock className="w-6 h-6 text-blue-600" />
+                    <div className="bg-gray-50 dark:bg-gray-800/80 rounded-xl p-6 border border-slate-200 dark:border-gray-700 text-center">
+                        <div className="p-3 bg-blue-50 dark:bg-blue-900/30 rounded-lg w-fit mx-auto mb-4">
+                            <Clock className="w-6 h-6 text-blue-600 dark:text-blue-300" />
                         </div>
-                        <h3 className="font-semibold text-gray-900 mb-2">Business Hours</h3>
-                        <p className="text-gray-500 text-sm">
+                        <h3 className="font-semibold text-gray-900 dark:text-white mb-2">Business Hours</h3>
+                        <p className="text-gray-500 dark:text-gray-400 text-sm">
                             Monday - Friday<br />
                             9:00 AM - 6:00 PM (PST)<br />
                             Weekend: Closed
@@ -119,12 +119,12 @@ export default function ContactPage() {
                 </div>
 
                 {/* Contact Form */}
-                <div className="bg-gray-50 rounded-xl p-8 border border-slate-200 shadow-sm">
+                <div className="bg-gray-50 dark:bg-gray-800/80 rounded-xl p-8 border border-slate-200 dark:border-gray-700 shadow-sm">
                     {isSubmitted ? (
                         <div className="text-center py-12">
                             <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
-                            <h2 className="text-2xl font-semibold text-gray-900 mb-2">Message Sent!</h2>
-                            <p className="text-gray-600 mb-6">
+                            <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-2">Message Sent!</h2>
+                            <p className="text-gray-600 dark:text-gray-300 mb-6">
                                 Thank you for reaching out. We'll get back to you within 24-48 hours.
                             </p>
                             <Button onClick={() => setIsSubmitted(false)} variant="outline">
@@ -135,7 +135,7 @@ export default function ContactPage() {
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div className="space-y-2">
-                                    <Label htmlFor="name">Name</Label>
+                                    <Label htmlFor="name" className="text-gray-900 dark:text-white">Name</Label>
                                     <Input
                                         id="name"
                                         name="name"
@@ -143,10 +143,11 @@ export default function ContactPage() {
                                         value={formState.name}
                                         onChange={handleChange}
                                         required
+                                        className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500"
                                     />
                                 </div>
                                 <div className="space-y-2">
-                                    <Label htmlFor="email">Email</Label>
+                                    <Label htmlFor="email" className="text-gray-900 dark:text-white">Email</Label>
                                     <Input
                                         id="email"
                                         name="email"
@@ -155,12 +156,13 @@ export default function ContactPage() {
                                         value={formState.email}
                                         onChange={handleChange}
                                         required
+                                        className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500"
                                     />
                                 </div>
                             </div>
 
                             <div className="space-y-2">
-                                <Label htmlFor="subject">Subject</Label>
+                                <Label htmlFor="subject" className="text-gray-900 dark:text-white">Subject</Label>
                                 <Input
                                     id="subject"
                                     name="subject"
@@ -168,11 +170,12 @@ export default function ContactPage() {
                                     value={formState.subject}
                                     onChange={handleChange}
                                     required
+                                    className="bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500"
                                 />
                             </div>
 
                             <div className="space-y-2">
-                                <Label htmlFor="message">Message</Label>
+                                <Label htmlFor="message" className="text-gray-900 dark:text-white">Message</Label>
                                 <textarea
                                     id="message"
                                     name="message"
@@ -181,11 +184,11 @@ export default function ContactPage() {
                                     onChange={handleChange}
                                     required
                                     rows={6}
-                                    className="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 resize-none"
+                                    className="flex w-full rounded-md border border-input bg-background dark:bg-gray-800 dark:border-gray-600 px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground dark:placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 resize-none dark:text-white"
                                 />
                             </div>
 
-                            <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700" disabled={isLoading}>
+                            <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white" disabled={isLoading}>
                                 {isLoading ? (
                                     "Sending..."
                                 ) : (

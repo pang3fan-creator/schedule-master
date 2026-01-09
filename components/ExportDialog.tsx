@@ -155,34 +155,34 @@ export function ExportDialog({
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="sm:max-w-md">
+            <DialogContent className="sm:max-w-md bg-white dark:bg-gray-900">
                 <DialogHeader>
-                    <DialogTitle className="flex items-center gap-2">
+                    <DialogTitle className="flex items-center gap-2 text-gray-900 dark:text-gray-100">
                         <Download className="size-5" />
                         Export Schedule
                     </DialogTitle>
-                    <DialogDescription className="text-left">
+                    <DialogDescription className="text-left text-gray-600 dark:text-gray-400">
                         Choose a format to download your schedule.
                     </DialogDescription>
                 </DialogHeader>
 
                 <div className="space-y-4 py-4">
-                    <Label>Format</Label>
+                    <Label className="text-gray-900 dark:text-gray-100">Format</Label>
                     <div className="space-y-2">
                         {formatOptions.map((option) => (
                             <div
                                 key={option.format}
                                 className={`flex items-center gap-3 rounded-lg border p-3 transition-colors cursor-pointer ${selectedFormat === option.format
-                                    ? "border-blue-500 bg-blue-50"
-                                    : "border-gray-200 hover:border-gray-300"
+                                    ? "border-blue-500 bg-blue-50 dark:bg-blue-900/30"
+                                    : "border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600"
                                     }`}
                                 onClick={() => setSelectedFormat(option.format)}
                             >
-                                <option.icon className={`size-5 ${selectedFormat === option.format ? "text-blue-600" : "text-gray-500"
+                                <option.icon className={`size-5 ${selectedFormat === option.format ? "text-blue-600 dark:text-blue-400" : "text-gray-500 dark:text-gray-400"
                                     }`} />
                                 <div className="flex-1">
                                     <div className="flex items-center gap-2">
-                                        <span className={`font-medium ${selectedFormat === option.format ? "text-blue-900" : "text-gray-900"
+                                        <span className={`font-medium ${selectedFormat === option.format ? "text-blue-900 dark:text-blue-100" : "text-gray-900 dark:text-gray-100"
                                             }`}>
                                             {option.label}
                                         </span>
@@ -193,7 +193,7 @@ export function ExportDialog({
                                             </span>
                                         )}
                                     </div>
-                                    <span className="text-sm text-gray-500">{option.description}</span>
+                                    <span className="text-sm text-gray-500 dark:text-gray-400">{option.description}</span>
                                 </div>
                             </div>
                         ))}
@@ -201,12 +201,12 @@ export function ExportDialog({
 
                     {/* Pro upgrade prompt for non-pro users */}
                     {!isPro && (selectedFormat === "pdf" || selectedFormat === "csv") && (
-                        <div className="rounded-lg bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 p-4">
+                        <div className="rounded-lg bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-900/30 dark:to-orange-900/30 border border-amber-200 dark:border-amber-800 p-4">
                             <div className="flex items-start gap-3">
-                                <Crown className="size-5 text-amber-600 mt-0.5" />
+                                <Crown className="size-5 text-amber-600 dark:text-amber-400 mt-0.5" />
                                 <div>
-                                    <p className="font-medium text-amber-900">Upgrade to Pro</p>
-                                    <p className="text-sm text-amber-700 mt-1">
+                                    <p className="font-medium text-amber-900 dark:text-amber-100">Upgrade to Pro</p>
+                                    <p className="text-sm text-amber-700 dark:text-amber-300 mt-1">
                                         Unlock PDF and CSV exports, plus remove watermarks from images.
                                     </p>
                                     <Link href="/pricing">

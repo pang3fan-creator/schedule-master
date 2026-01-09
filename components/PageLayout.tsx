@@ -41,7 +41,7 @@ export function PageLayout({
     showNavbar = true,
 }: PageLayoutProps) {
     return (
-        <div className={cn("h-screen flex flex-col", bgColor)}>
+        <div className={cn("h-screen flex flex-col", bgColor, "dark:bg-gray-900")}>
             {/* Fixed navbar with transparency - content scrolls behind it */}
             {showNavbar && (
                 <div className="fixed top-0 left-0 right-0 z-50">

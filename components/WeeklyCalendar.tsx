@@ -278,7 +278,7 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
   }, [visibleEvents])
 
   return (
-    <div className={`flex flex-col p-2 md:p-6 bg-muted/20 ${exportMode ? '' : 'h-full'}`}>
+    <div className={`flex flex-col p-2 md:p-6 bg-gray-50 dark:bg-gray-900/20 ${exportMode ? '' : 'h-full'}`}>
       {/* Header with navigation - responsive layout */}
       <div className="mb-1 md:mb-4 flex-shrink-0">
         {/* Desktop layout */}
@@ -290,11 +290,11 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
           {showDates && (
             <div className={`flex items-center ${exportMode ? 'flex-1 justify-center' : 'absolute left-1/2 -translate-x-1/2'}`}>
               {!exportMode && (
-                <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToPreviousWeek} aria-label="Go to previous week">
+                <Button variant="ghost" size="icon" className="size-10 text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700" onClick={goToPreviousWeek} aria-label="Go to previous week">
                   <ChevronLeft className="size-6" />
                 </Button>
               )}
-              <h2 className="text-xl font-semibold text-gray-900 w-[450px] text-center flex justify-center">
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 w-[450px] text-center flex justify-center">
                 {exportMode ? (
                   dateRangeString
                 ) : (
@@ -302,7 +302,7 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
                     <PopoverTrigger asChild>
                       <Button
                         variant="ghost"
-                        className="text-xl font-semibold text-gray-900 hover:bg-gray-200 h-auto py-1 px-2"
+                        className="text-xl font-semibold text-gray-900 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 h-auto py-1 px-2"
                       >
                         {dateRangeString}
                       </Button>
@@ -338,7 +338,7 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
                 )}
               </h2>
               {!exportMode && (
-                <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToNextWeek} aria-label="Go to next week">
+                <Button variant="ghost" size="icon" className="size-10 text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700" onClick={goToNextWeek} aria-label="Go to next week">
                   <ChevronRight className="size-6" />
                 </Button>
               )}
@@ -357,15 +357,15 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
             {/* Navigation row */}
             {!exportMode && (
               <div className="flex items-center justify-center w-full">
-                <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToPreviousWeek} aria-label="Go to previous week">
+                <Button variant="ghost" size="icon" className="size-10 text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700" onClick={goToPreviousWeek} aria-label="Go to previous week">
                   <ChevronLeft className="size-6" />
                 </Button>
-                <h2 className="text-sm font-semibold text-gray-900 text-center flex-1 px-1 flex justify-center">
+                <h2 className="text-sm font-semibold text-gray-900 dark:text-gray-100 text-center flex-1 px-1 flex justify-center">
                   <Popover open={isMobileCalendarOpen} onOpenChange={setIsMobileCalendarOpen}>
                     <PopoverTrigger asChild>
                       <Button
                         variant="ghost"
-                        className="text-sm font-semibold text-gray-900 hover:bg-gray-200 h-auto py-1 px-2"
+                        className="text-sm font-semibold text-gray-900 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 h-auto py-1 px-2"
                       >
                         {dateRangeString}
                       </Button>
@@ -399,7 +399,7 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
                     </PopoverContent>
                   </Popover>
                 </h2>
-                <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToNextWeek} aria-label="Go to next week">
+                <Button variant="ghost" size="icon" className="size-10 text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700" onClick={goToNextWeek} aria-label="Go to next week">
                   <ChevronRight className="size-6" />
                 </Button>
               </div>
@@ -433,9 +433,9 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
           {/* Header Row */}
           <div /> {/* Empty corner cell */}
           {days.map((day) => (
-            <div key={day.short} className="flex flex-col items-center justify-center border-b border-gray-300">
-              <span className="text-[10px] md:text-xs font-medium text-gray-500">{day.short}</span>
-              {showDates && <span className="text-xs md:text-sm font-semibold text-gray-900">{day.date}</span>}
+            <div key={day.short} className="flex flex-col items-center justify-center border-b border-gray-300 dark:border-gray-700">
+              <span className="text-[10px] md:text-xs font-medium text-gray-500 dark:text-gray-400">{day.short}</span>
+              {showDates && <span className="text-xs md:text-sm font-semibold text-gray-900 dark:text-gray-100">{day.date}</span>}
             </div>
           ))}
 
@@ -444,20 +444,20 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
             <React.Fragment key={hour}>
               {/* Time label */}
               <div className="flex items-start justify-end pr-1 md:pr-3">
-                <span className="text-[9px] md:text-xs font-medium text-gray-500 -translate-y-1/2 whitespace-nowrap">{formatHour(hour, use12HourFormat)}</span>
+                <span className="text-[9px] md:text-xs font-medium text-gray-500 dark:text-gray-400 -translate-y-1/2 whitespace-nowrap">{formatHour(hour, use12HourFormat)}</span>
               </div>
 
               {/* Day cells - only render for data rows (not the last label row) */}
               {index !== hours.length - 1 && days.map((day, dayIndex) => (
                 <div
                   key={`${day.short}-${hour}`}
-                  className={`relative border-b border-l border-gray-300 ${dayIndex === days.length - 1 ? "border-r" : ""}`}
+                  className={`relative border-b border-l border-gray-300 dark:border-gray-700 ${dayIndex === days.length - 1 ? "border-r" : ""}`}
                   style={{ touchAction: 'none' }}
                   onMouseDown={(e) => handleCreateMouseDown(e, hour, dayIndex, !!dragState.eventId)}
                   onTouchStart={(e) => handleCreateTouchStart(e, hour, dayIndex, !!dragState.eventId)}
                 >
                   {/* Hover Effect Layer - Separate from container to avoid event bubbling triggering it */}
-                  <div className="absolute inset-0 hover:bg-blue-50 transition-colors" />
+                  <div className="absolute inset-0 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors" />
 
                   {/* Current Time Indicator - only if date matches today and within this hour */}
                   {currentTime &&
@@ -471,7 +471,7 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
                           top: `${(currentTime.getMinutes() / 60) * 100}%`,
                         }}
                       >
-                        <div className="absolute -left-[6px] -top-[5px] size-2.5 rounded-full bg-red-500 ring-2 ring-white" />
+                        <div className="absolute -left-[6px] -top-[5px] size-2.5 rounded-full bg-red-500 ring-2 ring-white dark:ring-gray-800" />
                         <div className="border-t-2 border-red-500 w-full opacity-60" />
                       </div>
                     )}
@@ -479,7 +479,7 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
                   {/* Creating Ghost Event */}
                   {index === 0 && creatingEvent && creatingEvent.dayIndex === dayIndex && (
                     <div
-                      className="absolute z-20 rounded-lg border-l-4 border-blue-500 bg-blue-100/50 backdrop-blur-sm p-2 overflow-hidden shadow-lg ring-2 ring-blue-400 pointer-events-none"
+                      className="absolute z-20 rounded-lg border-l-4 border-blue-500 bg-blue-100/50 dark:bg-blue-900/30 backdrop-blur-sm p-2 overflow-hidden shadow-lg ring-2 ring-blue-400 pointer-events-none"
                       style={{
                         top: getGhostPosition()?.top,
                         height: getGhostPosition()?.height,
@@ -488,8 +488,8 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
                         transition: 'none'
                       }}
                     >
-                      <div className="text-xs font-semibold text-blue-700">New Event</div>
-                      <div className="text-xs text-blue-600">
+                      <div className="text-xs font-semibold text-blue-700 dark:text-blue-300">New Event</div>
+                      <div className="text-xs text-blue-600 dark:text-blue-400">
                         {formatTime(creatingEvent.startHour, creatingEvent.startMinute, use12HourFormat)} - {formatTime(creatingEvent.endHour, creatingEvent.endMinute, use12HourFormat)}
                       </div>
                     </div>
@@ -568,7 +568,7 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
                             {taskModeEnabled && (
                               <button
                                 type="button"
-                                className={`absolute top-1 ${event.priority ? 'left-4' : 'left-1'} size-4 md:size-5 flex items-center justify-center rounded border transition-colors ${event.task?.isCompleted ? 'bg-green-500 border-green-600 text-white' : 'bg-white border-gray-300 hover:border-gray-400'}`}
+                                className={`absolute top-1 ${event.priority ? 'left-4' : 'left-1'} size-4 md:size-5 flex items-center justify-center rounded border transition-colors ${event.task?.isCompleted ? 'bg-green-500 border-green-600 text-white' : 'bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500'}`}
                                 onClick={(e) => {
                                   e.stopPropagation()
                                   if (onEventUpdate) {

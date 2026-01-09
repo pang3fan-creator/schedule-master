@@ -4,6 +4,7 @@ import { useState } from "react"
 import dynamic from "next/dynamic"
 import { Button } from "@/components/ui/button"
 import { ViewModeToggle } from "@/components/ViewModeToggle"
+import { ThemeToggle } from "@/components/ThemeToggle"
 import { Download, Settings, Sparkles, Cloud, Calendar, HelpCircle } from "lucide-react"
 import { useSettings } from "@/components/SettingsContext"
 import { TaskModeToggle } from "@/components/templates/TaskModeToggle"
@@ -135,7 +136,7 @@ export function Sidebar({ events, onReset, viewMode, onViewModeChange, weekStart
   }
 
   return (
-    <aside className="hidden md:flex w-[230px] h-full shrink-0 flex-col border-r border-gray-200 bg-white p-4 overflow-hidden">
+    <aside className="hidden md:flex w-[230px] h-full shrink-0 flex-col border-r border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-950 p-4 overflow-hidden">
       {/* Upgrade Modal */}
       <UpgradeModal
         open={showUpgradeModal}
@@ -168,7 +169,7 @@ export function Sidebar({ events, onReset, viewMode, onViewModeChange, weekStart
         {/* Cloud Save */}
         <Button
           variant="ghost"
-          className="justify-start gap-3 text-gray-600 hover:text-gray-900"
+          className="justify-start gap-3 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
           onClick={handleCloudSaveClick}
         >
           <Cloud className="size-5" />
@@ -189,7 +190,7 @@ export function Sidebar({ events, onReset, viewMode, onViewModeChange, weekStart
         {/* Calendar Sync */}
         <Button
           variant="ghost"
-          className="justify-start gap-3 text-gray-600 hover:text-gray-900"
+          className="justify-start gap-3 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
           onClick={handleCalendarSyncClick}
         >
           <Calendar className="size-5" />
@@ -207,7 +208,7 @@ export function Sidebar({ events, onReset, viewMode, onViewModeChange, weekStart
         {/* Export/Download */}
         <Button
           variant="ghost"
-          className="justify-start gap-3 text-gray-600 hover:text-gray-900"
+          className="justify-start gap-3 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
           onClick={handleExportClick}
         >
           <Download className="size-5" />
@@ -217,7 +218,7 @@ export function Sidebar({ events, onReset, viewMode, onViewModeChange, weekStart
         {/* Help & FAQ */}
         <Button
           variant="ghost"
-          className="justify-start gap-3 text-gray-600 hover:text-gray-900"
+          className="justify-start gap-3 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
           onClick={() => setShowFAQDialog(true)}
         >
           <HelpCircle className="size-5" />
@@ -233,14 +234,14 @@ export function Sidebar({ events, onReset, viewMode, onViewModeChange, weekStart
         {/* Settings */}
         <Button
           variant="ghost"
-          className="justify-start gap-3 text-gray-600 hover:text-gray-900"
+          className="justify-start gap-3 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
           onClick={() => setEffectiveSettingsOpen(true)}
         >
           <Settings className="size-5" />
           Settings
         </Button>
 
-        <div className="h-px bg-gray-100 my-2 mx-1" />
+        <div className="h-px bg-gray-100 my-2 mx-1 dark:bg-gray-800" />
 
         {/* Task Mode Toggle - Only for Cleaning Template */}
         {settings.activeTemplateSlug === 'cleaning-schedule-builder' && <TaskModeToggle />}

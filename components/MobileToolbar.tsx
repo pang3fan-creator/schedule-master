@@ -233,59 +233,59 @@ export function MobileToolbar({
 
 
             {/* Fixed Bottom Toolbar */}
-            <div className="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-gray-200 px-4 py-2 md:hidden safe-area-pb">
+            <div className="fixed bottom-0 left-0 right-0 z-40 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 px-4 py-2 md:hidden safe-area-pb">
                 <div className="flex items-center justify-around">
                     {/* Reset Button (4) */}
                     <button
                         onClick={handleResetClick}
-                        className="flex flex-col items-center gap-0.5 p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                        className="flex flex-col items-center gap-0.5 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
                     >
-                        <RotateCcw className="size-5 text-gray-600" />
-                        <span className="text-xs text-gray-600">Reset</span>
+                        <RotateCcw className="size-5 text-gray-600 dark:text-gray-400" />
+                        <span className="text-xs text-gray-600 dark:text-gray-400">Reset</span>
                     </button>
 
                     {/* Export Button (3) */}
                     <button
                         onClick={handleExportClick}
-                        className="flex flex-col items-center gap-0.5 p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                        className="flex flex-col items-center gap-0.5 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
                     >
-                        <Download className="size-5 text-gray-600" />
-                        <span className="text-xs text-gray-600">Export</span>
+                        <Download className="size-5 text-gray-600 dark:text-gray-400" />
+                        <span className="text-xs text-gray-600 dark:text-gray-400">Export</span>
                     </button>
 
                     {/* Day/Week Toggle Button (1) */}
                     <button
                         onClick={() => onViewModeChange(viewMode === "day" ? "week" : "day")}
-                        className="flex flex-col items-center gap-0.5 p-2 w-16 hover:bg-gray-100 rounded-lg transition-colors"
+                        className="flex flex-col items-center gap-0.5 p-2 w-16 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
                     >
                         {viewMode === "day" ? (
-                            <CalendarDays className="size-5 text-blue-600" />
+                            <CalendarDays className="size-5 text-blue-600 dark:text-blue-400" />
                         ) : (
-                            <CalendarRange className="size-5 text-blue-600" />
+                            <CalendarRange className="size-5 text-blue-600 dark:text-blue-400" />
                         )}
-                        <span className="text-xs text-gray-600 whitespace-nowrap">
-                            {viewMode === "day" ? "Day" : "Week"} <span className="text-gray-400">↔</span>
+                        <span className="text-xs text-gray-600 dark:text-gray-400 whitespace-nowrap">
+                            {viewMode === "day" ? "Day" : "Week"} <span className="text-gray-400 dark:text-gray-500">↔</span>
                         </span>
                     </button>
 
                     {/* Cloud Save Button (2) */}
                     <button
                         onClick={handleCloudSaveClick}
-                        className="flex flex-col items-center gap-0.5 p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                        className="flex flex-col items-center gap-0.5 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
                     >
-                        <Cloud className="size-5 text-gray-600" />
-                        <span className="text-xs text-gray-600">Cloud</span>
+                        <Cloud className="size-5 text-gray-600 dark:text-gray-400" />
+                        <span className="text-xs text-gray-600 dark:text-gray-400">Cloud</span>
                     </button>
 
                     {/* More Menu (5) */}
                     <Sheet open={showMoreSheet} onOpenChange={setShowMoreSheet}>
                         <SheetTrigger asChild>
-                            <button className="flex flex-col items-center gap-0.5 p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                                <MoreHorizontal className="size-5 text-gray-600" />
-                                <span className="text-xs text-gray-600">More</span>
+                            <button className="flex flex-col items-center gap-0.5 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors">
+                                <MoreHorizontal className="size-5 text-gray-600 dark:text-gray-400" />
+                                <span className="text-xs text-gray-600 dark:text-gray-400">More</span>
                             </button>
                         </SheetTrigger>
-                        <SheetContent side="bottom" className="h-auto rounded-t-2xl">
+                        <SheetContent side="bottom" className="h-auto rounded-t-2xl dark:bg-gray-900">
                             <SheetHeader className="pb-4">
                                 <SheetTitle>More Options</SheetTitle>
                             </SheetHeader>
@@ -293,45 +293,45 @@ export function MobileToolbar({
                                 {/* Sync Button (4) */}
                                 <button
                                     onClick={handleCalendarSyncClick}
-                                    className="flex flex-col items-center gap-2 p-3 rounded-xl hover:bg-gray-50"
+                                    className="flex flex-col items-center gap-2 p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800"
                                 >
-                                    <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center">
-                                        <Calendar className="size-5 text-gray-600" />
+                                    <div className="w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+                                        <Calendar className="size-5 text-gray-600 dark:text-gray-400" />
                                     </div>
-                                    <span className="text-xs text-gray-600">Sync</span>
+                                    <span className="text-xs text-gray-600 dark:text-gray-400">Sync</span>
                                 </button>
 
                                 {/* AI Fill Button (2) */}
                                 <button
                                     onClick={handleAIAutofillClick}
-                                    className="flex flex-col items-center gap-2 p-3 rounded-xl hover:bg-gray-50"
+                                    className="flex flex-col items-center gap-2 p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800"
                                 >
                                     <div className="w-12 h-12 rounded-full bg-gradient-to-r from-violet-500 to-blue-500 flex items-center justify-center">
                                         <Sparkles className="size-5 text-white" />
                                     </div>
-                                    <span className="text-xs text-gray-600">AI Fill</span>
+                                    <span className="text-xs text-gray-600 dark:text-gray-400">AI Fill</span>
                                 </button>
 
                                 {/* Settings Button (1) */}
                                 <button
                                     onClick={handleSettingsClick}
-                                    className="flex flex-col items-center gap-2 p-3 rounded-xl hover:bg-gray-50"
+                                    className="flex flex-col items-center gap-2 p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800"
                                 >
-                                    <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center">
-                                        <Settings className="size-5 text-gray-600" />
+                                    <div className="w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+                                        <Settings className="size-5 text-gray-600 dark:text-gray-400" />
                                     </div>
-                                    <span className="text-xs text-gray-600">Settings</span>
+                                    <span className="text-xs text-gray-600 dark:text-gray-400">Settings</span>
                                 </button>
 
                                 {/* FAQ Button (3) */}
                                 <button
                                     onClick={handleFAQClick}
-                                    className="flex flex-col items-center gap-2 p-3 rounded-xl hover:bg-gray-50"
+                                    className="flex flex-col items-center gap-2 p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800"
                                 >
-                                    <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center">
-                                        <HelpCircle className="size-5 text-gray-600" />
+                                    <div className="w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+                                        <HelpCircle className="size-5 text-gray-600 dark:text-gray-400" />
                                     </div>
-                                    <span className="text-xs text-gray-600">FAQ</span>
+                                    <span className="text-xs text-gray-600 dark:text-gray-400">FAQ</span>
                                 </button>
                             </div>
                         </SheetContent>

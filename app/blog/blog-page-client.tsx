@@ -129,7 +129,7 @@ export function BlogPageClient({ posts, categories }: BlogPageClientProps) {
                         <button
                             onClick={() => handlePageChange(currentPage - 1)}
                             disabled={currentPage === 1}
-                            className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                            className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                             aria-label="Previous page"
                         >
                             <ChevronLeft className="w-5 h-5" />
@@ -142,13 +142,13 @@ export function BlogPageClient({ posts, categories }: BlogPageClientProps) {
                                     onClick={() => handlePageChange(page)}
                                     className={`w-10 h-10 flex items-center justify-center rounded-lg text-sm font-medium transition-colors ${currentPage === page
                                         ? 'bg-blue-600 text-white'
-                                        : 'border border-gray-200 bg-white text-gray-700 hover:bg-gray-50'
+                                        : 'border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'
                                         }`}
                                 >
                                     {page}
                                 </button>
                             ) : (
-                                <span key={index} className="w-10 h-10 flex items-center justify-center text-gray-400">
+                                <span key={index} className="w-10 h-10 flex items-center justify-center text-gray-400 dark:text-gray-600">
                                     {page}
                                 </span>
                             )
@@ -157,7 +157,7 @@ export function BlogPageClient({ posts, categories }: BlogPageClientProps) {
                         <button
                             onClick={() => handlePageChange(currentPage + 1)}
                             disabled={currentPage === totalPages}
-                            className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                            className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                             aria-label="Next page"
                         >
                             <ChevronRight className="w-5 h-5" />

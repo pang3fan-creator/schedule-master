@@ -15,6 +15,7 @@ import {
 } from "@clerk/nextjs"
 import { getAllTemplates } from "@/lib/templates"
 import { MobileNav } from "@/components/MobileNav"
+import { ThemeToggle } from "@/components/ThemeToggle"
 
 // Dynamically import modals to reduce initial bundle size
 // These are only loaded when user triggers authentication or subscription actions
@@ -59,7 +60,7 @@ export function Navbar() {
 
   return (
     <>
-      <header className="relative z-50 flex h-16 shrink-0 items-center justify-between border-b border-gray-200 bg-blue-600 md:bg-white/60 md:backdrop-blur-md px-4 md:px-6 shadow-sm transition-all dark:bg-black/70 dark:border-white/5">
+      <header className="relative z-50 flex h-16 shrink-0 items-center justify-between border-b border-gray-200 bg-blue-600 md:bg-white/80 md:backdrop-blur-md px-4 md:px-6 shadow-sm transition-all dark:bg-gray-900/80 dark:border-gray-800">
         {/* Mobile: Hamburger Menu */}
         <div className="md:hidden">
           <MobileNav />
@@ -71,7 +72,7 @@ export function Navbar() {
           className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0"
         >
           <Image src="/icon.svg" alt="TrySchedule - Free Online Schedule Builder" width={32} height={32} className="object-contain" priority />
-          <span className="text-lg text-blue-600 hidden sm:inline">
+          <span className="text-lg text-blue-600 hidden sm:inline dark:text-blue-400">
             <span className="font-bold">Try</span><span className="font-normal">Schedule</span>
           </span>
         </Link>
@@ -84,8 +85,8 @@ export function Navbar() {
             className={cn(
               "text-sm font-medium transition-colors",
               pathname === "/"
-                ? "text-blue-600 border-b-2 border-blue-600 pb-0.5"
-                : "text-gray-600 hover:text-gray-900"
+                ? "text-blue-600 dark:text-blue-400 border-b-2 border-blue-600 dark:border-blue-400 pb-0.5"
+                : "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100"
             )}
           >
             Home
@@ -101,8 +102,8 @@ export function Navbar() {
               className={cn(
                 "text-sm font-medium transition-colors flex items-center gap-1",
                 isTemplatesActive
-                  ? "text-blue-600 border-b-2 border-blue-600 pb-0.5"
-                  : "text-gray-600 hover:text-gray-900"
+                  ? "text-blue-600 dark:text-blue-400 border-b-2 border-blue-600 dark:border-blue-400 pb-0.5"
+                  : "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100"
               )}
             >
               Templates
@@ -115,21 +116,21 @@ export function Navbar() {
             {/* Dropdown Menu */}
             {templatesDropdownOpen && (
               <div className="absolute top-full left-0 pt-2 w-72">
-                <div className="bg-white rounded-lg shadow-lg border border-gray-200 py-2 overflow-hidden">
+                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-2 overflow-hidden">
                   {templates.map((template) => {
                     const IconComponent = template.icon ? iconMap[template.icon] : Briefcase
                     return (
                       <Link
                         key={template.slug}
                         href={`/templates/${template.slug}`}
-                        className="flex items-start gap-3 px-4 py-3 hover:bg-gray-50 transition-colors"
+                        className="flex items-start gap-3 px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
                       >
-                        <div className="p-1.5 bg-blue-50 rounded-md">
-                          <IconComponent className="size-4 text-blue-600" />
+                        <div className="p-1.5 bg-blue-50 dark:bg-blue-900/30 rounded-md">
+                          <IconComponent className="size-4 text-blue-600 dark:text-blue-300" />
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2">
-                            <span className="text-sm font-medium text-gray-900 truncate">
+                            <span className="text-sm font-medium text-gray-900 dark:text-white truncate">
                               {template.title}
                             </span>
                             {template.requiresPro && (
@@ -143,10 +144,10 @@ export function Navbar() {
                       </Link>
                     )
                   })}
-                  <div className="border-t border-gray-100 mt-2 pt-2">
+                  <div className="border-t border-gray-100 dark:border-gray-700 mt-2 pt-2">
                     <Link
                       href="/templates"
-                      className="flex items-center justify-center gap-1 px-4 py-2 text-sm text-blue-600 hover:text-blue-700 font-medium"
+                      className="flex items-center justify-center gap-1 px-4 py-2 text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium"
                     >
                       View All Templates
                     </Link>
@@ -166,8 +167,8 @@ export function Navbar() {
                 className={cn(
                   "text-sm font-medium transition-colors",
                   isActive
-                    ? "text-blue-600 border-b-2 border-blue-600 pb-0.5"
-                    : "text-gray-600 hover:text-gray-900"
+                    ? "text-blue-600 dark:text-blue-400 border-b-2 border-blue-600 dark:border-blue-400 pb-0.5"
+                    : "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100"
                 )}
               >
                 {link.label}
@@ -178,16 +179,19 @@ export function Navbar() {
 
         {/* Right: Auth Buttons - Hidden on mobile (available in MobileNav) */}
         <div className="flex items-center gap-3">
+          {/* Theme Toggle */}
+          <ThemeToggle />
+
           <SignedOut>
             <Button
               variant="ghost"
-              className="hidden md:inline-flex text-gray-700"
+              className="hidden md:inline-flex text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800"
               onClick={() => openAuthModal("sign-in")}
             >
               Sign In
             </Button>
             <Button
-              className="hidden md:inline-flex bg-blue-600 hover:bg-blue-700 text-white"
+              className="hidden md:inline-flex bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white"
               onClick={() => openAuthModal("sign-up")}
             >
               Sign Up

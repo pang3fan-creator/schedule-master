@@ -10,7 +10,7 @@ export function GoogleButton({ onClick, text }: GoogleButtonProps) {
         <Button
             type="button"
             variant="outline"
-            className="w-full h-11 border-gray-200 hover:bg-gray-50"
+            className="w-full h-11 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
             onClick={onClick}
         >
             <svg className="size-5 mr-2" viewBox="0 0 24 24">

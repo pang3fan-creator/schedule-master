@@ -254,7 +254,7 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
     const groupedDayEvents = useMemo(() => groupOverlappingEvents(dayEvents), [dayEvents])
 
     return (
-        <div className={`flex flex-col p-2 md:p-6 bg-muted/20 ${exportMode ? '' : 'h-full'}`}>
+        <div className={`flex flex-col p-2 md:p-6 bg-gray-50 dark:bg-gray-900/20 ${exportMode ? '' : 'h-full'}`}>
             {/* Header with navigation - responsive layout */}
             <div className="mb-1 md:mb-4 flex-shrink-0">
                 {/* Desktop layout */}
@@ -266,11 +266,11 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                     {showDates && (
                         <div className={`flex items-center ${exportMode ? 'flex-1 justify-center' : 'absolute left-1/2 -translate-x-1/2'}`}>
                             {!exportMode && (
-                                <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToPreviousDay} aria-label="Go to previous day">
+                                <Button variant="ghost" size="icon" className="size-10 text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700" onClick={goToPreviousDay} aria-label="Go to previous day">
                                     <ChevronLeft className="size-6" />
                                 </Button>
                             )}
-                            <h2 className="text-xl font-semibold text-gray-900 w-[450px] text-center flex justify-center">
+                            <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 w-[450px] text-center flex justify-center">
                                 {exportMode ? (
                                     formatDate(selectedDate)
                                 ) : (
@@ -278,7 +278,7 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                                         <PopoverTrigger asChild>
                                             <Button
                                                 variant="ghost"
-                                                className="text-xl font-semibold text-gray-900 hover:bg-gray-200 h-auto py-1 px-2"
+                                                className="text-xl font-semibold text-gray-900 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 h-auto py-1 px-2"
                                             >
                                                 {formatDate(selectedDate)}
                                             </Button>
@@ -314,7 +314,7 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                                 )}
                             </h2>
                             {!exportMode && (
-                                <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToNextDay} aria-label="Go to next day">
+                                <Button variant="ghost" size="icon" className="size-10 text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700" onClick={goToNextDay} aria-label="Go to next day">
                                     <ChevronRight className="size-6" />
                                 </Button>
                             )}
@@ -334,15 +334,15 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                         {/* Navigation row */}
                         {!exportMode && (
                             <div className="flex items-center justify-center w-full">
-                                <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToPreviousDay} aria-label="Go to previous day">
+                                <Button variant="ghost" size="icon" className="size-10 text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700" onClick={goToPreviousDay} aria-label="Go to previous day">
                                     <ChevronLeft className="size-6" />
                                 </Button>
-                                <h2 className="text-base font-semibold text-gray-900 text-center flex-1 px-2 flex justify-center">
+                                <h2 className="text-base font-semibold text-gray-900 dark:text-gray-100 text-center flex-1 px-2 flex justify-center">
                                     <Popover open={isMobileCalendarOpen} onOpenChange={setIsMobileCalendarOpen}>
                                         <PopoverTrigger asChild>
                                             <Button
                                                 variant="ghost"
-                                                className="text-base font-semibold text-gray-900 hover:bg-gray-200 h-auto py-1 px-2"
+                                                className="text-base font-semibold text-gray-900 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 h-auto py-1 px-2"
                                             >
                                                 {formatDate(selectedDate)}
                                             </Button>
@@ -376,7 +376,7 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                                         </PopoverContent>
                                     </Popover>
                                 </h2>
-                                <Button variant="ghost" size="icon" className="size-10 text-gray-500 hover:text-gray-800 hover:bg-gray-200" onClick={goToNextDay} aria-label="Go to next day">
+                                <Button variant="ghost" size="icon" className="size-10 text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700" onClick={goToNextDay} aria-label="Go to next day">
                                     <ChevronRight className="size-6" />
                                 </Button>
                             </div>
@@ -404,25 +404,25 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                     >
                         {/* Header Row */}
                         <div /> {/* Empty corner cell */}
-                        <div className="flex flex-col items-center justify-center border-b border-gray-300">
+                        <div className="flex flex-col items-center justify-center border-b border-gray-300 dark:border-gray-700">
                             {showDates ? (
                                 <>
-                                    <span className="text-xs font-medium text-gray-500">{shortDayName}</span>
-                                    <span className="text-sm font-semibold text-gray-900">{selectedDate.getDate()}</span>
+                                    <span className="text-xs font-medium text-gray-500 dark:text-gray-400">{shortDayName}</span>
+                                    <span className="text-sm font-semibold text-gray-900 dark:text-gray-100">{selectedDate.getDate()}</span>
                                 </>
                             ) : (
                                 <div className="flex items-center gap-16">
                                     <button
                                         onClick={goToPreviousDay}
-                                        className="p-2 text-gray-400 hover:text-gray-700 hover:bg-gray-200 rounded-full transition-colors"
+                                        className="p-2 text-gray-400 dark:text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full transition-colors"
                                         aria-label="Go to previous day"
                                     >
                                         <ChevronLeft className="size-6" />
                                     </button>
-                                    <span className="text-xs font-medium text-gray-500 w-10 text-center">{shortDayName}</span>
+                                    <span className="text-xs font-medium text-gray-500 dark:text-gray-400 w-10 text-center">{shortDayName}</span>
                                     <button
                                         onClick={goToNextDay}
-                                        className="p-2 text-gray-400 hover:text-gray-700 hover:bg-gray-200 rounded-full transition-colors"
+                                        className="p-2 text-gray-400 dark:text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full transition-colors"
                                         aria-label="Go to next day"
                                     >
                                         <ChevronRight className="size-6" />
@@ -435,18 +435,18 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                         {hours.map((hour, index) => (
                             <React.Fragment key={hour}>
                                 <div className="flex items-start justify-end pr-3">
-                                    <span className="text-xs font-medium text-gray-500 -translate-y-1/2 whitespace-nowrap">{formatHour(hour, use12HourFormat)}</span>
+                                    <span className="text-xs font-medium text-gray-500 dark:text-gray-400 -translate-y-1/2 whitespace-nowrap">{formatHour(hour, use12HourFormat)}</span>
                                 </div>
 
                                 {/* Day cell - only render for data rows (not the last label row) */}
                                 {index !== hours.length - 1 && (
-                                    <div className="relative border-b border-l border-r border-gray-300"
+                                    <div className="relative border-b border-l border-r border-gray-300 dark:border-gray-700"
                                         style={{ touchAction: 'none' }}
                                         onMouseDown={(e) => handleCreateMouseDown(e, hour, currentDayIndex, !!dragState.eventId)}
                                         onTouchStart={(e) => handleCreateTouchStart(e, hour, currentDayIndex, !!dragState.eventId)}
                                     >
                                         {/* Hover Effect Layer - Separate from container to avoid event bubbling triggering it */}
-                                        <div className="absolute inset-0 hover:bg-blue-50 transition-colors" />
+                                        <div className="absolute inset-0 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors" />
 
                                         {/* Current Time Indicator - only if today and within this hour */}
                                         {isToday && currentTime && currentTime.getHours() === hour && (
@@ -456,7 +456,7 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                                                     top: `${(currentTime.getMinutes() / 60) * 100}%`,
                                                 }}
                                             >
-                                                <div className="absolute -left-[6px] -top-[5px] size-2.5 rounded-full bg-red-500 ring-2 ring-white" />
+                                                <div className="absolute -left-[6px] -top-[5px] size-2.5 rounded-full bg-red-500 ring-2 ring-white dark:ring-gray-800" />
                                                 <div className="border-t-2 border-red-500 w-full opacity-60" />
                                             </div>
                                         )}
@@ -464,7 +464,7 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                                         {/* Creating Ghost Event */}
                                         {index === 0 && creatingEvent && (
                                             <div
-                                                className="absolute z-20 rounded-lg border-l-4 border-blue-500 bg-blue-100/50 backdrop-blur-sm p-2 overflow-hidden shadow-lg ring-2 ring-blue-400 pointer-events-none"
+                                                className="absolute z-20 rounded-lg border-l-4 border-blue-500 bg-blue-100/50 dark:bg-blue-900/30 backdrop-blur-sm p-2 overflow-hidden shadow-lg ring-2 ring-blue-400 pointer-events-none"
                                                 style={{
                                                     top: getGhostPosition()?.top,
                                                     height: getGhostPosition()?.height,
@@ -473,8 +473,8 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                                                     transition: 'none'
                                                 }}
                                             >
-                                                <div className="text-xs font-semibold text-blue-700">New Event</div>
-                                                <div className="text-xs text-blue-600">
+                                                <div className="text-xs font-semibold text-blue-700 dark:text-blue-300">New Event</div>
+                                                <div className="text-xs text-blue-600 dark:text-blue-400">
                                                     {formatTime(creatingEvent.startHour, creatingEvent.startMinute, use12HourFormat)} - {formatTime(creatingEvent.endHour, creatingEvent.endMinute, use12HourFormat)}
                                                 </div>
                                             </div>
@@ -550,7 +550,7 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                                                         {taskModeEnabled && (
                                                             <button
                                                                 type="button"
-                                                                className={`absolute top-1 ${event.priority ? 'left-5' : 'left-1'} size-5 flex items-center justify-center rounded border transition-colors ${event.task?.isCompleted ? 'bg-green-500 border-green-600 text-white' : 'bg-white border-gray-300 hover:border-gray-400'}`}
+                                                                className={`absolute top-1 ${event.priority ? 'left-5' : 'left-1'} size-5 flex items-center justify-center rounded border transition-colors ${event.task?.isCompleted ? 'bg-green-500 border-green-600 text-white' : 'bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500'}`}
                                                                 onClick={(e) => {
                                                                     e.stopPropagation()
                                                                     if (onEventUpdate) {

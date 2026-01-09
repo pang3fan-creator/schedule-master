@@ -178,13 +178,13 @@ export function SignInForm({ onSuccess }: SignInFormProps) {
                     {/* Step 4: Reset success */}
                     {resetSuccess ? (
                         <div className="text-center py-8">
-                            <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-green-100 flex items-center justify-center">
-                                <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
+                                <svg className="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                                 </svg>
                             </div>
-                            <h3 className="text-lg font-semibold text-gray-900 mb-2">Password reset successful!</h3>
-                            <p className="text-sm text-gray-500 mb-6">
+                            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">Password reset successful!</h3>
+                            <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
                                 Your password has been reset and you are now signed in.
                             </p>
                             <Button
@@ -193,7 +193,7 @@ export function SignInForm({ onSuccess }: SignInFormProps) {
                                     onSuccess()
                                     router.refresh()
                                 }}
-                                className="bg-blue-600 hover:bg-blue-700 text-white font-medium"
+                                className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white font-medium"
                             >
                                 Continue
                             </Button>
@@ -202,20 +202,20 @@ export function SignInForm({ onSuccess }: SignInFormProps) {
                         /* Step 3: Set new password */
                         <form onSubmit={handleResetPassword} className="space-y-4">
                             <div className="text-center mb-4">
-                                <h3 className="text-lg font-semibold text-gray-900">Set new password</h3>
-                                <p className="text-sm text-gray-500 mt-1">
+                                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Set new password</h3>
+                                <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
                                     Enter your new password below
                                 </p>
                             </div>
 
                             {error && (
-                                <div className="p-3 text-sm text-red-600 bg-red-50 rounded-lg border border-red-200">
+                                <div className="p-3 text-sm text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/30 rounded-lg border border-red-200 dark:border-red-800">
                                     {error}
                                 </div>
                             )}
 
                             <div className="space-y-2">
-                                <Label htmlFor="new-password">New password</Label>
+                                <Label htmlFor="new-password" className="text-gray-900 dark:text-gray-100">New password</Label>
                                 <div className="relative">
                                     <Input
                                         id="new-password"
@@ -223,14 +223,14 @@ export function SignInForm({ onSuccess }: SignInFormProps) {
                                         placeholder="Enter new password"
                                         value={newPassword}
                                         onChange={(e) => setNewPassword(e.target.value)}
-                                        className="h-11 pr-10 border-gray-200 focus-visible:border-blue-500 focus-visible:ring-blue-500/20"
+                                        className="h-11 pr-10 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus-visible:border-blue-500 focus-visible:ring-blue-500/20"
                                         required
                                         minLength={8}
                                     />
                                     <button
                                         type="button"
                                         onClick={() => setShowNewPassword(!showNewPassword)}
-                                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300"
                                     >
                                         {showNewPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
                                     </button>
@@ -238,7 +238,7 @@ export function SignInForm({ onSuccess }: SignInFormProps) {
                             </div>
 
                             <div className="space-y-2">
-                                <Label htmlFor="confirm-password">Confirm password</Label>
+                                <Label htmlFor="confirm-password" className="text-gray-900 dark:text-gray-100">Confirm password</Label>
                                 <div className="relative">
                                     <Input
                                         id="confirm-password"
@@ -246,14 +246,14 @@ export function SignInForm({ onSuccess }: SignInFormProps) {
                                         placeholder="Confirm new password"
                                         value={confirmPassword}
                                         onChange={(e) => setConfirmPassword(e.target.value)}
-                                        className="h-11 pr-10 border-gray-200 focus-visible:border-blue-500 focus-visible:ring-blue-500/20"
+                                        className="h-11 pr-10 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus-visible:border-blue-500 focus-visible:ring-blue-500/20"
                                         required
                                         minLength={8}
                                     />
                                     <button
                                         type="button"
                                         onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300"
                                     >
                                         {showConfirmPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
                                     </button>
@@ -262,7 +262,7 @@ export function SignInForm({ onSuccess }: SignInFormProps) {
 
                             <Button
                                 type="submit"
-                                className="w-full h-11 bg-blue-600 hover:bg-blue-700 text-white font-medium"
+                                className="w-full h-11 bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white font-medium"
                                 disabled={isLoading || !newPassword || !confirmPassword}
                             >
                                 {isLoading ? (
@@ -275,7 +275,7 @@ export function SignInForm({ onSuccess }: SignInFormProps) {
                             <button
                                 type="button"
                                 onClick={resetForgotPasswordFlow}
-                                className="w-full text-sm text-gray-500 hover:text-gray-700"
+                                className="w-full text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
                             >
                                 ← Back to sign in
                             </button>
@@ -284,32 +284,32 @@ export function SignInForm({ onSuccess }: SignInFormProps) {
                         /* Step 2: Enter verification code */
                         <form onSubmit={handleVerifyCode} className="space-y-4">
                             <div className="text-center mb-4">
-                                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-blue-100 flex items-center justify-center">
-                                    <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
+                                    <svg className="w-8 h-8 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                                     </svg>
                                 </div>
-                                <h3 className="text-lg font-semibold text-gray-900">Check your email</h3>
-                                <p className="text-sm text-gray-500 mt-1">
+                                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Check your email</h3>
+                                <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
                                     We sent a 6-digit code to <strong>{email}</strong>
                                 </p>
                             </div>
 
                             {error && (
-                                <div className="p-3 text-sm text-red-600 bg-red-50 rounded-lg border border-red-200">
+                                <div className="p-3 text-sm text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/30 rounded-lg border border-red-200 dark:border-red-800">
                                     {error}
                                 </div>
                             )}
 
                             <div className="space-y-2">
-                                <Label htmlFor="verification-code">Verification code</Label>
+                                <Label htmlFor="verification-code" className="text-gray-900 dark:text-gray-100">Verification code</Label>
                                 <Input
                                     id="verification-code"
                                     type="text"
                                     placeholder="Enter 6-digit code"
                                     value={verificationCode}
                                     onChange={(e) => setVerificationCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
-                                    className="h-11 text-center text-lg tracking-widest border-gray-200 focus-visible:border-blue-500 focus-visible:ring-blue-500/20"
+                                    className="h-11 text-center text-lg tracking-widest border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus-visible:border-blue-500 focus-visible:ring-blue-500/20"
                                     required
                                     maxLength={6}
                                 />
@@ -317,7 +317,7 @@ export function SignInForm({ onSuccess }: SignInFormProps) {
 
                             <Button
                                 type="submit"
-                                className="w-full h-11 bg-blue-600 hover:bg-blue-700 text-white font-medium"
+                                className="w-full h-11 bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white font-medium"
                                 disabled={isLoading || verificationCode.length !== 6}
                             >
                                 {isLoading ? (
@@ -330,7 +330,7 @@ export function SignInForm({ onSuccess }: SignInFormProps) {
                             <button
                                 type="button"
                                 onClick={resetForgotPasswordFlow}
-                                className="w-full text-sm text-gray-500 hover:text-gray-700"
+                                className="w-full text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
                             >
                                 ← Back to sign in
                             </button>
@@ -339,34 +339,34 @@ export function SignInForm({ onSuccess }: SignInFormProps) {
                         /* Step 1: Enter email */
                         <form onSubmit={handleForgotPassword} className="space-y-4">
                             <div className="text-center mb-4">
-                                <h3 className="text-lg font-semibold text-gray-900">Reset your password</h3>
-                                <p className="text-sm text-gray-500 mt-1">
+                                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Reset your password</h3>
+                                <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
                                     Enter your email and we&apos;ll send you a verification code
                                 </p>
                             </div>
 
                             {error && (
-                                <div className="p-3 text-sm text-red-600 bg-red-50 rounded-lg border border-red-200">
+                                <div className="p-3 text-sm text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/30 rounded-lg border border-red-200 dark:border-red-800">
                                     {error}
                                 </div>
                             )}
 
                             <div className="space-y-2">
-                                <Label htmlFor="reset-email">Email address</Label>
+                                <Label htmlFor="reset-email" className="text-gray-900 dark:text-gray-100">Email address</Label>
                                 <Input
                                     id="reset-email"
                                     type="email"
                                     placeholder="Enter your email"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
-                                    className="h-11 border-gray-200 focus-visible:border-blue-500 focus-visible:ring-blue-500/20"
+                                    className="h-11 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus-visible:border-blue-500 focus-visible:ring-blue-500/20"
                                     required
                                 />
                             </div>
 
                             <Button
                                 type="submit"
-                                className="w-full h-11 bg-blue-600 hover:bg-blue-700 text-white font-medium"
+                                className="w-full h-11 bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white font-medium"
                                 disabled={isLoading || !email}
                             >
                                 {isLoading ? (
@@ -379,7 +379,7 @@ export function SignInForm({ onSuccess }: SignInFormProps) {
                             <button
                                 type="button"
                                 onClick={() => setForgotPasswordMode(false)}
-                                className="w-full text-sm text-gray-500 hover:text-gray-700"
+                                className="w-full text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
                             >
                                 ← Back to sign in
                             </button>
@@ -394,26 +394,26 @@ export function SignInForm({ onSuccess }: SignInFormProps) {
         <form onSubmit={handleSubmit} className="flex flex-col flex-1">
             <div className="flex-1">
                 {error && (
-                    <div className="p-3 text-sm text-red-600 bg-red-50 rounded-lg border border-red-200 mb-4">
+                    <div className="p-3 text-sm text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/30 rounded-lg border border-red-200 dark:border-red-800 mb-4">
                         {error}
                     </div>
                 )}
 
                 <div className="space-y-2 mb-4">
-                    <Label htmlFor="signin-email">Email</Label>
+                    <Label htmlFor="signin-email" className="text-gray-900 dark:text-gray-100">Email</Label>
                     <Input
                         id="signin-email"
                         type="email"
                         placeholder="Enter your email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="h-11 border-gray-200 focus-visible:border-blue-500 focus-visible:ring-blue-500/20"
+                        className="h-11 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus-visible:border-blue-500 focus-visible:ring-blue-500/20"
                         required
                     />
                 </div>
 
                 <div className="space-y-2 mb-4">
-                    <Label htmlFor="signin-password">Password</Label>
+                    <Label htmlFor="signin-password" className="text-gray-900 dark:text-gray-100">Password</Label>
                     <div className="relative">
                         <Input
                             id="signin-password"
@@ -421,13 +421,13 @@ export function SignInForm({ onSuccess }: SignInFormProps) {
                             placeholder="Enter your password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            className="h-11 pr-10 border-gray-200 focus-visible:border-blue-500 focus-visible:ring-blue-500/20"
+                            className="h-11 pr-10 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus-visible:border-blue-500 focus-visible:ring-blue-500/20"
                             required
                         />
                         <button
                             type="button"
                             onClick={() => setShowPassword(!showPassword)}
-                            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300"
                         >
                             {showPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
                         </button>
@@ -436,7 +436,7 @@ export function SignInForm({ onSuccess }: SignInFormProps) {
 
                 <Button
                     type="submit"
-                    className="w-full h-11 bg-blue-600 hover:bg-blue-700 text-white font-medium mb-3"
+                    className="w-full h-11 bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white font-medium mb-3"
                     disabled={isLoading}
                 >
                     {isLoading ? (
@@ -451,7 +451,7 @@ export function SignInForm({ onSuccess }: SignInFormProps) {
                 <div className="text-center">
                     <button
                         type="button"
-                        className="text-sm text-blue-600 hover:text-blue-700 hover:underline"
+                        className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 hover:underline"
                         onClick={() => setForgotPasswordMode(true)}
                     >
                         Forgot your password?
@@ -462,10 +462,10 @@ export function SignInForm({ onSuccess }: SignInFormProps) {
             <div className="pt-6">
                 <div className="relative mb-4">
                     <div className="absolute inset-0 flex items-center">
-                        <div className="w-full border-t border-gray-200" />
+                        <div className="w-full border-t border-gray-200 dark:border-gray-700" />
                     </div>
                     <div className="relative flex justify-center text-xs uppercase">
-                        <span className="bg-white px-4 text-gray-400">OR</span>
+                        <span className="bg-white dark:bg-gray-900 px-4 text-gray-400">OR</span>
                     </div>
                 </div>
 

@@ -93,7 +93,7 @@ export function ResetButton({
         <>
             <Button
                 variant={variant}
-                className={`justify-start gap-3 text-gray-600 hover:text-gray-900 ${className}`}
+                className={`justify-start gap-3 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 ${className}`}
                 onClick={handleResetClick}
             >
                 <RotateCcw className="size-5" />

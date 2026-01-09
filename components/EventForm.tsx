@@ -171,17 +171,17 @@ export function EventForm({
         <div className="space-y-4 md:space-y-5">
             {/* Title Field */}
             <div className="space-y-2">
-                <Label className="text-sm font-medium text-gray-700">Title</Label>
+                <Label className="text-sm font-medium text-gray-700 dark:text-gray-200">Title</Label>
                 <div className="flex items-center gap-2">
-                    <div className="flex items-center justify-center size-9 border border-gray-200 rounded-md bg-gray-50">
-                        <Tag className="size-4 text-gray-500" />
+                    <div className="flex items-center justify-center size-9 border border-gray-200 dark:border-gray-700 rounded-md bg-gray-50 dark:bg-gray-800">
+                        <Tag className="size-4 text-gray-500 dark:text-gray-400" />
                     </div>
                     <div className="flex gap-2 flex-1">
                         <Input
                             placeholder="Event title"
                             value={title}
                             onChange={(e) => onTitleChange(e.target.value)}
-                            className="flex-1 h-9 border-gray-200 focus:border-blue-500 focus:ring-blue-500/20"
+                            className="flex-1 h-9 border-gray-200 dark:border-gray-700 focus:border-blue-500 focus:ring-blue-500/20 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
                             style={{ wordBreak: 'break-all' }}
                         />
                         <Popover>
@@ -189,18 +189,18 @@ export function EventForm({
                                 <Button
                                     variant="outline"
                                     size="icon"
-                                    className="size-9 shrink-0 border-gray-200 hover:bg-gray-50"
+                                    className="size-9 shrink-0 border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 bg-white dark:bg-gray-900"
                                 >
-                                    <SelectedIconComponent className="size-4 text-gray-500" />
+                                    <SelectedIconComponent className="size-4 text-gray-500 dark:text-gray-400" />
                                 </Button>
                             </PopoverTrigger>
-                            <PopoverContent className="w-64 p-2 grid grid-cols-6 gap-1" align="end">
+                            <PopoverContent className="w-64 p-2 grid grid-cols-6 gap-1 bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700" align="end">
                                 {iconOptions.map((opt) => (
                                     <Button
                                         key={opt.name}
                                         variant="ghost"
                                         size="icon"
-                                        className={`size-9 rounded-md ${selectedIcon === opt.name || (!selectedIcon && opt.name === 'None') ? 'bg-blue-50 text-blue-600' : 'text-gray-500'}`}
+                                        className={`size-9 rounded-md ${selectedIcon === opt.name || (!selectedIcon && opt.name === 'None') ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400' : 'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800'}`}
                                         onClick={() => onIconChange(opt.name === 'None' ? undefined : opt.name)}
                                         title={opt.name}
                                     >
@@ -215,10 +215,10 @@ export function EventForm({
 
             {/* Color Field */}
             <div className="space-y-2">
-                <Label className="text-sm font-medium text-gray-700">Color</Label>
+                <Label className="text-sm font-medium text-gray-700 dark:text-gray-200">Color</Label>
                 <div className="flex items-center gap-2">
-                    <div className="flex items-center justify-center size-9 border border-gray-200 rounded-md bg-gray-50">
-                        <Palette className="size-4 text-gray-500" />
+                    <div className="flex items-center justify-center size-9 border border-gray-200 dark:border-gray-700 rounded-md bg-gray-50 dark:bg-gray-800">
+                        <Palette className="size-4 text-gray-500 dark:text-gray-400" />
                     </div>
                     <div className="flex gap-1.5 flex-1 flex-wrap">
                         {colorOptions.map((color) => {
@@ -227,7 +227,7 @@ export function EventForm({
                                 <button
                                     key={color}
                                     type="button"
-                                    className={`size-8 rounded-full border-2 transition-all ${colorConfig.bg} ${selectedColor === color ? 'ring-2 ring-offset-2 ring-blue-500 border-gray-400' : 'border-transparent hover:scale-110'}`}
+                                    className={`size-8 rounded-full border-2 transition-all dark:ring-offset-gray-900 ${colorConfig.bg} ${selectedColor === color ? 'ring-2 ring-offset-2 ring-blue-500 border-gray-400 dark:border-gray-500' : 'border-transparent hover:scale-110'}`}
                                     onClick={() => onColorChange(color)}
                                     title={color.charAt(0).toUpperCase() + color.slice(1)}
                                 />
@@ -239,12 +239,12 @@ export function EventForm({
 
             {/* Day(s) Field */}
             <div className="space-y-2">
-                <Label className="text-sm font-medium text-gray-700">
+                <Label className="text-sm font-medium text-gray-700 dark:text-gray-200">
                     {selectionMode === 'single' ? 'Day' : 'Day(s)'}
                 </Label>
                 <div className="flex items-start gap-2">
-                    <div className="flex items-center justify-center size-9 border border-gray-200 rounded-md bg-gray-50 shrink-0">
-                        <Calendar className="size-4 text-gray-500" />
+                    <div className="flex items-center justify-center size-9 border border-gray-200 dark:border-gray-700 rounded-md bg-gray-50 dark:bg-gray-800 shrink-0">
+                        <Calendar className="size-4 text-gray-500 dark:text-gray-400" />
                     </div>
                     <div className="flex flex-wrap gap-1.5 flex-1">
                         {dayOptions.map((day) => (
@@ -254,7 +254,7 @@ export function EventForm({
                                 size="sm"
                                 className={`h-9 px-2 md:px-3 text-xs font-medium transition-all ${selectedDays.includes(day.value)
                                     ? "bg-blue-600 text-white border-blue-600 hover:bg-blue-700 hover:border-blue-700"
-                                    : "border-gray-200 text-gray-600 hover:bg-gray-50 hover:border-gray-300"
+                                    : "border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-600"
                                     }`}
                                 onClick={() => onDayToggle(day.value)}
                             >
@@ -268,45 +268,45 @@ export function EventForm({
             {/* Time Selection */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
                 <div className="space-y-2">
-                    <Label className="text-sm font-medium text-gray-700 flex items-center gap-2">
-                        <Clock className="size-4 text-gray-400" />
+                    <Label className="text-sm font-medium text-gray-700 dark:text-gray-200 flex items-center gap-2">
+                        <Clock className="size-4 text-gray-400 dark:text-gray-500" />
                         Start
                     </Label>
                     <Input
                         type="time"
                         value={startTime}
                         onChange={(e) => onStartTimeChange(e.target.value)}
-                        className="h-10 w-full"
+                        className="h-10 w-full border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
                     />
                 </div>
                 <div className="space-y-2">
-                    <Label className="text-sm font-medium text-gray-700 flex items-center gap-2">
-                        <Clock className="size-4 text-gray-400" />
+                    <Label className="text-sm font-medium text-gray-700 dark:text-gray-200 flex items-center gap-2">
+                        <Clock className="size-4 text-gray-400 dark:text-gray-500" />
                         End
                     </Label>
                     <Input
                         type="time"
                         value={endTime}
                         onChange={(e) => onEndTimeChange(e.target.value)}
-                        className="h-10 w-full"
+                        className="h-10 w-full border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
                     />
                 </div>
             </div>
 
             {/* Description Field */}
             <div className="space-y-2">
-                <Label className="text-sm font-medium text-gray-700">
+                <Label className="text-sm font-medium text-gray-700 dark:text-gray-200">
                     Description
                 </Label>
                 <div className="flex gap-2">
-                    <div className="flex items-start justify-center size-9 pt-2 border border-gray-200 rounded-md bg-gray-50">
-                        <Info className="size-4 text-gray-500" />
+                    <div className="flex items-start justify-center size-9 pt-2 border border-gray-200 dark:border-gray-700 rounded-md bg-gray-50 dark:bg-gray-800">
+                        <Info className="size-4 text-gray-500 dark:text-gray-400" />
                     </div>
                     <Textarea
                         placeholder="Event description (optional)"
                         value={description}
                         onChange={(e) => onDescriptionChange(e.target.value)}
-                        className="flex-1 min-h-[80px] border-gray-200 focus:border-blue-500 focus:ring-blue-500/20 resize-none"
+                        className="flex-1 min-h-[80px] border-gray-200 dark:border-gray-700 focus:border-blue-500 focus:ring-blue-500/20 resize-none bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
                         style={{ wordBreak: 'break-all', overflowWrap: 'break-word' }}
                     />
                 </div>
@@ -331,16 +331,16 @@ export function EventDialogFooter({
     disablePrimary = false
 }: EventDialogFooterProps) {
     return (
-        <div className="flex border-t border-gray-100">
+        <div className="flex border-t border-gray-200 dark:border-gray-700">
             <Button
                 variant="ghost"
-                className="flex-1 h-12 rounded-none text-blue-600 hover:text-blue-700 hover:bg-blue-50 font-medium border-r border-gray-100"
+                className="flex-1 h-12 rounded-none text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900/30 font-medium border-r border-gray-200 dark:border-gray-700"
                 onClick={onSecondary}
             >
                 {secondaryText}
             </Button>
             <Button
-                className="flex-1 h-12 rounded-none bg-blue-50 text-blue-600 hover:bg-blue-100 font-medium"
+                className="flex-1 h-12 rounded-none bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-900/50 font-medium"
                 onClick={onPrimary}
                 disabled={disablePrimary}
             >

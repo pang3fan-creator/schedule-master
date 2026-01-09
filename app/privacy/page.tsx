@@ -21,30 +21,30 @@ export default function PrivacyPage() {
                     ]} />
                 </div>
 
-                <h1 className="text-4xl font-bold text-gray-900 mb-4 text-center">Privacy Policy</h1>
-                <p className="text-sm text-gray-500 mb-12 text-center">Last updated: January 1, 2026</p>
+                <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4 text-center">Privacy Policy</h1>
+                <p className="text-sm text-gray-500 dark:text-gray-400 mb-12 text-center">Last updated: January 1, 2026</p>
 
                 <div className="prose prose-gray max-w-none">
                     <section className="mb-8">
-                        <h2 className="text-2xl font-semibold text-gray-900 mb-4">1. Introduction</h2>
-                        <p className="text-gray-600 mb-4">
+                        <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">1. Introduction</h2>
+                        <p className="text-gray-600 dark:text-gray-300 mb-4">
                             TrySchedule ("we", "our", or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our TrySchedule service.
                         </p>
                     </section>
 
                     <section className="mb-8">
-                        <h2 className="text-2xl font-semibold text-gray-900 mb-4">2. Information We Collect</h2>
-                        <h3 className="text-lg font-medium text-gray-800 mb-3">Personal Information</h3>
-                        <p className="text-gray-600 mb-4">When you register for an account, we may collect:</p>
-                        <ul className="list-disc list-inside text-gray-600 space-y-2 mb-4">
+                        <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">2. Information We Collect</h2>
+                        <h3 className="text-lg font-medium text-gray-800 dark:text-gray-100 mb-3">Personal Information</h3>
+                        <p className="text-gray-600 dark:text-gray-300 mb-4">When you register for an account, we may collect:</p>
+                        <ul className="list-disc list-inside text-gray-600 dark:text-gray-300 space-y-2 mb-4">
                             <li>Name and email address</li>
                             <li>Profile information you choose to provide</li>
                             <li>Payment information (processed securely by our payment provider)</li>
                         </ul>
 
-                        <h3 className="text-lg font-medium text-gray-800 mb-3">Usage Information</h3>
-                        <p className="text-gray-600 mb-4">We automatically collect:</p>
-                        <ul className="list-disc list-inside text-gray-600 space-y-2 mb-4">
+                        <h3 className="text-lg font-medium text-gray-800 dark:text-gray-100 mb-3">Usage Information</h3>
+                        <p className="text-gray-600 dark:text-gray-300 mb-4">We automatically collect:</p>
+                        <ul className="list-disc list-inside text-gray-600 dark:text-gray-300 space-y-2 mb-4">
                             <li>Device and browser information</li>
                             <li>IP address and location data</li>
                             <li>Usage patterns and feature interactions</li>
@@ -53,9 +53,9 @@ export default function PrivacyPage() {
                     </section>
 
                     <section className="mb-8">
-                        <h2 className="text-2xl font-semibold text-gray-900 mb-4">3. How We Use Your Information</h2>
-                        <p className="text-gray-600 mb-4">We use your information to:</p>
-                        <ul className="list-disc list-inside text-gray-600 space-y-2 mb-4">
+                        <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">3. How We Use Your Information</h2>
+                        <p className="text-gray-600 dark:text-gray-300 mb-4">We use your information to:</p>
+                        <ul className="list-disc list-inside text-gray-600 dark:text-gray-300 space-y-2 mb-4">
                             <li>Provide and maintain our Service</li>
                             <li>Process your transactions and manage your subscription</li>
                             <li>Send you updates, security alerts, and support messages</li>
@@ -66,11 +66,11 @@ export default function PrivacyPage() {
                     </section>
 
                     <section className="mb-8">
-                        <h2 className="text-2xl font-semibold text-gray-900 mb-4">4. Information Sharing</h2>
-                        <p className="text-gray-600 mb-4">
+                        <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">4. Information Sharing</h2>
+                        <p className="text-gray-600 dark:text-gray-300 mb-4">
                             We do not sell your personal information. We may share your information with:
                         </p>
-                        <ul className="list-disc list-inside text-gray-600 space-y-2 mb-4">
+                        <ul className="list-disc list-inside text-gray-600 dark:text-gray-300 space-y-2 mb-4">
                             <li>Service providers who assist in operating our Service</li>
                             <li>Business partners with your consent</li>
                             <li>Legal authorities when required by law</li>
@@ -78,65 +78,65 @@ export default function PrivacyPage() {
                     </section>
 
                     <section className="mb-8">
-                        <h2 className="text-2xl font-semibold text-gray-900 mb-4">5. Analytics and Third-Party Tools</h2>
-                        <p className="text-gray-600 mb-4">
+                        <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">5. Analytics and Third-Party Tools</h2>
+                        <p className="text-gray-600 dark:text-gray-300 mb-4">
                             We use third-party analytics services to help us understand how users interact with our Service and to improve user experience. These services may collect anonymous data about your usage of the Service.
                         </p>
-                        <h3 className="text-lg font-medium text-gray-800 mb-3">Google Analytics</h3>
-                        <p className="text-gray-600 mb-4">
+                        <h3 className="text-lg font-medium text-gray-800 dark:text-gray-100 mb-3">Google Analytics</h3>
+                        <p className="text-gray-600 dark:text-gray-300 mb-4">
                             We use Google Analytics, a web analytics service provided by Google, Inc. Google Analytics uses cookies to analyze how users use our Service. The information generated is transmitted to and stored by Google. For more information on how Google uses data, please visit{" "}
                             <a
                                 href="https://policies.google.com/privacy"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-blue-600 hover:text-blue-700 hover:underline cursor-pointer transition-colors font-medium"
+                                className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 hover:underline cursor-pointer transition-colors font-medium"
                             >
                                 Google's Privacy Policy
                             </a>.
                         </p>
-                        <h3 className="text-lg font-medium text-gray-800 mb-3">Microsoft Clarity</h3>
-                        <p className="text-gray-600 mb-4">
+                        <h3 className="text-lg font-medium text-gray-800 dark:text-gray-100 mb-3">Microsoft Clarity</h3>
+                        <p className="text-gray-600 dark:text-gray-300 mb-4">
                             We use Microsoft Clarity, a user behavior analytics tool provided by Microsoft. Clarity captures how users interact with our Service through session recordings and heatmaps. Clarity automatically masks sensitive content to protect user privacy. For more information, please visit{" "}
                             <a
                                 href="https://privacy.microsoft.com/en-us/privacystatement"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-blue-600 hover:text-blue-700 hover:underline cursor-pointer transition-colors font-medium"
+                                className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 hover:underline cursor-pointer transition-colors font-medium"
                             >
                                 Microsoft's Privacy Statement
                             </a>.
                         </p>
-                        <h3 className="text-lg font-medium text-gray-800 mb-3">Opting Out</h3>
-                        <p className="text-gray-600 mb-4">
+                        <h3 className="text-lg font-medium text-gray-800 dark:text-gray-100 mb-3">Opting Out</h3>
+                        <p className="text-gray-600 dark:text-gray-300 mb-4">
                             You can opt out of analytics tracking by adjusting your browser settings to block cookies or by using browser extensions designed to block tracking scripts.
                         </p>
                     </section>
 
                     <section className="mb-8">
-                        <h2 className="text-2xl font-semibold text-gray-900 mb-4">6. Google User Data</h2>
-                        <p className="text-gray-600 mb-4">
+                        <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">6. Google User Data</h2>
+                        <p className="text-gray-600 dark:text-gray-300 mb-4">
                             TrySchedule uses Google OAuth to allow you to connect your Google account and sync your local schedule with Google Calendar.
                         </p>
-                        <h3 className="text-lg font-medium text-gray-800 mb-3">Information We Access</h3>
-                        <p className="text-gray-600 mb-4">
+                        <h3 className="text-lg font-medium text-gray-800 dark:text-gray-100 mb-3">Information We Access</h3>
+                        <p className="text-gray-600 dark:text-gray-300 mb-4">
                             When you connect your Google account, we request the following permissions:
                         </p>
-                        <ul className="list-disc list-inside text-gray-600 space-y-2 mb-4">
+                        <ul className="list-disc list-inside text-gray-600 dark:text-gray-300 space-y-2 mb-4">
                             <li><strong>View your calendar settings:</strong> We use this to detect your primary Google Calendar timezone, ensuring synchronized events appear at the correct time.</li>
                             <li><strong>View and edit events on your calendars:</strong> We use this to create, update, and manage the schedule events you choose to sync from TrySchedule to your Google Calendar.</li>
                         </ul>
-                        <h3 className="text-lg font-medium text-gray-800 mb-3">How We Use This Data</h3>
-                        <p className="text-gray-600 mb-4">
+                        <h3 className="text-lg font-medium text-gray-800 dark:text-gray-100 mb-3">How We Use This Data</h3>
+                        <p className="text-gray-600 dark:text-gray-300 mb-4">
                             Our use of information received from Google APIs is strictly limited to providing and improving the Calendar Sync feature. We do not store your Google Calendar data on our servers, nor do we use it for advertising or share it with any third parties except as necessary to provide the service.
                         </p>
-                        <h3 className="text-lg font-medium text-gray-800 mb-3">Google API Limited Use Policy</h3>
-                        <p className="text-gray-600 mb-4">
+                        <h3 className="text-lg font-medium text-gray-800 dark:text-gray-100 mb-3">Google API Limited Use Policy</h3>
+                        <p className="text-gray-600 dark:text-gray-300 mb-4">
                             TrySchedule's use and transfer to any other app of information received from Google APIs will adhere to the{" "}
                             <a
                                 href="https://developers.google.com/terms/api-services-user-data-policy#additional_requirements_for_specific_api_scopes"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-blue-600 hover:text-blue-700 hover:underline cursor-pointer transition-colors font-medium"
+                                className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 hover:underline cursor-pointer transition-colors font-medium"
                             >
                                 Google API Services User Data Policy
                             </a>, including the Limited Use requirements.
@@ -144,16 +144,16 @@ export default function PrivacyPage() {
                     </section>
 
                     <section className="mb-8">
-                        <h2 className="text-2xl font-semibold text-gray-900 mb-4">7. Data Security</h2>
-                        <p className="text-gray-600 mb-4">
+                        <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">7. Data Security</h2>
+                        <p className="text-gray-600 dark:text-gray-300 mb-4">
                             We implement industry-standard security measures to protect your data, including encryption, secure servers, and regular security assessments. However, no method of transmission over the Internet is 100% secure.
                         </p>
                     </section>
 
                     <section className="mb-8">
-                        <h2 className="text-2xl font-semibold text-gray-900 mb-4">8. Your Rights</h2>
-                        <p className="text-gray-600 mb-4">Depending on your location, you may have the right to:</p>
-                        <ul className="list-disc list-inside text-gray-600 space-y-2 mb-4">
+                        <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">8. Your Rights</h2>
+                        <p className="text-gray-600 dark:text-gray-300 mb-4">Depending on your location, you may have the right to:</p>
+                        <ul className="list-disc list-inside text-gray-600 dark:text-gray-300 space-y-2 mb-4">
                             <li>Access your personal data</li>
                             <li>Correct inaccurate data</li>
                             <li>Request deletion of your data</li>
@@ -164,33 +164,33 @@ export default function PrivacyPage() {
                     </section>
 
                     <section className="mb-8">
-                        <h2 className="text-2xl font-semibold text-gray-900 mb-4">9. Cookies</h2>
-                        <p className="text-gray-600 mb-4">
+                        <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">9. Cookies</h2>
+                        <p className="text-gray-600 dark:text-gray-300 mb-4">
                             We use cookies and similar technologies to enhance your experience, analyze usage, and deliver personalized content. You can control cookie preferences through your browser settings.
                         </p>
                     </section>
 
                     <section className="mb-8">
-                        <h2 className="text-2xl font-semibold text-gray-900 mb-4">10. Children's Privacy</h2>
-                        <p className="text-gray-600 mb-4">
+                        <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">10. Children's Privacy</h2>
+                        <p className="text-gray-600 dark:text-gray-300 mb-4">
                             Our Service is not intended for children under 13. We do not knowingly collect personal information from children under 13. If you believe we have collected such information, please contact us immediately.
                         </p>
                     </section>
 
                     <section className="mb-8">
-                        <h2 className="text-2xl font-semibold text-gray-900 mb-4">11. Changes to This Policy</h2>
-                        <p className="text-gray-600 mb-4">
+                        <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">11. Changes to This Policy</h2>
+                        <p className="text-gray-600 dark:text-gray-300 mb-4">
                             We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last updated" date.
                         </p>
                     </section>
 
                     <section className="mb-8">
-                        <h2 className="text-2xl font-semibold text-gray-900 mb-4">12. Contact Us</h2>
-                        <p className="text-gray-600">
+                        <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">12. Contact Us</h2>
+                        <p className="text-gray-600 dark:text-gray-300">
                             If you have questions about this Privacy Policy, please contact us at{" "}
                             <a
                                 href="mailto:support@tryschedule.com"
-                                className="text-blue-600 hover:text-blue-700 hover:underline cursor-pointer transition-colors font-medium"
+                                className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 hover:underline cursor-pointer transition-colors font-medium"
                             >
                                 support@tryschedule.com
                             </a>

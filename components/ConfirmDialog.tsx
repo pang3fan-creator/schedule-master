@@ -47,13 +47,13 @@ export function ConfirmDialog({
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="sm:max-w-[425px]">
+            <DialogContent className="sm:max-w-[425px] bg-white dark:bg-gray-900">
                 <DialogHeader>
-                    <DialogTitle className="flex items-center gap-2">
+                    <DialogTitle className="flex items-center gap-2 text-gray-900 dark:text-gray-100">
                         {Icon && <Icon className={iconClassName} />}
                         {title}
                     </DialogTitle>
-                    <DialogDescription className="text-left">
+                    <DialogDescription className="text-left text-gray-600 dark:text-gray-400">
                         {description}
                     </DialogDescription>
                 </DialogHeader>

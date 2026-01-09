@@ -117,7 +117,7 @@ export function PricingCard({
     // 根据计划类型决定按钮样式（统一函数）
     const getButtonClassName = () => {
         if (isFree) {
-            return "w-full mb-2 border-gray-300 text-gray-600 hover:bg-gray-50";
+            return "w-full mb-2 border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800";
         }
         if (isLifetime) {
             // Lifetime: 渐变色
@@ -169,7 +169,7 @@ export function PricingCard({
                         {buttonText}
                     </Button>
                     {shouldShowGuarantee ? (
-                        <p className="text-center text-xs text-gray-500 mt-1">
+                        <p className="text-center text-xs text-gray-500 dark:text-gray-400 mt-1">
                             30-day money-back guarantee
                         </p>
                     ) : (
@@ -193,7 +193,7 @@ export function PricingCard({
                         {buttonText}
                     </Button>
                     {shouldShowGuarantee ? (
-                        <p className="text-center text-xs text-gray-500 mt-1">
+                        <p className="text-center text-xs text-gray-500 dark:text-gray-400 mt-1">
                             30-day money-back guarantee
                         </p>
                     ) : (
@@ -222,7 +222,7 @@ export function PricingCard({
                         Loading...
                     </Button>
                     {shouldShowGuarantee ? (
-                        <p className="text-center text-xs text-gray-500 mt-1">
+                        <p className="text-center text-xs text-gray-500 dark:text-gray-400 mt-1">
                             30-day money-back guarantee
                         </p>
                     ) : (
@@ -292,40 +292,40 @@ export function PricingCard({
     return (
         <div
             className={cn(
-                "relative flex flex-col rounded-2xl border bg-gray-50 p-6 shadow-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-1",
-                popular ? "border-transparent bg-gradient-to-b from-gray-50 to-violet-50/30 ring-2 ring-blue-500/50" : "border-slate-200",
+                "relative flex flex-col rounded-2xl border bg-gray-50 dark:bg-gray-800/80 p-6 shadow-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-1",
+                popular ? "border-transparent bg-gradient-to-b from-gray-50 dark:from-gray-800/80 to-violet-50/30 dark:to-violet-900/20 ring-2 ring-blue-500/50" : "border-slate-200 dark:border-gray-700",
                 isCurrentPlan && "ring-2 ring-green-500 border-green-500"
             )}
         >
             {/* Current Plan 标记 */}
             {isCurrentPlan && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-600">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-green-100 dark:bg-green-900/30 px-3 py-1 text-xs font-medium text-green-600 dark:text-green-300">
                     Current Plan
                 </div>
             )}
 
             {/* Most Popular 标记（如果不是当前计划） */}
             {popular && !isCurrentPlan && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-600">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-blue-100 dark:bg-blue-900/30 px-3 py-1 text-xs font-medium text-blue-600 dark:text-blue-300">
                     Most Popular
                 </div>
             )}
 
             <div className="mb-6">
-                <h3 className={cn("text-lg font-semibold", popular ? "text-blue-600" : "text-gray-900")}>
+                <h3 className={cn("text-lg font-semibold", popular ? "text-blue-600 dark:text-blue-400" : "text-gray-900 dark:text-white")}>
                     {title}
                 </h3>
-                <div className="mt-4 flex items-baseline text-gray-900">
+                <div className="mt-4 flex items-baseline text-gray-900 dark:text-white">
                     <span className="text-4xl font-bold tracking-tight">{price}</span>
-                    {priceDetail && <span className="ml-1 text-sm text-gray-500">{priceDetail}</span>}
+                    {priceDetail && <span className="ml-1 text-sm text-gray-500 dark:text-gray-400">{priceDetail}</span>}
                 </div>
-                <p className="mt-2 text-sm text-gray-500">{description}</p>
+                <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">{description}</p>
             </div>
 
             <ul className="mb-6 flex-1 space-y-3">
                 {features.map((feature) => (
-                    <li key={feature} className="flex items-start gap-2 text-sm text-gray-700">
-                        <Check className="h-4 w-4 text-blue-600 shrink-0 mt-0.5" />
+                    <li key={feature} className="flex items-start gap-2 text-sm text-gray-700 dark:text-gray-300">
+                        <Check className="h-4 w-4 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" />
                         <span>{feature}</span>
                     </li>
                 ))}

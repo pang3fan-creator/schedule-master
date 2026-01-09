@@ -83,19 +83,19 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="sm:max-w-[420px] p-0 gap-0 overflow-hidden" showCloseButton={false}>
+            <DialogContent className="sm:max-w-[420px] p-0 gap-0 overflow-hidden bg-white dark:bg-gray-900" showCloseButton={false}>
                 {/* Header */}
-                <DialogHeader className="flex flex-row items-center justify-between px-6 pt-5 pb-2.5 border-b border-gray-100">
+                <DialogHeader className="flex flex-row items-center justify-between px-6 pt-5 pb-2.5 border-b border-gray-100 dark:border-gray-800">
                     <div className="flex items-center gap-3">
-                        <Settings className="size-5 text-blue-600" />
-                        <DialogTitle className="text-lg font-semibold text-gray-900">
+                        <Settings className="size-5 text-blue-600 dark:text-blue-400" />
+                        <DialogTitle className="text-lg font-semibold text-gray-900 dark:text-gray-100">
                             Settings
                         </DialogTitle>
                     </div>
                     <Button
                         variant="ghost"
                         size="icon"
-                        className="size-8 sm:size-9 rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 hover:text-gray-700"
+                        className="size-8 sm:size-9 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-700 dark:hover:text-gray-200"
                         onClick={() => onOpenChange(false)}
                     >
                         <X className="size-4 sm:size-5" />
@@ -107,10 +107,10 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
                     {/* Week Start Day */}
                     <div className="flex items-center justify-between">
                         <div className="space-y-0.5">
-                            <Label className="text-sm font-medium text-gray-900">
+                            <Label className="text-sm font-medium text-gray-900 dark:text-gray-100">
                                 Start week on Sunday
                             </Label>
-                            <p className="text-xs text-gray-500">
+                            <p className="text-xs text-gray-500 dark:text-gray-400">
                                 US standard is Sunday, ISO standard is Monday
                             </p>
                         </div>
@@ -123,10 +123,10 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
                     {/* Time Format */}
                     <div className="flex items-center justify-between">
                         <div className="space-y-0.5">
-                            <Label className="text-sm font-medium text-gray-900">
+                            <Label className="text-sm font-medium text-gray-900 dark:text-gray-100">
                                 12-hour format (AM/PM)
                             </Label>
-                            <p className="text-xs text-gray-500">
+                            <p className="text-xs text-gray-500 dark:text-gray-400">
                                 Toggle off for 24-hour format
                             </p>
                         </div>
@@ -139,10 +139,10 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
                     {/* Show Dates */}
                     <div className="flex items-center justify-between">
                         <div className="space-y-0.5">
-                            <Label className="text-sm font-medium text-gray-900">
+                            <Label className="text-sm font-medium text-gray-900 dark:text-gray-100">
                                 Show dates
                             </Label>
-                            <p className="text-xs text-gray-500">
+                            <p className="text-xs text-gray-500 dark:text-gray-400">
                                 Display date numbers in calendar headers
                             </p>
                         </div>
@@ -154,7 +154,7 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
 
                     {/* Time Increment */}
                     <div className="space-y-2">
-                        <Label className="text-sm font-medium text-gray-900">
+                        <Label className="text-sm font-medium text-gray-900 dark:text-gray-100">
                             Time increment
                         </Label>
                         <Select
@@ -174,7 +174,7 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
 
                     {/* Working Hours */}
                     <div className="space-y-2">
-                        <Label className="text-sm font-medium text-gray-900">
+                        <Label className="text-sm font-medium text-gray-900 dark:text-gray-100">
                             Working hours
                         </Label>
                         <div className="flex items-center gap-3">
@@ -193,7 +193,7 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
                                     ))}
                                 </SelectContent>
                             </Select>
-                            <span className="text-gray-400">to</span>
+                            <span className="text-gray-400 dark:text-gray-500">to</span>
                             <Select
                                 value={settings.workingHoursEnd.toString()}
                                 onValueChange={handleWorkingHoursEndChange}

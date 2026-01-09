@@ -103,19 +103,19 @@ export function EditEventDialog({
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="sm:max-w-[480px] max-h-[90vh] p-0 gap-0 overflow-hidden flex flex-col" showCloseButton={false}>
+            <DialogContent className="sm:max-w-[480px] max-h-[90vh] p-0 gap-0 overflow-hidden flex flex-col bg-white dark:bg-gray-900" showCloseButton={false}>
                 {/* Header */}
-                <DialogHeader className="flex flex-row items-center justify-between px-4 md:px-6 py-4 border-b border-gray-100 shrink-0">
+                <DialogHeader className="flex flex-row items-center justify-between px-4 md:px-6 py-4 border-b border-gray-200 dark:border-gray-700 shrink-0">
                     <div className="flex items-center gap-3">
-                        <Edit3 className="size-5 text-blue-600" />
-                        <DialogTitle className="text-lg font-semibold text-gray-900">
+                        <Edit3 className="size-5 text-blue-600 dark:text-blue-400" />
+                        <DialogTitle className="text-lg font-semibold text-gray-900 dark:text-gray-100">
                             Edit event
                         </DialogTitle>
                     </div>
                     <Button
                         variant="ghost"
                         size="icon"
-                        className="size-8 sm:size-9 rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 hover:text-gray-700"
+                        className="size-8 sm:size-9 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-700 dark:hover:text-gray-200"
                         onClick={() => onOpenChange(false)}
                     >
                         <X className="size-4 sm:size-5" />
