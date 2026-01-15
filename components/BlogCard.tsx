@@ -1,5 +1,6 @@
 import Link from "next/link"
 import Image from "next/image"
+import { formatDate } from "@/lib/date-format"
 
 interface BlogCardProps {
     slug: string
@@ -10,6 +11,7 @@ interface BlogCardProps {
     readTime: string
     coverImage?: string
     featured?: boolean
+    locale?: string
 }
 
 function ImagePlaceholder({ size = "normal" }: { size?: "normal" | "large" }) {
@@ -47,11 +49,15 @@ export function BlogCard({
     readTime,
     coverImage,
     featured = false,
+    locale = 'en',
 }: BlogCardProps) {
+    const formattedDate = formatDate(date, locale);
+    const blogUrl = locale === 'en' ? `/blog/${slug}` : `/${locale}/blog/${slug}`;
+
     if (featured) {
         return (
             <Link
-                href={`/blog/${slug}`}
+                href={blogUrl}
                 className="group block rounded-2xl border border-slate-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-800/80 shadow-sm overflow-hidden hover:shadow-md transition-shadow"
             >
                 <div className="grid md:grid-cols-2 gap-0">
@@ -65,7 +71,7 @@ export function BlogCard({
                         </h2>
                         <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">{excerpt}</p>
                         <div className="text-sm text-gray-500 dark:text-gray-300">
-                            {date} • {readTime}
+                            {formattedDate} • {readTime}
                         </div>
                     </div>
                 </div>
@@ -75,7 +81,7 @@ export function BlogCard({
 
     return (
         <Link
-            href={`/blog/${slug}`}
+            href={blogUrl}
             className="group block rounded-xl border border-slate-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-800/80 shadow-sm overflow-hidden hover:shadow-md transition-shadow"
         >
             <div className="relative aspect-[16/10]">
@@ -87,7 +93,7 @@ export function BlogCard({
                     {title}
                 </h3>
                 <div className="mt-3 text-sm text-gray-500 dark:text-gray-300">
-                    {date} • {readTime}
+                    {formattedDate} • {readTime}
                 </div>
             </div>
         </Link>

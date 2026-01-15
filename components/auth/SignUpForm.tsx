@@ -8,12 +8,14 @@ import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { Eye, EyeOff, ArrowRight, Loader2 } from "lucide-react"
 import { GoogleButton } from "./GoogleButton"
+import { useTranslations } from "next-intl"
 
 interface SignUpFormProps {
     onSuccess: () => void
 }
 
 export function SignUpForm({ onSuccess }: SignUpFormProps) {
+    const t = useTranslations('Auth')
     const { signUp, setActive, isLoaded } = useSignUp()
     const router = useRouter()
 
@@ -46,7 +48,7 @@ export function SignUpForm({ onSuccess }: SignUpFormProps) {
             setPendingVerification(true)
         } catch (err: unknown) {
             const clerkError = err as { errors?: Array<{ message: string }> }
-            setError(clerkError.errors?.[0]?.message || "An error occurred during sign up")
+            setError(clerkError.errors?.[0]?.message || t('errors.signUpError'))
         } finally {
             setIsLoading(false)
         }
@@ -71,7 +73,7 @@ export function SignUpForm({ onSuccess }: SignUpFormProps) {
             }
         } catch (err: unknown) {
             const clerkError = err as { errors?: Array<{ message: string }> }
-            setError(clerkError.errors?.[0]?.message || "Verification failed")
+            setError(clerkError.errors?.[0]?.message || t('errors.verificationFailed'))
         } finally {
             setIsLoading(false)
         }
@@ -88,7 +90,7 @@ export function SignUpForm({ onSuccess }: SignUpFormProps) {
             })
         } catch (err: unknown) {
             const clerkError = err as { errors?: Array<{ message: string }> }
-            setError(clerkError.errors?.[0]?.message || "Failed to sign up with Google")
+            setError(clerkError.errors?.[0]?.message || t('errors.googleSignUpError'))
         }
     }
 
@@ -97,9 +99,9 @@ export function SignUpForm({ onSuccess }: SignUpFormProps) {
         return (
             <form onSubmit={handleVerification} className="space-y-4">
                 <div className="text-center mb-6">
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Check your email</h3>
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{t('verification.title')}</h3>
                     <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                        We sent a verification code to <strong>{email}</strong>
+                        {t('verification.codeSentTo')} <strong>{email}</strong>
                     </p>
                 </div>
 
@@ -110,11 +112,11 @@ export function SignUpForm({ onSuccess }: SignUpFormProps) {
                 )}
 
                 <div className="space-y-2">
-                    <Label htmlFor="verification-code" className="text-gray-900 dark:text-gray-100">Verification Code</Label>
+                    <Label htmlFor="verification-code" className="text-gray-900 dark:text-gray-100">{t('verification.codeLabel')}</Label>
                     <Input
                         id="verification-code"
                         type="text"
-                        placeholder="Enter 6-digit code"
+                        placeholder={t('forgotPassword.codePlaceholder')}
                         value={verificationCode}
                         onChange={(e) => setVerificationCode(e.target.value)}
                         className="h-11 text-center text-lg tracking-widest border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus-visible:border-blue-500 focus-visible:ring-blue-500/20"
@@ -131,7 +133,7 @@ export function SignUpForm({ onSuccess }: SignUpFormProps) {
                     {isLoading ? (
                         <Loader2 className="size-4 animate-spin" />
                     ) : (
-                        "Verify Email"
+                        t('verification.submit')
                     )}
                 </Button>
 
@@ -140,7 +142,7 @@ export function SignUpForm({ onSuccess }: SignUpFormProps) {
                     onClick={() => setPendingVerification(false)}
                     className="w-full text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
                 >
-                    ← Back to sign up
+                    {t('common.backToSignUp')}
                 </button>
             </form>
         )
@@ -158,12 +160,12 @@ export function SignUpForm({ onSuccess }: SignUpFormProps) {
                 <div className="grid grid-cols-2 gap-3 mb-4">
                     <div className="space-y-2">
                         <Label htmlFor="firstName" className="text-gray-900 dark:text-gray-100">
-                            First name <span className="text-gray-400 dark:text-gray-500 text-xs">(Optional)</span>
+                            {t('signUp.firstName')} <span className="text-gray-400 dark:text-gray-500 text-xs">{t('common.optional')}</span>
                         </Label>
                         <Input
                             id="firstName"
                             type="text"
-                            placeholder="First name"
+                            placeholder={t('signUp.firstNamePlaceholder')}
                             value={firstName}
                             onChange={(e) => setFirstName(e.target.value)}
                             className="h-11 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus-visible:border-blue-500 focus-visible:ring-blue-500/20"
@@ -171,12 +173,12 @@ export function SignUpForm({ onSuccess }: SignUpFormProps) {
                     </div>
                     <div className="space-y-2">
                         <Label htmlFor="lastName" className="text-gray-900 dark:text-gray-100">
-                            Last name <span className="text-gray-400 dark:text-gray-500 text-xs">(Optional)</span>
+                            {t('signUp.lastName')} <span className="text-gray-400 dark:text-gray-500 text-xs">{t('common.optional')}</span>
                         </Label>
                         <Input
                             id="lastName"
                             type="text"
-                            placeholder="Last name"
+                            placeholder={t('signUp.lastNamePlaceholder')}
                             value={lastName}
                             onChange={(e) => setLastName(e.target.value)}
                             className="h-11 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus-visible:border-blue-500 focus-visible:ring-blue-500/20"
@@ -185,11 +187,11 @@ export function SignUpForm({ onSuccess }: SignUpFormProps) {
                 </div>
 
                 <div className="space-y-2 mb-4">
-                    <Label htmlFor="signup-email" className="text-gray-900 dark:text-gray-100">Email address</Label>
+                    <Label htmlFor="signup-email" className="text-gray-900 dark:text-gray-100">{t('common.emailAddress')}</Label>
                     <Input
                         id="signup-email"
                         type="email"
-                        placeholder="Enter your email"
+                        placeholder={t('signIn.emailPlaceholder')}
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         className="h-11 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus-visible:border-blue-500 focus-visible:ring-blue-500/20"
@@ -198,12 +200,12 @@ export function SignUpForm({ onSuccess }: SignUpFormProps) {
                 </div>
 
                 <div className="space-y-2 mb-4">
-                    <Label htmlFor="signup-password" className="text-gray-900 dark:text-gray-100">Password</Label>
+                    <Label htmlFor="signup-password" className="text-gray-900 dark:text-gray-100">{t('common.password')}</Label>
                     <div className="relative">
                         <Input
                             id="signup-password"
                             type={showPassword ? "text" : "password"}
-                            placeholder="Create a password"
+                            placeholder={t('signUp.passwordPlaceholder')}
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             className="h-11 pr-10 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus-visible:border-blue-500 focus-visible:ring-blue-500/20"
@@ -229,7 +231,7 @@ export function SignUpForm({ onSuccess }: SignUpFormProps) {
                         <Loader2 className="size-4 animate-spin" />
                     ) : (
                         <>
-                            Continue <ArrowRight className="ml-2 size-4" />
+                            {t('signUp.submit')} <ArrowRight className="ml-2 size-4" />
                         </>
                     )}
                 </Button>
@@ -241,11 +243,11 @@ export function SignUpForm({ onSuccess }: SignUpFormProps) {
                         <div className="w-full border-t border-gray-200 dark:border-gray-700" />
                     </div>
                     <div className="relative flex justify-center text-xs uppercase">
-                        <span className="bg-white dark:bg-gray-900 px-4 text-gray-400">OR</span>
+                        <span className="bg-white dark:bg-gray-900 px-4 text-gray-400">{t('common.or')}</span>
                     </div>
                 </div>
 
-                <GoogleButton onClick={handleGoogleSignUp} text="Sign up with Google" />
+                <GoogleButton onClick={handleGoogleSignUp} text={t('signUp.googleButton')} />
             </div>
         </form>
     )

@@ -14,8 +14,11 @@ import {
   UserButton,
 } from "@clerk/nextjs"
 import { getAllTemplates } from "@/lib/templates"
+import { getTemplateTranslation } from "@/lib/templates-translations"
 import { MobileNav } from "@/components/MobileNav"
 import { ThemeToggle } from "@/components/ThemeToggle"
+import { LanguageSwitcher } from "@/components/LanguageSwitcher"
+import { useTranslations, useLocale } from "next-intl"
 
 // Dynamically import modals to reduce initial bundle size
 // These are only loaded when user triggers authentication or subscription actions
@@ -35,18 +38,23 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
 }
 
 const navLinks = [
-  { href: "/pricing", label: "Pricing" },
-  { href: "/blog", label: "Blog" },
+  { href: "/pricing", labelKey: "nav.pricing" },
+  { href: "/blog", labelKey: "nav.blog" },
 ]
 
 export function Navbar() {
   const pathname = usePathname()
+  const t = useTranslations('Common')
+  const locale = useLocale()
   const [authModalOpen, setAuthModalOpen] = useState(false)
   const [authMode, setAuthMode] = useState<"sign-in" | "sign-up">("sign-in")
   const [subscriptionModalOpen, setSubscriptionModalOpen] = useState(false)
   const [templatesDropdownOpen, setTemplatesDropdownOpen] = useState(false)
 
   const templates = getAllTemplates()
+
+  // Generate locale-aware URLs
+  const getLocalizedUrl = (path: string) => locale === 'en' ? path : `/${locale}${path}`
 
   const openAuthModal = (mode: "sign-in" | "sign-up") => {
     setAuthMode(mode)
@@ -71,7 +79,7 @@ export function Navbar() {
           href="/"
           className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0"
         >
-          <Image src="/icon.svg" alt="TrySchedule - Free Online Schedule Builder" width={32} height={32} className="object-contain" priority />
+          <Image src="/icon.svg" alt={t('brand.alt')} width={32} height={32} className="object-contain" priority />
           <span className="text-lg text-blue-600 hidden sm:inline dark:text-blue-400">
             <span className="font-bold">Try</span><span className="font-normal">Schedule</span>
           </span>
@@ -81,15 +89,15 @@ export function Navbar() {
         {/* Center: Navigation Links - Hidden on mobile */}
         <nav className="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center gap-8">
           <Link
-            href="/"
+            href={getLocalizedUrl('/')}
             className={cn(
               "text-sm font-medium transition-colors",
-              pathname === "/"
+              pathname === "/" || pathname === `/${locale}`
                 ? "text-blue-600 dark:text-blue-400 border-b-2 border-blue-600 dark:border-blue-400 pb-0.5"
                 : "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100"
             )}
           >
-            Home
+            {t('nav.home')}
           </Link>
           {/* Templates Dropdown */}
           <div
@@ -98,7 +106,7 @@ export function Navbar() {
             onMouseLeave={() => setTemplatesDropdownOpen(false)}
           >
             <Link
-              href="/templates"
+              href={getLocalizedUrl('/templates')}
               className={cn(
                 "text-sm font-medium transition-colors flex items-center gap-1",
                 isTemplatesActive
@@ -106,7 +114,7 @@ export function Navbar() {
                   : "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100"
               )}
             >
-              Templates
+              {t('nav.templates')}
               <ChevronDown className={cn(
                 "size-3 transition-transform",
                 templatesDropdownOpen && "rotate-180"
@@ -119,10 +127,12 @@ export function Navbar() {
                 <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-2 overflow-hidden">
                   {templates.map((template) => {
                     const IconComponent = template.icon ? iconMap[template.icon] : Briefcase
+                    const translation = getTemplateTranslation(template.slug, locale)
+                    const displayTitle = translation?.title || template.title
                     return (
                       <Link
                         key={template.slug}
-                        href={`/templates/${template.slug}`}
+                        href={getLocalizedUrl(`/templates/${template.slug}`)}
                         className="flex items-start gap-3 px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
                       >
                         <div className="p-1.5 bg-blue-50 dark:bg-blue-900/30 rounded-md">
@@ -131,12 +141,12 @@ export function Navbar() {
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2">
                             <span className="text-sm font-medium text-gray-900 dark:text-white truncate">
-                              {template.title}
+                              {displayTitle}
                             </span>
                             {template.requiresPro && (
                               <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[10px] font-semibold bg-gradient-to-r from-amber-400 to-orange-500 text-white">
                                 <Crown className="size-2.5" />
-                                PRO
+                                {t('badge.pro')}
                               </span>
                             )}
                           </div>
@@ -146,10 +156,10 @@ export function Navbar() {
                   })}
                   <div className="border-t border-gray-100 dark:border-gray-700 mt-2 pt-2">
                     <Link
-                      href="/templates"
+                      href={getLocalizedUrl('/templates')}
                       className="flex items-center justify-center gap-1 px-4 py-2 text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium"
                     >
-                      View All Templates
+                      {t('nav.viewAllTemplates')}
                     </Link>
                   </div>
                 </div>
@@ -159,11 +169,12 @@ export function Navbar() {
 
           {/* Other nav links */}
           {navLinks.map((link) => {
-            const isActive = pathname === link.href
+            const localizedHref = getLocalizedUrl(link.href)
+            const isActive = pathname === link.href || pathname === localizedHref
             return (
               <Link
                 key={link.href}
-                href={link.href}
+                href={localizedHref}
                 className={cn(
                   "text-sm font-medium transition-colors",
                   isActive
@@ -171,7 +182,7 @@ export function Navbar() {
                     : "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100"
                 )}
               >
-                {link.label}
+                {t(link.labelKey)}
               </Link>
             )
           })}
@@ -179,6 +190,9 @@ export function Navbar() {
 
         {/* Right: Auth Buttons - Hidden on mobile (available in MobileNav) */}
         <div className="flex items-center gap-3">
+          {/* Language Switcher */}
+          <LanguageSwitcher />
+
           {/* Theme Toggle */}
           <ThemeToggle />
 
@@ -188,13 +202,13 @@ export function Navbar() {
               className="hidden md:inline-flex text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800"
               onClick={() => openAuthModal("sign-in")}
             >
-              Sign In
+              {t('auth.signIn')}
             </Button>
             <Button
               className="hidden md:inline-flex bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white"
               onClick={() => openAuthModal("sign-up")}
             >
-              Sign Up
+              {t('auth.signUp')}
             </Button>
           </SignedOut>
           <SignedIn>
@@ -208,7 +222,7 @@ export function Navbar() {
             >
               <UserButton.MenuItems>
                 <UserButton.Action
-                  label="My Subscription"
+                  label={t('auth.mySubscription')}
                   labelIcon={<Crown className="h-4 w-4" />}
                   onClick={() => setSubscriptionModalOpen(true)}
                 />

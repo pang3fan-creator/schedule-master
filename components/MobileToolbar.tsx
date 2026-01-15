@@ -42,6 +42,7 @@ const AIAutofillDialog = dynamic(() => import("@/components/AIAutofillDialog").t
 // Import FAQDialog directly (not dynamically) to ensure SEO visibility
 import { FAQDialog } from "@/components/FAQDialog"
 import { DEFAULT_SETTINGS } from "@/components/SettingsContext"
+import { useTranslations } from "next-intl"
 
 
 interface MobileToolbarProps {
@@ -73,6 +74,7 @@ export function MobileToolbar({
     onAIAutofillOpenChange,
     onAddEvents,
 }: MobileToolbarProps) {
+    const t = useTranslations('Common')
     const { userId } = useAuth()
     const [showAuthModal, setShowAuthModal] = useState(false)
     const [showResetDialog, setShowResetDialog] = useState(false)
@@ -241,7 +243,7 @@ export function MobileToolbar({
                         className="flex flex-col items-center gap-0.5 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
                     >
                         <RotateCcw className="size-5 text-gray-600 dark:text-gray-400" />
-                        <span className="text-xs text-gray-600 dark:text-gray-400">Reset</span>
+                        <span className="text-xs text-gray-600 dark:text-gray-400">{t('sidebar.reset')}</span>
                     </button>
 
                     {/* Export Button (3) */}
@@ -250,7 +252,7 @@ export function MobileToolbar({
                         className="flex flex-col items-center gap-0.5 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
                     >
                         <Download className="size-5 text-gray-600 dark:text-gray-400" />
-                        <span className="text-xs text-gray-600 dark:text-gray-400">Export</span>
+                        <span className="text-xs text-gray-600 dark:text-gray-400">{t('export')}</span>
                     </button>
 
                     {/* Day/Week Toggle Button (1) */}
@@ -264,7 +266,7 @@ export function MobileToolbar({
                             <CalendarRange className="size-5 text-blue-600 dark:text-blue-400" />
                         )}
                         <span className="text-xs text-gray-600 dark:text-gray-400 whitespace-nowrap">
-                            {viewMode === "day" ? "Day" : "Week"} <span className="text-gray-400 dark:text-gray-500">↔</span>
+                            {viewMode === "day" ? t('viewMode.day') : t('viewMode.week')} <span className="text-gray-400 dark:text-gray-500">↔</span>
                         </span>
                     </button>
 
@@ -274,7 +276,7 @@ export function MobileToolbar({
                         className="flex flex-col items-center gap-0.5 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
                     >
                         <Cloud className="size-5 text-gray-600 dark:text-gray-400" />
-                        <span className="text-xs text-gray-600 dark:text-gray-400">Cloud</span>
+                        <span className="text-xs text-gray-600 dark:text-gray-400">{t('cloud')}</span>
                     </button>
 
                     {/* More Menu (5) */}
@@ -282,12 +284,12 @@ export function MobileToolbar({
                         <SheetTrigger asChild>
                             <button className="flex flex-col items-center gap-0.5 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors">
                                 <MoreHorizontal className="size-5 text-gray-600 dark:text-gray-400" />
-                                <span className="text-xs text-gray-600 dark:text-gray-400">More</span>
+                                <span className="text-xs text-gray-600 dark:text-gray-400">{t('more')}</span>
                             </button>
                         </SheetTrigger>
                         <SheetContent side="bottom" className="h-auto rounded-t-2xl dark:bg-gray-900">
                             <SheetHeader className="pb-4">
-                                <SheetTitle>More Options</SheetTitle>
+                                <SheetTitle>{t('moreOptions')}</SheetTitle>
                             </SheetHeader>
                             <div className="grid grid-cols-4 gap-4 pb-6">
                                 {/* Sync Button (4) */}
@@ -298,7 +300,7 @@ export function MobileToolbar({
                                     <div className="w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
                                         <Calendar className="size-5 text-gray-600 dark:text-gray-400" />
                                     </div>
-                                    <span className="text-xs text-gray-600 dark:text-gray-400">Sync</span>
+                                    <span className="text-xs text-gray-600 dark:text-gray-400">{t('sync')}</span>
                                 </button>
 
                                 {/* AI Fill Button (2) */}
@@ -309,7 +311,7 @@ export function MobileToolbar({
                                     <div className="w-12 h-12 rounded-full bg-gradient-to-r from-violet-500 to-blue-500 flex items-center justify-center">
                                         <Sparkles className="size-5 text-white" />
                                     </div>
-                                    <span className="text-xs text-gray-600 dark:text-gray-400">AI Fill</span>
+                                    <span className="text-xs text-gray-600 dark:text-gray-400">{t('aiFill')}</span>
                                 </button>
 
                                 {/* Settings Button (1) */}
@@ -320,7 +322,7 @@ export function MobileToolbar({
                                     <div className="w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
                                         <Settings className="size-5 text-gray-600 dark:text-gray-400" />
                                     </div>
-                                    <span className="text-xs text-gray-600 dark:text-gray-400">Settings</span>
+                                    <span className="text-xs text-gray-600 dark:text-gray-400">{t('sidebar.settings')}</span>
                                 </button>
 
                                 {/* FAQ Button (3) */}
@@ -331,7 +333,7 @@ export function MobileToolbar({
                                     <div className="w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
                                         <HelpCircle className="size-5 text-gray-600 dark:text-gray-400" />
                                     </div>
-                                    <span className="text-xs text-gray-600 dark:text-gray-400">FAQ</span>
+                                    <span className="text-xs text-gray-600 dark:text-gray-400">{t('faq')}</span>
                                 </button>
                             </div>
                         </SheetContent>
@@ -345,14 +347,14 @@ export function MobileToolbar({
             <Dialog open={showResetDialog} onOpenChange={setShowResetDialog}>
                 <DialogContent>
                     <DialogHeader>
-                        <DialogTitle>Reset Everything</DialogTitle>
+                        <DialogTitle>{t('reset.title')}</DialogTitle>
                         <DialogDescription>
-                            This will clear all sidebar template features, restore your settings to default, and delete all events from the calendar. This action cannot be undone.
+                            {t('reset.description')}
                         </DialogDescription>
                     </DialogHeader>
                     <DialogFooter className="gap-2">
                         <Button variant="outline" onClick={() => setShowResetDialog(false)}>
-                            Cancel
+                            {t('reset.cancel')}
                         </Button>
                         <Button
                             className="bg-blue-600 hover:bg-blue-700 text-white"
@@ -361,7 +363,7 @@ export function MobileToolbar({
                                 setShowResetDialog(false)
                             }}
                         >
-                            Yes, Reset
+                            {t('reset.confirm')}
                         </Button>
                     </DialogFooter>
                 </DialogContent>

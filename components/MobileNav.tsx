@@ -22,7 +22,10 @@ import {
     UserButton,
 } from "@clerk/nextjs"
 import { getAllTemplates } from "@/lib/templates"
+import { getTemplateTranslation } from "@/lib/templates-translations"
 import { cn } from "@/lib/utils"
+import { useTranslations, useLocale } from "next-intl"
+import { LanguageSwitcher } from "@/components/LanguageSwitcher"
 
 // Dynamically import modals to reduce initial bundle size
 const AuthModal = dynamic(() => import("@/components/AuthModal").then(m => m.AuthModal), { ssr: false })
@@ -42,12 +45,14 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
 }
 
 const navLinks = [
-    { href: "/pricing", label: "Pricing" },
-    { href: "/blog", label: "Blog" },
+    { href: "/pricing", labelKey: "nav.pricing" },
+    { href: "/blog", labelKey: "nav.blog" },
 ]
 
 export function MobileNav() {
     const pathname = usePathname()
+    const t = useTranslations('Common')
+    const locale = useLocale()
     const [mounted, setMounted] = useState(false)
     const [open, setOpen] = useState(false)
     const [authModalOpen, setAuthModalOpen] = useState(false)
@@ -56,6 +61,9 @@ export function MobileNav() {
     const [showTemplates, setShowTemplates] = useState(false)
 
     const templates = getAllTemplates()
+
+    // Generate locale-aware URLs
+    const getLocalizedUrl = (path: string) => locale === 'en' ? path : `/${locale}${path}`
 
     // Ensure component is mounted before rendering Sheet to avoid hydration mismatch
     // Radix UI generates different IDs on server vs client for aria-controls
@@ -92,7 +100,7 @@ export function MobileNav() {
             <>
                 <Button variant="ghost" size="icon" className="md:hidden text-white hover:text-white hover:bg-white/10">
                     <Menu className="size-6" />
-                    <span className="sr-only">Open menu</span>
+                    <span className="sr-only">{t('nav.openMenu')}</span>
                 </Button>
             </>
         )
@@ -104,7 +112,7 @@ export function MobileNav() {
                 <SheetTrigger asChild>
                     <Button variant="ghost" size="icon" className="md:hidden text-white hover:text-white hover:bg-white/10">
                         <Menu className="size-6" />
-                        <span className="sr-only">Open menu</span>
+                        <span className="sr-only">{t('nav.openMenu')}</span>
                     </Button>
                 </SheetTrigger>
                 <SheetPortal>
@@ -119,12 +127,15 @@ export function MobileNav() {
                     <SheetContent side="left" className="w-[300px] p-0 z-[60] gap-0 flex flex-col h-full dark:bg-gray-900" hideClose>
                         <SheetHeader className="border-b px-4 h-16 flex items-center shrink-0 dark:border-gray-800">
                             <SheetTitle className="flex items-center gap-2">
-                                <Image src="/icon.svg" alt="TrySchedule" width={28} height={28} className="object-contain" />
+                                <Image src="/icon.svg" alt={t('brand.alt')} width={28} height={28} className="object-contain" />
                                 <span className="text-lg text-blue-600 dark:text-blue-400">
                                     <span className="font-bold">Try</span>
                                     <span className="font-normal">Schedule</span>
                                 </span>
                             </SheetTitle>
+                            <div className="ml-auto mr-2">
+                                <LanguageSwitcher />
+                            </div>
                         </SheetHeader>
 
                         <div className="flex-1 overflow-y-auto overscroll-contain">
@@ -132,13 +143,13 @@ export function MobileNav() {
                                 {/* Home Link */}
                                 <SheetClose asChild>
                                     <Link
-                                        href="/"
+                                        href={getLocalizedUrl('/')}
                                         className={cn(
                                             "py-3 px-2 rounded-lg font-medium",
-                                            pathname === "/" ? "bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400" : "hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
+                                            pathname === "/" || pathname === `/${locale}` ? "bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400" : "hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
                                         )}
                                     >
-                                        Home
+                                        {t('nav.home')}
                                     </Link>
                                 </SheetClose>
 
@@ -151,7 +162,7 @@ export function MobileNav() {
                                             isTemplatesActive ? "bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400" : "hover:bg-gray-50 dark:hover:bg-gray-800"
                                         )}
                                     >
-                                        <span className="font-medium">Templates</span>
+                                        <span className="font-medium">{t('nav.templates')}</span>
                                         <ChevronRight className={cn(
                                             "size-4 transition-transform",
                                             showTemplates && "rotate-90"
@@ -162,20 +173,22 @@ export function MobileNav() {
                                         <div className="mt-2 ml-2 space-y-1">
                                             {templates.map((template) => {
                                                 const IconComponent = template.icon ? iconMap[template.icon] : Briefcase
+                                                const translation = getTemplateTranslation(template.slug, locale)
+                                                const displayTitle = translation?.title || template.title
                                                 return (
                                                     <SheetClose asChild key={template.slug}>
                                                         <Link
-                                                            href={`/templates/${template.slug}`}
+                                                            href={getLocalizedUrl(`/templates/${template.slug}`)}
                                                             className="flex items-center gap-3 py-2 px-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"
                                                         >
                                                             <div className="p-1 bg-blue-50 dark:bg-blue-900/30 rounded shrink-0">
                                                                 <IconComponent className="size-4 text-blue-600 dark:text-blue-400" />
                                                             </div>
-                                                            <span className="text-sm text-gray-700 dark:text-gray-300 flex-1 truncate min-w-0">{template.title}</span>
+                                                            <span className="text-sm text-gray-700 dark:text-gray-300 flex-1 truncate min-w-0">{displayTitle}</span>
                                                             {template.requiresPro && (
                                                                 <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[10px] font-semibold bg-gradient-to-r from-amber-400 to-orange-500 text-white shrink-0">
                                                                     <Crown className="size-2.5" />
-                                                                    PRO
+                                                                    {t('badge.pro')}
                                                                 </span>
                                                             )}
                                                         </Link>
@@ -184,10 +197,10 @@ export function MobileNav() {
                                             })}
                                             <SheetClose asChild>
                                                 <Link
-                                                    href="/templates"
+                                                    href={getLocalizedUrl('/templates')}
                                                     className="block py-2 px-3 text-sm text-blue-600 dark:text-blue-400 font-medium"
                                                 >
-                                                    View All Templates
+                                                    {t('nav.viewAllTemplates')}
                                                 </Link>
                                             </SheetClose>
                                         </div>
@@ -196,17 +209,18 @@ export function MobileNav() {
 
                                 {/* Other nav links */}
                                 {navLinks.map((link) => {
-                                    const isActive = pathname === link.href
+                                    const localizedHref = getLocalizedUrl(link.href)
+                                    const isActive = pathname === link.href || pathname === localizedHref
                                     return (
                                         <SheetClose asChild key={link.href}>
                                             <Link
-                                                href={link.href}
+                                                href={localizedHref}
                                                 className={cn(
                                                     "py-3 px-2 rounded-lg font-medium",
                                                     isActive ? "bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400" : "hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
                                                 )}
                                             >
-                                                {link.label}
+                                                {t(link.labelKey)}
                                             </Link>
                                         </SheetClose>
                                     )
@@ -223,19 +237,19 @@ export function MobileNav() {
                                         className="w-full dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-gray-100"
                                         onClick={() => openAuthModal("sign-in")}
                                     >
-                                        Sign In
+                                        {t('auth.signIn')}
                                     </Button>
                                     <Button
                                         className="w-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white"
                                         onClick={() => openAuthModal("sign-up")}
                                     >
-                                        Sign Up
+                                        {t('auth.signUp')}
                                     </Button>
                                 </div>
                             </SignedOut>
                             <SignedIn>
                                 <div className="flex items-center justify-between h-[54px]">
-                                    <span className="text-sm text-gray-600 dark:text-gray-400 font-medium">Your Account</span>
+                                    <span className="text-sm text-gray-600 dark:text-gray-400 font-medium">{t('auth.yourAccount')}</span>
                                     <UserButton
                                         afterSignOutUrl="/"
                                         appearance={{
@@ -246,7 +260,7 @@ export function MobileNav() {
                                     >
                                         <UserButton.MenuItems>
                                             <UserButton.Action
-                                                label="My Subscription"
+                                                label={t('auth.mySubscription')}
                                                 labelIcon={<Crown className="h-4 w-4" />}
                                                 onClick={() => {
                                                     setOpen(false)

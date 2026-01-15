@@ -7,6 +7,7 @@ import { ConfirmDialog } from "@/components/ConfirmDialog"
 import { useSettings, DEFAULT_SETTINGS, type CalendarSettings } from "@/components/SettingsContext"
 import { EVENTS_STORAGE_KEY } from "@/lib/storage-keys"
 import type { Event } from "@/lib/types"
+import { useTranslations } from "next-intl"
 
 /**
  * Check if there's any data to reset (events, settings, or active template).
@@ -78,6 +79,7 @@ export function ResetButton({
     className = "",
     showLabel = true,
 }: ResetButtonProps) {
+    const t = useTranslations('Common')
     const [showResetDialog, setShowResetDialog] = useState(false)
     const { settings } = useSettings()
 
@@ -97,16 +99,16 @@ export function ResetButton({
                 onClick={handleResetClick}
             >
                 <RotateCcw className="size-5" />
-                {showLabel && "Reset"}
+                {showLabel && t('sidebar.reset')}
             </Button>
 
             <ConfirmDialog
                 open={showResetDialog}
                 onOpenChange={setShowResetDialog}
-                title="Reset Everything"
-                description="This will clear all sidebar template features, restore your settings to default, and delete all events from the calendar. This action cannot be undone."
+                title={t('reset.title')}
+                description={t('reset.description')}
                 icon={RotateCcw}
-                confirmText="Yes, Reset"
+                confirmText={t('reset.confirm')}
                 onConfirm={onReset}
                 variant="blue"
             />

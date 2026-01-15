@@ -15,6 +15,7 @@ import { useSubscription } from "@/components/SubscriptionContext"
 import { ResetButton } from "@/components/ResetButton"
 import { useAuth } from "@clerk/nextjs"
 import { type Event } from "@/lib/types"
+import { useTranslations } from "next-intl"
 
 
 
@@ -46,6 +47,7 @@ interface SidebarProps {
 }
 
 export function Sidebar({ events, onReset, viewMode, onViewModeChange, weekStart, weekStartsOnSunday, onExport, showSettingsOpen, onSettingsOpenChange, onLoadSchedule, onAddEvents, showAIAutofillOpen, onAIAutofillOpenChange }: SidebarProps) {
+  const t = useTranslations('Common')
   const { userId } = useAuth()
   const [showAuthModal, setShowAuthModal] = useState(false)
   const [showUpgradeModal, setShowUpgradeModal] = useState(false)
@@ -173,7 +175,7 @@ export function Sidebar({ events, onReset, viewMode, onViewModeChange, weekStart
           onClick={handleCloudSaveClick}
         >
           <Cloud className="size-5" />
-          Cloud Save
+          {t('sidebar.cloudSave')}
         </Button>
 
         {/* Cloud Save Dialog */}
@@ -194,7 +196,7 @@ export function Sidebar({ events, onReset, viewMode, onViewModeChange, weekStart
           onClick={handleCalendarSyncClick}
         >
           <Calendar className="size-5" />
-          Calendar Sync
+          {t('sidebar.calendarSync')}
         </Button>
 
         {/* Calendar Sync Dialog */}
@@ -212,7 +214,7 @@ export function Sidebar({ events, onReset, viewMode, onViewModeChange, weekStart
           onClick={handleExportClick}
         >
           <Download className="size-5" />
-          Export/Download
+          {t('sidebar.exportDownload')}
         </Button>
 
         {/* Help & FAQ */}
@@ -222,7 +224,7 @@ export function Sidebar({ events, onReset, viewMode, onViewModeChange, weekStart
           onClick={() => setShowFAQDialog(true)}
         >
           <HelpCircle className="size-5" />
-          Help & FAQ
+          {t('sidebar.helpFaq')}
         </Button>
 
         {/* FAQ Dialog */}
@@ -238,7 +240,7 @@ export function Sidebar({ events, onReset, viewMode, onViewModeChange, weekStart
           onClick={() => setEffectiveSettingsOpen(true)}
         >
           <Settings className="size-5" />
-          Settings
+          {t('sidebar.settings')}
         </Button>
 
         <div className="h-px bg-gray-100 my-2 mx-1 dark:bg-gray-800" />
@@ -277,7 +279,7 @@ export function Sidebar({ events, onReset, viewMode, onViewModeChange, weekStart
         onClick={handleAIAutofillClick}
       >
         <Sparkles className="size-5" />
-        AI Autofill
+        {t('sidebar.aiAutofill')}
       </Button>
 
 

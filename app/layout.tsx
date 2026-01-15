@@ -6,10 +6,14 @@ import { ClerkProvider } from "@clerk/nextjs"
 import { Analytics } from "@vercel/analytics/next"
 import { GoogleAnalytics } from "@next/third-parties/google"
 import Script from "next/script"
+import { NextIntlClientProvider } from "next-intl"
 import { SubscriptionProvider } from "@/components/SubscriptionContext"
 import { SettingsProvider } from "@/components/SettingsContext"
 import { ThemeProvider } from "@/components/ThemeProvider"
 import "./globals.css"
+
+// Import messages for root layout (default to English)
+import messages from "@/messages/en.json"
 
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.tryschedule.com'
 
@@ -180,11 +184,13 @@ export default function RootLayout({
         </head>
         <body className="antialiased">
           <ThemeProvider>
-            <SettingsProvider>
-              <SubscriptionProvider>
-                {children}
-              </SubscriptionProvider>
-            </SettingsProvider>
+            <NextIntlClientProvider messages={messages} locale="en">
+              <SettingsProvider>
+                <SubscriptionProvider>
+                  {children}
+                </SubscriptionProvider>
+              </SettingsProvider>
+            </NextIntlClientProvider>
           </ThemeProvider>
           <Analytics />
         </body>

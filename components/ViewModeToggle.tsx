@@ -1,6 +1,7 @@
 "use client"
 
 import { cn } from "@/lib/utils"
+import { useTranslations } from "next-intl"
 
 interface ViewModeToggleProps {
     value: "day" | "week"
@@ -17,6 +18,7 @@ interface ViewModeToggleProps {
  * because we were using TabsTrigger without TabsContent.
  */
 export function ViewModeToggle({ value, onValueChange, className, size = "default" }: ViewModeToggleProps) {
+    const t = useTranslations('Common')
     const isSmall = size === "sm"
 
     return (
@@ -42,7 +44,7 @@ export function ViewModeToggle({ value, onValueChange, className, size = "defaul
                         : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
                 )}
             >
-                Day
+                {t('viewMode.day')}
             </button>
             <button
                 type="button"
@@ -57,8 +59,9 @@ export function ViewModeToggle({ value, onValueChange, className, size = "defaul
                         : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
                 )}
             >
-                Week
+                {t('viewMode.week')}
             </button>
         </div>
     )
 }
+

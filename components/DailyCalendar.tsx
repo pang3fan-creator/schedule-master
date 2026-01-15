@@ -45,6 +45,7 @@ import {
     shouldShowDescription,
     getDescriptionClasses
 } from "@/lib/event-display-utils"
+import { useTranslations, useLocale } from "next-intl"
 
 interface DailyCalendarProps {
     events: Event[]
@@ -67,7 +68,18 @@ const eventIconMap = EVENT_ICON_MAP
 
 
 // Format date for header (e.g., "Thursday, December 11, 2025")
-function formatDate(date: Date): string {
+function formatDate(date: Date, locale: string = 'en'): string {
+    try {
+        return new Intl.DateTimeFormat(locale, {
+            weekday: 'long',
+            month: 'long',
+            day: 'numeric',
+            year: 'numeric'
+        }).format(date);
+    } catch (e) {
+        // Fallback
+    }
+
     const monthNames = [
         "January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"
@@ -83,6 +95,8 @@ function formatDate(date: Date): string {
 
 
 export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdate, onEventDelete, onEventClick, onEventContextMenu, exportMode = false, onAddEvent }: DailyCalendarProps) {
+    const t = useTranslations('Common')
+    const locale = useLocale()
     const gridRef = useRef<HTMLDivElement>(null)
     // In export mode, use fixed row height
     const EXPORT_ROW_HEIGHT = 80
@@ -183,11 +197,12 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
 
 
 
-    // Get short day name for header
+    // Get short day name for header - use translations based on day of week
     const shortDayName = useMemo(() => {
         const day = selectedDate.getDay()
-        return shortDayNames[day]
-    }, [selectedDate])
+        const dayKeys = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']
+        return t(`calendar.days.${dayKeys[day]}`)
+    }, [selectedDate, t])
 
     // Navigate to previous day
     const goToPreviousDay = () => {
@@ -266,13 +281,13 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                     {showDates && (
                         <div className={`flex items-center ${exportMode ? 'flex-1 justify-center' : 'absolute left-1/2 -translate-x-1/2'}`}>
                             {!exportMode && (
-                                <Button variant="ghost" size="icon" className="size-10 text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700" onClick={goToPreviousDay} aria-label="Go to previous day">
+                                <Button variant="ghost" size="icon" className="size-10 text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700" onClick={goToPreviousDay} aria-label={t('calendar.previousDay')}>
                                     <ChevronLeft className="size-6" />
                                 </Button>
                             )}
                             <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 w-[450px] text-center flex justify-center">
                                 {exportMode ? (
-                                    formatDate(selectedDate)
+                                    formatDate(selectedDate, locale)
                                 ) : (
                                     <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
                                         <PopoverTrigger asChild>
@@ -280,7 +295,7 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                                                 variant="ghost"
                                                 className="text-xl font-semibold text-gray-900 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 h-auto py-1 px-2"
                                             >
-                                                {formatDate(selectedDate)}
+                                                {formatDate(selectedDate, locale)}
                                             </Button>
                                         </PopoverTrigger>
                                         <PopoverContent className="w-auto p-0" align="center">
@@ -306,7 +321,7 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                                                         setIsCalendarOpen(false)
                                                     }}
                                                 >
-                                                    Go to Today
+                                                    {t('calendar.today')}
                                                 </Button>
                                             </div>
                                         </PopoverContent>
@@ -314,7 +329,7 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                                 )}
                             </h2>
                             {!exportMode && (
-                                <Button variant="ghost" size="icon" className="size-10 text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700" onClick={goToNextDay} aria-label="Go to next day">
+                                <Button variant="ghost" size="icon" className="size-10 text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700" onClick={goToNextDay} aria-label={t('calendar.nextDay')}>
                                     <ChevronRight className="size-6" />
                                 </Button>
                             )}
@@ -334,7 +349,7 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                         {/* Navigation row */}
                         {!exportMode && (
                             <div className="flex items-center justify-center w-full">
-                                <Button variant="ghost" size="icon" className="size-10 text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700" onClick={goToPreviousDay} aria-label="Go to previous day">
+                                <Button variant="ghost" size="icon" className="size-10 text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700" onClick={goToPreviousDay} aria-label={t('calendar.previousDay')}>
                                     <ChevronLeft className="size-6" />
                                 </Button>
                                 <h2 className="text-base font-semibold text-gray-900 dark:text-gray-100 text-center flex-1 px-2 flex justify-center">
@@ -344,7 +359,7 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                                                 variant="ghost"
                                                 className="text-base font-semibold text-gray-900 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 h-auto py-1 px-2"
                                             >
-                                                {formatDate(selectedDate)}
+                                                {formatDate(selectedDate, locale)}
                                             </Button>
                                         </PopoverTrigger>
                                         <PopoverContent className="w-auto p-0" align="center">
@@ -370,13 +385,13 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                                                         setIsMobileCalendarOpen(false)
                                                     }}
                                                 >
-                                                    Go to Today
+                                                    {t('calendar.today')}
                                                 </Button>
                                             </div>
                                         </PopoverContent>
                                     </Popover>
                                 </h2>
-                                <Button variant="ghost" size="icon" className="size-10 text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700" onClick={goToNextDay} aria-label="Go to next day">
+                                <Button variant="ghost" size="icon" className="size-10 text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700" onClick={goToNextDay} aria-label={t('calendar.nextDay')}>
                                     <ChevronRight className="size-6" />
                                 </Button>
                             </div>
@@ -415,7 +430,7 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                                     <button
                                         onClick={goToPreviousDay}
                                         className="p-2 text-gray-400 dark:text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full transition-colors"
-                                        aria-label="Go to previous day"
+                                        aria-label={t('calendar.previousDay')}
                                     >
                                         <ChevronLeft className="size-6" />
                                     </button>
@@ -423,7 +438,7 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                                     <button
                                         onClick={goToNextDay}
                                         className="p-2 text-gray-400 dark:text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full transition-colors"
-                                        aria-label="Go to next day"
+                                        aria-label={t('calendar.nextDay')}
                                     >
                                         <ChevronRight className="size-6" />
                                     </button>
@@ -435,7 +450,7 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                         {hours.map((hour, index) => (
                             <React.Fragment key={hour}>
                                 <div className="flex items-start justify-end pr-3">
-                                    <span className="text-xs font-medium text-gray-500 dark:text-gray-400 -translate-y-1/2 whitespace-nowrap">{formatHour(hour, use12HourFormat)}</span>
+                                    <span className="text-xs font-medium text-gray-500 dark:text-gray-400 -translate-y-1/2 whitespace-nowrap">{formatHour(hour, use12HourFormat, locale)}</span>
                                 </div>
 
                                 {/* Day cell - only render for data rows (not the last label row) */}
@@ -473,9 +488,9 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                                                     transition: 'none'
                                                 }}
                                             >
-                                                <div className="text-xs font-semibold text-blue-700 dark:text-blue-300">New Event</div>
+                                                <div className="text-xs font-semibold text-blue-700 dark:text-blue-300">{t('calendar.newEvent')}</div>
                                                 <div className="text-xs text-blue-600 dark:text-blue-400">
-                                                    {formatTime(creatingEvent.startHour, creatingEvent.startMinute, use12HourFormat)} - {formatTime(creatingEvent.endHour, creatingEvent.endMinute, use12HourFormat)}
+                                                    {formatTime(creatingEvent.startHour, creatingEvent.startMinute, use12HourFormat, locale)} - {formatTime(creatingEvent.endHour, creatingEvent.endMinute, use12HourFormat, locale)}
                                                 </div>
                                             </div>
                                         )}
@@ -589,8 +604,8 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                                                         {/* Time - hidden in XS mode */}
                                                         {shouldShowTime(displayMode) && (
                                                             <p className={getTimeClasses(displayMode, colorConfig.textSecondary)}>
-                                                                {formatTime(displayTime.startHour, displayTime.startMinute, use12HourFormat)} -{" "}
-                                                                {formatTime(displayTime.endHour, displayTime.endMinute, use12HourFormat)}
+                                                                {formatTime(displayTime.startHour, displayTime.startMinute, use12HourFormat, locale)} -{" "}
+                                                                {formatTime(displayTime.endHour, displayTime.endMinute, use12HourFormat, locale)}
                                                             </p>
                                                         )}
                                                     </div>

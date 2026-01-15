@@ -56,6 +56,7 @@ import {
   shouldShowMobileWeeklyDescription,
   getMobileWeeklyDescriptionClasses
 } from "@/lib/event-display-utils"
+import { useTranslations, useLocale } from "next-intl"
 
 interface WeeklyCalendarProps {
   events: Event[]
@@ -84,6 +85,8 @@ function getEventPosition(event: Event, rowHeight: number, minHour: number = 8) 
 const eventIconMap = EVENT_ICON_MAP
 
 export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpdate, onEventDelete, onEventClick, onEventContextMenu, exportMode = false, onAddEvent }: WeeklyCalendarProps) {
+  const t = useTranslations('Common')
+  const locale = useLocale()
   const gridRef = useRef<HTMLDivElement>(null)
   // In export mode, use fixed row height to ensure consistent rendering
   const EXPORT_ROW_HEIGHT = 80
@@ -112,8 +115,16 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
     return result
   }, [workingHoursStart, workingHoursEnd])
 
-  // Get appropriate day names based on week start setting
-  const dayNames = weekStartsOnSunday ? DAY_NAMES_SUNDAY_START : DAY_NAMES_MONDAY_START
+  // Get appropriate day names based on week start setting - use translations
+  const dayNamesMondayStart = useMemo(() => [
+    t('calendar.days.mon'), t('calendar.days.tue'), t('calendar.days.wed'),
+    t('calendar.days.thu'), t('calendar.days.fri'), t('calendar.days.sat'), t('calendar.days.sun')
+  ], [t])
+  const dayNamesSundayStart = useMemo(() => [
+    t('calendar.days.sun'), t('calendar.days.mon'), t('calendar.days.tue'),
+    t('calendar.days.wed'), t('calendar.days.thu'), t('calendar.days.fri'), t('calendar.days.sat')
+  ], [t])
+  const dayNames = weekStartsOnSunday ? dayNamesSundayStart : dayNamesMondayStart
 
   // Calculate current week start from selectedDate
   const currentWeekStart = useMemo(() => getWeekStart(selectedDate, weekStartsOnSunday), [selectedDate, weekStartsOnSunday])
@@ -185,8 +196,8 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
   // Get date range string for header
   const dateRangeString = useMemo(() => {
     const lastDay = weekDates[6]
-    return formatDateRange(currentWeekStart, lastDay)
-  }, [currentWeekStart, weekDates])
+    return formatDateRange(currentWeekStart, lastDay, locale)
+  }, [currentWeekStart, weekDates, locale])
 
   // Navigate to previous week
   const goToPreviousWeek = () => {
@@ -290,7 +301,7 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
           {showDates && (
             <div className={`flex items-center ${exportMode ? 'flex-1 justify-center' : 'absolute left-1/2 -translate-x-1/2'}`}>
               {!exportMode && (
-                <Button variant="ghost" size="icon" className="size-10 text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700" onClick={goToPreviousWeek} aria-label="Go to previous week">
+                <Button variant="ghost" size="icon" className="size-10 text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700" onClick={goToPreviousWeek} aria-label={t('calendar.previousWeek')}>
                   <ChevronLeft className="size-6" />
                 </Button>
               )}
@@ -330,7 +341,7 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
                             setIsCalendarOpen(false)
                           }}
                         >
-                          Go to Today
+                          {t('calendar.today')}
                         </Button>
                       </div>
                     </PopoverContent>
@@ -338,7 +349,7 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
                 )}
               </h2>
               {!exportMode && (
-                <Button variant="ghost" size="icon" className="size-10 text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700" onClick={goToNextWeek} aria-label="Go to next week">
+                <Button variant="ghost" size="icon" className="size-10 text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700" onClick={goToNextWeek} aria-label={t('calendar.nextWeek')}>
                   <ChevronRight className="size-6" />
                 </Button>
               )}
@@ -357,7 +368,7 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
             {/* Navigation row */}
             {!exportMode && (
               <div className="flex items-center justify-center w-full">
-                <Button variant="ghost" size="icon" className="size-10 text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700" onClick={goToPreviousWeek} aria-label="Go to previous week">
+                <Button variant="ghost" size="icon" className="size-10 text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700" onClick={goToPreviousWeek} aria-label={t('calendar.previousWeek')}>
                   <ChevronLeft className="size-6" />
                 </Button>
                 <h2 className="text-sm font-semibold text-gray-900 dark:text-gray-100 text-center flex-1 px-1 flex justify-center">
@@ -393,13 +404,13 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
                             setIsMobileCalendarOpen(false)
                           }}
                         >
-                          Go to Today
+                          {t('calendar.today')}
                         </Button>
                       </div>
                     </PopoverContent>
                   </Popover>
                 </h2>
-                <Button variant="ghost" size="icon" className="size-10 text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700" onClick={goToNextWeek} aria-label="Go to next week">
+                <Button variant="ghost" size="icon" className="size-10 text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700" onClick={goToNextWeek} aria-label={t('calendar.nextWeek')}>
                   <ChevronRight className="size-6" />
                 </Button>
               </div>
@@ -444,7 +455,7 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
             <React.Fragment key={hour}>
               {/* Time label */}
               <div className="flex items-start justify-end pr-1 md:pr-3">
-                <span className="text-[9px] md:text-xs font-medium text-gray-500 dark:text-gray-400 -translate-y-1/2 whitespace-nowrap">{formatHour(hour, use12HourFormat)}</span>
+                <span className="text-[9px] md:text-xs font-medium text-gray-500 dark:text-gray-400 -translate-y-1/2 whitespace-nowrap">{formatHour(hour, use12HourFormat, locale)}</span>
               </div>
 
               {/* Day cells - only render for data rows (not the last label row) */}
@@ -488,9 +499,9 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
                         transition: 'none'
                       }}
                     >
-                      <div className="text-xs font-semibold text-blue-700 dark:text-blue-300">New Event</div>
+                      <div className="text-xs font-semibold text-blue-700 dark:text-blue-300">{t('calendar.newEvent')}</div>
                       <div className="text-xs text-blue-600 dark:text-blue-400">
-                        {formatTime(creatingEvent.startHour, creatingEvent.startMinute, use12HourFormat)} - {formatTime(creatingEvent.endHour, creatingEvent.endMinute, use12HourFormat)}
+                        {formatTime(creatingEvent.startHour, creatingEvent.startMinute, use12HourFormat, locale)} - {formatTime(creatingEvent.endHour, creatingEvent.endMinute, use12HourFormat, locale)}
                       </div>
                     </div>
                   )}
@@ -618,7 +629,7 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
                                 ? getMobileWeeklyTimeClasses(displayMode, colorConfig.textSecondary)
                                 : getTimeClasses(displayMode, colorConfig.textSecondary)
                               }>
-                                {formatTime(displayTime.startHour, displayTime.startMinute, use12HourFormat)} - {formatTime(displayTime.endHour, displayTime.endMinute, use12HourFormat)}
+                                {formatTime(displayTime.startHour, displayTime.startMinute, use12HourFormat, locale)} - {formatTime(displayTime.endHour, displayTime.endMinute, use12HourFormat, locale)}
                               </p>
                             )}
                           </div>

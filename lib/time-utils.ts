@@ -23,26 +23,67 @@ export interface GroupedEvent extends Event {
 /**
  * Format hour for display
  */
-export function formatHour(hour: number, use12Hour: boolean): string {
+export function formatHour(hour: number, use12Hour: boolean, locale: string = 'en'): string {
+    const date = new Date()
+    date.setHours(hour, 0, 0, 0)
+
     if (use12Hour) {
-        if (hour === 0) return "12:00 AM"
-        if (hour === 12) return "12:00 PM"
-        if (hour < 12) return `${hour}:00 AM`
-        return `${hour - 12}:00 PM`
+        try {
+            return new Intl.DateTimeFormat(locale, {
+                hour: 'numeric',
+                minute: 'numeric',
+                hour12: true
+            }).format(date)
+        } catch (e) {
+            // Fallback
+            if (hour === 0) return "12:00 AM"
+            if (hour === 12) return "12:00 PM"
+            if (hour < 12) return `${hour}:00 AM`
+            return `${hour - 12}:00 PM`
+        }
     }
-    return `${hour.toString().padStart(2, "0")}:00`
+
+    try {
+        return new Intl.DateTimeFormat(locale, {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false
+        }).format(date)
+    } catch (e) {
+        return `${hour.toString().padStart(2, "0")}:00`
+    }
 }
 
 /**
  * Format time with hour and minute
  */
-export function formatTime(hour: number, minute: number, use12Hour: boolean): string {
+export function formatTime(hour: number, minute: number, use12Hour: boolean, locale: string = 'en'): string {
+    const date = new Date()
+    date.setHours(hour, minute, 0, 0)
+
     if (use12Hour) {
-        const period = hour >= 12 ? "PM" : "AM"
-        const displayHour = hour === 0 ? 12 : hour > 12 ? hour - 12 : hour
-        return `${displayHour}:${minute.toString().padStart(2, "0")} ${period}`
+        try {
+            return new Intl.DateTimeFormat(locale, {
+                hour: 'numeric',
+                minute: 'numeric',
+                hour12: true
+            }).format(date)
+        } catch (e) {
+            const period = hour >= 12 ? "PM" : "AM"
+            const displayHour = hour === 0 ? 12 : hour > 12 ? hour - 12 : hour
+            return `${displayHour}:${minute.toString().padStart(2, "0")} ${period}`
+        }
     }
-    return `${hour.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")}`
+
+    try {
+        return new Intl.DateTimeFormat(locale, {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false
+        }).format(date)
+    } catch (e) {
+        return `${hour.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")}`
+    }
 }
 
 /**
@@ -146,7 +187,25 @@ export function getActualDay(dayIndex: number, weekStartsOnSunday: boolean): num
 /**
  * Format date range for header (e.g., "October 21 - 27, 2025")
  */
-export function formatDateRange(startDate: Date, endDate: Date): string {
+/**
+ * Format date range for header (e.g., "October 21 - 27, 2025")
+ */
+export function formatDateRange(startDate: Date, endDate: Date, locale: string = 'en'): string {
+    try {
+        const formatter = new Intl.DateTimeFormat(locale, {
+            month: 'long',
+            day: 'numeric',
+            year: 'numeric'
+        });
+
+        if (typeof formatter.formatRange === 'function') {
+            return formatter.formatRange(startDate, endDate);
+        }
+    } catch (e) {
+        // Fallback or error handling if needed, though mostly safe in modern environments
+    }
+
+    // Fallback logic using hardcoded English names if Intl fails or formatRange is missing
     const monthNames = [
         "January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"

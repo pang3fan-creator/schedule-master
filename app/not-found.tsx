@@ -20,13 +20,13 @@ export default function NotFound() {
           {/* Error Message */}
           <div className="mb-8">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              页面未找到
+              Page Not Found
             </h2>
             <p className="text-lg text-gray-600 mb-2">
-              抱歉，您访问的页面不存在或已被移动。
+              Sorry, the page you are looking for does not exist or has been moved.
             </p>
             <p className="text-base text-gray-500">
-              请检查 URL 是否正确，或返回首页继续浏览。
+              Please check the URL or return to the homepage.
             </p>
           </div>
 
@@ -39,7 +39,7 @@ export default function NotFound() {
             >
               <Link href="/">
                 <Home className="w-5 h-5 mr-2" />
-                返回首页
+                Back to Home
               </Link>
             </Button>
             <Button
@@ -50,7 +50,7 @@ export default function NotFound() {
             >
               <Link href="/templates">
                 <Search className="w-5 h-5 mr-2" />
-                浏览模板
+                Browse Templates
               </Link>
             </Button>
           </div>

@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/dialog"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { cn } from "@/lib/utils"
+import { useTranslations } from "next-intl"
 
 // Import extracted auth components
 import { SignInForm } from "@/components/auth/SignInForm"
@@ -23,6 +24,8 @@ interface AuthModalProps {
 }
 
 export function AuthModal({ open, onOpenChange, defaultMode = "sign-in" }: AuthModalProps) {
+    const t = useTranslations('AuthModal')
+    const tCommon = useTranslations('Common')
     const [activeTab, setActiveTab] = useState<"sign-up" | "sign-in">(defaultMode)
 
     // Reset tab when modal opens with different default mode
@@ -38,7 +41,7 @@ export function AuthModal({ open, onOpenChange, defaultMode = "sign-in" }: AuthM
                 className="sm:max-w-[900px] p-0 overflow-hidden gap-0 border-0 bg-white dark:bg-gray-900"
                 showCloseButton={true}
             >
-                <DialogTitle className="sr-only">Authentication</DialogTitle>
+                <DialogTitle className="sr-only">{t('title')}</DialogTitle>
                 <div className="flex min-h-[620px]">
                     {/* Left Panel - Brand Area */}
                     <div className="hidden md:flex flex-col justify-center items-center w-[45%] bg-gradient-to-br from-blue-600 via-blue-500 to-violet-600 p-8 relative overflow-hidden">
@@ -48,23 +51,23 @@ export function AuthModal({ open, onOpenChange, defaultMode = "sign-in" }: AuthM
                         {/* Content */}
                         <div className="relative z-10 text-center">
                             <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
-                                <Image src="/icon.svg" alt="TrySchedule" width={40} height={40} className="object-contain" />
+                                <Image src="/icon.svg" alt={tCommon('brand.alt')} width={40} height={40} className="object-contain" />
                             </div>
                             <h2 className="text-2xl font-bold text-white mb-3">
-                                {activeTab === "sign-in" ? "Welcome back!" : "Join TrySchedule"}
+                                {activeTab === "sign-in" ? t('welcomeBack') : t('join')}
                             </h2>
                             <p className="text-blue-100 text-sm max-w-[280px] leading-relaxed">
                                 {activeTab === "sign-in"
-                                    ? "Let's pick up where you left off and keep scheduling smarter"
-                                    : "Start building beautiful schedules in minutes, no learning curve required"}
+                                    ? t('signInDescription')
+                                    : t('signUpDescription')}
                             </p>
                         </div>
 
                         {/* Feature highlights */}
                         <div className="relative z-10 mt-8 space-y-3 w-full max-w-[240px]">
-                            <FeatureItem icon="✨" text="Drag & drop simplicity" />
-                            <FeatureItem icon="🎨" text="Beautiful color themes" />
-                            <FeatureItem icon="📱" text="Works on any device" />
+                            <FeatureItem icon="✨" text={t('features.dragDrop')} />
+                            <FeatureItem icon="🎨" text={t('features.themes')} />
+                            <FeatureItem icon="📱" text={t('features.devices')} />
                         </div>
 
                         {/* Calendar Preview Card */}
@@ -86,7 +89,7 @@ export function AuthModal({ open, onOpenChange, defaultMode = "sign-in" }: AuthM
                                             : "border-gray-200 dark:border-gray-700 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600"
                                     )}
                                 >
-                                    Sign Up
+                                    {tCommon('auth.signUp')}
                                 </TabsTrigger>
                                 <TabsTrigger
                                     value="sign-in"
@@ -97,7 +100,7 @@ export function AuthModal({ open, onOpenChange, defaultMode = "sign-in" }: AuthM
                                             : "border-gray-200 dark:border-gray-700 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600"
                                     )}
                                 >
-                                    Sign In
+                                    {tCommon('auth.signIn')}
                                 </TabsTrigger>
                             </TabsList>
 
