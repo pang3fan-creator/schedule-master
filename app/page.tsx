@@ -438,29 +438,51 @@ export default function ScheduleBuilderPage() {
     setDeleteConfirm({ event })
   }, [])
 
-  // Generate FAQ Schema for SEO
-  const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": homepageFAQs.map((faq) => ({
-      "@type": "Question",
-      "name": faq.question,
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": faq.answer,
-      },
-    })),
-  }
+  // Generate FAQ Schema for SEO - use ref to ensure it's only inserted once
+  const faqSchemaInsertedRef = useRef(false)
+
+  useEffect(() => {
+    // Only insert the schema once on the client side
+    if (!isExporting && !faqSchemaInsertedRef.current) {
+      const faqSchema = {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": homepageFAQs.map((faq) => ({
+          "@type": "Question",
+          "name": faq.question,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": faq.answer,
+          },
+        })),
+      }
+
+      // Create or find the script tag
+      let scriptTag = document.getElementById('faq-schema')
+
+      if (!scriptTag) {
+        scriptTag = document.createElement('script')
+        scriptTag.id = 'faq-schema'
+        scriptTag.type = 'application/ld+json'
+        scriptTag.textContent = JSON.stringify(faqSchema)
+        document.head.appendChild(scriptTag)
+        faqSchemaInsertedRef.current = true
+      }
+    }
+
+    // Cleanup: remove the script tag when component unmounts or isExporting changes
+    return () => {
+      if (isExporting) {
+        const scriptTag = document.getElementById('faq-schema')
+        if (scriptTag) {
+          scriptTag.remove()
+        }
+      }
+    }
+  }, [isExporting])
 
   return (
     <>
-      {/* FAQ Schema JSON-LD for SEO */}
-      {!isExporting && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-        />
-      )}
       <div className={`flex flex-col bg-gray-50 dark:bg-gray-950 ${isExporting ? '' : 'h-screen overflow-hidden'}`}>
         {/* Fixed navbar with transparency - content scrolls behind it */}
         {!isExporting && (
