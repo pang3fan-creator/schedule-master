@@ -458,10 +458,10 @@ export default function ScheduleBuilderPage() {
       }
 
       // Create or find the script tag
-      let scriptTag = document.getElementById('faq-schema')
+      let scriptTag = document.getElementById('faq-schema') as HTMLScriptElement | null
 
       if (!scriptTag) {
-        scriptTag = document.createElement('script')
+        scriptTag = document.createElement('script') as HTMLScriptElement
         scriptTag.id = 'faq-schema'
         scriptTag.type = 'application/ld+json'
         scriptTag.textContent = JSON.stringify(faqSchema)
