@@ -79,7 +79,7 @@ export function Navbar() {
           href="/"
           className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0"
         >
-          <Image src="/icon.svg" alt={t('brand.alt')} width={32} height={32} className="object-contain" priority />
+          <Image src="/icon.svg" alt={t('brand.alt')} width={32} height={32} className="object-contain" />
           <span className="text-lg text-blue-600 hidden sm:inline dark:text-blue-400">
             <span className="font-bold">Try</span><span className="font-normal">Schedule</span>
           </span>
@@ -191,10 +191,10 @@ export function Navbar() {
         {/* Right: Auth Buttons - Hidden on mobile (available in MobileNav) */}
         <div className="flex items-center gap-3">
           {/* Language Switcher */}
-          <LanguageSwitcher />
+          <LanguageSwitcher className="hidden md:inline-flex text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 dark:hover:bg-gray-800" />
 
           {/* Theme Toggle */}
-          <ThemeToggle />
+          <ThemeToggle className="hidden md:inline-flex border border-gray-200 bg-white text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-50" />
 
           <SignedOut>
             <Button
@@ -223,7 +223,7 @@ export function Navbar() {
               <UserButton.MenuItems>
                 <UserButton.Action
                   label={t('auth.mySubscription')}
-                  labelIcon={<Crown className="h-4 w-4" />}
+                  labelIcon={<Crown className="h-4 w-4 text-gray-500 dark:text-blue-400" />}
                   onClick={() => setSubscriptionModalOpen(true)}
                 />
               </UserButton.MenuItems>

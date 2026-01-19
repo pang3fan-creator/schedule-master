@@ -8,9 +8,7 @@ import { useSearchParams } from "next/navigation";
 import { Suspense, Fragment as ReactFragment, useState } from "react";
 
 import { Breadcrumb } from "@/components/Breadcrumb";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Tag } from "lucide-react";
 
 // Creem Product IDs
 const PRODUCT_IDS = {
@@ -43,19 +41,7 @@ interface PricingPageClientProps {
 
 export function PricingPageClient({ productSchemas }: PricingPageClientProps) {
     const t = useTranslations('Pricing');
-    const [promoCode, setPromoCode] = useState("");
-    const [isPromoApplied, setIsPromoApplied] = useState(false);
 
-    const handleApplyPromo = () => {
-        if (promoCode.trim()) {
-            setIsPromoApplied(true);
-        }
-    };
-
-    const handleRemovePromo = () => {
-        setPromoCode("");
-        setIsPromoApplied(false);
-    };
 
     const plans = [
         {
@@ -179,64 +165,7 @@ export function PricingPageClient({ productSchemas }: PricingPageClientProps) {
                     </p>
                 </div>
 
-                {/* Promo Code Section */}
-                <div className="container mx-auto px-4 mb-8">
-                    <div className="max-w-md mx-auto">
-                        {!isPromoApplied ? (
-                            <div className="flex gap-2">
-                                <div className="relative flex-1">
-                                    <Tag className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 dark:text-gray-500" />
-                                    <Input
-                                        type="text"
-                                        placeholder={t('promo.placeholder')}
-                                        value={promoCode}
-                                        onChange={(e) => setPromoCode(e.target.value.toUpperCase())}
-                                        className="pl-10 pr-10"
-                                        onKeyDown={(e) => {
-                                            if (e.key === "Enter") {
-                                                handleApplyPromo();
-                                            }
-                                        }}
-                                    />
-                                    {promoCode && (
-                                        <button
-                                            onClick={() => { setPromoCode(""); }}
-                                            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 transition-colors"
-                                            aria-label="Clear promo code"
-                                        >
-                                            ✕
-                                        </button>
-                                    )}
-                                </div>
-                                <Button
-                                    onClick={handleApplyPromo}
-                                    disabled={!promoCode.trim()}
-                                    variant="default"
-                                    className="bg-blue-600 hover:bg-blue-700 text-white"
-                                >
-                                    {t('promo.apply')}
-                                </Button>
-                            </div>
-                        ) : (
-                            <div className="flex items-center justify-between bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg px-4 py-3">
-                                <div className="flex items-center gap-2">
-                                    <Tag className="h-4 w-4 text-green-600 dark:text-green-400" />
-                                    <span className="font-medium text-green-800 dark:text-green-300">
-                                        {t('promo.applied')} {promoCode}
-                                    </span>
-                                </div>
-                                <Button
-                                    onClick={handleRemovePromo}
-                                    variant="ghost"
-                                    size="sm"
-                                    className="text-green-700 dark:text-green-400 hover:text-green-900 dark:hover:text-green-300 hover:bg-green-100 dark:hover:bg-green-900/30"
-                                >
-                                    {t('promo.remove')}
-                                </Button>
-                            </div>
-                        )}
-                    </div>
-                </div>
+
 
                 {/* Pricing Cards */}
                 <div className="container mx-auto px-4 mb-24">
@@ -245,7 +174,6 @@ export function PricingPageClient({ productSchemas }: PricingPageClientProps) {
                             <PricingCard
                                 key={plan.title}
                                 {...plan}
-                                promoCode={isPromoApplied ? promoCode : undefined}
                             />
                         ))}
                     </div>

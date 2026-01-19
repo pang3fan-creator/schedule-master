@@ -10,7 +10,7 @@ import {
     DialogDescription,
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
-import { Calendar, Link2, Loader2, CheckCircle, AlertCircle, ExternalLink } from "lucide-react"
+import { Calendar, Link2, Loader2, CheckCircle, AlertCircle, ExternalLink, X } from "lucide-react"
 import { useUser, useClerk } from "@clerk/nextjs"
 import { type Event } from "@/lib/types"
 import { EVENTS_STORAGE_KEY, CALENDAR_SYNC_MAPPINGS_KEY } from "@/lib/storage-keys"
@@ -140,18 +140,28 @@ export function CalendarSyncDialog({ open, onOpenChange, weekStart, weekStartsOn
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="sm:max-w-md bg-white dark:bg-gray-900">
-                <DialogHeader>
-                    <DialogTitle className="flex items-center gap-2 text-gray-900 dark:text-gray-100">
-                        <Calendar className="size-5 text-blue-600 dark:text-blue-400" />
-                        {t('title')}
-                    </DialogTitle>
+            <DialogContent className="sm:max-w-md p-0 gap-0 overflow-hidden bg-white dark:bg-gray-900" showCloseButton={false}>
+                <DialogHeader className="px-6 pt-5 pb-4 border-b border-gray-100 dark:border-gray-800">
+                    <div className="flex items-center justify-between mb-2">
+                        <DialogTitle className="flex items-center gap-2 text-gray-900 dark:text-gray-100">
+                            <Calendar className="size-5 text-blue-600 dark:text-blue-400" />
+                            {t('title')}
+                        </DialogTitle>
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            className="size-8 sm:size-9 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-700 dark:hover:text-gray-200"
+                            onClick={() => onOpenChange(false)}
+                        >
+                            <X className="size-4 sm:size-5" />
+                        </Button>
+                    </div>
                     <DialogDescription className="text-left text-gray-600 dark:text-gray-400">
                         {t('description')}
                     </DialogDescription>
                 </DialogHeader>
 
-                <div className="py-4">
+                <div className="p-6">
                     {loading ? (
                         <div className="flex items-center justify-center py-8">
                             <Loader2 className="size-6 animate-spin text-gray-400 dark:text-gray-500" />

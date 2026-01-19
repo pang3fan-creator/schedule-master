@@ -7,6 +7,7 @@ import {
     Dialog,
     DialogContent,
     DialogTitle,
+    DialogDescription,
 } from "@/components/ui/dialog"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { cn } from "@/lib/utils"
@@ -42,6 +43,9 @@ export function AuthModal({ open, onOpenChange, defaultMode = "sign-in" }: AuthM
                 showCloseButton={true}
             >
                 <DialogTitle className="sr-only">{t('title')}</DialogTitle>
+                <DialogDescription className="sr-only">
+                    {activeTab === "sign-in" ? t('signInDescription') : t('signUpDescription')}
+                </DialogDescription>
                 <div className="flex min-h-[620px]">
                     {/* Left Panel - Brand Area */}
                     <div className="hidden md:flex flex-col justify-center items-center w-[45%] bg-gradient-to-br from-blue-600 via-blue-500 to-violet-600 p-8 relative overflow-hidden">

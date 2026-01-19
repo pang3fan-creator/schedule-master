@@ -30,11 +30,10 @@ export async function generateMetadata({ params }: Omit<Props, 'children'>): Pro
     };
 }
 
-import { ClerkProvider } from '@clerk/nextjs';
-import { enUS, esES } from '@clerk/localizations';
 import { SubscriptionProvider } from "@/components/SubscriptionContext";
 import { SettingsProvider } from "@/components/SettingsContext";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { ThemeClerkProvider } from "@/components/ThemeClerkProvider";
 
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.tryschedule.com';
 
@@ -99,18 +98,18 @@ export default async function LocaleLayout({ children, params }: Props) {
     };
 
     return (
-        <ClerkProvider localization={locale === 'es' ? esES : enUS}>
-            {/* Organization Schema */}
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
-            />
-            {/* SoftwareApplication Schema */}
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
-            />
-            <ThemeProvider>
+        <ThemeProvider>
+            <ThemeClerkProvider locale={locale}>
+                {/* Organization Schema */}
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+                />
+                {/* SoftwareApplication Schema */}
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
+                />
                 <NextIntlClientProvider messages={messages}>
                     <SettingsProvider>
                         <SubscriptionProvider>
@@ -118,7 +117,7 @@ export default async function LocaleLayout({ children, params }: Props) {
                         </SubscriptionProvider>
                     </SettingsProvider>
                 </NextIntlClientProvider>
-            </ThemeProvider>
-        </ClerkProvider>
+            </ThemeClerkProvider>
+        </ThemeProvider>
     );
 }

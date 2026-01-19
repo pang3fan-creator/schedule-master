@@ -26,6 +26,7 @@ import { getTemplateTranslation } from "@/lib/templates-translations"
 import { cn } from "@/lib/utils"
 import { useTranslations, useLocale } from "next-intl"
 import { LanguageSwitcher } from "@/components/LanguageSwitcher"
+import { ThemeToggle } from "@/components/ThemeToggle"
 
 // Dynamically import modals to reduce initial bundle size
 const AuthModal = dynamic(() => import("@/components/AuthModal").then(m => m.AuthModal), { ssr: false })
@@ -133,9 +134,7 @@ export function MobileNav() {
                                     <span className="font-normal">Schedule</span>
                                 </span>
                             </SheetTitle>
-                            <div className="ml-auto mr-2">
-                                <LanguageSwitcher />
-                            </div>
+
                         </SheetHeader>
 
                         <div className="flex-1 overflow-y-auto overscroll-contain">
@@ -230,8 +229,17 @@ export function MobileNav() {
 
                         {/* Auth buttons at bottom */}
                         <div className="border-t border-gray-200 dark:border-gray-800 px-4 py-2 safe-area-pb bg-white dark:bg-gray-900 shrink-0">
+                            {/* App Settings Row */}
+                            <div className="flex items-center justify-between h-[44px]">
+                                <span className="text-sm text-gray-600 dark:text-gray-400 font-medium">{t('sidebar.settings')}</span>
+                                <div className="flex items-center gap-2">
+                                    <ThemeToggle className="h-9 w-9 border-gray-200 dark:border-gray-700" />
+                                    <LanguageSwitcher className="h-9 w-9" />
+                                </div>
+                            </div>
+
                             <SignedOut>
-                                <div className="flex flex-col gap-2 py-2">
+                                <div className="flex flex-col gap-2 py-3 border-t border-gray-100 dark:border-gray-800">
                                     <Button
                                         variant="outline"
                                         className="w-full dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-gray-100"
@@ -248,7 +256,7 @@ export function MobileNav() {
                                 </div>
                             </SignedOut>
                             <SignedIn>
-                                <div className="flex items-center justify-between h-[54px]">
+                                <div className="flex items-center justify-between h-[54px] border-t border-gray-100 dark:border-gray-800">
                                     <span className="text-sm text-gray-600 dark:text-gray-400 font-medium">{t('auth.yourAccount')}</span>
                                     <UserButton
                                         afterSignOutUrl="/"
@@ -261,7 +269,7 @@ export function MobileNav() {
                                         <UserButton.MenuItems>
                                             <UserButton.Action
                                                 label={t('auth.mySubscription')}
-                                                labelIcon={<Crown className="h-4 w-4" />}
+                                                labelIcon={<Crown className="h-4 w-4 text-gray-500 dark:text-blue-400" />}
                                                 onClick={() => {
                                                     setOpen(false)
                                                     setSubscriptionModalOpen(true)

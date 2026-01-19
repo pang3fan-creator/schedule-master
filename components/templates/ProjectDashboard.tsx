@@ -131,13 +131,13 @@ export function ProjectDashboard({ variant = 'default' }: ProjectDashboardProps)
             <PopoverTrigger asChild>
                 <Button
                     variant="ghost"
-                    className={`justify-start gap-3 w-full text-gray-600 hover:text-gray-900 hover:bg-gray-100 ${isOpen ? 'bg-gray-100' : ''}`}
+                    className={`justify-start gap-3 w-full text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 ${isOpen ? 'bg-gray-100 dark:bg-gray-800' : ''}`}
                 >
-                    <HardHat className="size-5 text-orange-600" />
+                    <HardHat className="size-5 text-orange-600 dark:text-orange-500" />
                     {t('title')}
                 </Button>
             </PopoverTrigger>
-            <PopoverContent align="start" side="right" className="w-[320px] p-0 overflow-hidden ml-2 shadow-xl border-orange-100">
+            <PopoverContent align="start" side="right" className="w-[320px] p-0 overflow-hidden ml-2 shadow-xl border-orange-100 dark:border-gray-800">
                 <DashboardContent progress={progress} milestones={milestones} onToggle={toggleStatus} weather={weatherCheck} onLocate={handleLocate} hasCustomLocation={!!coords} />
             </PopoverContent>
         </Popover>
@@ -161,7 +161,7 @@ function DashboardContent({
 }) {
     const t = useTranslations('TemplateComponents.ProjectDashboard')
     return (
-        <div className="bg-white">
+        <div className="bg-white dark:bg-gray-900">
             {/* Header */}
             <div className="bg-zinc-900 p-5 text-white">
                 <div className="flex items-center justify-between mb-3">
@@ -195,42 +195,42 @@ function DashboardContent({
             </div>
 
             {/* Milestones List */}
-            <div className="p-4 bg-gray-50/50">
-                <h4 className="flex items-center justify-between text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3">
+            <div className="p-4 bg-gray-50/50 dark:bg-gray-900/50">
+                <h4 className="flex items-center justify-between text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-3">
                     <span>{t('milestones')}</span>
-                    <span className="text-[9px] font-normal text-gray-400 bg-gray-100 px-1.5 py-0.5 rounded">{t('clickToUpdate')}</span>
+                    <span className="text-[9px] font-normal text-gray-400 dark:text-gray-500 bg-gray-100 dark:bg-gray-800/50 px-1.5 py-0.5 rounded">{t('clickToUpdate')}</span>
                 </h4>
                 <div className="space-y-2">
                     {milestones.map((milestone, idx) => (
                         <button
                             key={idx}
                             onClick={() => onToggle(idx)}
-                            className="w-full flex items-center gap-3 p-2 rounded-lg hover:bg-white hover:shadow-sm hover:border-orange-100 border border-transparent transition-all group text-left"
+                            className="w-full flex items-center gap-3 p-2 rounded-lg hover:bg-white dark:hover:bg-gray-800 hover:shadow-sm hover:border-orange-100 dark:hover:border-orange-500/20 border border-transparent transition-all group text-left"
                         >
                             <div className="mt-0.5 shrink-0 transition-transform group-hover:scale-110">
                                 {milestone.status === 'completed' && (
-                                    <CheckCircle2 className="size-5 text-green-500" />
+                                    <CheckCircle2 className="size-5 text-green-500 dark:text-green-400" />
                                 )}
                                 {milestone.status === 'in-progress' && (
-                                    <TrendingUp className="size-5 text-blue-500" />
+                                    <TrendingUp className="size-5 text-blue-500 dark:text-blue-400" />
                                 )}
                                 {milestone.status === 'pending' && (
-                                    <Circle className="size-5 text-gray-300 group-hover:text-gray-400" />
+                                    <Circle className="size-5 text-gray-300 dark:text-gray-600 group-hover:text-gray-400 dark:group-hover:text-gray-500" />
                                 )}
                             </div>
                             <div className="flex-1 min-w-0">
                                 <div className={cn(
                                     "text-sm font-medium transition-colors truncate",
-                                    milestone.status === 'completed' ? "text-gray-400 line-through" : "text-gray-900"
+                                    milestone.status === 'completed' ? "text-gray-400 dark:text-gray-500 line-through" : "text-gray-900 dark:text-gray-100"
                                 )}>
                                     {t(`milestoneData.${milestone.id}`)}
                                 </div>
-                                <div className="text-[11px] text-gray-500">
+                                <div className="text-[11px] text-gray-500 dark:text-gray-400">
                                     {milestone.week ? t('week', { num: milestone.week.num }) : milestone.weekRange ? t('weekRange', { range: milestone.weekRange.range }) : ''}
                                 </div>
                             </div>
                             {milestone.status === 'in-progress' && (
-                                <span className="text-[10px] font-bold bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full border border-blue-100 uppercase tracking-tight">
+                                <span className="text-[10px] font-bold bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 px-2 py-0.5 rounded-full border border-blue-100 dark:border-blue-800 uppercase tracking-tight">
                                     {t('active')}
                                 </span>
                             )}
@@ -238,27 +238,27 @@ function DashboardContent({
                     ))}
                 </div>
 
-                <div className="mt-4 pt-3 border-t border-gray-200/60 flex items-start justify-between gap-2.5 px-1 opacity-90">
+                <div className="mt-4 pt-3 border-t border-gray-200/60 dark:border-gray-700/60 flex items-start justify-between gap-2.5 px-1 opacity-90">
                     <div className="flex gap-2.5">
                         {weather?.type === 'alert' ? (
                             <>
                                 <AlertCircle className="size-4 text-amber-500 shrink-0 mt-0.5" />
-                                <p className="text-xs text-amber-800/80 leading-snug">
-                                    <span className="font-semibold text-amber-900">{t('weatherAlert')}</span> {weather ? t(weather.key as any, weather.params) : ''}
+                                <p className="text-xs text-amber-800/80 dark:text-amber-400/90 leading-snug">
+                                    <span className="font-semibold text-amber-900 dark:text-amber-300">{t('weatherAlert')}</span> {weather ? t(weather.key as any, weather.params) : ''}
                                 </p>
                             </>
                         ) : (
                             <>
-                                <CheckCircle2 className="size-4 text-emerald-500 shrink-0 mt-0.5" />
-                                <p className="text-xs text-emerald-800/80 leading-snug">
-                                    <span className="font-semibold text-emerald-900">{t('siteStatus')}</span> {weather ? t(weather.key as any, weather.params) : t('checkingForecast')}
+                                <CheckCircle2 className="size-4 text-emerald-500 dark:text-emerald-400 shrink-0 mt-0.5" />
+                                <p className="text-xs text-emerald-800/80 dark:text-emerald-400/90 leading-snug">
+                                    <span className="font-semibold text-emerald-900 dark:text-emerald-300">{t('siteStatus')}</span> {weather ? t(weather.key as any, weather.params) : t('checkingForecast')}
                                 </p>
                             </>
                         )}
                     </div>
                     <button
                         onClick={onLocate}
-                        className={`shrink-0 p-1 rounded hover:bg-gray-200 transition-colors ${hasCustomLocation ? 'text-blue-500' : 'text-gray-400'}`}
+                        className={`shrink-0 p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors ${hasCustomLocation ? 'text-blue-500 dark:text-blue-400' : 'text-gray-400 dark:text-gray-500'}`}
                         title={t('updateLocation')}
                     >
                         <MapPin className="size-3.5" />

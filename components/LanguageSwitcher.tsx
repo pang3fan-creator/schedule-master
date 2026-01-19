@@ -11,7 +11,9 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Languages } from "lucide-react"
 
-export function LanguageSwitcher() {
+import { cn } from "@/lib/utils"
+
+export function LanguageSwitcher({ className }: { className?: string }) {
     const locale = useLocale()
     const router = useRouter()
     const pathname = usePathname()
@@ -44,12 +46,12 @@ export function LanguageSwitcher() {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 dark:hover:bg-gray-800">
+                <Button variant="ghost" size="icon" className={cn("text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 dark:hover:bg-gray-800", className)}>
                     <Languages className="h-[1.2rem] w-[1.2rem]" />
                     <span className="sr-only">{t('nav.language')}</span>
                 </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
+            <DropdownMenuContent align="end" className="z-[100]">
                 <DropdownMenuItem onClick={() => handleLanguageChange('en')} className={locale === 'en' ? "bg-accent" : ""}>
                     English
                 </DropdownMenuItem>

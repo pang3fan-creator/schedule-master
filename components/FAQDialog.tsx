@@ -8,6 +8,8 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog"
+import { Button } from "@/components/ui/button"
+import { X } from "lucide-react"
 import { useTranslations, useLocale } from "next-intl"
 
 interface FAQDialogProps {
@@ -40,15 +42,23 @@ export function FAQDialog({ open, onOpenChange }: FAQDialogProps) {
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="w-[calc(100%-2rem)] sm:max-w-2xl max-h-[80vh] flex flex-col bg-white dark:bg-gray-900">
-                <DialogHeader>
+            <DialogContent className="w-[calc(100%-2rem)] sm:max-w-2xl max-h-[80vh] flex flex-col p-0 gap-0 overflow-hidden bg-white dark:bg-gray-900" showCloseButton={false}>
+                <DialogHeader className="flex flex-row items-center justify-between px-6 pt-5 pb-2.5 border-b border-gray-100 dark:border-gray-800">
                     <DialogTitle className="text-xl font-bold text-gray-900 dark:text-gray-100">
                         {t('seo.faqTitle')}
                     </DialogTitle>
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        className="size-8 sm:size-9 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-700 dark:hover:text-gray-200"
+                        onClick={() => onOpenChange(false)}
+                    >
+                        <X className="size-4 sm:size-5" />
+                    </Button>
                 </DialogHeader>
 
                 {/* Scrollable content area including FAQ and Footer */}
-                <div className="flex-1 overflow-y-auto mt-4 pr-2">
+                <div className="flex-1 overflow-y-auto px-6 py-6">
                     {/* FAQ List */}
                     <div className="space-y-6">
                         {faqs.map((faq, index) => (

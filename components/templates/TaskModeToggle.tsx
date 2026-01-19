@@ -19,7 +19,7 @@ export function TaskModeToggle({ variant = 'default' }: ToggleProps) {
             <Button
                 variant="outline"
                 size="icon"
-                className={`size-12 rounded-full shadow-md border-gray-200 transition-all ${settings.taskModeEnabled ? 'text-green-600 bg-green-50 border-green-200' : 'text-gray-600 bg-white hover:bg-gray-50'}`}
+                className={`size-12 rounded-full shadow-md border-gray-200 dark:border-gray-700 transition-all ${settings.taskModeEnabled ? 'text-green-600 bg-green-50 border-green-200 dark:bg-green-900/30 dark:border-green-700/50 dark:text-green-400' : 'text-gray-600 bg-white hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700'}`}
                 onClick={() => updateSettings({ taskModeEnabled: !settings.taskModeEnabled })}
                 title={t('TaskModeToggle.title')}
             >
@@ -31,7 +31,7 @@ export function TaskModeToggle({ variant = 'default' }: ToggleProps) {
     return (
         <Button
             variant="ghost"
-            className={`justify-start gap-3 w-full ${settings.taskModeEnabled ? 'text-green-600 bg-green-50 hover:bg-green-100' : 'text-gray-600 hover:text-gray-900'}`}
+            className={`justify-start gap-3 w-full ${settings.taskModeEnabled ? 'text-green-600 bg-green-50 hover:bg-green-100 dark:bg-green-900/30 dark:hover:bg-green-900/50 dark:text-green-400' : 'text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800'}`}
             onClick={() => updateSettings({ taskModeEnabled: !settings.taskModeEnabled })}
         >
             <CheckSquare className="size-5" />

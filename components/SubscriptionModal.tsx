@@ -8,6 +8,7 @@ import {
     DialogContent,
     DialogHeader,
     DialogTitle,
+    DialogDescription,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -71,9 +72,12 @@ export function SubscriptionModal({ open, onOpenChange }: SubscriptionModalProps
             <DialogContent className="sm:max-w-md">
                 <DialogHeader>
                     <DialogTitle className="flex items-center gap-2">
-                        <Crown className="h-5 w-5 text-blue-600" />
+                        <Crown className="h-5 w-5 text-blue-600 dark:text-blue-500" />
                         My Subscription
                     </DialogTitle>
+                    <DialogDescription className="sr-only">
+                        View and manage your current subscription plan details.
+                    </DialogDescription>
                 </DialogHeader>
 
                 {isLoading ? (
@@ -83,15 +87,15 @@ export function SubscriptionModal({ open, onOpenChange }: SubscriptionModalProps
                 ) : (
                     <div className="space-y-6">
                         {/* Plan Info */}
-                        <div className="rounded-lg border border-gray-200 bg-gray-50 p-4">
+                        <div className="rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/80 p-4">
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <p className="text-sm text-gray-500">Current Plan</p>
-                                    <p className="text-xl font-semibold text-gray-900">{planName}</p>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">Current Plan</p>
+                                    <p className="text-xl font-semibold text-gray-900 dark:text-gray-100">{planName}</p>
                                 </div>
                                 <Badge
                                     variant={isActive ? "default" : "secondary"}
-                                    className={isActive ? "bg-green-100 text-green-700 hover:bg-green-100" : ""}
+                                    className={isActive ? "bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 hover:bg-green-100 dark:hover:bg-green-900/30" : ""}
                                 >
                                     {isActive ? "Active" : "Expired"}
                                 </Badge>
@@ -99,7 +103,7 @@ export function SubscriptionModal({ open, onOpenChange }: SubscriptionModalProps
 
                             {/* Expiration Date */}
                             {showExpiration && (
-                                <div className="mt-4 flex items-center gap-2 text-sm text-gray-600">
+                                <div className="mt-4 flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
                                     <Calendar className="h-4 w-4" />
                                     <span>
                                         {isActive ? "Expires on " : "Expired on "}
@@ -110,7 +114,7 @@ export function SubscriptionModal({ open, onOpenChange }: SubscriptionModalProps
 
                             {/* Lifetime badge */}
                             {plan === "lifetime" && (
-                                <div className="mt-4 text-sm text-gray-600">
+                                <div className="mt-4 text-sm text-gray-600 dark:text-gray-300">
                                     🎉 You have lifetime access. No expiration!
                                 </div>
                             )}
@@ -135,7 +139,7 @@ export function SubscriptionModal({ open, onOpenChange }: SubscriptionModalProps
                             ) : (
                                 <Button
                                     onClick={handleUpgrade}
-                                    className="w-full bg-blue-600 hover:bg-blue-700"
+                                    className="w-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700"
                                 >
                                     <Crown className="mr-2 h-4 w-4" />
                                     Upgrade to Pro

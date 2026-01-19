@@ -330,18 +330,28 @@ export function CloudSaveDialog({ open, onOpenChange, onLoadSchedule }: CloudSav
     return (
         <>
             <Dialog open={open} onOpenChange={onOpenChange}>
-                <DialogContent className="sm:max-w-lg max-h-[80vh] overflow-hidden flex flex-col bg-white dark:bg-gray-900">
-                    <DialogHeader>
-                        <DialogTitle className="flex items-center gap-2 text-gray-900 dark:text-gray-100">
-                            <Cloud className="size-5 text-blue-600 dark:text-blue-400" />
-                            {t('title')}
-                        </DialogTitle>
+                <DialogContent className="sm:max-w-lg max-h-[80vh] flex flex-col p-0 gap-0 overflow-hidden bg-white dark:bg-gray-900" showCloseButton={false}>
+                    <DialogHeader className="px-6 pt-5 pb-4 border-b border-gray-100 dark:border-gray-800 shrink-0">
+                        <div className="flex items-center justify-between mb-2">
+                            <DialogTitle className="flex items-center gap-2 text-gray-900 dark:text-gray-100">
+                                <Cloud className="size-5 text-blue-600 dark:text-blue-400" />
+                                {t('title')}
+                            </DialogTitle>
+                            <Button
+                                variant="ghost"
+                                size="icon"
+                                className="size-8 sm:size-9 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-700 dark:hover:text-gray-200"
+                                onClick={() => onOpenChange(false)}
+                            >
+                                <X className="size-4 sm:size-5" />
+                            </Button>
+                        </div>
                         <DialogDescription className="text-left text-gray-600 dark:text-gray-400">
                             {t('description')}
                         </DialogDescription>
                     </DialogHeader>
 
-                    <div className="flex-1 overflow-hidden flex flex-col gap-4">
+                    <div className="flex-1 overflow-hidden flex flex-col gap-4 p-6 min-h-0">
                         {/* Template count and actions */}
                         <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
                             <span>{t('templatesUsed', { count: totalCount, max: maxTemplates })}</span>

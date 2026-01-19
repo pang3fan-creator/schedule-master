@@ -244,23 +244,23 @@ export function AIAutofillDialog({
     return (
         <>
             <Dialog open={open} onOpenChange={onOpenChange}>
-                <DialogContent className="sm:max-w-[520px] max-h-[85vh] p-0 gap-0 overflow-hidden flex flex-col" showCloseButton={false}>
+                <DialogContent className="sm:max-w-[520px] max-h-[85vh] p-0 gap-0 overflow-hidden flex flex-col bg-white dark:bg-gray-900" showCloseButton={false}>
                     {/* Header */}
-                    <DialogHeader className="flex flex-row items-center justify-between px-4 md:px-6 py-4 border-b border-gray-100 shrink-0">
+                    <DialogHeader className="flex flex-row items-center justify-between px-4 md:px-6 py-4 border-b border-gray-100 dark:border-gray-800 shrink-0">
                         <div className="flex items-center gap-3">
                             <div className="w-8 h-8 rounded-full bg-gradient-to-r from-violet-500 to-blue-500 flex items-center justify-center text-white">
                                 <Sparkles className="size-4" />
                             </div>
                             <div className="text-left">
-                                <DialogTitle className="text-lg font-semibold text-gray-900">
+                                <DialogTitle className="text-lg font-semibold text-gray-900 dark:text-gray-100">
                                     {t('title')}
                                 </DialogTitle>
                                 {usage && (
-                                    <p className="text-xs text-gray-500">
+                                    <p className="text-xs text-gray-500 dark:text-gray-400">
                                         {usage.isPro ? (
                                             t('usageRemaining', { remaining: usage.remaining, limit: usage.limit })
                                         ) : (
-                                            <span className="flex items-center gap-1.5 font-medium text-blue-600">
+                                            <span className="flex items-center gap-1.5 font-medium text-blue-600 dark:text-blue-400">
                                                 <Sparkles className="size-3" />
                                                 {t('trialRemaining', { remaining: usage.remaining })}
                                             </span>
@@ -272,7 +272,7 @@ export function AIAutofillDialog({
                         <Button
                             variant="ghost"
                             size="icon"
-                            className="size-8 sm:size-9 rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 hover:text-gray-700"
+                            className="size-8 sm:size-9 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-700 dark:hover:text-gray-200"
                             onClick={handleClose}
                         >
                             <X className="size-4 sm:size-5" />
@@ -286,17 +286,17 @@ export function AIAutofillDialog({
                                 {isLimitReached && !usage?.isPro ? (
                                     /* Trial Reached Paywall */
                                     <div className="py-6 text-center space-y-5">
-                                        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-blue-100">
-                                            <Lock className="h-8 w-8 text-blue-600" />
+                                        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900/30">
+                                            <Lock className="h-8 w-8 text-blue-600 dark:text-blue-400" />
                                         </div>
                                         <div className="space-y-2 max-w-[320px] mx-auto">
-                                            <h3 className="text-lg font-bold text-gray-900">{t('trialLimitReachedTitle')}</h3>
-                                            <p className="text-sm text-gray-600 leading-relaxed">
+                                            <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100">{t('trialLimitReachedTitle')}</h3>
+                                            <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
                                                 {t('trialLimitReachedDescription')}
                                             </p>
                                         </div>
                                         <div className="pt-2">
-                                            <Button asChild className="w-full max-w-[280px] bg-blue-600 hover:bg-blue-700 shadow-md">
+                                            <Button asChild className="w-full max-w-[280px] bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 shadow-md text-white">
                                                 <Link href="/pricing" className="flex items-center gap-2">
                                                     <Crown className="size-4" />
                                                     {t('upgradeToPro')}
@@ -308,31 +308,31 @@ export function AIAutofillDialog({
                                     /* Normal Input */
                                     <>
                                         <div>
-                                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                                 {t('inputLabel')}
                                             </label>
                                             <Textarea
                                                 placeholder={t('inputPlaceholder')}
                                                 value={prompt}
                                                 onChange={(e) => setPrompt(e.target.value)}
-                                                className="min-h-[140px] resize-none"
+                                                className="min-h-[140px] resize-none bg-white dark:bg-gray-950 border-gray-200 dark:border-gray-800 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 dark:placeholder:text-gray-500"
                                                 maxLength={2000}
                                                 disabled={isLimitReached}
                                             />
-                                            <p className="text-xs text-gray-400 mt-1 text-right">
+                                            <p className="text-xs text-gray-400 dark:text-gray-500 mt-1 text-right">
                                                 {prompt.length} / 2000
                                             </p>
                                         </div>
 
                                         {error && (
-                                            <div className="flex items-start gap-2 p-3 bg-red-50 text-red-700 rounded-lg text-sm">
+                                            <div className="flex items-start gap-2 p-3 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 rounded-lg text-sm border border-red-100 dark:border-red-800">
                                                 <AlertCircle className="size-4 mt-0.5 shrink-0" />
                                                 <span>{error}</span>
                                             </div>
                                         )}
 
-                                        <div className="bg-gray-50 rounded-lg p-3 text-sm text-gray-600">
-                                            <p className="font-medium mb-1">{t('tipsTitle')}</p>
+                                        <div className="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-3 text-sm text-gray-600 dark:text-gray-400">
+                                            <p className="font-medium mb-1 text-gray-900 dark:text-gray-200">{t('tipsTitle')}</p>
                                             <ul className="list-disc list-inside space-y-1 text-xs">
                                                 <li>{t('tips.durations')}</li>
                                                 <li>{t('tips.days')}</li>
@@ -344,13 +344,13 @@ export function AIAutofillDialog({
                             </div>
                         ) : (
                             <div className="space-y-4">
-                                <div className="flex items-center gap-2 text-green-600 mb-4">
+                                <div className="flex items-center gap-2 text-green-600 dark:text-green-400 mb-4">
                                     <CheckCircle2 className="size-5" />
                                     <span className="font-medium">{t('previewTitle', { count: generatedEvents.length })}</span>
                                 </div>
 
                                 {Object.keys(eventsByDay).length === 0 ? (
-                                    <div className="text-center py-8 text-gray-500">
+                                    <div className="text-center py-8 text-gray-500 dark:text-gray-400">
                                         {t('noEvents')}
                                     </div>
                                 ) : (
@@ -361,7 +361,7 @@ export function AIAutofillDialog({
 
                                             return (
                                                 <div key={day}>
-                                                    <h4 className="text-sm font-medium text-gray-700 mb-2">
+                                                    <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                                         {dayNames[day]}
                                                     </h4>
                                                     <div className="space-y-2">
@@ -389,7 +389,7 @@ export function AIAutofillDialog({
                                                                     <Button
                                                                         variant="ghost"
                                                                         size="icon"
-                                                                        className="size-7 text-gray-400 hover:text-red-500 shrink-0"
+                                                                        className="size-7 text-gray-400 dark:text-gray-500 hover:text-red-500 dark:hover:text-red-400 shrink-0"
                                                                         onClick={() => handleRemoveEvent(globalIdx)}
                                                                     >
                                                                         <Trash2 className="size-4" />
@@ -408,17 +408,17 @@ export function AIAutofillDialog({
                     </div>
 
                     {/* Footer */}
-                    <div className="flex items-center justify-between gap-3 px-4 md:px-6 py-4 border-t border-gray-100 shrink-0">
+                    <div className="flex items-center justify-between gap-3 px-4 md:px-6 py-4 border-t border-gray-100 dark:border-gray-800 shrink-0">
                         {step === "input" ? (
                             <>
-                                <Button variant="outline" onClick={handleClose}>
+                                <Button variant="outline" onClick={handleClose} className="border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
                                     {isLimitReached && !usage?.isPro ? t('closeButton') : t('cancelButton')}
                                 </Button>
                                 {!isLimitReached || usage?.isPro ? (
                                     <Button
                                         onClick={handleGenerateClick}
                                         disabled={!prompt.trim() || isLoading || isLimitReached}
-                                        className="bg-gradient-to-r from-violet-500 to-blue-500 hover:from-violet-600 hover:to-blue-600 text-white shadow-sm"
+                                        className="bg-gradient-to-r from-violet-500 to-blue-500 hover:from-violet-600 hover:to-blue-600 text-white shadow-sm dark:from-violet-600 dark:to-blue-600 dark:hover:from-violet-500 dark:hover:to-blue-500"
                                     >
                                         {isLoading ? (
                                             <>
@@ -436,13 +436,13 @@ export function AIAutofillDialog({
                             </>
                         ) : (
                             <>
-                                <Button variant="outline" onClick={handleBack}>
+                                <Button variant="outline" onClick={handleBack} className="border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800">
                                     {t('backButton')}
                                 </Button>
                                 <Button
                                     onClick={handleConfirm}
                                     disabled={generatedEvents.length === 0}
-                                    className="bg-blue-600 hover:bg-blue-700 text-white"
+                                    className="bg-blue-600 hover:bg-blue-700 text-white dark:bg-blue-500 dark:hover:bg-blue-600"
                                 >
                                     <CheckCircle2 className="size-4 mr-2" />
                                     {t('addButton', { count: generatedEvents.length })}
