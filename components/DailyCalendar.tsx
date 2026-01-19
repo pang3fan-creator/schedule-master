@@ -68,7 +68,8 @@ const eventIconMap = EVENT_ICON_MAP
 
 
 // Format date for header (e.g., "Thursday, December 11, 2025")
-export function formatDate(date: Date, locale: string): string {
+// Note: This is defined outside component to avoid re-creation
+function formatDateIntl(date: Date, locale: string): string {
     return new Intl.DateTimeFormat(locale, {
         weekday: 'long',
         year: 'numeric',
@@ -88,6 +89,13 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
     const [isCalendarOpen, setIsCalendarOpen] = useState(false)
     const [isMobileCalendarOpen, setIsMobileCalendarOpen] = useState(false)
     const isMobile = useIsMobile()
+    
+    // Use state and useEffect to avoid hydration mismatch from Intl.DateTimeFormat
+    const [formattedDate, setFormattedDate] = useState<string>('')
+    
+    useEffect(() => {
+        setFormattedDate(formatDateIntl(selectedDate, locale))
+    }, [selectedDate, locale])
 
     // Update rowHeight when exportMode changes
     useEffect(() => {
@@ -269,17 +277,18 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                                     <ChevronLeft className="size-6" />
                                 </Button>
                             )}
-                            <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 w-[450px] text-center flex justify-center">
+                            <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 w-[450px] text-center flex justify-center" suppressHydrationWarning>
                                 {exportMode ? (
-                                    formatDate(selectedDate, locale)
+                                    formattedDate
                                 ) : (
                                     <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
                                         <PopoverTrigger asChild>
                                             <Button
                                                 variant="ghost"
                                                 className="text-xl font-semibold text-gray-900 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 h-auto py-1 px-2"
+                                                suppressHydrationWarning
                                             >
-                                                {formatDate(selectedDate, locale)}
+                                                {formattedDate}
                                             </Button>
                                         </PopoverTrigger>
                                         <PopoverContent className="w-auto p-0" align="center">
@@ -336,14 +345,15 @@ export function DailyCalendar({ events, selectedDate, onDateChange, onEventUpdat
                                 <Button variant="ghost" size="icon" className="size-10 text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700" onClick={goToPreviousDay} aria-label={t('calendar.previousDay')}>
                                     <ChevronLeft className="size-6" />
                                 </Button>
-                                <h2 className="text-base font-semibold text-gray-900 dark:text-gray-100 text-center flex-1 px-2 flex justify-center">
+                                <h2 className="text-base font-semibold text-gray-900 dark:text-gray-100 text-center flex-1 px-2 flex justify-center" suppressHydrationWarning>
                                     <Popover open={isMobileCalendarOpen} onOpenChange={setIsMobileCalendarOpen}>
                                         <PopoverTrigger asChild>
                                             <Button
                                                 variant="ghost"
                                                 className="text-base font-semibold text-gray-900 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 h-auto py-1 px-2"
+                                                suppressHydrationWarning
                                             >
-                                                {formatDate(selectedDate, locale)}
+                                                {formattedDate}
                                             </Button>
                                         </PopoverTrigger>
                                         <PopoverContent className="w-auto p-0" align="center">

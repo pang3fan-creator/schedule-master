@@ -194,9 +194,13 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
   }, [weekDates, dayNames])
 
   // Get date range string for header
-  const dateRangeString = useMemo(() => {
+  // Use state and useEffect to avoid hydration mismatch from Intl.DateTimeFormat
+  // Intl formatting can differ between server and client, especially for locales like 'es'
+  const [dateRangeString, setDateRangeString] = useState<string>('')
+  
+  useEffect(() => {
     const lastDay = weekDates[6]
-    return formatDateRange(currentWeekStart, lastDay, locale)
+    setDateRangeString(formatDateRange(currentWeekStart, lastDay, locale))
   }, [currentWeekStart, weekDates, locale])
 
   // Navigate to previous week
@@ -305,7 +309,7 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
                   <ChevronLeft className="size-6" />
                 </Button>
               )}
-              <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 w-[450px] text-center flex justify-center">
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 w-[450px] text-center flex justify-center" suppressHydrationWarning>
                 {exportMode ? (
                   dateRangeString
                 ) : (
@@ -314,6 +318,7 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
                       <Button
                         variant="ghost"
                         className="text-xl font-semibold text-gray-900 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 h-auto py-1 px-2"
+                        suppressHydrationWarning
                       >
                         {dateRangeString}
                       </Button>
@@ -371,12 +376,13 @@ export function WeeklyCalendar({ events, selectedDate, onDateChange, onEventUpda
                 <Button variant="ghost" size="icon" className="size-10 text-gray-500 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700" onClick={goToPreviousWeek} aria-label={t('calendar.previousWeek')}>
                   <ChevronLeft className="size-6" />
                 </Button>
-                <h2 className="text-sm font-semibold text-gray-900 dark:text-gray-100 text-center flex-1 px-1 flex justify-center">
+                <h2 className="text-sm font-semibold text-gray-900 dark:text-gray-100 text-center flex-1 px-1 flex justify-center" suppressHydrationWarning>
                   <Popover open={isMobileCalendarOpen} onOpenChange={setIsMobileCalendarOpen}>
                     <PopoverTrigger asChild>
                       <Button
                         variant="ghost"
                         className="text-sm font-semibold text-gray-900 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 h-auto py-1 px-2"
+                        suppressHydrationWarning
                       >
                         {dateRangeString}
                       </Button>

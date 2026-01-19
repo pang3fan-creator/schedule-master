@@ -45,16 +45,27 @@ function generateEventsFromTemplate(template: TemplateData, events: Omit<Event, 
 function TemplatePreview({ template, events, locale }: { template: TemplateData, events: Omit<Event, "id" | "date">[], locale: string }) {
     const t = useTranslations('Templates')
     const weekStartsOnSunday = template.settings?.weekStartsOnSunday ?? true
+    
+    // Use state to avoid hydration mismatch from Intl.DateTimeFormat
+    const [localizedDays, setLocalizedDays] = useState<string[]>([])
+    
+    useEffect(() => {
+        const dayOrder = weekStartsOnSunday
+            ? [0, 1, 2, 3, 4, 5, 6]
+            : [1, 2, 3, 4, 5, 6, 0]
+
+        // Get localized day names
+        const days = dayOrder.map(dayNum => {
+            const date = getDateForDayOfWeek(dayNum);
+            return new Intl.DateTimeFormat(locale, { weekday: 'short' }).format(date);
+        });
+        
+        setLocalizedDays(days)
+    }, [locale, weekStartsOnSunday])
 
     const dayOrder = weekStartsOnSunday
         ? [0, 1, 2, 3, 4, 5, 6]
         : [1, 2, 3, 4, 5, 6, 0]
-
-    // Get localized day names
-    const days = dayOrder.map(dayNum => {
-        const date = getDateForDayOfWeek(dayNum);
-        return new Intl.DateTimeFormat(locale, { weekday: 'short' }).format(date);
-    });
 
     const startHour = template.settings?.workingHoursStart ?? 8
     const endHour = template.settings?.workingHoursEnd ?? 17
@@ -99,7 +110,7 @@ function TemplatePreview({ template, events, locale }: { template: TemplateData,
             {/* Day headers */}
             <div className="grid grid-cols-8 border-b border-gray-200 dark:border-gray-700">
                 <div className="p-2 text-xs text-gray-400 dark:text-gray-500"></div>
-                {days.map((day) => (
+                {localizedDays.map((day) => (
                     <div key={day} className="p-2 text-center text-xs font-medium text-gray-600 dark:text-gray-400 border-l border-gray-200 dark:border-gray-700">
                         {day}
                     </div>
@@ -114,7 +125,7 @@ function TemplatePreview({ template, events, locale }: { template: TemplateData,
                             {formatHour(hour)}
                         </div>
 
-                        {days.map((_, dayIndex) => {
+                        {localizedDays.map((_, dayIndex) => {
                             const semanticDay = dayOrder[dayIndex]
                             return (
                                 <div
