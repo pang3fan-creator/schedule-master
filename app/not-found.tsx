@@ -77,10 +77,17 @@ function NotFoundContent() {
   )
 }
 
+import { ThemeProvider } from "@/components/ThemeProvider"
+import { ThemeClerkProvider } from "@/components/ThemeClerkProvider"
+
 export default function NotFound() {
   return (
-    <NextIntlClientProvider locale="en" messages={enMessages}>
-      <NotFoundContent />
-    </NextIntlClientProvider>
+    <ThemeProvider>
+      <ThemeClerkProvider locale="en">
+        <NextIntlClientProvider locale="en" messages={enMessages}>
+          <NotFoundContent />
+        </NextIntlClientProvider>
+      </ThemeClerkProvider>
+    </ThemeProvider>
   )
 }
