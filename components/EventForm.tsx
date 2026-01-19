@@ -15,6 +15,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import React from "react"
 import { ICON_OPTIONS } from "@/lib/icons"
 import { type EventColor, type EventPriority, EVENT_COLORS, PRIORITY_COLORS } from "@/lib/types"
+import { useTranslations } from "next-intl"
 
 // ============== Time Utility Functions ==============
 
@@ -156,6 +157,7 @@ export function EventForm({
     selectedIcon,
     onIconChange,
 }: EventFormProps) {
+    const t = useTranslations('Common')
     // Available color options
     const colorOptions: EventColor[] = ['blue', 'green', 'red', 'yellow', 'purple', 'pink', 'orange', 'teal']
 
@@ -171,14 +173,14 @@ export function EventForm({
         <div className="space-y-4 md:space-y-5">
             {/* Title Field */}
             <div className="space-y-2">
-                <Label className="text-sm font-medium text-gray-700 dark:text-gray-200">Title</Label>
+                <Label className="text-sm font-medium text-gray-700 dark:text-gray-200">{t('eventDialog.form.title')}</Label>
                 <div className="flex items-center gap-2">
                     <div className="flex items-center justify-center size-9 border border-gray-200 dark:border-gray-700 rounded-md bg-gray-50 dark:bg-gray-800">
                         <Tag className="size-4 text-gray-500 dark:text-gray-400" />
                     </div>
                     <div className="flex gap-2 flex-1">
                         <Input
-                            placeholder="Event title"
+                            placeholder={t('eventDialog.form.titlePlaceholder')}
                             value={title}
                             onChange={(e) => onTitleChange(e.target.value)}
                             className="flex-1 h-9 border-gray-200 dark:border-gray-700 focus:border-blue-500 focus:ring-blue-500/20 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"
@@ -202,7 +204,7 @@ export function EventForm({
                                         size="icon"
                                         className={`size-9 rounded-md ${selectedIcon === opt.name || (!selectedIcon && opt.name === 'None') ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400' : 'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800'}`}
                                         onClick={() => onIconChange(opt.name === 'None' ? undefined : opt.name)}
-                                        title={opt.name}
+                                        title={t(`eventDialog.form.icons.${opt.name.toLowerCase() === 'none' ? 'none' : opt.name}`)}
                                     >
                                         <opt.icon className="size-4" />
                                     </Button>
@@ -215,7 +217,7 @@ export function EventForm({
 
             {/* Color Field */}
             <div className="space-y-2">
-                <Label className="text-sm font-medium text-gray-700 dark:text-gray-200">Color</Label>
+                <Label className="text-sm font-medium text-gray-700 dark:text-gray-200">{t('eventDialog.form.color')}</Label>
                 <div className="flex items-center gap-2">
                     <div className="flex items-center justify-center size-9 border border-gray-200 dark:border-gray-700 rounded-md bg-gray-50 dark:bg-gray-800">
                         <Palette className="size-4 text-gray-500 dark:text-gray-400" />
@@ -229,7 +231,7 @@ export function EventForm({
                                     type="button"
                                     className={`size-8 rounded-full border-2 transition-all dark:ring-offset-gray-900 ${colorConfig.bg} ${selectedColor === color ? 'ring-2 ring-offset-2 ring-blue-500 border-gray-400 dark:border-gray-500' : 'border-transparent hover:scale-110'}`}
                                     onClick={() => onColorChange(color)}
-                                    title={color.charAt(0).toUpperCase() + color.slice(1)}
+                                    title={t(`eventDialog.form.colors.${color}`)}
                                 />
                             )
                         })}
@@ -240,27 +242,31 @@ export function EventForm({
             {/* Day(s) Field */}
             <div className="space-y-2">
                 <Label className="text-sm font-medium text-gray-700 dark:text-gray-200">
-                    {selectionMode === 'single' ? 'Day' : 'Day(s)'}
+                    {selectionMode === 'single' ? t('eventDialog.form.day') : t('eventDialog.form.days')}
                 </Label>
                 <div className="flex items-start gap-2">
                     <div className="flex items-center justify-center size-9 border border-gray-200 dark:border-gray-700 rounded-md bg-gray-50 dark:bg-gray-800 shrink-0">
                         <Calendar className="size-4 text-gray-500 dark:text-gray-400" />
                     </div>
                     <div className="flex flex-wrap gap-1.5 flex-1">
-                        {dayOptions.map((day) => (
-                            <Button
-                                key={day.value}
-                                variant="outline"
-                                size="sm"
-                                className={`h-9 px-2 md:px-3 text-xs font-medium transition-all ${selectedDays.includes(day.value)
-                                    ? "bg-blue-600 text-white border-blue-600 hover:bg-blue-700 hover:border-blue-700"
-                                    : "border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-600"
-                                    }`}
-                                onClick={() => onDayToggle(day.value)}
-                            >
-                                {day.label}
-                            </Button>
-                        ))}
+                        {dayOptions.map((day) => {
+                            const dayLabelKeys = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'] as const
+                            const translatedLabel = t(`eventDialog.form.dayLabels.${dayLabelKeys[day.value]}`)
+                            return (
+                                <Button
+                                    key={day.value}
+                                    variant="outline"
+                                    size="sm"
+                                    className={`h-9 px-2 md:px-3 text-xs font-medium transition-all ${selectedDays.includes(day.value)
+                                        ? "bg-blue-600 text-white border-blue-600 hover:bg-blue-700 hover:border-blue-700"
+                                        : "border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-600"
+                                        }`}
+                                    onClick={() => onDayToggle(day.value)}
+                                >
+                                    {translatedLabel}
+                                </Button>
+                            )
+                        })}
                     </div>
                 </div>
             </div>
@@ -270,7 +276,7 @@ export function EventForm({
                 <div className="space-y-2">
                     <Label className="text-sm font-medium text-gray-700 dark:text-gray-200 flex items-center gap-2">
                         <Clock className="size-4 text-gray-400 dark:text-gray-500" />
-                        Start
+                        {t('eventDialog.form.start')}
                     </Label>
                     <Input
                         type="time"
@@ -282,7 +288,7 @@ export function EventForm({
                 <div className="space-y-2">
                     <Label className="text-sm font-medium text-gray-700 dark:text-gray-200 flex items-center gap-2">
                         <Clock className="size-4 text-gray-400 dark:text-gray-500" />
-                        End
+                        {t('eventDialog.form.end')}
                     </Label>
                     <Input
                         type="time"
@@ -296,14 +302,14 @@ export function EventForm({
             {/* Description Field */}
             <div className="space-y-2">
                 <Label className="text-sm font-medium text-gray-700 dark:text-gray-200">
-                    Description
+                    {t('eventDialog.form.description')}
                 </Label>
                 <div className="flex gap-2">
                     <div className="flex items-start justify-center size-9 pt-2 border border-gray-200 dark:border-gray-700 rounded-md bg-gray-50 dark:bg-gray-800">
                         <Info className="size-4 text-gray-500 dark:text-gray-400" />
                     </div>
                     <Textarea
-                        placeholder="Event description (optional)"
+                        placeholder={t('eventDialog.form.descriptionPlaceholder')}
                         value={description}
                         onChange={(e) => onDescriptionChange(e.target.value)}
                         className="flex-1 min-h-[80px] border-gray-200 dark:border-gray-700 focus:border-blue-500 focus:ring-blue-500/20 resize-none bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100"

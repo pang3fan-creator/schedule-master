@@ -21,13 +21,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return {
         title: t('metaTitle'),
         description: t('metaDescription'),
-        keywords: [
-            "scheduling tips",
-            "productivity blog",
-            "time management",
-            "schedule builder tips",
-            "employee scheduling guide",
-        ],
+        keywords: t('metaKeywords').split(',').map(k => k.trim()),
         openGraph: {
             title: t('metaTitle'),
             description: t('metaDescription'),

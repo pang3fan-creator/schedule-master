@@ -4,6 +4,8 @@ import * as React from "react"
 import { DayPicker } from "react-day-picker"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { format } from "date-fns"
+import { es, enUS } from "date-fns/locale"
+import { useLocale, useTranslations } from "next-intl"
 
 import { cn } from "@/lib/utils"
 
@@ -16,13 +18,20 @@ function Calendar({
     showWeekNumber = true,
     ...props
 }: CalendarProps) {
+    const locale = useLocale()
+    const t = useTranslations('Common')
+
+    // Map locale string to date-fns locale object
+    const dateFnsLocale = locale === 'es' ? es : enUS
+
     return (
         <DayPicker
             showOutsideDays={showOutsideDays}
             showWeekNumber={showWeekNumber}
+            locale={dateFnsLocale}
             className={cn("p-3", className)}
             formatters={{
-                formatWeekdayName: (date) => format(date, "EEE"),
+                formatWeekdayName: (date) => format(date, "EEE", { locale: dateFnsLocale }),
                 formatWeekNumber: (weekNumber) => `${weekNumber}`,
             }}
             classNames={{
@@ -73,7 +82,7 @@ function Calendar({
                     const Icon = orientation === "left" ? ChevronLeft : ChevronRight
                     return <Icon className="size-4" />
                 },
-                WeekNumberHeader: () => <th className="inline-flex items-center justify-center w-8 mr-2 border-r border-border text-[0.8rem] font-medium pb-4">Wk</th>,
+                WeekNumberHeader: () => <th className="inline-flex items-center justify-center w-8 mr-2 border-r border-border text-[0.8rem] font-medium pb-4">{t('calendarPicker.weekLabel')}</th>,
             }}
             {...props}
         />

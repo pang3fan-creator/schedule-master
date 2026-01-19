@@ -4,12 +4,14 @@ import * as React from "react"
 import { Button } from "@/components/ui/button"
 import { Flag } from "lucide-react"
 import { useSettings } from "@/components/SettingsContext"
+import { useTranslations } from "next-intl"
 
 export interface ToggleProps {
     variant?: 'default' | 'compact'
 }
 
 export function PriorityModeToggle({ variant = 'default' }: ToggleProps) {
+    const t = useTranslations('TemplateComponents')
     const { settings, updateSettings } = useSettings()
 
     if (variant === 'compact') {
@@ -19,7 +21,7 @@ export function PriorityModeToggle({ variant = 'default' }: ToggleProps) {
                 size="icon"
                 className={`size-12 rounded-full shadow-md border-gray-200 transition-all ${settings.priorityModeEnabled ? 'text-amber-600 bg-amber-50 border-amber-200' : 'text-gray-600 bg-white hover:bg-gray-50'}`}
                 onClick={() => updateSettings({ priorityModeEnabled: !settings.priorityModeEnabled })}
-                title="Toggle Priority Mode"
+                title={t('PriorityModeToggle.title')}
             >
                 <Flag className="size-6" />
             </Button>
@@ -33,7 +35,7 @@ export function PriorityModeToggle({ variant = 'default' }: ToggleProps) {
             onClick={() => updateSettings({ priorityModeEnabled: !settings.priorityModeEnabled })}
         >
             <Flag className="size-5" />
-            Priority Mode {settings.priorityModeEnabled ? 'On' : 'Off'}
+            {t('PriorityModeToggle.label')} {settings.priorityModeEnabled ? t('common.on') : t('common.off')}
         </Button>
     )
 }

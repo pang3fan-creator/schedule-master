@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { LucideIcon } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 interface ConfirmDialogProps {
     open: boolean
@@ -32,10 +33,12 @@ export function ConfirmDialog({
     icon: Icon,
     iconClassName = "size-5 text-gray-500",
     confirmText,
-    cancelText = "Cancel",
+    cancelText,
     onConfirm,
     variant = "default"
 }: ConfirmDialogProps) {
+    const t = useTranslations('Common')
+    const displayCancelText = cancelText || t('buttons.cancel')
     const handleConfirm = () => {
         onConfirm()
         onOpenChange(false)
@@ -62,7 +65,7 @@ export function ConfirmDialog({
                         variant="outline"
                         onClick={() => onOpenChange(false)}
                     >
-                        {cancelText}
+                        {displayCancelText}
                     </Button>
                     <Button
                         variant={finalVariant}

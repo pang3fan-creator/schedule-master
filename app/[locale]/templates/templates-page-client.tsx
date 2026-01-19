@@ -39,8 +39,19 @@ export function TemplatesPageClient({ locale }: TemplatesPageClientProps) {
     const [currentPage, setCurrentPage] = useState(1);
     const [searchQuery, setSearchQuery] = useState("");
 
-    // Get unique categories from templates
-    const categories = ["All", ...Array.from(new Set(allTemplates.map(t => t.category)))];
+    // Get unique categories from templates and translate them
+    const getCategoryLabel = (cat: string) => {
+        const key = cat.toLowerCase();
+        return t(`categories.${key}`);
+    };
+
+    const categories = [
+        { value: "All", label: getCategoryLabel("all") },
+        ...Array.from(new Set(allTemplates.map(t => t.category))).map(cat => ({
+            value: cat,
+            label: getCategoryLabel(cat)
+        }))
+    ];
 
     // Filter templates by category and search query
     const filteredTemplates = allTemplates.filter(template => {
@@ -199,7 +210,7 @@ export function TemplatesPageClient({ locale }: TemplatesPageClientProps) {
                                             </div>
                                             <div className="flex-1 min-w-0">
                                                 <span className="text-xs font-medium text-blue-600 dark:text-blue-300 uppercase tracking-wide">
-                                                    {template.category}
+                                                    {getCategoryLabel(template.category)}
                                                 </span>
                                                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white mt-1 group-hover:text-blue-600 dark:group-hover:text-blue-300 transition-colors line-clamp-1">
                                                     {displayTitle}
@@ -265,6 +276,7 @@ export function TemplatesPageClient({ locale }: TemplatesPageClientProps) {
                 {/* FAQ Section - using unified FAQSection component */}
                 <div className="mt-16">
                     <FAQSection
+                        title={t('faqs.title')}
                         items={faqItems}
                     />
                 </div>

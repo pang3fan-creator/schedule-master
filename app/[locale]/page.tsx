@@ -649,7 +649,7 @@ export default function ScheduleBuilderPage() {
           conflictingEvents={conflictState?.conflictingEvents || []}
           newEventTitle={conflictState?.newEventData.title || ""}
           onDeleteExisting={handleConflictDeleteExisting}
-          onModifyNew={handleConflictModifyNew}
+          onEditNew={handleConflictModifyNew}
           onCancel={handleConflictCancel}
         />
 

@@ -68,29 +68,13 @@ const eventIconMap = EVENT_ICON_MAP
 
 
 // Format date for header (e.g., "Thursday, December 11, 2025")
-function formatDate(date: Date, locale: string = 'en'): string {
-    try {
-        return new Intl.DateTimeFormat(locale, {
-            weekday: 'long',
-            month: 'long',
-            day: 'numeric',
-            year: 'numeric'
-        }).format(date);
-    } catch (e) {
-        // Fallback
-    }
-
-    const monthNames = [
-        "January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"
-    ]
-
-    const dayName = dayNames[date.getDay()]
-    const month = monthNames[date.getMonth()]
-    const day = date.getDate()
-    const year = date.getFullYear()
-
-    return `${dayName}, ${month} ${day}, ${year}`
+export function formatDate(date: Date, locale: string): string {
+    return new Intl.DateTimeFormat(locale, {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    }).format(date)
 }
 
 

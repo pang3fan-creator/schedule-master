@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect, useCallback } from "react"
+import { useTranslations } from "next-intl"
 import {
     Dialog,
     DialogContent,
@@ -41,6 +42,7 @@ export function CalendarSyncDialog({ open, onOpenChange, weekStart, weekStartsOn
     const [loading, setLoading] = useState(true)
     const [syncing, setSyncing] = useState(false)
     const [syncResult, setSyncResult] = useState<SyncResult | null>(null)
+    const t = useTranslations('CalendarSync')
 
     // 检查 Google 连接状态
     const checkStatus = useCallback(async () => {
@@ -142,10 +144,10 @@ export function CalendarSyncDialog({ open, onOpenChange, weekStart, weekStartsOn
                 <DialogHeader>
                     <DialogTitle className="flex items-center gap-2 text-gray-900 dark:text-gray-100">
                         <Calendar className="size-5 text-blue-600 dark:text-blue-400" />
-                        Google Calendar Sync
+                        {t('title')}
                     </DialogTitle>
                     <DialogDescription className="text-left text-gray-600 dark:text-gray-400">
-                        Sync your schedule to Google Calendar for easy access on all devices.
+                        {t('description')}
                     </DialogDescription>
                 </DialogHeader>
 
@@ -161,10 +163,10 @@ export function CalendarSyncDialog({ open, onOpenChange, weekStart, weekStartsOn
                                 <Link2 className="size-8 text-gray-400 dark:text-gray-500" />
                             </div>
                             <h3 className="font-medium text-gray-900 dark:text-gray-100 mb-2">
-                                Connect Your Google Account
+                                {t('notConnected.title')}
                             </h3>
                             <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
-                                Link your Google account to sync events to your calendar.
+                                {t('notConnected.description')}
                             </p>
                             <Button
                                 onClick={handleConnectGoogle}
@@ -188,7 +190,7 @@ export function CalendarSyncDialog({ open, onOpenChange, weekStart, weekStartsOn
                                         d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
                                     />
                                 </svg>
-                                Connect Google Account
+                                {t('notConnected.button')}
                             </Button>
                         </div>
                     ) : (
@@ -198,7 +200,7 @@ export function CalendarSyncDialog({ open, onOpenChange, weekStart, weekStartsOn
                             <div className="flex items-center gap-3 p-3 bg-green-50 dark:bg-green-900/30 rounded-lg border border-green-200 dark:border-green-800">
                                 <CheckCircle className="size-5 text-green-600 dark:text-green-400 shrink-0" />
                                 <div className="flex-1 min-w-0">
-                                    <p className="text-sm font-medium text-green-800 dark:text-green-100">Connected</p>
+                                    <p className="text-sm font-medium text-green-800 dark:text-green-100">{t('connected.status')}</p>
                                     <p className="text-xs text-green-600 dark:text-green-300 truncate">{status.email}</p>
                                 </div>
                             </div>
@@ -221,15 +223,15 @@ export function CalendarSyncDialog({ open, onOpenChange, weekStart, weekStartsOn
                                             className={`text-sm font-medium ${syncResult.success ? "text-blue-800 dark:text-blue-100" : "text-red-800 dark:text-red-100"
                                                 }`}
                                         >
-                                            {syncResult.success ? "Sync Complete" : "Sync Failed"}
+                                            {syncResult.success ? t('connected.syncComplete') : t('connected.syncFailed')}
                                         </span>
                                     </div>
                                     <p
                                         className={`text-xs mt-1 ${syncResult.success ? "text-blue-600 dark:text-blue-300" : "text-red-600 dark:text-red-300"
                                             }`}
                                     >
-                                        {syncResult.synced} event(s) synced
-                                        {syncResult.failed > 0 && `, ${syncResult.failed} failed`}
+                                        {t('connected.eventsSynced', { count: syncResult.synced })}
+                                        {syncResult.failed > 0 && t('connected.eventsFailed', { count: syncResult.failed })}
                                     </p>
                                 </div>
                             )}
@@ -243,12 +245,12 @@ export function CalendarSyncDialog({ open, onOpenChange, weekStart, weekStartsOn
                                 {syncing ? (
                                     <>
                                         <Loader2 className="size-4 animate-spin" />
-                                        Syncing...
+                                        {t('connected.syncing')}
                                     </>
                                 ) : (
                                     <>
                                         <Calendar className="size-4" />
-                                        Sync to Google Calendar
+                                        {t('connected.syncButton')}
                                     </>
                                 )}
                             </Button>
@@ -260,7 +262,7 @@ export function CalendarSyncDialog({ open, onOpenChange, weekStart, weekStartsOn
                                 onClick={() => window.open("https://calendar.google.com", "_blank")}
                             >
                                 <ExternalLink className="size-4" />
-                                Open Google Calendar
+                                {t('connected.openCalendar')}
                             </Button>
                         </div>
                     )}

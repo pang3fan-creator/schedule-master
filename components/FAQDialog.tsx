@@ -71,20 +71,20 @@ export function FAQDialog({ open, onOpenChange }: FAQDialogProps) {
                                 <Image src="/icon.svg" alt="TrySchedule - Free Online Schedule Builder" width={18} height={18} className="object-contain" />
                                 <span className="text-blue-600 dark:text-blue-400"><span className="font-bold">Try</span><span className="font-normal">Schedule</span></span>
                             </Link>
-                            <span className="text-gray-400 dark:text-gray-500">© 2025 TrySchedule. All rights reserved.</span>
+                            <span className="text-gray-400 dark:text-gray-500">© 2025 TrySchedule. {t('footer.rights')}</span>
                         </div>
 
                         {/* Row 2: Navigation Links */}
                         <div className="flex flex-wrap justify-center gap-6">
                             <Link href={getLocalizedUrl('/pricing')} className="hover:text-violet-600 dark:hover:text-violet-400 transition-colors">{t('nav.pricing')}</Link>
-                            <Link href={getLocalizedUrl('/terms')} className="hover:text-violet-600 dark:hover:text-violet-400 transition-colors">Terms</Link>
-                            <Link href={getLocalizedUrl('/privacy')} className="hover:text-violet-600 dark:hover:text-violet-400 transition-colors">Privacy</Link>
-                            <Link href={getLocalizedUrl('/contact')} className="hover:text-violet-600 dark:hover:text-violet-400 transition-colors">Contact</Link>
+                            <Link href={getLocalizedUrl('/terms')} className="hover:text-violet-600 dark:hover:text-violet-400 transition-colors">{t('footer.terms')}</Link>
+                            <Link href={getLocalizedUrl('/privacy')} className="hover:text-violet-600 dark:hover:text-violet-400 transition-colors">{t('footer.privacy')}</Link>
+                            <Link href={getLocalizedUrl('/contact')} className="hover:text-violet-600 dark:hover:text-violet-400 transition-colors">{t('footer.contact')}</Link>
                         </div>
 
                         {/* Row 3: Tagline */}
                         <p className="text-xs text-gray-400 dark:text-gray-500 italic text-center">
-                            <span className="font-medium">Try</span>Schedule is the easiest free online schedule builder for students, managers, and teams.
+                            <span className="font-medium">Try</span>Schedule {t('footer.taglineSimple')}
                         </p>
                     </div>
                 </div>

@@ -48,7 +48,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     return {
         title: `${post.title} | TrySchedule Blog`,
         description: post.excerpt || post.title,
-        keywords: [post.category.toLowerCase(), 'schedule builder', 'scheduling tips', 'productivity'],
+        keywords: [t(`categories.${post.category.toLowerCase()}`).toLowerCase(), 'schedule builder', 'scheduling tips', 'productivity'],
         openGraph: {
             title: post.title,
             description: post.excerpt || post.title,
@@ -338,13 +338,13 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                         <Breadcrumb items={[
                             { label: t('breadcrumb.home'), href: "/" },
                             { label: t('breadcrumb.blog'), href: blogListUrl },
-                            { label: slug }
+                            { label: post.title }
                         ]} />
                     </div>
 
                     <div className="text-center mb-8">
                         <span className="text-sm font-medium text-blue-600 dark:text-blue-400 uppercase tracking-wider">
-                            {post.category}
+                            {t(`categories.${post.category.toLowerCase()}`)}
                         </span>
                         <h1 className="mt-4 text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl leading-tight">
                             {post.title}
@@ -354,7 +354,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                             <span>•</span>
                             <span>{formatDate(post.date, locale)}</span>
                             <span>•</span>
-                            <span>{post.readTime}</span>
+                            <span>{t('readTime', { minutes: parseInt(post.readTime) || 0 })}</span>
                         </div>
                     </div>
 

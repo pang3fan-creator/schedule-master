@@ -22,68 +22,35 @@ export interface GroupedEvent extends Event {
 
 /**
  * Format hour for display
+ * Uses consistent AM/PM format regardless of locale
  */
 export function formatHour(hour: number, use12Hour: boolean, locale: string = 'en'): string {
-    const date = new Date()
-    date.setHours(hour, 0, 0, 0)
-
     if (use12Hour) {
-        try {
-            return new Intl.DateTimeFormat(locale, {
-                hour: 'numeric',
-                minute: 'numeric',
-                hour12: true
-            }).format(date)
-        } catch (e) {
-            // Fallback
-            if (hour === 0) return "12:00 AM"
-            if (hour === 12) return "12:00 PM"
-            if (hour < 12) return `${hour}:00 AM`
-            return `${hour - 12}:00 PM`
-        }
+        // Use consistent AM/PM format
+        if (hour === 0) return "12:00 AM"
+        if (hour === 12) return "12:00 PM"
+        if (hour < 12) return `${hour}:00 AM`
+        return `${hour - 12}:00 PM`
     }
 
-    try {
-        return new Intl.DateTimeFormat(locale, {
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: false
-        }).format(date)
-    } catch (e) {
-        return `${hour.toString().padStart(2, "0")}:00`
-    }
+    // 24-hour format
+    return `${hour.toString().padStart(2, "0")}:00`
 }
 
 /**
  * Format time with hour and minute
+ * Uses consistent AM/PM format regardless of locale
  */
 export function formatTime(hour: number, minute: number, use12Hour: boolean, locale: string = 'en'): string {
-    const date = new Date()
-    date.setHours(hour, minute, 0, 0)
-
     if (use12Hour) {
-        try {
-            return new Intl.DateTimeFormat(locale, {
-                hour: 'numeric',
-                minute: 'numeric',
-                hour12: true
-            }).format(date)
-        } catch (e) {
-            const period = hour >= 12 ? "PM" : "AM"
-            const displayHour = hour === 0 ? 12 : hour > 12 ? hour - 12 : hour
-            return `${displayHour}:${minute.toString().padStart(2, "0")} ${period}`
-        }
+        // Use consistent AM/PM format
+        const period = hour >= 12 ? "PM" : "AM"
+        const displayHour = hour === 0 ? 12 : hour > 12 ? hour - 12 : hour
+        return `${displayHour}:${minute.toString().padStart(2, "0")} ${period}`
     }
 
-    try {
-        return new Intl.DateTimeFormat(locale, {
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: false
-        }).format(date)
-    } catch (e) {
-        return `${hour.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")}`
-    }
+    // 24-hour format
+    return `${hour.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")}`
 }
 
 /**

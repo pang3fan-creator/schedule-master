@@ -16,6 +16,7 @@ import type { Event, EventColor } from "@/lib/types"
 import { formatDateString, getSunday, getDateForDay, getDayIndexFromDate } from "@/lib/time-utils"
 import { EventForm, EventDialogFooter, parseTimeValue, formatTimeString, validateEventTimes, DAY_OPTIONS_SUNDAY_FIRST } from "@/components/EventForm"
 import { useSettings } from "@/components/SettingsContext"
+import { useTranslations } from "next-intl"
 
 interface EditEventDialogProps {
     open: boolean
@@ -34,6 +35,7 @@ export function EditEventDialog({
     onUpdateEvent,
 }: EditEventDialogProps) {
     const { settings } = useSettings()
+    const t = useTranslations('Common')
     const [title, setTitle] = useState("")
     const [selectedDay, setSelectedDay] = useState<number>(0)
     const [startTime, setStartTime] = useState("08:00")
@@ -109,7 +111,7 @@ export function EditEventDialog({
                     <div className="flex items-center gap-3">
                         <Edit3 className="size-5 text-blue-600 dark:text-blue-400" />
                         <DialogTitle className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                            Edit event
+                            {t('eventDialog.editTitle')}
                         </DialogTitle>
                     </div>
                     <Button
@@ -146,10 +148,10 @@ export function EditEventDialog({
 
                 {/* Footer */}
                 <EventDialogFooter
-                    primaryText="Save Changes"
+                    primaryText={t('eventDialog.buttons.save')}
                     onPrimary={handleSubmit}
                     disablePrimary={!title.trim()}
-                    secondaryText="Cancel"
+                    secondaryText={t('eventDialog.buttons.cancel')}
                     onSecondary={() => onOpenChange(false)}
                 />
             </DialogContent>

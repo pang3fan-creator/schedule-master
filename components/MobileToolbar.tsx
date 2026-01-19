@@ -184,8 +184,8 @@ export function MobileToolbar({
 
     const handleCalendarSyncClick = () => {
         // Painted Door Test - Intercept all requests
-        setComingSoonFeature("Calendar Sync")
-        setComingSoonDescription("This feature is included in the Pro version and will be available soon! Enter your email to get notified first when it launches.")
+        setComingSoonFeature(t('featureComingSoon.calendarSync.name'))
+        setComingSoonDescription(t('featureComingSoon.calendarSync.description'))
         setShowComingSoonModal(true)
         return
 

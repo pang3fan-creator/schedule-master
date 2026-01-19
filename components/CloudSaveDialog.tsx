@@ -35,6 +35,7 @@ import { ConfirmDialog } from "@/components/ConfirmDialog"
 import { type Event, type UserSchedule } from "@/lib/types"
 import { EVENTS_STORAGE_KEY, SETTINGS_STORAGE_KEY } from "@/lib/storage-keys"
 import { ChevronLeft, ChevronRight } from "lucide-react"
+import { useTranslations, useLocale } from "next-intl"
 
 interface CloudSaveDialogProps {
     open: boolean
@@ -53,6 +54,8 @@ interface ScheduleListItem {
 type SortOption = "updated" | "created" | "name"
 
 export function CloudSaveDialog({ open, onOpenChange, onLoadSchedule }: CloudSaveDialogProps) {
+    const t = useTranslations('CloudSave')
+    const locale = useLocale()
     const [schedules, setSchedules] = useState<ScheduleListItem[]>([])
     const [isLoading, setIsLoading] = useState(false)
     const [isSaving, setIsSaving] = useState(false)
@@ -103,7 +106,7 @@ export function CloudSaveDialog({ open, onOpenChange, onLoadSchedule }: CloudSav
             setMaxTemplates(data.maxTemplates || 50)
         } catch (err) {
             console.error("Error fetching schedules:", err)
-            setError("Failed to load templates")
+            setError(t('errors.fetchFailed'))
         } finally {
             setIsLoading(false)
         }
@@ -136,12 +139,12 @@ export function CloudSaveDialog({ open, onOpenChange, onLoadSchedule }: CloudSav
 
     const handleSave = async () => {
         if (!saveName.trim()) {
-            setSaveError("Please enter a name")
+            setSaveError(t('errors.enterName'))
             return
         }
 
         if (saveName.length > 50) {
-            setSaveError("Name must be 50 characters or less")
+            setSaveError(t('errors.nameTooLong'))
             return
         }
 
@@ -177,7 +180,7 @@ export function CloudSaveDialog({ open, onOpenChange, onLoadSchedule }: CloudSav
             fetchSchedules()
         } catch (err) {
             console.error("Error saving:", err)
-            setSaveError(err instanceof Error ? err.message : "Failed to save")
+            setSaveError(err instanceof Error ? err.message : t('errors.saveFailed'))
         } finally {
             setIsSaving(false)
         }
@@ -210,7 +213,7 @@ export function CloudSaveDialog({ open, onOpenChange, onLoadSchedule }: CloudSav
             fetchSchedules()
         } catch (err) {
             console.error("Error overwriting:", err)
-            setSaveError("Failed to overwrite template")
+            setSaveError(t('errors.overwriteFailed'))
         } finally {
             setIsSaving(false)
         }
@@ -252,7 +255,7 @@ export function CloudSaveDialog({ open, onOpenChange, onLoadSchedule }: CloudSav
             onOpenChange(false)
         } catch (err) {
             console.error("Error loading:", err)
-            setError("Failed to load template")
+            setError(t('errors.loadFailed'))
         } finally {
             setIsLoading(false)
             setLoadTarget(null)
@@ -263,7 +266,7 @@ export function CloudSaveDialog({ open, onOpenChange, onLoadSchedule }: CloudSav
         if (!renameValue.trim()) return
 
         if (renameValue.length > 50) {
-            setError("Name must be 50 characters or less")
+            setError(t('errors.nameTooLong'))
             return
         }
 
@@ -286,7 +289,7 @@ export function CloudSaveDialog({ open, onOpenChange, onLoadSchedule }: CloudSav
             fetchSchedules()
         } catch (err) {
             console.error("Error renaming:", err)
-            setError(err instanceof Error ? err.message : "Failed to rename")
+            setError(err instanceof Error ? err.message : t('errors.renameFailed'))
         } finally {
             setIsLoading(false)
         }
@@ -309,7 +312,7 @@ export function CloudSaveDialog({ open, onOpenChange, onLoadSchedule }: CloudSav
             fetchSchedules()
         } catch (err) {
             console.error("Error deleting:", err)
-            setError("Failed to delete template")
+            setError(t('errors.deleteFailed'))
         } finally {
             setIsLoading(false)
         }
@@ -317,7 +320,7 @@ export function CloudSaveDialog({ open, onOpenChange, onLoadSchedule }: CloudSav
 
     const formatDate = (dateStr: string) => {
         const date = new Date(dateStr)
-        return date.toLocaleDateString("en-US", {
+        return date.toLocaleDateString(locale, {
             month: "short",
             day: "numeric",
             year: "numeric",
@@ -331,17 +334,17 @@ export function CloudSaveDialog({ open, onOpenChange, onLoadSchedule }: CloudSav
                     <DialogHeader>
                         <DialogTitle className="flex items-center gap-2 text-gray-900 dark:text-gray-100">
                             <Cloud className="size-5 text-blue-600 dark:text-blue-400" />
-                            Cloud Save
+                            {t('title')}
                         </DialogTitle>
                         <DialogDescription className="text-left text-gray-600 dark:text-gray-400">
-                            Save your schedule to the cloud or load a saved template.
+                            {t('description')}
                         </DialogDescription>
                     </DialogHeader>
 
                     <div className="flex-1 overflow-hidden flex flex-col gap-4">
                         {/* Template count and actions */}
                         <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
-                            <span>{totalCount}/{maxTemplates} templates used</span>
+                            <span>{t('templatesUsed', { count: totalCount, max: maxTemplates })}</span>
                             <div className="flex items-center gap-2">
                                 {/* Sort selector */}
                                 {totalCount > 1 && (
@@ -351,9 +354,9 @@ export function CloudSaveDialog({ open, onOpenChange, onLoadSchedule }: CloudSav
                                             <SelectValue />
                                         </SelectTrigger>
                                         <SelectContent>
-                                            <SelectItem value="updated">Updated</SelectItem>
-                                            <SelectItem value="created">Created</SelectItem>
-                                            <SelectItem value="name">Name</SelectItem>
+                                            <SelectItem value="updated">{t('sort.updated')}</SelectItem>
+                                            <SelectItem value="created">{t('sort.created')}</SelectItem>
+                                            <SelectItem value="name">{t('sort.name')}</SelectItem>
                                         </SelectContent>
                                     </Select>
                                 )}
@@ -368,7 +371,7 @@ export function CloudSaveDialog({ open, onOpenChange, onLoadSchedule }: CloudSav
                                     className="gap-1"
                                 >
                                     <Upload className="size-4" />
-                                    Save Current
+                                    {t('saveButton')}
                                 </Button>
                             </div>
                         </div>
@@ -376,13 +379,13 @@ export function CloudSaveDialog({ open, onOpenChange, onLoadSchedule }: CloudSav
                         {/* Save input */}
                         {showSaveInput && (
                             <div className="space-y-2 p-3 bg-blue-50 dark:bg-blue-900/30 rounded-lg border border-blue-200 dark:border-blue-800">
-                                <Label htmlFor="save-name" className="text-gray-900 dark:text-gray-100">Template Name</Label>
+                                <Label htmlFor="save-name" className="text-gray-900 dark:text-gray-100">{t('templateName')}</Label>
                                 <div className="flex gap-2">
                                     <Input
                                         id="save-name"
                                         value={saveName}
                                         onChange={(e) => setSaveName(e.target.value)}
-                                        placeholder="My Schedule"
+                                        placeholder={t('templatePlaceholder')}
                                         maxLength={50}
                                         disabled={isSaving}
                                         onKeyDown={(e) => {
@@ -436,8 +439,8 @@ export function CloudSaveDialog({ open, onOpenChange, onLoadSchedule }: CloudSav
                             ) : schedules.length === 0 ? (
                                 <div className="flex flex-col items-center justify-center py-8 text-gray-500 dark:text-gray-400">
                                     <Calendar className="size-12 mb-2 opacity-50" />
-                                    <p>No saved templates yet</p>
-                                    <p className="text-sm">Save your first schedule to the cloud!</p>
+                                    <p>{t('noTemplates')}</p>
+                                    <p className="text-sm">{t('noTemplatesHint')}</p>
                                 </div>
                             ) : (
                                 <div className="space-y-2">
@@ -478,7 +481,7 @@ export function CloudSaveDialog({ open, onOpenChange, onLoadSchedule }: CloudSav
                                                     <div className="flex-1 min-w-0">
                                                         <p className="font-medium text-gray-900 dark:text-gray-100 truncate">{schedule.name}</p>
                                                         <p className="text-sm text-gray-500 dark:text-gray-400">
-                                                            {schedule.event_count} events • Updated {formatDate(schedule.updated_at)}
+                                                            {t('eventsCount', { count: schedule.event_count })} • {t('updated', { date: formatDate(schedule.updated_at) })}
                                                         </p>
                                                     </div>
                                                     <div className="flex gap-1">
@@ -486,7 +489,7 @@ export function CloudSaveDialog({ open, onOpenChange, onLoadSchedule }: CloudSav
                                                             size="sm"
                                                             variant="ghost"
                                                             onClick={() => handleLoad(schedule)}
-                                                            title="Load template"
+                                                            title={t('buttons.load')}
                                                         >
                                                             <Download className="size-4" />
                                                         </Button>
@@ -497,7 +500,7 @@ export function CloudSaveDialog({ open, onOpenChange, onLoadSchedule }: CloudSav
                                                                 setRenamingId(schedule.id)
                                                                 setRenameValue(schedule.name)
                                                             }}
-                                                            title="Rename"
+                                                            title={t('buttons.rename')}
                                                         >
                                                             <Pencil className="size-4" />
                                                         </Button>
@@ -506,7 +509,7 @@ export function CloudSaveDialog({ open, onOpenChange, onLoadSchedule }: CloudSav
                                                             variant="ghost"
                                                             onClick={() => setDeleteTarget(schedule)}
                                                             className="text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 hover:bg-red-50 dark:hover:bg-red-900/30"
-                                                            title="Delete"
+                                                            title={t('buttons.delete')}
                                                         >
                                                             <Trash2 className="size-4" />
                                                         </Button>
@@ -532,7 +535,7 @@ export function CloudSaveDialog({ open, onOpenChange, onLoadSchedule }: CloudSav
                                     <ChevronLeft className="size-4" />
                                 </Button>
                                 <span className="text-sm text-gray-600 dark:text-gray-400 min-w-[80px] text-center">
-                                    Page {page} of {totalPages}
+                                    {t('pagination', { page, total: totalPages })}
                                 </span>
                                 <Button
                                     size="sm"
@@ -553,11 +556,11 @@ export function CloudSaveDialog({ open, onOpenChange, onLoadSchedule }: CloudSav
             <ConfirmDialog
                 open={deleteTarget !== null}
                 onOpenChange={(open) => !open && setDeleteTarget(null)}
-                title="Delete Template"
-                description={`Are you sure you want to delete "${deleteTarget?.name}"? This action cannot be undone.`}
+                title={t('deleteConfirm.title')}
+                description={t('deleteConfirm.description', { name: deleteTarget?.name || '' })}
                 icon={Trash2}
                 iconClassName="size-5 text-red-500"
-                confirmText="Delete"
+                confirmText={t('deleteConfirm.button')}
                 onConfirm={handleDelete}
                 variant="destructive"
             />
@@ -566,11 +569,11 @@ export function CloudSaveDialog({ open, onOpenChange, onLoadSchedule }: CloudSav
             <ConfirmDialog
                 open={loadTarget !== null}
                 onOpenChange={(open) => !open && setLoadTarget(null)}
-                title="Load Template"
-                description="Your current schedule will be replaced with this template. This action cannot be undone."
+                title={t('loadConfirm.title')}
+                description={t('loadConfirm.description')}
                 icon={Download}
                 iconClassName="size-5 text-blue-500"
-                confirmText="Load Template"
+                confirmText={t('loadConfirm.button')}
                 onConfirm={() => loadTarget && performLoad(loadTarget.id)}
                 variant="blue"
             />
@@ -579,11 +582,11 @@ export function CloudSaveDialog({ open, onOpenChange, onLoadSchedule }: CloudSav
             <ConfirmDialog
                 open={overwriteTarget !== null}
                 onOpenChange={(open) => !open && setOverwriteTarget(null)}
-                title="Template Already Exists"
-                description={`A template named "${overwriteTarget?.name}" already exists. Do you want to overwrite it with your current schedule?`}
+                title={t('overwriteConfirm.title')}
+                description={t('overwriteConfirm.description', { name: overwriteTarget?.name || '' })}
                 icon={AlertCircle}
                 iconClassName="size-5 text-amber-500"
-                confirmText="Overwrite"
+                confirmText={t('overwriteConfirm.button')}
                 onConfirm={handleOverwrite}
                 variant="blue"
             />

@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useTranslations } from "next-intl"
 import {
     Dialog,
     DialogContent,
@@ -48,6 +49,7 @@ export function ExportDialog({
     const [selectedFormat, setSelectedFormat] = useState<ExportFormat>("png")
     const [isExporting, setIsExporting] = useState(false)
     const { isPro } = useSubscription()
+    const t = useTranslations('Export')
 
     const handleExport = async () => {
         if (!calendarRef.current) {
@@ -124,21 +126,21 @@ export function ExportDialog({
         {
             format: "png" as ExportFormat,
             label: "PNG",
-            description: "High quality image with transparency",
+            description: t('formats.png.description'),
             icon: Image,
             available: true,
         },
         {
             format: "jpg" as ExportFormat,
             label: "JPG",
-            description: "Compressed image, smaller file size",
+            description: t('formats.jpg.description'),
             icon: Image,
             available: true,
         },
         {
             format: "pdf" as ExportFormat,
             label: "PDF",
-            description: "Vector format, perfect for printing",
+            description: t('formats.pdf.description'),
             icon: FileText,
             available: isPro,
             proOnly: true,
@@ -146,7 +148,7 @@ export function ExportDialog({
         {
             format: "csv" as ExportFormat,
             label: "CSV",
-            description: "Spreadsheet format for data analysis",
+            description: t('formats.csv.description'),
             icon: Table,
             available: isPro,
             proOnly: true,
@@ -159,15 +161,15 @@ export function ExportDialog({
                 <DialogHeader>
                     <DialogTitle className="flex items-center gap-2 text-gray-900 dark:text-gray-100">
                         <Download className="size-5" />
-                        Export Schedule
+                        {t('title')}
                     </DialogTitle>
                     <DialogDescription className="text-left text-gray-600 dark:text-gray-400">
-                        Choose a format to download your schedule.
+                        {t('description')}
                     </DialogDescription>
                 </DialogHeader>
 
                 <div className="space-y-4 py-4">
-                    <Label className="text-gray-900 dark:text-gray-100">Format</Label>
+                    <Label className="text-gray-900 dark:text-gray-100">{t('format')}</Label>
                     <div className="space-y-2">
                         {formatOptions.map((option) => (
                             <div
@@ -205,13 +207,13 @@ export function ExportDialog({
                             <div className="flex items-start gap-3">
                                 <Crown className="size-5 text-amber-600 dark:text-amber-400 mt-0.5" />
                                 <div>
-                                    <p className="font-medium text-amber-900 dark:text-amber-100">Upgrade to Pro</p>
+                                    <p className="font-medium text-amber-900 dark:text-amber-100">{t('upgradePrompt.title')}</p>
                                     <p className="text-sm text-amber-700 dark:text-amber-300 mt-1">
-                                        Unlock PDF and CSV exports, plus remove watermarks from images.
+                                        {t('upgradePrompt.description')}
                                     </p>
                                     <Link href="/pricing">
                                         <Button size="sm" className="mt-2 bg-amber-600 hover:bg-amber-700">
-                                            View Plans
+                                            {t('upgradePrompt.button')}
                                         </Button>
                                     </Link>
                                 </div>
@@ -222,7 +224,7 @@ export function ExportDialog({
 
                 <DialogFooter className="gap-2 sm:gap-2">
                     <Button variant="outline" onClick={() => onOpenChange(false)}>
-                        Cancel
+                        {t('buttons.cancel')}
                     </Button>
                     <Button
                         onClick={handleExport}
@@ -232,12 +234,12 @@ export function ExportDialog({
                         {isExporting ? (
                             <>
                                 <Loader2 className="size-4 animate-spin" />
-                                Exporting...
+                                {t('buttons.exporting')}
                             </>
                         ) : (
                             <>
                                 <Download className="size-4" />
-                                Download {selectedFormat.toUpperCase()}
+                                {t('buttons.download', { format: selectedFormat.toUpperCase() })}
                             </>
                         )}
                     </Button>

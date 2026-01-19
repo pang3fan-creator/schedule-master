@@ -33,6 +33,16 @@ export function BlogPageClient({ posts, categories, locale }: BlogPageClientProp
     const [activeCategory, setActiveCategory] = useState("All");
     const [currentPage, setCurrentPage] = useState(1);
 
+    const getCategoryLabel = (cat: string) => {
+        const key = cat.toLowerCase();
+        return t(`categories.${key}`);
+    };
+
+    const localizedCategories = categories.map(cat => ({
+        value: cat,
+        label: getCategoryLabel(cat)
+    }));
+
     const filteredPosts =
         activeCategory === "All"
             ? posts
@@ -98,7 +108,7 @@ export function BlogPageClient({ posts, categories, locale }: BlogPageClientProp
             {/* Category Filter */}
             <div className="container mx-auto px-4 mb-12">
                 <CategoryFilter
-                    categories={categories}
+                    categories={localizedCategories}
                     activeCategory={activeCategory}
                     onCategoryChange={handleCategoryChange}
                 />

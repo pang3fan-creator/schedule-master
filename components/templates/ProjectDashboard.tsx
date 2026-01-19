@@ -1,7 +1,8 @@
 "use client"
 
 import * as React from "react"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
+import { useTranslations } from "next-intl"
 import { Button } from "@/components/ui/button"
 import { HardHat, Hammer, CheckCircle2, Circle, AlertCircle, TrendingUp, X, MapPin } from "lucide-react"
 import {
@@ -15,19 +16,29 @@ export interface ProjectDashboardProps {
     variant?: 'default' | 'compact'
 }
 
+type MilestoneStatus = 'completed' | 'in-progress' | 'pending'
+
+interface Milestone {
+    id: string
+    status: MilestoneStatus
+    week?: { num: number }
+    weekRange?: { range: string }
+}
+
 export function ProjectDashboard({ variant = 'default' }: ProjectDashboardProps) {
+    const t = useTranslations('TemplateComponents.ProjectDashboard')
     const [isOpen, setIsOpen] = useState(false)
     // Local state for milestones 
-    const [milestones, setMilestones] = useState([
-        { name: "Site Prep & Excavation", status: "completed", date: "Week 1" },
-        { name: "Foundation Pouring", status: "in-progress", date: "Week 2" },
-        { name: "Framing & Roofing", status: "pending", date: "Week 3-4" },
-        { name: "HVAC & Electrical", status: "pending", date: "Week 5" },
-        { name: "Interior Finishing", status: "pending", date: "Week 6" },
+    const [milestones, setMilestones] = useState<Milestone[]>([
+        { id: "sitePrep", status: "completed", week: { num: 1 } },
+        { id: "foundation", status: "in-progress", week: { num: 2 } },
+        { id: "framing", status: "pending", weekRange: { range: "3-4" } },
+        { id: "hvac", status: "pending", week: { num: 5 } },
+        { id: "interior", status: "pending", week: { num: 6 } },
     ])
 
-    const [weatherCheck, setWeatherCheck] = useState<{ type: 'alert' | 'success', message: string } | null>(null)
-    const [coords, setCoords] = useState<{ lat: number, long: number } | null>(null) // Start with null to prompt user
+    const [weatherCheck, setWeatherCheck] = useState<{ type: 'alert' | 'success', key: string, params?: any } | null>(null)
+    const [coords, setCoords] = useState<{ lat: number, long: number } | null>(null)
 
     const fetchWeather = (lat: number, long: number) => {
         fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&daily=weather_code&timezone=auto&forecast_days=3`)
@@ -37,14 +48,14 @@ export function ProjectDashboard({ variant = 'default' }: ProjectDashboardProps)
                 const badWeatherDayIndex = codes.findIndex((c: number) => c >= 51)
 
                 if (badWeatherDayIndex === 0) {
-                    setWeatherCheck({ type: 'alert', message: "Site Alert: Rain/Snow expected TODAY. Cover sensitive materials." })
+                    setWeatherCheck({ type: 'alert', key: 'siteAlertToday' })
                 } else if (badWeatherDayIndex > 0) {
-                    setWeatherCheck({ type: 'alert', message: `Forecast: Bad weather expected in ${badWeatherDayIndex} days. Plan indoor tasks.` })
+                    setWeatherCheck({ type: 'alert', key: 'forecastAlert', params: { days: badWeatherDayIndex } })
                 } else {
-                    setWeatherCheck({ type: 'success', message: "Forecast Clear: Optimal conditions for outdoor site work." })
+                    setWeatherCheck({ type: 'success', key: 'forecastClear' })
                 }
             })
-            .catch(() => setWeatherCheck({ type: 'success', message: "Weather Data Unavailable." }))
+            .catch(() => setWeatherCheck({ type: 'success', key: 'weatherError' }))
     }
 
     // Default to New York only if no user location, but let's wait for user input or default
@@ -68,7 +79,7 @@ export function ProjectDashboard({ variant = 'default' }: ProjectDashboardProps)
                 },
                 (error) => {
                     console.error("Location access denied", error)
-                    alert("Please enable location access to get local site weather.")
+                    alert(t('locationPrompt'))
                 }
             )
         }
@@ -98,7 +109,7 @@ export function ProjectDashboard({ variant = 'default' }: ProjectDashboardProps)
                     <Button
                         size="icon"
                         className={`size-12 rounded-full shadow-lg border-0 transition-all bg-orange-500 hover:bg-orange-600 text-white ${isOpen ? 'ring-2 ring-orange-300 ring-offset-2' : ''}`}
-                        title="Project Dashboard"
+                        title={t('title')}
                     >
                         {isOpen ? (
                             <X className="size-6" />
@@ -123,7 +134,7 @@ export function ProjectDashboard({ variant = 'default' }: ProjectDashboardProps)
                     className={`justify-start gap-3 w-full text-gray-600 hover:text-gray-900 hover:bg-gray-100 ${isOpen ? 'bg-gray-100' : ''}`}
                 >
                     <HardHat className="size-5 text-orange-600" />
-                    Project Dashboard
+                    {t('title')}
                 </Button>
             </PopoverTrigger>
             <PopoverContent align="start" side="right" className="w-[320px] p-0 overflow-hidden ml-2 shadow-xl border-orange-100">
@@ -142,12 +153,13 @@ function DashboardContent({
     hasCustomLocation
 }: {
     progress: number
-    milestones: { name: string, status: string, date: string }[]
+    milestones: Milestone[]
     onToggle: (index: number) => void
-    weather: { type: 'alert' | 'success', message: string } | null
+    weather: { type: 'alert' | 'success', key: string, params?: any } | null
     onLocate: () => void
     hasCustomLocation: boolean
 }) {
+    const t = useTranslations('TemplateComponents.ProjectDashboard')
     return (
         <div className="bg-white">
             {/* Header */}
@@ -159,18 +171,18 @@ function DashboardContent({
                         </div>
                         <div>
                             <span className="block font-bold text-sm leading-tight text-white">Project A-72</span>
-                            <span className="text-[10px] text-zinc-400 font-medium">CONSTRUCTION PHASE</span>
+                            <span className="text-[10px] text-zinc-400 font-medium">{t('phase')}</span>
                         </div>
                     </div>
                     <span className="text-[10px] font-bold tracking-wider bg-zinc-800 px-2 py-1 rounded text-zinc-300 uppercase">
-                        On Track
+                        {t('onTrack')}
                     </span>
                 </div>
 
                 {/* Progress Bar */}
                 <div className="space-y-1.5">
                     <div className="flex justify-between items-baseline">
-                        <span className="text-xs font-medium text-zinc-400">Completion</span>
+                        <span className="text-xs font-medium text-zinc-400">{t('completion')}</span>
                         <span className="text-sm font-bold text-orange-400">{progress}%</span>
                     </div>
                     <div className="h-2 bg-zinc-800 rounded-full overflow-hidden">
@@ -185,8 +197,8 @@ function DashboardContent({
             {/* Milestones List */}
             <div className="p-4 bg-gray-50/50">
                 <h4 className="flex items-center justify-between text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3">
-                    <span>Key Milestones</span>
-                    <span className="text-[9px] font-normal text-gray-400 bg-gray-100 px-1.5 py-0.5 rounded">Click to update</span>
+                    <span>{t('milestones')}</span>
+                    <span className="text-[9px] font-normal text-gray-400 bg-gray-100 px-1.5 py-0.5 rounded">{t('clickToUpdate')}</span>
                 </h4>
                 <div className="space-y-2">
                     {milestones.map((milestone, idx) => (
@@ -211,15 +223,15 @@ function DashboardContent({
                                     "text-sm font-medium transition-colors truncate",
                                     milestone.status === 'completed' ? "text-gray-400 line-through" : "text-gray-900"
                                 )}>
-                                    {milestone.name}
+                                    {t(`milestoneData.${milestone.id}`)}
                                 </div>
                                 <div className="text-[11px] text-gray-500">
-                                    {milestone.date}
+                                    {milestone.week ? t('week', { num: milestone.week.num }) : milestone.weekRange ? t('weekRange', { range: milestone.weekRange.range }) : ''}
                                 </div>
                             </div>
                             {milestone.status === 'in-progress' && (
                                 <span className="text-[10px] font-bold bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full border border-blue-100 uppercase tracking-tight">
-                                    Active
+                                    {t('active')}
                                 </span>
                             )}
                         </button>
@@ -232,14 +244,14 @@ function DashboardContent({
                             <>
                                 <AlertCircle className="size-4 text-amber-500 shrink-0 mt-0.5" />
                                 <p className="text-xs text-amber-800/80 leading-snug">
-                                    <span className="font-semibold text-amber-900">Weather Alert:</span> {weather.message}
+                                    <span className="font-semibold text-amber-900">{t('weatherAlert')}</span> {weather ? t(weather.key as any, weather.params) : ''}
                                 </p>
                             </>
                         ) : (
                             <>
                                 <CheckCircle2 className="size-4 text-emerald-500 shrink-0 mt-0.5" />
                                 <p className="text-xs text-emerald-800/80 leading-snug">
-                                    <span className="font-semibold text-emerald-900">Site Status:</span> {weather?.message || "Checking forecast..."}
+                                    <span className="font-semibold text-emerald-900">{t('siteStatus')}</span> {weather ? t(weather.key as any, weather.params) : t('checkingForecast')}
                                 </p>
                             </>
                         )}
@@ -247,7 +259,7 @@ function DashboardContent({
                     <button
                         onClick={onLocate}
                         className={`shrink-0 p-1 rounded hover:bg-gray-200 transition-colors ${hasCustomLocation ? 'text-blue-500' : 'text-gray-400'}`}
-                        title="Update Site Location"
+                        title={t('updateLocation')}
                     >
                         <MapPin className="size-3.5" />
                     </button>

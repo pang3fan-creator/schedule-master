@@ -1,6 +1,7 @@
 import Link from "next/link"
 import Image from "next/image"
 import { formatDate } from "@/lib/date-format"
+import { useTranslations } from "next-intl"
 
 interface BlogCardProps {
     slug: string
@@ -51,6 +52,7 @@ export function BlogCard({
     featured = false,
     locale = 'en',
 }: BlogCardProps) {
+    const t = useTranslations('Blog');
     const formattedDate = formatDate(date, locale);
     const blogUrl = locale === 'en' ? `/blog/${slug}` : `/${locale}/blog/${slug}`;
 
@@ -65,13 +67,13 @@ export function BlogCard({
                         <CoverImage src={coverImage} alt={title} size="large" />
                     </div>
                     <div className="p-6 md:p-8 flex flex-col justify-center">
-                        <span className="text-sm font-medium text-blue-600 dark:text-blue-300 mb-2">Featured Article</span>
+                        <span className="text-sm font-medium text-blue-600 dark:text-blue-300 mb-2">{t('featuredArticle')}</span>
                         <h2 className="text-2xl font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-300 transition-colors mb-3">
                             {title}
                         </h2>
                         <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">{excerpt}</p>
                         <div className="text-sm text-gray-500 dark:text-gray-300">
-                            {formattedDate} • {readTime}
+                            {formattedDate} • {t('readTime', { minutes: parseInt(readTime) || 0 })}
                         </div>
                     </div>
                 </div>
@@ -88,12 +90,14 @@ export function BlogCard({
                 <CoverImage src={coverImage} alt={title} />
             </div>
             <div className="p-5">
-                <span className="text-sm font-medium text-blue-600 dark:text-blue-300">{category}</span>
+                <span className="text-sm font-medium text-blue-600 dark:text-blue-300">
+                    {t(`categories.${category.toLowerCase()}`)}
+                </span>
                 <h3 className="mt-2 text-lg font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-300 transition-colors line-clamp-2">
                     {title}
                 </h3>
                 <div className="mt-3 text-sm text-gray-500 dark:text-gray-300">
-                    {formattedDate} • {readTime}
+                    {formattedDate} • {t('readTime', { minutes: parseInt(readTime) || 0 })}
                 </div>
             </div>
         </Link>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import {
     Dialog,
     DialogContent,
@@ -28,6 +29,7 @@ export function FeatureComingSoonModal({
     const [email, setEmail] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const t = useTranslations('FeatureComingSoon');
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -89,14 +91,12 @@ export function FeatureComingSoonModal({
                         <Sparkles className="h-7 w-7 text-violet-600 dark:text-violet-400" />
                     </div>
                     <DialogTitle className="text-xl text-center text-gray-900 dark:text-gray-100">
-                        {featureName} - Coming Soon!
+                        {t('title', { feature: featureName })}
                     </DialogTitle>
                     <DialogDescription className="text-center text-gray-600 dark:text-gray-400">
-                        {description || (
-                            <>
-                                This Pro feature is currently in development. Be the first to know when it launches and get an exclusive <span className="font-semibold text-violet-600 dark:text-violet-400">50% discount</span>!
-                            </>
-                        )}
+                        {description || t.rich('description', {
+                            discount: (chunks) => <span className="font-semibold text-violet-600 dark:text-violet-400">{chunks}</span>
+                        })}
                     </DialogDescription>
                 </DialogHeader>
 
@@ -106,10 +106,10 @@ export function FeatureComingSoonModal({
                             <Check className="h-6 w-6 text-green-600 dark:text-green-400" />
                         </div>
                         <p className="text-sm font-medium text-green-600 dark:text-green-400">
-                            You&apos;re on the list! 🎉
+                            {t('success.title')}
                         </p>
                         <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                            We&apos;ll notify you when it&apos;s ready.
+                            {t('success.subtitle')}
                         </p>
                     </div>
                 ) : (
@@ -117,7 +117,7 @@ export function FeatureComingSoonModal({
                         <div>
                             <Input
                                 type="email"
-                                placeholder="Enter your email address"
+                                placeholder={t('emailPlaceholder')}
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
@@ -132,10 +132,10 @@ export function FeatureComingSoonModal({
                             {isSubmitting ? (
                                 <>
                                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                    Signing up...
+                                    {t('submitting')}
                                 </>
                             ) : (
-                                "Notify Me & Get 50% Off"
+                                t('submitButton')
                             )}
                         </Button>
                         <Button
@@ -144,13 +144,13 @@ export function FeatureComingSoonModal({
                             className="w-full text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
                             onClick={() => onOpenChange(false)}
                         >
-                            Maybe Later
+                            {t('maybeLater')}
                         </Button>
                     </form>
                 )}
 
                 <p className="text-center text-xs text-gray-400 dark:text-gray-500 mt-2">
-                    No spam, unsubscribe anytime.
+                    {t('noSpam')}
                 </p>
             </DialogContent>
         </Dialog>

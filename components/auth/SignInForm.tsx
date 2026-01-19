@@ -279,7 +279,7 @@ export function SignInForm({ onSuccess }: SignInFormProps) {
                                 onClick={resetForgotPasswordFlow}
                                 className="w-full text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
                             >
-                                ← Back to sign in
+                                {t('common.backToSignIn')}
                             </button>
                         </form>
                     ) : resetEmailSent ? (

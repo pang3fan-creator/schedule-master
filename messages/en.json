@@ -402,8 +402,14 @@
             "postNotFound": "Post Not Found | TrySchedule Blog"
         },
         "categories": {
-            "all": "All"
-        }
+            "all": "All",
+            "productivity tips": "Productivity Tips",
+            "case studies": "Case Studies",
+            "product updates": "Product Updates"
+        },
+        "featuredArticle": "Featured Article",
+        "metaKeywords": "scheduling tips, productivity blog, time management, schedule builder tips, employee scheduling guide",
+        "readTime": "{minutes} min read"
     },
     "Templates": {
         "metaTitle": "Free Schedule Templates | TrySchedule",
@@ -443,13 +449,23 @@
             "featureSettingsDesc": "Time format and working hours configured for this use case",
             "featureCustomizable": "Fully Customizable",
             "featureCustomizableDesc": "Edit, add, or remove events after applying the template",
-            "loading": "Loading..."
+            "loading": "Loading...",
+            "reviews": {
+                "sarah": "Best free schedule builder I've found. The drag-and-drop is so intuitive!",
+                "mike": "Perfect for creating my weekly class schedule. Love the instant PNG export."
+            },
+            "resetConfirm": {
+                "title": "Reset Everything",
+                "description": "This will clear all sidebar template features, restore your settings to default, and delete all events from the calendar. This action cannot be undone.",
+                "button": "Yes, Reset"
+            }
         },
         "categories": {
             "all": "All",
             "business": "Business",
             "personal": "Personal",
-            "education": "Education"
+            "education": "Education",
+            "ai": "AI"
         },
         "faqs": {
             "title": "Frequently Asked Questions",
@@ -479,6 +495,11 @@
         "badge": {
             "pro": "PRO",
             "featured": "Featured"
+        },
+        "preview": {
+            "aiTitle": "Let AI create your perfect schedule",
+            "aiSubtitle": "Click 'Use This Template' to get started",
+            "sampleEvent": "Sample Event"
         }
     },
     "Common": {
@@ -496,7 +517,8 @@
             "terms": "Terms",
             "privacy": "Privacy",
             "contact": "Contact",
-            "tagline": "<brand>Try</brand>Schedule is the easiest <highlight>free online schedule builder</highlight> for students, managers, and teams."
+            "tagline": "<brand>Try</brand>Schedule is the easiest <highlight>free online schedule builder</highlight> for students, managers, and teams.",
+            "taglineSimple": "is the easiest free online schedule builder for students, managers, and teams."
         },
         "auth": {
             "signIn": "Sign In",
@@ -513,9 +535,126 @@
             "aiAutofill": "AI Autofill",
             "reset": "Reset"
         },
+        "featureComingSoon": {
+            "calendarSync": {
+                "name": "Calendar Sync",
+                "description": "This feature is included in the Pro version and will be available soon! Enter your email to get notified first when it launches."
+            }
+        },
+        "upgradeModal": {
+            "title": "Upgrade to Pro",
+            "description": "{feature} is available on Pro plans. Upgrade now to unlock all premium features.",
+            "benefits": {
+                "pdf": "High-res PDF exports without watermarks",
+                "ai": "AI-powered scheduling suggestions",
+                "cloud": "Cloud save & sync across devices"
+            },
+            "viewPlans": "View Plans",
+            "maybeLater": "Maybe Later",
+            "priceNote": "Starting at just $4.9 for a 7-day pass"
+        },
         "viewMode": {
             "day": "Day",
             "week": "Week"
+        },
+        "eventDialog": {
+            "addTitle": "Add event",
+            "editTitle": "Edit event",
+            "form": {
+                "title": "Title",
+                "titlePlaceholder": "Event title",
+                "color": "Color",
+                "day": "Day",
+                "days": "Day(s)",
+                "start": "Start",
+                "end": "End",
+                "description": "Description",
+                "descriptionPlaceholder": "Event description (optional)",
+                "dayLabels": {
+                    "sun": "Sun",
+                    "mon": "Mon",
+                    "tue": "Tue",
+                    "wed": "Wed",
+                    "thu": "Thu",
+                    "fri": "Fri",
+                    "sat": "Sat"
+                },
+                "colors": {
+                    "blue": "Blue",
+                    "green": "Green",
+                    "red": "Red",
+                    "yellow": "Yellow",
+                    "purple": "Purple",
+                    "pink": "Pink",
+                    "orange": "Orange",
+                    "teal": "Teal"
+                },
+                "icons": {
+                    "none": "None",
+                    "Tag": "General",
+                    "Briefcase": "Work",
+                    "User": "Personal",
+                    "Utensils": "Food",
+                    "Coffee": "Break",
+                    "ChefHat": "Cooking",
+                    "Dumbbell": "Gym",
+                    "ShoppingCart": "Shopping",
+                    "PenTool": "Creative",
+                    "Calculator": "Finance",
+                    "FlaskConical": "Science",
+                    "Zap": "Energy",
+                    "Activity": "Activity",
+                    "WashingMachine": "Chore",
+                    "Bed": "Sleep",
+                    "Bath": "Self-care",
+                    "Sparkles": "Leisure",
+                    "FolderOpen": "Productivity",
+                    "Smile": "Fun",
+                    "Heart": "Health",
+                    "Star": "Priority",
+                    "CheckCircle2": "Task",
+                    "HelpCircle": "Question",
+                    "Plane": "Travel",
+                    "Car": "Commute",
+                    "Bike": "Exercise",
+                    "Music": "Hobby",
+                    "Gamepad": "Gaming",
+                    "Tv": "Entertainment",
+                    "Film": "Movies",
+                    "Camera": "Photo",
+                    "Moon": "Night",
+                    "Sun": "Day",
+                    "Cloud": "Weather",
+                    "PalmTree": "Vacation",
+                    "Flower": "Nature",
+                    "Leaf": "Relax",
+                    "Apple": "Nutrition",
+                    "Stethoscope": "Medical",
+                    "Brain": "Mindset",
+                    "GraduationCap": "Education",
+                    "Book": "Study",
+                    "Laptop": "Tech",
+                    "Mail": "Communication",
+                    "ClipboardList": "To-do",
+                    "ShoppingBag": "Groceries",
+                    "Gift": "Gift",
+                    "PartyPopper": "Celebration",
+                    "Trophy": "Achievement",
+                    "PawPrint": "Pets",
+                    "Globe": "Web",
+                    "Wifi": "Internet",
+                    "Lock": "Security",
+                    "MapPin": "Location",
+                    "Calendar": "Planning",
+                    "Bell": "Reminder"
+                }
+            },
+            "buttons": {
+                "add": "Add",
+                "copy": "Copy",
+                "save": "Save Changes",
+                "cancel": "Cancel"
+            }
         },
         "reset": {
             "title": "Reset Everything",
@@ -547,15 +686,17 @@
             "previousDay": "Go to previous day",
             "nextDay": "Go to next day",
             "today": "Go to Today",
-            "newEvent": "New Event"
-        },
-        "preview": {
-            "aiTitle": "Let AI create your perfect schedule",
-            "aiSubtitle": "Click 'Use This Template' to get started",
-            "sampleEvent": "Sample Event"
+            "newEvent": "New Event",
+            "time": {
+                "am": "AM",
+                "pm": "PM"
+            }
         },
         "brand": {
             "alt": "TrySchedule - Free Online Schedule Builder"
+        },
+        "calendarPicker": {
+            "weekLabel": "Wk"
         },
         "moreOptions": "More Options",
         "export": "Export",
@@ -597,6 +738,9 @@
                     "answer": "Your privacy is our priority.\n\nBy default, all schedule data stays in your browser's local storage – nothing leaves your device unless you choose otherwise.\n\nYour schedules remain completely private unless you explicitly choose to enable cloud sync with a Pro account. You have full control over your data at all times."
                 }
             }
+        },
+        "buttons": {
+            "cancel": "Cancel"
         }
     },
     "AuthModal": {
@@ -676,6 +820,242 @@
             "passwordMismatch": "Passwords do not match",
             "passwordLength": "Password must be at least 8 characters",
             "resetError": "Failed to reset password"
+        }
+    },
+    "Settings": {
+        "title": "Settings",
+        "weekStart": {
+            "label": "Start week on Sunday",
+            "description": "US standard is Sunday, ISO standard is Monday"
+        },
+        "timeFormat": {
+            "label": "12-hour format (AM/PM)",
+            "description": "Toggle off for 24-hour format"
+        },
+        "showDates": {
+            "label": "Show dates",
+            "description": "Display date numbers in calendar headers"
+        },
+        "timeIncrement": {
+            "label": "Time increment",
+            "minutes": "{count} minutes"
+        },
+        "workingHours": {
+            "label": "Working hours",
+            "to": "to"
+        }
+    },
+    "Export": {
+        "title": "Export Schedule",
+        "description": "Choose a format to download your schedule.",
+        "format": "Format",
+        "formats": {
+            "png": {
+                "description": "High quality image with transparency"
+            },
+            "jpg": {
+                "description": "Compressed image, smaller file size"
+            },
+            "pdf": {
+                "description": "Vector format, perfect for printing"
+            },
+            "csv": {
+                "description": "Spreadsheet format for data analysis"
+            }
+        },
+        "upgradePrompt": {
+            "title": "Upgrade to Pro",
+            "description": "Unlock PDF and CSV exports, plus remove watermarks from images.",
+            "button": "View Plans"
+        },
+        "buttons": {
+            "cancel": "Cancel",
+            "exporting": "Exporting...",
+            "download": "Download {format}"
+        }
+    },
+    "CalendarSync": {
+        "title": "Google Calendar Sync",
+        "description": "Sync your schedule to Google Calendar for easy access on all devices.",
+        "notConnected": {
+            "title": "Connect Your Google Account",
+            "description": "Link your Google account to sync events to your calendar.",
+            "button": "Connect Google Account"
+        },
+        "connected": {
+            "status": "Connected",
+            "syncComplete": "Sync Complete",
+            "syncFailed": "Sync Failed",
+            "eventsSynced": "{count} event(s) synced",
+            "eventsFailed": ", {count} failed",
+            "syncing": "Syncing...",
+            "syncButton": "Sync to Google Calendar",
+            "openCalendar": "Open Google Calendar"
+        }
+    },
+    "FeatureComingSoon": {
+        "title": "{feature} - Coming Soon!",
+        "description": "This Pro feature is currently in development. Be the first to know when it launches and get an exclusive <discount>50% discount</discount>!",
+        "emailPlaceholder": "Enter your email address",
+        "submitButton": "Notify Me & Get 50% Off",
+        "submitting": "Signing up...",
+        "maybeLater": "Maybe Later",
+        "noSpam": "No spam, unsubscribe anytime.",
+        "success": {
+            "title": "You're on the list! 🎉",
+            "subtitle": "We'll notify you when it's ready."
+        },
+        "error": "Submission failed, please try again later",
+        "features": {
+            "calendarSync": {
+                "name": "Calendar Sync",
+                "description": "This feature is included in the Pro version and will be available soon! Enter your email to get notified first when it launches."
+            }
+        }
+    },
+    "CloudSave": {
+        "title": "Cloud Save",
+        "description": "Save your schedule to the cloud or load a saved template.",
+        "templatesUsed": "{count}/{max} templates used",
+        "saveButton": "Save Current",
+        "templateName": "Template Name",
+        "templatePlaceholder": "My Schedule",
+        "noTemplates": "No saved templates yet",
+        "noTemplatesHint": "Save your first schedule to the cloud!",
+        "eventsCount": "{count} events",
+        "updated": "Updated {date}",
+        "pagination": "Page {page} of {total}",
+        "sort": {
+            "updated": "Updated",
+            "created": "Created",
+            "name": "Name"
+        },
+        "buttons": {
+            "load": "Load template",
+            "rename": "Rename",
+            "delete": "Delete"
+        },
+        "errors": {
+            "fetchFailed": "Failed to load templates",
+            "saveFailed": "Failed to save",
+            "loadFailed": "Failed to load template",
+            "renameFailed": "Failed to rename",
+            "deleteFailed": "Failed to delete template",
+            "overwriteFailed": "Failed to overwrite template",
+            "enterName": "Please enter a name",
+            "nameTooLong": "Name must be 50 characters or less"
+        },
+        "deleteConfirm": {
+            "title": "Delete Template",
+            "description": "Are you sure you want to delete \"{name}\"? This action cannot be undone.",
+            "button": "Delete"
+        },
+        "loadConfirm": {
+            "title": "Load Template",
+            "description": "Your current schedule will be replaced with this template. This action cannot be undone.",
+            "button": "Load Template"
+        },
+        "overwriteConfirm": {
+            "title": "Template Already Exists",
+            "description": "A template named \"{name}\" already exists. Do you want to overwrite it with your current schedule?",
+            "button": "Overwrite"
+        }
+    },
+    "TemplateComponents": {
+        "common": {
+            "on": "On",
+            "off": "Off"
+        },
+        "AIQuickActions": {
+            "title": "AI Quick Actions",
+            "regenerate": "Regenerate with AI",
+            "clear": "Clear Schedule"
+        },
+        "PriorityModeToggle": {
+            "title": "Toggle Priority Mode",
+            "label": "Priority Mode"
+        },
+        "TaskModeToggle": {
+            "title": "Toggle Task Mode",
+            "label": "Task Mode"
+        },
+        "ProjectDashboard": {
+            "title": "Project Dashboard",
+            "phase": "CONSTRUCTION PHASE",
+            "onTrack": "On Track",
+            "completion": "Completion",
+            "milestones": "Key Milestones",
+            "clickToUpdate": "Click to update",
+            "active": "Active",
+            "weatherAlert": "Weather Alert:",
+            "siteStatus": "Site Status:",
+            "checkingForecast": "Checking forecast...",
+            "updateLocation": "Update Site Location",
+            "locationDenied": "Location access denied",
+            "locationPrompt": "Please enable location access to get local site weather.",
+            "weatherError": "Weather Data Unavailable.",
+            "siteAlertToday": "Site Alert: Rain/Snow expected TODAY. Cover sensitive materials.",
+            "forecastAlert": "Forecast: Bad weather expected in {days} days. Plan indoor tasks.",
+            "forecastClear": "Forecast Clear: Optimal conditions for outdoor site work.",
+            "milestoneData": {
+                "sitePrep": "Site Prep & Excavation",
+                "foundation": "Foundation Pouring",
+                "framing": "Framing & Roofing",
+                "hvac": "HVAC & Electrical",
+                "interior": "Interior Finishing"
+            },
+            "week": "Week {num}",
+            "weekRange": "Week {range}"
+        }
+    },
+    "NotFound": {
+        "title": "404 - Page Not Found",
+        "description": "The page you are looking for does not exist or has been moved.",
+        "hint": "Try searching for templates or go back to the homepage.",
+        "backHome": "Back to Home",
+        "browseTemplates": "Browse Templates"
+    },
+    "AIAutofill": {
+        "title": "AI Autofill",
+        "usageRemaining": "{remaining} / {limit} monthly uses remaining",
+        "trialRemaining": "{remaining} trial uses remaining",
+        "inputLabel": "Describe your schedule needs",
+        "inputPlaceholder": "E.g., I'm a college student. I need to study for 3 hours in the morning, have lunch at noon, and go to the gym in the evening on weekdays...",
+        "tipsTitle": "Tips for better results:",
+        "tips": {
+            "durations": "Mention specific activities and their durations",
+            "days": "Specify which days of the week",
+            "ranges": "Include preferred time ranges"
+        },
+        "generateButton": "Generate Schedule",
+        "generatingButton": "Generating...",
+        "previewTitle": "Generated {count} events",
+        "noEvents": "No events generated. Try a more detailed description.",
+        "addButton": "Add {count} Events",
+        "backButton": "Back",
+        "closeButton": "Close",
+        "cancelButton": "Cancel",
+        "trialLimitReachedTitle": "Trial Limit Reached",
+        "trialLimitReachedDescription": "You've used all 3 free AI generations. Upgrade to Pro for 100 uses every month!",
+        "upgradeToPro": "Upgrade to Pro",
+        "startFreshTitle": "Start Fresh?",
+        "startFreshDescription": "This will reset your calendar and clear all existing events. Your settings will also be restored to defaults.",
+        "startFreshConfirm": "Yes, Start Fresh",
+        "errors": {
+            "usageLimitExceededPro": "You've reached the monthly limit of {limit} AI generations. Limit resets next month.",
+            "usageLimitExceededFree": "Trial limit reached. Please upgrade to Pro for more AI generations.",
+            "generationFailed": "Failed to generate schedule",
+            "connectionError": "Failed to connect to AI service. Please try again."
+        }
+    },
+    "EventConflict": {
+        "title": "Time Conflict Detected",
+        "description": "\"{title}\" conflicts with existing events.",
+        "listTitle": "Conflicting events:",
+        "buttons": {
+            "cancel": "Cancel",
+            "modify": "Modify New Event",
+            "delete": "Delete Existing ({count})"
         }
     }
 }

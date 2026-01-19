@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useTranslations } from "next-intl"
 import {
     Dialog,
     DialogContent,
@@ -27,6 +28,8 @@ interface SettingsDialogProps {
 
 export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
     const { settings, updateSettings } = useSettings()
+    const t = useTranslations('Settings')
+    const tCommon = useTranslations('Common')
 
     const handleWeekStartChange = (checked: boolean) => {
         updateSettings({ weekStartsOnSunday: checked })
@@ -73,10 +76,12 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
     // Format hour for display based on current time format setting
     const formatHourOption = (hour: number) => {
         if (settings.use12HourFormat) {
-            if (hour === 0) return "12:00 AM"
-            if (hour === 12) return "12:00 PM"
-            if (hour < 12) return `${hour}:00 AM`
-            return `${hour - 12}:00 PM`
+            const am = tCommon('calendar.time.am')
+            const pm = tCommon('calendar.time.pm')
+            if (hour === 0) return `12:00 ${am}`
+            if (hour === 12) return `12:00 ${pm}`
+            if (hour < 12) return `${hour}:00 ${am}`
+            return `${hour - 12}:00 ${pm}`
         }
         return `${hour.toString().padStart(2, "0")}:00`
     }
@@ -89,7 +94,7 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
                     <div className="flex items-center gap-3">
                         <Settings className="size-5 text-blue-600 dark:text-blue-400" />
                         <DialogTitle className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                            Settings
+                            {t('title')}
                         </DialogTitle>
                     </div>
                     <Button
@@ -108,10 +113,10 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
                     <div className="flex items-center justify-between">
                         <div className="space-y-0.5">
                             <Label className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                                Start week on Sunday
+                                {t('weekStart.label')}
                             </Label>
                             <p className="text-xs text-gray-500 dark:text-gray-400">
-                                US standard is Sunday, ISO standard is Monday
+                                {t('weekStart.description')}
                             </p>
                         </div>
                         <Switch
@@ -124,10 +129,10 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
                     <div className="flex items-center justify-between">
                         <div className="space-y-0.5">
                             <Label className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                                12-hour format (AM/PM)
+                                {t('timeFormat.label')}
                             </Label>
                             <p className="text-xs text-gray-500 dark:text-gray-400">
-                                Toggle off for 24-hour format
+                                {t('timeFormat.description')}
                             </p>
                         </div>
                         <Switch
@@ -140,10 +145,10 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
                     <div className="flex items-center justify-between">
                         <div className="space-y-0.5">
                             <Label className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                                Show dates
+                                {t('showDates.label')}
                             </Label>
                             <p className="text-xs text-gray-500 dark:text-gray-400">
-                                Display date numbers in calendar headers
+                                {t('showDates.description')}
                             </p>
                         </div>
                         <Switch
@@ -155,7 +160,7 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
                     {/* Time Increment */}
                     <div className="space-y-2">
                         <Label className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                            Time increment
+                            {t('timeIncrement.label')}
                         </Label>
                         <Select
                             value={settings.timeIncrement.toString()}
@@ -165,9 +170,9 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
                                 <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
-                                <SelectItem value="5">5 minutes</SelectItem>
-                                <SelectItem value="15">15 minutes</SelectItem>
-                                <SelectItem value="30">30 minutes</SelectItem>
+                                <SelectItem value="5">{t('timeIncrement.minutes', { count: 5 })}</SelectItem>
+                                <SelectItem value="15">{t('timeIncrement.minutes', { count: 15 })}</SelectItem>
+                                <SelectItem value="30">{t('timeIncrement.minutes', { count: 30 })}</SelectItem>
                             </SelectContent>
                         </Select>
                     </div>
@@ -175,7 +180,7 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
                     {/* Working Hours */}
                     <div className="space-y-2">
                         <Label className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                            Working hours
+                            {t('workingHours.label')}
                         </Label>
                         <div className="flex items-center gap-3">
                             <Select
@@ -193,7 +198,7 @@ export function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
                                     ))}
                                 </SelectContent>
                             </Select>
-                            <span className="text-gray-400 dark:text-gray-500">to</span>
+                            <span className="text-gray-400 dark:text-gray-500">{t('workingHours.to')}</span>
                             <Select
                                 value={settings.workingHoursEnd.toString()}
                                 onValueChange={handleWorkingHoursEndChange}

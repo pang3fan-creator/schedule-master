@@ -16,6 +16,7 @@ import type { Event, EventColor } from "@/lib/types"
 import { formatDateString, getDateForDay } from "@/lib/time-utils"
 import { EventForm, EventDialogFooter, parseTimeValue, validateEventTimes, DAY_OPTIONS_SUNDAY_FIRST } from "@/components/EventForm"
 import { useSettings } from "@/components/SettingsContext"
+import { useTranslations } from "next-intl"
 
 interface AddEventDialogProps {
     open: boolean
@@ -39,6 +40,7 @@ export function AddEventDialog({
     initialData
 }: AddEventDialogProps) {
     const { settings } = useSettings()
+    const t = useTranslations('Common')
     const [title, setTitle] = useState("")
     const [selectedDays, setSelectedDays] = useState<number[]>([])
     const [startTime, setStartTime] = useState("08:00")
@@ -154,7 +156,7 @@ export function AddEventDialog({
                     <div className="flex items-center gap-3">
                         <CalendarPlus className="size-5 text-blue-600 dark:text-blue-400" />
                         <DialogTitle className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                            Add event
+                            {t('eventDialog.addTitle')}
                         </DialogTitle>
                     </div>
                     <Button
@@ -191,10 +193,10 @@ export function AddEventDialog({
 
                 {/* Footer Buttons */}
                 <EventDialogFooter
-                    primaryText="Add"
+                    primaryText={t('eventDialog.buttons.add')}
                     onPrimary={handleSubmit}
                     disablePrimary={!title.trim() || selectedDays.length === 0}
-                    secondaryText="Copy"
+                    secondaryText={t('eventDialog.buttons.copy')}
                     onSecondary={handleCopy}
                 />
             </DialogContent>

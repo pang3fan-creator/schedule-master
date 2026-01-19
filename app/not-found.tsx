@@ -4,8 +4,15 @@ import Link from "next/link"
 import { PageLayout } from "@/components/PageLayout"
 import { Button } from "@/components/ui/button"
 import { Home, Search } from "lucide-react"
+import { useTranslations, useLocale } from "next-intl"
 
 export default function NotFound() {
+  const t = useTranslations('NotFound')
+  const locale = useLocale()
+
+  // Helper for locale-aware links
+  const getLocalizedUrl = (path: string) => locale === 'en' ? path : `/${locale}${path}`
+
   return (
     <PageLayout contentPadding="">
       <div className="flex-1 flex items-center justify-center px-4 py-16">
@@ -20,13 +27,13 @@ export default function NotFound() {
           {/* Error Message */}
           <div className="mb-8">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Page Not Found
+              {t('title')}
             </h2>
             <p className="text-lg text-gray-600 mb-2">
-              Sorry, the page you are looking for does not exist or has been moved.
+              {t('description')}
             </p>
             <p className="text-base text-gray-500">
-              Please check the URL or return to the homepage.
+              {t('hint')}
             </p>
           </div>
 
@@ -37,9 +44,9 @@ export default function NotFound() {
               size="lg"
               className="bg-blue-600 hover:bg-blue-700 text-white shadow-lg hover:shadow-xl transition-all"
             >
-              <Link href="/">
+              <Link href={getLocalizedUrl('/')}>
                 <Home className="w-5 h-5 mr-2" />
-                Back to Home
+                {t('backHome')}
               </Link>
             </Button>
             <Button
@@ -48,9 +55,9 @@ export default function NotFound() {
               size="lg"
               className="shadow-sm hover:shadow-md transition-all"
             >
-              <Link href="/templates">
+              <Link href={getLocalizedUrl('/templates')}>
                 <Search className="w-5 h-5 mr-2" />
-                Browse Templates
+                {t('browseTemplates')}
               </Link>
             </Button>
           </div>

@@ -17,6 +17,7 @@ import { cn } from "@/lib/utils"
 import { ConfirmDialog } from "@/components/ConfirmDialog"
 import { EVENTS_STORAGE_KEY } from "@/lib/storage-keys"
 import Link from "next/link"
+import { useTranslations } from "next-intl"
 
 interface GeneratedEvent {
     title: string
@@ -40,10 +41,10 @@ interface AIAutofillDialogProps {
 
 const DAY_NAMES = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
 
-function formatTime(hour: number, minute: number): string {
+function formatTime(hour: number, minute: number, t: any): string {
     const h = hour % 12 || 12
     const m = minute.toString().padStart(2, "0")
-    const ampm = hour < 12 ? "AM" : "PM"
+    const ampm = hour < 12 ? t('calendar.time.am') : t('calendar.time.pm')
     return `${h}:${m} ${ampm}`
 }
 
@@ -56,6 +57,8 @@ export function AIAutofillDialog({
     onReset,
 }: AIAutofillDialogProps) {
     const { settings, updateSettings } = useSettings()
+    const t = useTranslations('AIAutofill')
+    const tCommon = useTranslations('Common')
     const [prompt, setPrompt] = useState("")
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
@@ -132,11 +135,11 @@ export function AIAutofillDialog({
             if (!res.ok) {
                 if (data.code === "USAGE_LIMIT_EXCEEDED") {
                     setError(usage?.isPro
-                        ? `You've reached the monthly limit of ${data.limit || 100} AI generations. Limit resets next month.`
-                        : `Trial limit reached. Please upgrade to Pro for more AI generations.`
+                        ? t('errors.usageLimitExceededPro', { limit: data.limit || 100 })
+                        : t('errors.usageLimitExceededFree')
                     )
                 } else {
-                    setError(data.error || "Failed to generate schedule")
+                    setError(data.error || t('errors.generationFailed'))
                 }
                 return
             }
@@ -150,7 +153,7 @@ export function AIAutofillDialog({
             setStep("preview")
         } catch (e) {
             console.error("AI generation error:", e)
-            setError("Failed to connect to AI service. Please try again.")
+            setError(t('errors.connectionError'))
         } finally {
             setIsLoading(false)
         }
@@ -228,6 +231,16 @@ export function AIAutofillDialog({
 
     const isLimitReached = usage?.remaining === 0
 
+    const dayNames = [
+        tCommon('calendar.daysShort.sun'),
+        tCommon('calendar.daysShort.mon'),
+        tCommon('calendar.daysShort.tue'),
+        tCommon('calendar.daysShort.wed'),
+        tCommon('calendar.daysShort.thu'),
+        tCommon('calendar.daysShort.fri'),
+        tCommon('calendar.daysShort.sat'),
+    ]
+
     return (
         <>
             <Dialog open={open} onOpenChange={onOpenChange}>
@@ -240,16 +253,16 @@ export function AIAutofillDialog({
                             </div>
                             <div className="text-left">
                                 <DialogTitle className="text-lg font-semibold text-gray-900">
-                                    AI Autofill
+                                    {t('title')}
                                 </DialogTitle>
                                 {usage && (
                                     <p className="text-xs text-gray-500">
                                         {usage.isPro ? (
-                                            `${usage.remaining} / ${usage.limit} monthly uses remaining`
+                                            t('usageRemaining', { remaining: usage.remaining, limit: usage.limit })
                                         ) : (
                                             <span className="flex items-center gap-1.5 font-medium text-blue-600">
                                                 <Sparkles className="size-3" />
-                                                {usage.remaining} trial uses remaining
+                                                {t('trialRemaining', { remaining: usage.remaining })}
                                             </span>
                                         )}
                                     </p>
@@ -277,16 +290,16 @@ export function AIAutofillDialog({
                                             <Lock className="h-8 w-8 text-blue-600" />
                                         </div>
                                         <div className="space-y-2 max-w-[320px] mx-auto">
-                                            <h3 className="text-lg font-bold text-gray-900">Trial Limit Reached</h3>
+                                            <h3 className="text-lg font-bold text-gray-900">{t('trialLimitReachedTitle')}</h3>
                                             <p className="text-sm text-gray-600 leading-relaxed">
-                                                You've used all 3 free AI generations. Upgrade to Pro for 100 uses every month!
+                                                {t('trialLimitReachedDescription')}
                                             </p>
                                         </div>
                                         <div className="pt-2">
                                             <Button asChild className="w-full max-w-[280px] bg-blue-600 hover:bg-blue-700 shadow-md">
                                                 <Link href="/pricing" className="flex items-center gap-2">
                                                     <Crown className="size-4" />
-                                                    Upgrade to Pro
+                                                    {t('upgradeToPro')}
                                                 </Link>
                                             </Button>
                                         </div>
@@ -296,10 +309,10 @@ export function AIAutofillDialog({
                                     <>
                                         <div>
                                             <label className="block text-sm font-medium text-gray-700 mb-2">
-                                                Describe your schedule needs
+                                                {t('inputLabel')}
                                             </label>
                                             <Textarea
-                                                placeholder="E.g., I'm a college student. I need to study for 3 hours in the morning, have lunch at noon, and go to the gym in the evening on weekdays..."
+                                                placeholder={t('inputPlaceholder')}
                                                 value={prompt}
                                                 onChange={(e) => setPrompt(e.target.value)}
                                                 className="min-h-[140px] resize-none"
@@ -319,11 +332,11 @@ export function AIAutofillDialog({
                                         )}
 
                                         <div className="bg-gray-50 rounded-lg p-3 text-sm text-gray-600">
-                                            <p className="font-medium mb-1">Tips for better results:</p>
+                                            <p className="font-medium mb-1">{t('tipsTitle')}</p>
                                             <ul className="list-disc list-inside space-y-1 text-xs">
-                                                <li>Mention specific activities and their durations</li>
-                                                <li>Specify which days of the week</li>
-                                                <li>Include preferred time ranges</li>
+                                                <li>{t('tips.durations')}</li>
+                                                <li>{t('tips.days')}</li>
+                                                <li>{t('tips.ranges')}</li>
                                             </ul>
                                         </div>
                                     </>
@@ -333,12 +346,12 @@ export function AIAutofillDialog({
                             <div className="space-y-4">
                                 <div className="flex items-center gap-2 text-green-600 mb-4">
                                     <CheckCircle2 className="size-5" />
-                                    <span className="font-medium">Generated {generatedEvents.length} events</span>
+                                    <span className="font-medium">{t('previewTitle', { count: generatedEvents.length })}</span>
                                 </div>
 
                                 {Object.keys(eventsByDay).length === 0 ? (
                                     <div className="text-center py-8 text-gray-500">
-                                        No events generated. Try a more detailed description.
+                                        {t('noEvents')}
                                     </div>
                                 ) : (
                                     <div className="space-y-4">
@@ -349,7 +362,7 @@ export function AIAutofillDialog({
                                             return (
                                                 <div key={day}>
                                                     <h4 className="text-sm font-medium text-gray-700 mb-2">
-                                                        {DAY_NAMES[day]}
+                                                        {dayNames[day]}
                                                     </h4>
                                                     <div className="space-y-2">
                                                         {events.map((event, idx) => {
@@ -370,7 +383,7 @@ export function AIAutofillDialog({
                                                                             {event.title}
                                                                         </p>
                                                                         <p className={cn("text-xs", colorStyles.textSecondary)}>
-                                                                            {formatTime(event.startHour, event.startMinute)} - {formatTime(event.endHour, event.endMinute)}
+                                                                            {formatTime(event.startHour, event.startMinute, tCommon)} - {formatTime(event.endHour, event.endMinute, tCommon)}
                                                                         </p>
                                                                     </div>
                                                                     <Button
@@ -399,7 +412,7 @@ export function AIAutofillDialog({
                         {step === "input" ? (
                             <>
                                 <Button variant="outline" onClick={handleClose}>
-                                    {isLimitReached && !usage?.isPro ? "Close" : "Cancel"}
+                                    {isLimitReached && !usage?.isPro ? t('closeButton') : t('cancelButton')}
                                 </Button>
                                 {!isLimitReached || usage?.isPro ? (
                                     <Button
@@ -410,12 +423,12 @@ export function AIAutofillDialog({
                                         {isLoading ? (
                                             <>
                                                 <Loader2 className="size-4 mr-2 animate-spin" />
-                                                Generating...
+                                                {t('generatingButton')}
                                             </>
                                         ) : (
                                             <>
                                                 <Sparkles className="size-4 mr-2" />
-                                                Generate Schedule
+                                                {t('generateButton')}
                                             </>
                                         )}
                                     </Button>
@@ -424,7 +437,7 @@ export function AIAutofillDialog({
                         ) : (
                             <>
                                 <Button variant="outline" onClick={handleBack}>
-                                    Back
+                                    {t('backButton')}
                                 </Button>
                                 <Button
                                     onClick={handleConfirm}
@@ -432,7 +445,7 @@ export function AIAutofillDialog({
                                     className="bg-blue-600 hover:bg-blue-700 text-white"
                                 >
                                     <CheckCircle2 className="size-4 mr-2" />
-                                    Add {generatedEvents.length} Events
+                                    {t('addButton', { count: generatedEvents.length })}
                                 </Button>
                             </>
                         )}
@@ -443,11 +456,11 @@ export function AIAutofillDialog({
             <ConfirmDialog
                 open={showConfirmDialog}
                 onOpenChange={setShowConfirmDialog}
-                title="Start Fresh?"
-                description="This will reset your calendar and clear all existing events. Your settings will also be restored to defaults."
+                title={t('startFreshTitle')}
+                description={t('startFreshDescription')}
                 icon={AlertTriangle}
                 iconClassName="size-5 text-amber-500"
-                confirmText="Yes, Start Fresh"
+                confirmText={t('startFreshConfirm')}
                 onConfirm={() => {
                     onReset()
                     generateSchedule()

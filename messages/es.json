@@ -402,8 +402,14 @@
             "postNotFound": "Publicación No Encontrada | TrySchedule Blog"
         },
         "categories": {
-            "all": "Todos"
-        }
+            "all": "Todos",
+            "productivity tips": "Consejos de Productividad",
+            "case studies": "Estudios de Caso",
+            "product updates": "Actualizaciones del Producto"
+        },
+        "featuredArticle": "Artículo Destacado",
+        "metaKeywords": "consejos de programación, blog de productividad, gestión del tiempo, consejos del creador de horarios, guía de programación de empleados",
+        "readTime": "{minutes} min de lectura"
     },
     "Templates": {
         "metaTitle": "Plantillas de Horarios Gratis | TrySchedule",
@@ -443,13 +449,23 @@
             "featureSettingsDesc": "Formato de hora y horario de trabajo configurados para este caso de uso",
             "featureCustomizable": "Totalmente Personalizable",
             "featureCustomizableDesc": "Edita, añade o elimina eventos después de aplicar la plantilla",
-            "loading": "Cargando..."
+            "loading": "Cargando...",
+            "reviews": {
+                "sarah": "El mejor constructor de horarios gratuito que he encontrado. ¡El arrastrar y soltar es muy intuitivo!",
+                "mike": "Perfecto para crear mi horario semanal de clases. Me encanta la exportación instantánea a PNG."
+            },
+            "resetConfirm": {
+                "title": "Restablecer Todo",
+                "description": "Esto borrará todas las funciones de plantilla de la barra lateral, restaurará tus ajustes a los valores predeterminados y eliminará todos los eventos del calendario. Esta acción no se puede deshacer.",
+                "button": "Sí, Restablecer"
+            }
         },
         "categories": {
             "all": "Todos",
             "business": "Negocios",
             "personal": "Personal",
-            "education": "Educación"
+            "education": "Educación",
+            "ai": "IA"
         },
         "faqs": {
             "title": "Preguntas Frecuentes",
@@ -479,6 +495,11 @@
         "badge": {
             "pro": "PRO",
             "featured": "Destacado"
+        },
+        "preview": {
+            "aiTitle": "Deja que la IA cree tu horario perfecto",
+            "aiSubtitle": "Haz clic en 'Usar Esta Plantilla' para comenzar",
+            "sampleEvent": "Evento de Ejemplo"
         }
     },
     "Common": {
@@ -496,7 +517,8 @@
             "terms": "Términos",
             "privacy": "Privacidad",
             "contact": "Contacto",
-            "tagline": "<brand>Try</brand>Schedule es el <highlight>creador de horarios en línea gratuito</highlight> más fácil para estudiantes, gerentes y equipos."
+            "tagline": "<brand>Try</brand>Schedule es el <highlight>creador de horarios en línea gratuito</highlight> más fácil para estudiantes, gerentes y equipos.",
+            "taglineSimple": "es el creador de horarios en línea gratuito más fácil para estudiantes, gerentes y equipos."
         },
         "auth": {
             "signIn": "Iniciar Sesión",
@@ -513,9 +535,126 @@
             "aiAutofill": "Autocompletar con IA",
             "reset": "Reiniciar"
         },
+        "featureComingSoon": {
+            "calendarSync": {
+                "name": "Sincronización de Calendario",
+                "description": "Esta función está incluida en la versión Pro y estará disponible pronto. Ingresa tu correo para ser el primero en saber cuando se lance."
+            }
+        },
+        "upgradeModal": {
+            "title": "Actualizar a Pro",
+            "description": "{feature} está disponible en los planes Pro. Actualiza ahora para desbloquear todas las funciones premium.",
+            "benefits": {
+                "pdf": "Exportaciones PDF de alta resolución sin marcas de agua",
+                "ai": "Sugerencias de programación con IA",
+                "cloud": "Guardado en la nube y sincronización entre dispositivos"
+            },
+            "viewPlans": "Ver Planes",
+            "maybeLater": "Quizás después",
+            "priceNote": "Desde solo $4.9 por un pase de 7 días"
+        },
         "viewMode": {
             "day": "Día",
             "week": "Semana"
+        },
+        "eventDialog": {
+            "addTitle": "Añadir evento",
+            "editTitle": "Editar evento",
+            "form": {
+                "title": "Título",
+                "titlePlaceholder": "Título del evento",
+                "color": "Color",
+                "day": "Día",
+                "days": "Día(s)",
+                "start": "Inicio",
+                "end": "Fin",
+                "description": "Descripción",
+                "descriptionPlaceholder": "Descripción del evento (opcional)",
+                "dayLabels": {
+                    "sun": "Dom",
+                    "mon": "Lun",
+                    "tue": "Mar",
+                    "wed": "Mié",
+                    "thu": "Jue",
+                    "fri": "Vie",
+                    "sat": "Sáb"
+                },
+                "colors": {
+                    "blue": "Azul",
+                    "green": "Verde",
+                    "red": "Rojo",
+                    "yellow": "Amarillo",
+                    "purple": "Púrpura",
+                    "pink": "Rosa",
+                    "orange": "Naranja",
+                    "teal": "Turquesa"
+                },
+                "icons": {
+                    "none": "Ninguno",
+                    "Tag": "General",
+                    "Briefcase": "Trabajo",
+                    "User": "Personal",
+                    "Utensils": "Comida",
+                    "Coffee": "Descanso",
+                    "ChefHat": "Cocina",
+                    "Dumbbell": "Gimnasio",
+                    "ShoppingCart": "Compras",
+                    "PenTool": "Creativo",
+                    "Calculator": "Finanzas",
+                    "FlaskConical": "Ciencia",
+                    "Zap": "Energía",
+                    "Activity": "Actividad",
+                    "WashingMachine": "Tareas",
+                    "Bed": "Sueño",
+                    "Bath": "Cuidado personal",
+                    "Sparkles": "Ocio",
+                    "FolderOpen": "Productividad",
+                    "Smile": "Diversión",
+                    "Heart": "Salud",
+                    "Star": "Prioridad",
+                    "CheckCircle2": "Tarea",
+                    "HelpCircle": "Pregunta",
+                    "Plane": "Viaje",
+                    "Car": "Transporte",
+                    "Bike": "Ejercicio",
+                    "Music": "Hobby",
+                    "Gamepad": "Juegos",
+                    "Tv": "Entretenimiento",
+                    "Film": "Películas",
+                    "Camera": "Foto",
+                    "Moon": "Noche",
+                    "Sun": "Día",
+                    "Cloud": "Tiempo",
+                    "PalmTree": "Vacaciones",
+                    "Flower": "Naturaleza",
+                    "Leaf": "Relajación",
+                    "Apple": "Nutrición",
+                    "Stethoscope": "Médico",
+                    "Brain": "Mentalidad",
+                    "GraduationCap": "Educación",
+                    "Book": "Estudio",
+                    "Laptop": "Tecnología",
+                    "Mail": "Comunicación",
+                    "ClipboardList": "Lista de tareas",
+                    "ShoppingBag": "Mandado",
+                    "Gift": "Regalo",
+                    "PartyPopper": "Celebración",
+                    "Trophy": "Logro",
+                    "PawPrint": "Mascotas",
+                    "Globe": "Web",
+                    "Wifi": "Internet",
+                    "Lock": "Seguridad",
+                    "MapPin": "Ubicación",
+                    "Calendar": "Planificación",
+                    "Bell": "Recordatorio"
+                }
+            },
+            "buttons": {
+                "add": "Añadir",
+                "copy": "Copiar",
+                "save": "Guardar Cambios",
+                "cancel": "Cancelar"
+            }
         },
         "reset": {
             "title": "Reiniciar Todo",
@@ -547,15 +686,17 @@
             "previousDay": "Ir al día anterior",
             "nextDay": "Ir al día siguiente",
             "today": "Ir a Hoy",
-            "newEvent": "Nuevo Evento"
-        },
-        "preview": {
-            "aiTitle": "Deja que la IA cree tu horario perfecto",
-            "aiSubtitle": "Haz clic en 'Usar Esta Plantilla' para comenzar",
-            "sampleEvent": "Evento de Ejemplo"
+            "newEvent": "Nuevo Evento",
+            "time": {
+                "am": "AM",
+                "pm": "PM"
+            }
         },
         "brand": {
             "alt": "TrySchedule - Creador de Horarios en Línea Gratuito"
+        },
+        "calendarPicker": {
+            "weekLabel": "Sem"
         },
         "moreOptions": "Más Opciones",
         "export": "Exportar",
@@ -597,6 +738,9 @@
                     "answer": "Tu privacidad es nuestra prioridad.\n\nPor defecto, todos los datos del horario permanecen en el almacenamiento local de tu navegador – nada sale de tu dispositivo a menos que elijas lo contrario.\n\nTus horarios permanecen completamente privados a menos que elijas explícitamente habilitar la sincronización en la nube con una cuenta Pro. Tienes control total sobre tus datos en todo momento."
                 }
             }
+        },
+        "buttons": {
+            "cancel": "Cancelar"
         }
     },
     "AuthModal": {
@@ -676,6 +820,242 @@
             "passwordMismatch": "Las contraseñas no coinciden",
             "passwordLength": "La contraseña debe tener al menos 8 caracteres",
             "resetError": "Error al restablecer la contraseña"
+        }
+    },
+    "Settings": {
+        "title": "Configuración",
+        "weekStart": {
+            "label": "Semana comienza en domingo",
+            "description": "EE.UU. usa domingo, estándar ISO usa lunes"
+        },
+        "timeFormat": {
+            "label": "Formato 12 horas (AM/PM)",
+            "description": "Desactivar para formato 24 horas"
+        },
+        "showDates": {
+            "label": "Mostrar fechas",
+            "description": "Mostrar números de fecha en los encabezados del calendario"
+        },
+        "timeIncrement": {
+            "label": "Incremento de tiempo",
+            "minutes": "{count} minutos"
+        },
+        "workingHours": {
+            "label": "Horario de trabajo",
+            "to": "a"
+        }
+    },
+    "Export": {
+        "title": "Exportar Horario",
+        "description": "Elige un formato para descargar tu horario.",
+        "format": "Formato",
+        "formats": {
+            "png": {
+                "description": "Imagen de alta calidad con transparencia"
+            },
+            "jpg": {
+                "description": "Imagen comprimida, tamaño de archivo más pequeño"
+            },
+            "pdf": {
+                "description": "Formato vectorial, perfecto para imprimir"
+            },
+            "csv": {
+                "description": "Formato de hoja de cálculo para análisis de datos"
+            }
+        },
+        "upgradePrompt": {
+            "title": "Actualizar a Pro",
+            "description": "Desbloquea exportaciones PDF y CSV, además elimina marcas de agua de las imágenes.",
+            "button": "Ver Planes"
+        },
+        "buttons": {
+            "cancel": "Cancelar",
+            "exporting": "Exportando...",
+            "download": "Descargar {format}"
+        }
+    },
+    "CalendarSync": {
+        "title": "Sincronización con Google Calendar",
+        "description": "Sincroniza tu horario con Google Calendar para acceder fácilmente desde todos tus dispositivos.",
+        "notConnected": {
+            "title": "Conecta tu cuenta de Google",
+            "description": "Vincula tu cuenta de Google para sincronizar eventos con tu calendario.",
+            "button": "Conectar cuenta de Google"
+        },
+        "connected": {
+            "status": "Conectado",
+            "syncComplete": "Sincronización completa",
+            "syncFailed": "Sincronización fallida",
+            "eventsSynced": "{count} evento(s) sincronizado(s)",
+            "eventsFailed": ", {count} fallido(s)",
+            "syncing": "Sincronizando...",
+            "syncButton": "Sincronizar con Google Calendar",
+            "openCalendar": "Abrir Google Calendar"
+        }
+    },
+    "FeatureComingSoon": {
+        "title": "{feature} - ¡Próximamente!",
+        "description": "Esta función Pro está actualmente en desarrollo. Sé el primero en saber cuando se lance y obtén un <discount>50% de descuento</discount> exclusivo.",
+        "emailPlaceholder": "Ingresa tu correo electrónico",
+        "submitButton": "Notificarme y obtener 50% Off",
+        "submitting": "Registrando...",
+        "maybeLater": "Quizás después",
+        "noSpam": "Sin spam, cancela cuando quieras.",
+        "success": {
+            "title": "¡Estás en la lista! 🎉",
+            "subtitle": "Te notificaremos cuando esté listo."
+        },
+        "error": "Envío fallido, por favor intenta de nuevo más tarde",
+        "features": {
+            "calendarSync": {
+                "name": "Sincronización de Calendario",
+                "description": "Esta función está incluida en la versión Pro y estará disponible pronto. Ingresa tu correo para ser el primero en saber cuando se lance."
+            }
+        }
+    },
+    "CloudSave": {
+        "title": "Guardar en la Nube",
+        "description": "Guarda tu horario en la nube o carga una plantilla guardada.",
+        "templatesUsed": "{count}/{max} plantillas usadas",
+        "saveButton": "Guardar Actual",
+        "templateName": "Nombre de Plantilla",
+        "templatePlaceholder": "Mi Horario",
+        "noTemplates": "Sin plantillas guardadas aún",
+        "noTemplatesHint": "¡Guarda tu primer horario en la nube!",
+        "eventsCount": "{count} eventos",
+        "updated": "Actualizado {date}",
+        "pagination": "Página {page} de {total}",
+        "sort": {
+            "updated": "Actualizado",
+            "created": "Creado",
+            "name": "Nombre"
+        },
+        "buttons": {
+            "load": "Cargar plantilla",
+            "rename": "Renombrar",
+            "delete": "Eliminar"
+        },
+        "errors": {
+            "fetchFailed": "Error al cargar las plantillas",
+            "saveFailed": "Error al guardar",
+            "loadFailed": "Error al cargar la plantilla",
+            "renameFailed": "Error al renombrar",
+            "deleteFailed": "Error al eliminar la plantilla",
+            "overwriteFailed": "Error al sobrescribir la plantilla",
+            "enterName": "Por favor ingresa un nombre",
+            "nameTooLong": "El nombre debe tener 50 caracteres o menos"
+        },
+        "deleteConfirm": {
+            "title": "Eliminar Plantilla",
+            "description": "¿Estás seguro de que quieres eliminar \"{name}\"? Esta acción no se puede deshacer.",
+            "button": "Eliminar"
+        },
+        "loadConfirm": {
+            "title": "Cargar Plantilla",
+            "description": "Tu horario actual será reemplazado por esta plantilla. Esta acción no se puede deshacer.",
+            "button": "Cargar Plantilla"
+        },
+        "overwriteConfirm": {
+            "title": "La Plantilla Ya Existe",
+            "description": "Ya existe una plantilla llamada \"{name}\". ¿Quieres sobrescribirla con tu horario actual?",
+            "button": "Sobrescribir"
+        }
+    },
+    "TemplateComponents": {
+        "common": {
+            "on": "Activo",
+            "off": "Inactivo"
+        },
+        "AIQuickActions": {
+            "title": "Acciones Rápidas con IA",
+            "regenerate": "Regenerar con IA",
+            "clear": "Limpiar Horario"
+        },
+        "PriorityModeToggle": {
+            "title": "Alternar Modo Prioridad",
+            "label": "Modo Prioridad"
+        },
+        "TaskModeToggle": {
+            "title": "Alternar Modo Tarea",
+            "label": "Modo Tarea"
+        },
+        "ProjectDashboard": {
+            "title": "Panel del Proyecto",
+            "phase": "FASE DE CONSTRUCCIÓN",
+            "onTrack": "Al Día",
+            "completion": "Progreso",
+            "milestones": "Hitos Clave",
+            "clickToUpdate": "Clic para actualizar",
+            "active": "Activo",
+            "weatherAlert": "Alerta Meteorológica:",
+            "siteStatus": "Estado del Sitio:",
+            "checkingForecast": "Consultando pronóstico...",
+            "updateLocation": "Actualizar Ubicación del Sitio",
+            "locationDenied": "Acceso a la ubicación denegado",
+            "locationPrompt": "Por favor, permite el acceso a la ubicación para obtener el clima local del sitio.",
+            "weatherError": "Datos meteorológicos no disponibles.",
+            "siteAlertToday": "Alerta: Se espera lluvia/nieve HOY. Cubre los materiales sensibles.",
+            "forecastAlert": "Pronóstico: Mal tiempo esperado en {days} días. Planifica tareas de interior.",
+            "forecastClear": "Pronóstico Despejado: Condiciones óptimas para trabajo exterior.",
+            "milestoneData": {
+                "sitePrep": "Preparación y Excavación",
+                "foundation": "Vertido de Cimientos",
+                "framing": "Estructura y Techo",
+                "hvac": "HVAC y Electricidad",
+                "interior": "Acabados Interiores"
+            },
+            "week": "Semana {num}",
+            "weekRange": "Semana {range}"
+        }
+    },
+    "NotFound": {
+        "title": "404 - Página No Encontrada",
+        "description": "La página que estás buscando no existe o ha sido movida.",
+        "hint": "Intenta buscar plantillas o vuelve a la página de inicio.",
+        "backHome": "Volver al Inicio",
+        "browseTemplates": "Ver Plantillas"
+    },
+    "AIAutofill": {
+        "title": "Autocompletar con IA",
+        "usageRemaining": "{remaining} / {limit} usos mensuales restantes",
+        "trialRemaining": "{remaining} usos de prueba restantes",
+        "inputLabel": "Describe tus necesidades de horario",
+        "inputPlaceholder": "Ej: Soy estudiante universitario. Necesito estudiar 3 horas por la mañana, almorzar al mediodía e ir al gimnasio por la tarde los días de semana...",
+        "tipsTitle": "Consejos para mejores resultados:",
+        "tips": {
+            "durations": "Menciona actividades específicas y sus duraciones",
+            "days": "Especifica qué días de la semana",
+            "ranges": "Incluye rangos de tiempo preferidos"
+        },
+        "generateButton": "Generar Horario",
+        "generatingButton": "Generando...",
+        "previewTitle": "{count} eventos generados",
+        "noEvents": "No se generaron eventos. Intenta una descripción más detallada.",
+        "addButton": "Añadir {count} Eventos",
+        "backButton": "Atrás",
+        "closeButton": "Cerrar",
+        "cancelButton": "Cancelar",
+        "trialLimitReachedTitle": "Límite de Prueba Alcanzado",
+        "trialLimitReachedDescription": "Has usado tus 3 generaciones gratuitas con IA. ¡Actualiza a Pro para tener 100 usos cada mes!",
+        "upgradeToPro": "Actualizar a Pro",
+        "startFreshTitle": "¿Empezar de Cero?",
+        "startFreshDescription": "Esto reiniciará tu calendario y borrará todos los eventos existentes. Tu configuración también se restaurará a los valores predeterminados.",
+        "startFreshConfirm": "Sí, Empezar de Cero",
+        "errors": {
+            "usageLimitExceededPro": "Has alcanzado el límite mensual de {limit} generaciones con IA. El límite se reinicia el próximo mes.",
+            "usageLimitExceededFree": "Límite de prueba alcanzado. Por favor, actualiza a Pro para más generaciones con IA.",
+            "generationFailed": "Error al generar el horario",
+            "connectionError": "Error al conectar con el servicio de IA. Por favor, inténtalo de nuevo."
+        }
+    },
+    "EventConflict": {
+        "title": "Conflicto de Tiempo Detectado",
+        "description": "\"{title}\" tiene conflictos con eventos existentes.",
+        "listTitle": "Eventos en conflicto:",
+        "buttons": {
+            "cancel": "Cancelar",
+            "modify": "Modificar Nuevo Evento",
+            "delete": "Eliminar Existentes ({count})"
         }
     }
 }

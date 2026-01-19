@@ -9,8 +9,9 @@ import {
     DialogFooter,
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
-import { AlertTriangle } from "lucide-react"
+import { AlertCircle, Trash2, Edit2, X } from "lucide-react"
 import type { Event } from "@/lib/types"
+import { useTranslations } from "next-intl"
 import { formatEventTimeRange } from "@/lib/event-conflict"
 
 interface ConflictDialogProps {
@@ -19,7 +20,7 @@ interface ConflictDialogProps {
     conflictingEvents: Event[]
     newEventTitle: string
     onDeleteExisting: () => void
-    onModifyNew: () => void
+    onEditNew: () => void // Changed from onModifyNew
     onCancel: () => void
 }
 
@@ -29,28 +30,32 @@ export function ConflictDialog({
     conflictingEvents,
     newEventTitle,
     onDeleteExisting,
-    onModifyNew,
+    onEditNew, // Changed from onModifyNew
     onCancel,
 }: ConflictDialogProps) {
+    const t = useTranslations('EventConflict')
+
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="sm:max-w-md">
+            <DialogContent className="sm:max-w-md bg-white dark:bg-gray-900">
                 <DialogHeader>
-                    <div className="flex items-center gap-3">
-                        <div className="p-2 rounded-full bg-amber-100">
-                            <AlertTriangle className="size-5 text-amber-600" />
+                    <div className="flex items-center gap-3 mb-2">
+                        <div className="p-2 rounded-full bg-red-100 dark:bg-red-900/30">
+                            <AlertCircle className="size-6 text-red-600 dark:text-red-400" />
                         </div>
-                        <div>
-                            <DialogTitle>Time Conflict Detected</DialogTitle>
-                            <DialogDescription className="mt-1">
-                                "{newEventTitle}" conflicts with existing events.
-                            </DialogDescription>
-                        </div>
+                        <DialogTitle className="text-xl font-bold text-gray-900 dark:text-gray-100">
+                            {t('title')}
+                        </DialogTitle>
                     </div>
+                    <DialogDescription className="text-gray-600 dark:text-gray-400">
+                        {t('description', { title: newEventTitle })}
+                    </DialogDescription>
                 </DialogHeader>
 
                 <div className="py-4">
-                    <p className="text-sm text-gray-600 mb-3">Conflicting events:</p>
+                    <h4 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-3 uppercase tracking-wider">
+                        {t('listTitle')}
+                    </h4>
                     <div className="space-y-2">
                         {conflictingEvents.map((event) => (
                             <div
@@ -67,22 +72,17 @@ export function ConflictDialog({
                 </div>
 
                 <DialogFooter className="flex-col sm:flex-row gap-2">
-                    <Button variant="outline" onClick={onCancel} className="w-full sm:w-auto">
-                        Cancel
+                    <Button variant="ghost" onClick={() => onOpenChange(false)} className="sm:flex-1">
+                        <X className="size-4 mr-2" />
+                        {t('buttons.cancel')}
                     </Button>
-                    <Button
-                        variant="outline"
-                        onClick={onModifyNew}
-                        className="w-full sm:w-auto"
-                    >
-                        Modify New Event
+                    <Button variant="outline" onClick={onEditNew} className="sm:flex-1">
+                        <Edit2 className="size-4 mr-2" />
+                        {t('buttons.modify')}
                     </Button>
-                    <Button
-                        variant="destructive"
-                        onClick={onDeleteExisting}
-                        className="w-full sm:w-auto"
-                    >
-                        Delete Existing ({conflictingEvents.length})
+                    <Button variant="destructive" onClick={onDeleteExisting} className="sm:flex-1">
+                        <Trash2 className="size-4 mr-2" />
+                        {t('buttons.delete', { count: conflictingEvents.length })}
                     </Button>
                 </DialogFooter>
             </DialogContent>

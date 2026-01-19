@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-import { useTranslations } from "next-intl"
+import { useTranslations, useLocale } from "next-intl"
 import { PageLayout } from "@/components/PageLayout"
 import { Button } from "@/components/ui/button"
 import { getTemplate, type TemplateData } from "@/lib/templates"
@@ -43,16 +43,19 @@ function generateEventsFromTemplate(template: TemplateData, events: Omit<Event, 
 }
 
 // Mini calendar preview component
-function TemplatePreview({ template, events }: { template: TemplateData, events: Omit<Event, "id" | "date">[] }) {
+function TemplatePreview({ template, events, locale }: { template: TemplateData, events: Omit<Event, "id" | "date">[], locale: string }) {
     const t = useTranslations('Templates')
     const weekStartsOnSunday = template.settings?.weekStartsOnSunday ?? true
 
     const dayOrder = weekStartsOnSunday
         ? [0, 1, 2, 3, 4, 5, 6]
         : [1, 2, 3, 4, 5, 6, 0]
-    const days = weekStartsOnSunday
-        ? ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
-        : ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+
+    // Get localized day names
+    const days = dayOrder.map(dayNum => {
+        const date = getDateForDayOfWeek(dayNum);
+        return new Intl.DateTimeFormat(locale, { weekday: 'short' }).format(date);
+    });
 
     const startHour = template.settings?.workingHoursStart ?? 8
     const endHour = template.settings?.workingHoursEnd ?? 17
@@ -161,6 +164,7 @@ interface TemplateDetailClientProps {
 export function TemplateDetailClient({ slug, locale }: TemplateDetailClientProps) {
     const router = useRouter()
     const t = useTranslations('Templates')
+    const localeFromHook = useLocale() // Use hook instead of prop for consistency
     const { isPro } = useSubscription()
     const { settings } = useSettings()
     const [template, setTemplate] = useState<TemplateData | null>(null)
@@ -168,6 +172,7 @@ export function TemplateDetailClient({ slug, locale }: TemplateDetailClientProps
     const [isLoading, setIsLoading] = useState(false)
     const [upgradeModalOpen, setUpgradeModalOpen] = useState(false)
     const [confirmDialogOpen, setConfirmDialogOpen] = useState(false)
+    const displayTitle = getTemplateTranslation(slug, locale)?.title || template?.title || slug
 
     useEffect(() => {
         const t = getTemplate(slug)
@@ -272,7 +277,7 @@ export function TemplateDetailClient({ slug, locale }: TemplateDetailClientProps
                         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
                             <div>
                                 <span className="text-sm font-medium text-blue-600 dark:text-blue-400 uppercase tracking-wide">
-                                    {template.category}
+                                    {t(`categories.${template.category.toLowerCase()}`)}
                                 </span>
                                 {template.requiresPro && (
                                     <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[10px] font-semibold bg-gradient-to-r from-amber-400 to-orange-500 text-white ml-2">
@@ -297,7 +302,7 @@ export function TemplateDetailClient({ slug, locale }: TemplateDetailClientProps
                             </div>
                         </div>
 
-                        <TemplatePreview template={template} events={translatedEvents} />
+                        <TemplatePreview template={template} events={translatedEvents} locale={locale} />
 
                         <p className="text-sm text-gray-500 dark:text-gray-400 mt-4 text-center">
                             {template.slug === 'ai-schedule-builder'
@@ -360,16 +365,16 @@ export function TemplateDetailClient({ slug, locale }: TemplateDetailClientProps
             <UpgradeModal
                 open={upgradeModalOpen}
                 onOpenChange={setUpgradeModalOpen}
-                feature={template.title}
+                feature={displayTitle}
             />
 
             <ConfirmDialog
                 open={confirmDialogOpen}
                 onOpenChange={setConfirmDialogOpen}
-                title="Reset Everything"
-                description="This will clear all sidebar template features, restore your settings to default, and delete all events from the calendar. This action cannot be undone."
+                title={t('detail.resetConfirm.title')}
+                description={t('detail.resetConfirm.description')}
                 icon={RotateCcw}
-                confirmText="Yes, Reset"
+                confirmText={t('detail.resetConfirm.button')}
                 onConfirm={handleConfirmUseTemplate}
                 variant="blue"
             />

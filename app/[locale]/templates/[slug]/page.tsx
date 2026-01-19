@@ -2,6 +2,7 @@ import { notFound } from "next/navigation"
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { getTemplate, getAllTemplateSlugs } from "@/lib/templates"
 import { TemplateDetailClient } from "./TemplateDetailClient"
+import { getTemplateTranslation } from "@/lib/templates-translations"
 import type { Metadata } from "next"
 import { locales } from '@/i18n/request'
 
@@ -24,12 +25,16 @@ export async function generateMetadata({ params }: TemplatePageProps): Promise<M
     const { locale, slug } = await params
     const template = getTemplate(slug)
     const t = await getTranslations({ locale, namespace: 'Templates' })
+    const translation = getTemplateTranslation(slug, locale)
 
     if (!template) {
         return {
             title: t('detail.notFound'),
         }
     }
+
+    const title = translation?.title || template.title
+    const description = translation?.description || template.description
 
     const templateUrl = locale === 'en'
         ? `${baseUrl}/templates/${slug}`
@@ -43,8 +48,8 @@ export async function generateMetadata({ params }: TemplatePageProps): Promise<M
             : []
 
     return {
-        title: `${template.title} | TrySchedule Templates`,
-        description: template.description,
+        title: `${title} | TrySchedule Templates`,
+        description: description,
         keywords: [...baseKeywords, ...aiKeywords],
         alternates: {
             canonical: templateUrl,
@@ -58,9 +63,16 @@ export async function generateMetadata({ params }: TemplatePageProps): Promise<M
 }
 
 // Generate JSON-LD structured data
-function generateJsonLd(slug: string, locale: string) {
+async function generateJsonLd(slug: string, locale: string) {
     const template = getTemplate(slug)
     if (!template) return null
+
+    const translation = getTemplateTranslation(slug, locale)
+    const t = await getTranslations({ locale, namespace: 'Templates' })
+    const commonT = await getTranslations({ locale, namespace: 'Common' })
+
+    const title = translation?.title || template.title
+    const description = translation?.description || template.description
 
     const templateUrl = locale === 'en'
         ? `${baseUrl}/templates/${slug}`
@@ -70,8 +82,8 @@ function generateJsonLd(slug: string, locale: string) {
     const webAppSchema = {
         "@context": "https://schema.org",
         "@type": "WebApplication",
-        "name": template.title,
-        "description": template.description,
+        "name": title,
+        "description": description,
         "url": templateUrl,
         "applicationCategory": "SchedulingApplication",
         "operatingSystem": "Web Browser",
@@ -91,13 +103,13 @@ function generateJsonLd(slug: string, locale: string) {
                 "@type": "Review",
                 "author": { "@type": "Person", "name": "Sarah M." },
                 "reviewRating": { "@type": "Rating", "ratingValue": "5" },
-                "reviewBody": "Best free schedule builder I've found. The drag-and-drop is so intuitive!"
+                "reviewBody": t('detail.reviews.sarah')
             },
             {
                 "@type": "Review",
                 "author": { "@type": "Person", "name": "Mike T." },
                 "reviewRating": { "@type": "Rating", "ratingValue": "5" },
-                "reviewBody": "Perfect for creating my weekly class schedule. Love the instant PNG export."
+                "reviewBody": t('detail.reviews.mike')
             }
         ],
     }
@@ -110,19 +122,19 @@ function generateJsonLd(slug: string, locale: string) {
             {
                 "@type": "ListItem",
                 "position": 1,
-                "name": "Home",
+                "name": t('breadcrumb.home'),
                 "item": baseUrl
             },
             {
                 "@type": "ListItem",
                 "position": 2,
-                "name": "Templates",
+                "name": t('breadcrumb.templates'),
                 "item": locale === 'en' ? `${baseUrl}/templates` : `${baseUrl}/${locale}/templates`
             },
             {
                 "@type": "ListItem",
                 "position": 3,
-                "name": template.title,
+                "name": title,
                 "item": templateUrl
             }
         ]
@@ -141,7 +153,8 @@ export default async function TemplatePage({ params }: TemplatePageProps) {
         notFound()
     }
 
-    const { webAppSchema, breadcrumbSchema } = generateJsonLd(slug, locale) || {}
+    const jsonLd = await generateJsonLd(slug, locale)
+    const { webAppSchema, breadcrumbSchema } = jsonLd || {}
 
     return (
         <>
