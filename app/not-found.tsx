@@ -4,9 +4,10 @@ import Link from "next/link"
 import { PageLayout } from "@/components/PageLayout"
 import { Button } from "@/components/ui/button"
 import { Home, Search } from "lucide-react"
-import { useTranslations, useLocale } from "next-intl"
+import { useTranslations, useLocale, NextIntlClientProvider } from "next-intl"
+import enMessages from "@/messages/en.json"
 
-export default function NotFound() {
+function NotFoundContent() {
   const t = useTranslations('NotFound')
   const locale = useLocale()
 
@@ -73,5 +74,13 @@ export default function NotFound() {
         </div>
       </div>
     </PageLayout>
+  )
+}
+
+export default function NotFound() {
+  return (
+    <NextIntlClientProvider locale="en" messages={enMessages}>
+      <NotFoundContent />
+    </NextIntlClientProvider>
   )
 }
