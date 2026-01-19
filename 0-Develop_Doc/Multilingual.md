@@ -206,7 +206,7 @@ messages/                        # 新增：翻译字典
 ├── es.json
 └── zh.json
 
-middleware.ts                    # 新增：语言检测与重定向
+proxy.ts                    # 新增：语言检测与重定向
 ```
 
 ## H. 元数据与 SEO

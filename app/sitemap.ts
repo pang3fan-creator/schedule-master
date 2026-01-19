@@ -15,24 +15,26 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   })
 
-  // Static pages (without multilingual support)
-  const nonLocalizedPages = [
+
+
+  // Multilingual pages with proper alternates (xhtml:link)
+  const localizedPages = [
+    // Homepage - English
     {
       url: baseUrl,
       lastModified: new Date(),
       changeFrequency: 'daily' as const,
       priority: 1,
+      alternates: createAlternates('/'),
     },
+    // Homepage - Spanish
     {
-      url: `${baseUrl}/templates`,
+      url: `${baseUrl}/es`,
       lastModified: new Date(),
-      changeFrequency: 'weekly' as const,
-      priority: 0.8,
+      changeFrequency: 'daily' as const,
+      priority: 1,
+      alternates: createAlternates('/'),
     },
-  ]
-
-  // Multilingual pages with proper alternates (xhtml:link)
-  const localizedPages = [
     // Blog - English
     {
       url: `${baseUrl}/blog`,
@@ -177,6 +179,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ])
 
-  return [...nonLocalizedPages, ...localizedPages, ...templateListPages, ...templatePages, ...blogArticlePages]
+  return [...localizedPages, ...templateListPages, ...templatePages, ...blogArticlePages]
 }
 

@@ -6,7 +6,6 @@ import { useTranslations, useLocale } from "next-intl"
 import { PageLayout } from "@/components/PageLayout"
 import { Button } from "@/components/ui/button"
 import { getTemplate, type TemplateData } from "@/lib/templates"
-import { getTemplateTranslation } from "@/lib/templates-translations"
 import { formatDateString } from "@/lib/time-utils"
 import { EVENT_COLORS, type Event } from "@/lib/types"
 import { Play, Crown, RotateCcw, Sparkles } from "lucide-react"
@@ -167,31 +166,17 @@ export function TemplateDetailClient({ slug, locale }: TemplateDetailClientProps
     const localeFromHook = useLocale() // Use hook instead of prop for consistency
     const { isPro } = useSubscription()
     const { settings } = useSettings()
-    const [template, setTemplate] = useState<TemplateData | null>(null)
-    const [translatedEvents, setTranslatedEvents] = useState<Omit<Event, "id" | "date">[]>([])
+
+    // Get template synchronously
+    const template = getTemplate(slug, locale)
+
     const [isLoading, setIsLoading] = useState(false)
     const [upgradeModalOpen, setUpgradeModalOpen] = useState(false)
     const [confirmDialogOpen, setConfirmDialogOpen] = useState(false)
-    const displayTitle = getTemplateTranslation(slug, locale)?.title || template?.title || slug
 
-    useEffect(() => {
-        const t = getTemplate(slug)
-        if (t) {
-            setTemplate(t)
-            // Merge translations
-            const translation = getTemplateTranslation(slug, locale)
-            if (translation?.events && translation.events.length === t.events.length) {
-                const merged = t.events.map((event, index) => ({
-                    ...event,
-                    title: translation.events![index].title || event.title,
-                    description: translation.events![index].description || event.description
-                }))
-                setTranslatedEvents(merged)
-            } else {
-                setTranslatedEvents(t.events)
-            }
-        }
-    }, [slug, locale])
+    // Derived values
+    const displayTitle = template?.title || slug
+    const translatedEvents = template?.events || []
 
     // Generate URLs based on locale
     const getTemplatesUrl = () => locale === 'en' ? '/templates' : `/${locale}/templates`
@@ -260,14 +245,14 @@ export function TemplateDetailClient({ slug, locale }: TemplateDetailClientProps
                     <Breadcrumb items={[
                         { label: t('breadcrumb.home'), href: getHomeUrl() },
                         { label: t('breadcrumb.templates'), href: getTemplatesUrl() },
-                        { label: getTemplateTranslation(template.slug, locale)?.title || template.title }
+                        { label: template.title }
                     ]} />
                 </div>
 
                 {/* Page Title */}
                 <div className="container mx-auto px-4 max-w-6xl text-center mt-6">
                     <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100">
-                        {getTemplateTranslation(template.slug, locale)?.title || template.title}
+                        {template.title}
                     </h1>
                 </div>
 
@@ -286,7 +271,7 @@ export function TemplateDetailClient({ slug, locale }: TemplateDetailClientProps
                                     </span>
                                 )}
                                 <p className="text-gray-600 dark:text-gray-300 mt-2 max-w-2xl">
-                                    {getTemplateTranslation(template.slug, locale)?.description || template.description}
+                                    {template.description}
                                 </p>
                             </div>
                             <div className="shrink-0">
@@ -352,7 +337,7 @@ export function TemplateDetailClient({ slug, locale }: TemplateDetailClientProps
                     </h2>
                     <div className="bg-gray-50 dark:bg-gray-800/80 rounded-xl border border-gray-200 dark:border-gray-700 p-8 md:p-12 shadow-sm">
                         <div className="prose prose-gray max-w-none">
-                            {(getTemplateTranslation(template.slug, locale)?.longDescription || template.longDescription).split('\n\n').map((paragraph, idx) => (
+                            {template.longDescription.split('\n\n').map((paragraph, idx) => (
                                 <p key={idx} className="text-gray-600 dark:text-gray-300 mb-4">
                                     {paragraph}
                                 </p>

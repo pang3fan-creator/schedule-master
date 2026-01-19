@@ -2,7 +2,6 @@ import { notFound } from "next/navigation"
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { getTemplate, getAllTemplateSlugs } from "@/lib/templates"
 import { TemplateDetailClient } from "./TemplateDetailClient"
-import { getTemplateTranslation } from "@/lib/templates-translations"
 import type { Metadata } from "next"
 import { locales } from '@/i18n/request'
 
@@ -23,9 +22,8 @@ export async function generateStaticParams() {
 // Generate metadata for SEO
 export async function generateMetadata({ params }: TemplatePageProps): Promise<Metadata> {
     const { locale, slug } = await params
-    const template = getTemplate(slug)
+    const template = getTemplate(slug, locale)
     const t = await getTranslations({ locale, namespace: 'Templates' })
-    const translation = getTemplateTranslation(slug, locale)
 
     if (!template) {
         return {
@@ -33,8 +31,8 @@ export async function generateMetadata({ params }: TemplatePageProps): Promise<M
         }
     }
 
-    const title = translation?.title || template.title
-    const description = translation?.description || template.description
+    const title = template.title
+    const description = template.description
 
     const templateUrl = locale === 'en'
         ? `${baseUrl}/templates/${slug}`
@@ -64,15 +62,14 @@ export async function generateMetadata({ params }: TemplatePageProps): Promise<M
 
 // Generate JSON-LD structured data
 async function generateJsonLd(slug: string, locale: string) {
-    const template = getTemplate(slug)
+    const template = getTemplate(slug, locale)
     if (!template) return null
 
-    const translation = getTemplateTranslation(slug, locale)
     const t = await getTranslations({ locale, namespace: 'Templates' })
     const commonT = await getTranslations({ locale, namespace: 'Common' })
 
-    const title = translation?.title || template.title
-    const description = translation?.description || template.description
+    const title = template.title
+    const description = template.description
 
     const templateUrl = locale === 'en'
         ? `${baseUrl}/templates/${slug}`
@@ -147,7 +144,7 @@ export default async function TemplatePage({ params }: TemplatePageProps) {
     const { locale, slug } = await params
     setRequestLocale(locale)
 
-    const template = getTemplate(slug)
+    const template = getTemplate(slug, locale)
 
     if (!template) {
         notFound()

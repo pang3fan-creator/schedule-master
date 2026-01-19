@@ -1008,6 +1008,11 @@
             "weekRange": "Week {range}"
         }
     },
+    "Metadata": {
+        "title": "TrySchedule | Free Online Schedule Builder (No Login Required)",
+        "description": "The easiest free online schedule builder. Drag-and-drop interface, instant PNG export. No signup needed. PDF & AI tools available for Pro users.",
+        "organizationDescription": "The easiest free online schedule builder for students, managers, and gyms."
+    },
     "NotFound": {
         "title": "404 - Page Not Found",
         "description": "The page you are looking for does not exist or has been moved.",

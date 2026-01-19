@@ -520,14 +520,37 @@ Perfect for establishing cleaning routines, teaching kids responsibility, coordi
     },
 }
 
-export function getTemplate(slug: string): TemplateData | undefined {
-    return TEMPLATES[slug]
+import { TEMPLATE_TRANSLATIONS_ES } from "./templates-translations"
+
+export function getTemplate(slug: string, locale: string = 'en'): TemplateData | undefined {
+    const template = TEMPLATES[slug]
+    if (!template) return undefined
+
+    if (locale === 'es') {
+        const translation = TEMPLATE_TRANSLATIONS_ES[slug]
+        if (translation) {
+            const { events: transEvents, ...restTrans } = translation
+            const merged = { ...template, ...restTrans }
+
+            // Merge events if translated events exist
+            if (transEvents && template.events) {
+                merged.events = template.events.map((evt, i) => {
+                    const transEvt = transEvents[i]
+                    return transEvt ? { ...evt, ...transEvt } : evt
+                })
+            }
+            return merged
+        }
+    }
+
+    return template
 }
 
 export function getAllTemplateSlugs(): string[] {
     return Object.keys(TEMPLATES)
 }
 
-export function getAllTemplates(): TemplateData[] {
-    return Object.values(TEMPLATES)
+export function getAllTemplates(locale: string = 'en'): TemplateData[] {
+    const slugs = getAllTemplateSlugs()
+    return slugs.map(slug => getTemplate(slug, locale)!)
 }

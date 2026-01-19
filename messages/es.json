@@ -1002,11 +1002,15 @@
                 "foundation": "Vertido de Cimientos",
                 "framing": "Estructura y Techo",
                 "hvac": "HVAC y Electricidad",
-                "interior": "Acabados Interiores"
-            },
-            "week": "Semana {num}",
-            "weekRange": "Semana {range}"
+                "week": "Semana {num}",
+                "weekRange": "Semana {range}"
+            }
         }
+    },
+    "Metadata": {
+        "title": "TrySchedule | Creador de Horarios en Línea Gratuito (Sin Registro)",
+        "description": "El creador de horarios en línea gratuito más fácil. Interfaz de arrastrar y soltar, exportación instantánea a PNG. No es necesario registrarse. Herramientas PDF e IA disponibles para usuarios Pro.",
+        "organizationDescription": "El creador de horarios en línea gratuito más fácil para estudiantes, gerentes y gimnasios."
     },
     "NotFound": {
         "title": "404 - Página No Encontrada",
