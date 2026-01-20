@@ -46,7 +46,7 @@ export function LanguageSwitcher({ className }: { className?: string }) {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className={cn("text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 dark:hover:bg-gray-800", className)}>
+                <Button variant="ghost" size="icon" className={cn("text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 dark:hover:bg-gray-800", className)} suppressHydrationWarning={true}>
                     <Languages className="h-[1.2rem] w-[1.2rem]" />
                     <span className="sr-only">{t('nav.language')}</span>
                 </Button>
