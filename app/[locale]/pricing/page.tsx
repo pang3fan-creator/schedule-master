@@ -54,7 +54,7 @@ function generateProductSchemas(locale: string) {
             "@type": "Product",
             "name": "TrySchedule Starter (Free)",
             "description": "Free schedule builder for students and personal use",
-            "image": `${siteUrl}/products/tryschedule-starter.png`,
+            "image": `${siteUrl}/products/tryschedule-starter.webp`,
             "url": pricingUrl,
             "offers": {
                 "@type": "Offer",
@@ -87,7 +87,7 @@ function generateProductSchemas(locale: string) {
             "@type": "Product",
             "name": "TrySchedule 7-Day Pass",
             "description": "Full pro features for one week - PDF export, AI scheduling, cloud sync",
-            "image": `${siteUrl}/products/tryschedule-7day.png`,
+            "image": `${siteUrl}/products/tryschedule-7day.webp`,
             "url": pricingUrl,
             "offers": {
                 "@type": "Offer",
@@ -120,7 +120,7 @@ function generateProductSchemas(locale: string) {
             "@type": "Product",
             "name": "TrySchedule Monthly",
             "description": "Monthly subscription with all pro features including priority support",
-            "image": `${siteUrl}/products/tryschedule-monthly.png`,
+            "image": `${siteUrl}/products/tryschedule-monthly.webp`,
             "url": pricingUrl,
             "offers": {
                 "@type": "Offer",
@@ -154,7 +154,7 @@ function generateProductSchemas(locale: string) {
             "@type": "Product",
             "name": "TrySchedule Lifetime",
             "description": "One-time payment for lifetime access to all pro features",
-            "image": `${siteUrl}/products/tryschedule-lifetime.png`,
+            "image": `${siteUrl}/products/tryschedule-lifetime.webp`,
             "url": pricingUrl,
             "offers": {
                 "@type": "Offer",
