@@ -15,7 +15,18 @@ export default clerkMiddleware(async (auth, req) => {
     if (isApiRoute(req)) {
         return NextResponse.next();
     }
-    return intlMiddleware(req);
+
+    // Apply intl middleware and get response
+    const response = intlMiddleware(req);
+
+    // Set x-locale header for RootLayout to use for lang attribute
+    // Extract locale from pathname (e.g., /es/privacy -> es)
+    const pathname = req.nextUrl.pathname;
+    const localeMatch = pathname.match(/^\/([a-z]{2})(\/|$)/);
+    const locale = localeMatch ? localeMatch[1] : defaultLocale;
+    response.headers.set('x-locale', locale);
+
+    return response;
 });
 
 export const config = {
