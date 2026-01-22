@@ -1,6 +1,5 @@
 import Link from "next/link"
 import Image from "next/image"
-import PHBadge from "@/components/PHBadge"
 import { useTranslations, useLocale } from "next-intl"
 
 
@@ -31,12 +30,6 @@ export function Footer() {
                     </p>
                 </div>
                 <div className="flex gap-6 items-center">
-                    <div className="flex items-center gap-4">
-                        <PHBadge variant="inline" className="translate-y-0" />
-                        <a href="https://www.nxgntools.com/tools/tryschedule?utm_source=tryschedule" target="_blank" rel="noopener" className="inline-block w-auto transition-transform hover:scale-105">
-                            <img src="https://www.nxgntools.com/api/embed/tryschedule?type=LAUNCHING_SOON_ON" alt="NextGen Tools Badge - The #1 AI Tools Directory & Launch Platform" className="h-[38px] w-auto" />
-                        </a>
-                    </div>
                     <Link href={getLocalizedUrl("/pricing")} className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">{t('nav.pricing')}</Link>
                     <Link href={getLocalizedUrl("/terms")} className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">{t('footer.terms')}</Link>
                     <Link href={getLocalizedUrl("/privacy")} className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">{t('footer.privacy')}</Link>
@@ -71,13 +64,6 @@ export function Footer() {
                     })}
                 </p>
 
-                {/* Badges for Mobile */}
-                <div className="mt-2 flex flex-col items-center gap-3">
-                    <PHBadge variant="inline" />
-                    <a href="https://www.nxgntools.com/tools/tryschedule?utm_source=tryschedule" target="_blank" rel="noopener" className="inline-block w-auto transition-transform hover:scale-105">
-                        <img src="https://www.nxgntools.com/api/embed/tryschedule?type=LAUNCHING_SOON_ON" alt="NextGen Tools Badge - The #1 AI Tools Directory & Launch Platform" className="h-[42px] w-auto" />
-                    </a>
-                </div>
             </div>
         </footer>
     )
