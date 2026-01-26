@@ -16,20 +16,16 @@
       "Bash(npm:*)",
       "Bash(curl:*)",
       "Read(C:\\Users\\pang1fan\\.claude\\settings.json)",
-      "Read(C:\\Users\\pang1fan\\AppData\\Roaming\\Code\\User\\settings.json)"
+      "Read(C:\\Users\\pang1fan\\AppData\\Roaming\\Code\\User\\settings.json)",
+      "Bash(git:*)",
+      "mcp__acp__Bash",
+      "mcp__zcode_internal_tool__new_page"
     ],
     "deny": [],
-    "defaultMode": "plan",
-    "ask": []
-  },
-  "enabledPlugins": {
-    "claude-mem@thedotmack": true,
-    "ralph-wiggum@claude-plugins-official": true,
-    "glm-plan-usage@zai-coding-plugins": true,
-    "glm-plan-bug@zai-coding-plugins": true
+    "ask": [],
+    "defaultMode": "plan"
   },
   "model": "opus",
-  "language": "简体中文",
   "hooks": {
     "Stop": [
       {
@@ -50,8 +46,27 @@
           }
         ]
       }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/claudeception-activator.sh"
+          }
+        ]
+      }
     ]
   },
-  "dangerouslySkipPermissions": true,
-  "outputStyle": "Default"
+  "enabledPlugins": {
+    "claude-mem@thedotmack": true,
+    "ralph-wiggum@claude-plugins-official": true,
+    "glm-plan-usage@zai-coding-plugins": true,
+    "glm-plan-bug@zai-coding-plugins": true,
+    "superpowers@superpowers-marketplace": true
+  },
+  "outputStyle": "Default",
+  "language": "简体中文",
+  "autoUpdatesChannel": "latest",
+  "dangerouslySkipPermissions": true
 }
