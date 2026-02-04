@@ -1,24 +1,26 @@
-import type { Metadata, Viewport } from "next"
-import { Analytics } from "@vercel/analytics/next"
-import { GoogleAnalytics } from "@next/third-parties/google"
-import Script from "next/script"
-import { headers } from "next/headers"
-import "./globals.css"
+import type { Metadata, Viewport } from "next";
+import { Analytics } from "@vercel/analytics/next";
+import { GoogleAnalytics } from "@next/third-parties/google";
+import Script from "next/script";
+import { headers } from "next/headers";
+import "./globals.css";
 
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.tryschedule.com'
+const baseUrl =
+  process.env.NEXT_PUBLIC_SITE_URL || "https://www.tryschedule.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   alternates: {
     canonical: "/",
     languages: {
-      'en': '/',
-      'es': '/es',
-      'x-default': '/',
+      en: "/",
+      es: "/es",
+      "x-default": "/",
     },
   },
   title: "TrySchedule | Free Online Schedule Builder (No Login Required)",
-  description: "The easiest free online schedule builder. Drag-and-drop interface, instant PNG export. No signup needed. PDF & AI tools available for Pro users.",
+  description:
+    "The easiest free online schedule builder. Drag-and-drop interface, instant PNG export. No signup needed. PDF & AI tools available for Pro users.",
   generator: "Next.js",
   manifest: "/manifest.json",
   keywords: [
@@ -35,7 +37,8 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: "TrySchedule | Free Online Schedule Builder (No Login Required)",
-    description: "The easiest free online schedule builder. Drag-and-drop interface, instant PNG export. No signup needed. PDF & AI tools available for Pro users.",
+    description:
+      "The easiest free online schedule builder. Drag-and-drop interface, instant PNG export. No signup needed. PDF & AI tools available for Pro users.",
     type: "website",
     siteName: "TrySchedule",
     images: [
@@ -50,7 +53,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "TrySchedule | Free Online Schedule Builder",
-    description: "The easiest free online schedule builder. Drag-and-drop interface, instant PNG export. No signup needed.",
+    description:
+      "The easiest free online schedule builder. Drag-and-drop interface, instant PNG export. No signup needed.",
     images: ["/opengraph-image.png"],
   },
   appleWebApp: {
@@ -75,28 +79,28 @@ export const metadata: Metadata = {
     ],
     apple: "/icon.svg",
   },
-}
+};
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
   themeColor: "#3b82f6",
-}
+};
 
 // Helper function to get locale from middleware-set header
 async function getLocaleFromHeaders(): Promise<string> {
-  const headersList = await headers()
+  const headersList = await headers();
   // The middleware sets the 'x-locale' header based on the URL path
-  return headersList.get('x-locale') || 'en'
+  return headersList.get("x-locale") || "en";
 }
 
 export default async function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode;
 }>) {
-  const locale = await getLocaleFromHeaders()
+  const locale = await getLocaleFromHeaders();
 
   return (
     <html lang={locale} suppressHydrationWarning>
@@ -128,5 +132,5 @@ export default async function RootLayout({
       </body>
       <GoogleAnalytics gaId="G-7GCLCCR689" />
     </html>
-  )
+  );
 }

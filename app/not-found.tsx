@@ -1,18 +1,19 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { PageLayout } from "@/components/PageLayout"
-import { Button } from "@/components/ui/button"
-import { Home, Search } from "lucide-react"
-import { useTranslations, useLocale, NextIntlClientProvider } from "next-intl"
-import enMessages from "@/messages/en.json"
+import Link from "next/link";
+import { PageLayout } from "@/components/PageLayout";
+import { Button } from "@/components/ui/button";
+import { Home, Search } from "lucide-react";
+import { useTranslations, useLocale, NextIntlClientProvider } from "next-intl";
+import enMessages from "@/messages/en.json";
 
 function NotFoundContent() {
-  const t = useTranslations('NotFound')
-  const locale = useLocale()
+  const t = useTranslations("NotFound");
+  const locale = useLocale();
 
   // Helper for locale-aware links
-  const getLocalizedUrl = (path: string) => locale === 'en' ? path : `/${locale}${path}`
+  const getLocalizedUrl = (path: string) =>
+    locale === "en" ? path : `/${locale}${path}`;
 
   return (
     <PageLayout contentPadding="">
@@ -28,14 +29,10 @@ function NotFoundContent() {
           {/* Error Message */}
           <div className="mb-8">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              {t('title')}
+              {t("title")}
             </h2>
-            <p className="text-lg text-gray-600 mb-2">
-              {t('description')}
-            </p>
-            <p className="text-base text-gray-500">
-              {t('hint')}
-            </p>
+            <p className="text-lg text-gray-600 mb-2">{t("description")}</p>
+            <p className="text-base text-gray-500">{t("hint")}</p>
           </div>
 
           {/* Action Buttons */}
@@ -45,9 +42,9 @@ function NotFoundContent() {
               size="lg"
               className="bg-blue-600 hover:bg-blue-700 text-white shadow-lg hover:shadow-xl transition-all"
             >
-              <Link href={getLocalizedUrl('/')}>
+              <Link href={getLocalizedUrl("/")}>
                 <Home className="w-5 h-5 mr-2" />
-                {t('backHome')}
+                {t("backHome")}
               </Link>
             </Button>
             <Button
@@ -56,9 +53,9 @@ function NotFoundContent() {
               size="lg"
               className="shadow-sm hover:shadow-md transition-all"
             >
-              <Link href={getLocalizedUrl('/templates')}>
+              <Link href={getLocalizedUrl("/templates")}>
                 <Search className="w-5 h-5 mr-2" />
-                {t('browseTemplates')}
+                {t("browseTemplates")}
               </Link>
             </Button>
           </div>
@@ -66,19 +63,28 @@ function NotFoundContent() {
           {/* Decorative Elements */}
           <div className="mt-16 opacity-20">
             <div className="flex justify-center gap-4">
-              <div className="w-2 h-2 rounded-full bg-blue-600 animate-bounce" style={{ animationDelay: "0s" }} />
-              <div className="w-2 h-2 rounded-full bg-violet-600 animate-bounce" style={{ animationDelay: "0.2s" }} />
-              <div className="w-2 h-2 rounded-full bg-blue-600 animate-bounce" style={{ animationDelay: "0.4s" }} />
+              <div
+                className="w-2 h-2 rounded-full bg-blue-600 animate-bounce"
+                style={{ animationDelay: "0s" }}
+              />
+              <div
+                className="w-2 h-2 rounded-full bg-violet-600 animate-bounce"
+                style={{ animationDelay: "0.2s" }}
+              />
+              <div
+                className="w-2 h-2 rounded-full bg-blue-600 animate-bounce"
+                style={{ animationDelay: "0.4s" }}
+              />
             </div>
           </div>
         </div>
       </div>
     </PageLayout>
-  )
+  );
 }
 
-import { ThemeProvider } from "@/components/ThemeProvider"
-import { ThemeClerkProvider } from "@/components/ThemeClerkProvider"
+import { ThemeProvider } from "@/components/ThemeProvider";
+import { ThemeClerkProvider } from "@/components/ThemeClerkProvider";
 
 export default function NotFound() {
   return (
@@ -89,5 +95,5 @@ export default function NotFound() {
         </NextIntlClientProvider>
       </ThemeClerkProvider>
     </ThemeProvider>
-  )
+  );
 }

@@ -1,1065 +1,1065 @@
 {
-    "Terms": {
-        "title": "Términos de Servicio",
-        "metaTitle": "Términos de Servicio | TrySchedule",
-        "metaDescription": "Términos de Servicio de TrySchedule - Creador de Horarios en Línea Gratuito.",
-        "lastUpdated": "Última actualización: 1 de enero de 2026",
-        "breadcrumb": {
-            "home": "Inicio",
-            "terms": "Términos"
-        },
-        "sections": {
-            "acceptance": {
-                "title": "1. Aceptación de los Términos",
-                "content": "Al acceder y utilizar TrySchedule (\"el Servicio\"), usted acepta y se compromete a cumplir con los términos y disposiciones de este acuerdo. Si no está de acuerdo con estos términos, por favor no utilice el Servicio."
-            },
-            "description": {
-                "title": "2. Descripción del Servicio",
-                "content": "TrySchedule es una herramienta de planificación y programación basada en la web que permite a los usuarios crear, gestionar y compartir horarios. Ofrecemos varios niveles de suscripción, incluyendo opciones gratuitas y de pago con diferentes conjuntos de funciones."
-            },
-            "userAccounts": {
-                "title": "3. Cuentas de Usuario",
-                "intro": "Para utilizar ciertas funciones del Servicio, debe registrarse para obtener una cuenta. Usted acepta:",
-                "items": [
-                    "Proporcionar información precisa y completa durante el registro",
-                    "Mantener la seguridad de su contraseña y cuenta",
-                    "Notificarnos inmediatamente sobre cualquier uso no autorizado de su cuenta",
-                    "Aceptar la responsabilidad de todas las actividades que ocurran bajo su cuenta"
-                ]
-            },
-            "payment": {
-                "title": "4. Términos de Pago",
-                "content": "Para las suscripciones de pago, usted acepta pagar todas las tarifas asociadas con el plan elegido. Los pagos se procesan a través de nuestro proveedor de pago externo. Las suscripciones se renuevan automáticamente a menos que se cancelen antes de la fecha de renovación."
-            },
-            "acceptableUse": {
-                "title": "5. Uso Aceptable",
-                "intro": "Usted acepta no:",
-                "items": [
-                    "Usar el Servicio para cualquier propósito ilegal",
-                    "Intentar obtener acceso no autorizado a cualquier parte del Servicio",
-                    "Interferir o interrumpir el Servicio o los servidores",
-                    "Cargar código o contenido malicioso",
-                    "Revender o redistribuir el Servicio sin autorización"
-                ]
-            },
-            "thirdParty": {
-                "title": "6. Servicios de Terceros",
-                "content1": "Nuestro Servicio le permite conectarse con servicios de terceros, como Google Calendar, para mejorar su experiencia de programación. Al utilizar estas integraciones, usted acepta cumplir con los términos y políticas de privacidad de esos servicios de terceros.",
-                "content2": "No somos responsables del contenido, políticas de privacidad o prácticas de ningún servicio de terceros. Le recomendamos revisar los términos y políticas de privacidad de cualquier servicio de terceros antes de conectarlo a TrySchedule."
-            },
-            "intellectualProperty": {
-                "title": "7. Propiedad Intelectual",
-                "content": "El Servicio y su contenido original, características y funcionalidad son propiedad de TrySchedule y están protegidos por leyes internacionales de derechos de autor, marcas registradas y otras leyes de propiedad intelectual."
-            },
-            "liability": {
-                "title": "8. Limitación de Responsabilidad",
-                "content": "En ningún caso TrySchedule será responsable de daños indirectos, incidentales, especiales, consecuentes o punitivos resultantes de su uso o incapacidad de usar el Servicio."
-            },
-            "changes": {
-                "title": "9. Cambios en los Términos",
-                "content": "Nos reservamos el derecho de modificar estos términos en cualquier momento. Notificaremos a los usuarios sobre cambios significativos por correo electrónico o a través del Servicio. El uso continuado del Servicio después de los cambios constituye la aceptación de los nuevos términos."
-            },
-            "contact": {
-                "title": "10. Información de Contacto",
-                "content": "Si tiene alguna pregunta sobre estos Términos, contáctenos en"
-            }
-        }
+  "Terms": {
+    "title": "Términos de Servicio",
+    "metaTitle": "Términos de Servicio | TrySchedule",
+    "metaDescription": "Términos de Servicio de TrySchedule - Creador de Horarios en Línea Gratuito.",
+    "lastUpdated": "Última actualización: 1 de enero de 2026",
+    "breadcrumb": {
+      "home": "Inicio",
+      "terms": "Términos"
     },
-    "Privacy": {
-        "title": "Política de Privacidad",
-        "metaTitle": "Política de Privacidad | TrySchedule",
-        "metaDescription": "Política de Privacidad de TrySchedule - Creador de Horarios en Línea Gratuito.",
-        "lastUpdated": "Última actualización: 1 de enero de 2026",
-        "breadcrumb": {
-            "home": "Inicio",
-            "privacy": "Privacidad"
-        },
-        "sections": {
-            "introduction": {
-                "title": "1. Introducción",
-                "content": "TrySchedule (\"nosotros\", \"nuestro\" o \"nos\") se compromete a proteger su privacidad. Esta Política de Privacidad explica cómo recopilamos, usamos, divulgamos y protegemos su información cuando utiliza nuestro servicio TrySchedule."
-            },
-            "informationCollect": {
-                "title": "2. Información que Recopilamos",
-                "personalInfo": {
-                    "title": "Información Personal",
-                    "intro": "Cuando se registra para obtener una cuenta, podemos recopilar:",
-                    "items": [
-                        "Nombre y dirección de correo electrónico",
-                        "Información de perfil que elija proporcionar",
-                        "Información de pago (procesada de forma segura por nuestro proveedor de pagos)"
-                    ]
-                },
-                "usageInfo": {
-                    "title": "Información de Uso",
-                    "intro": "Recopilamos automáticamente:",
-                    "items": [
-                        "Información del dispositivo y navegador",
-                        "Dirección IP y datos de ubicación",
-                        "Patrones de uso e interacciones con funciones",
-                        "Cookies y tecnologías de seguimiento similares"
-                    ]
-                }
-            },
-            "howWeUse": {
-                "title": "3. Cómo Usamos Su Información",
-                "intro": "Usamos su información para:",
-                "items": [
-                    "Proporcionar y mantener nuestro Servicio",
-                    "Procesar sus transacciones y gestionar su suscripción",
-                    "Enviarle actualizaciones, alertas de seguridad y mensajes de soporte",
-                    "Mejorar y personalizar su experiencia",
-                    "Analizar patrones de uso para mejorar nuestro Servicio",
-                    "Cumplir con obligaciones legales"
-                ]
-            },
-            "informationSharing": {
-                "title": "4. Compartir Información",
-                "intro": "No vendemos su información personal. Podemos compartir su información con:",
-                "items": [
-                    "Proveedores de servicios que ayudan a operar nuestro Servicio",
-                    "Socios comerciales con su consentimiento",
-                    "Autoridades legales cuando lo requiera la ley"
-                ]
-            },
-            "analytics": {
-                "title": "5. Análisis y Herramientas de Terceros",
-                "intro": "Utilizamos servicios de análisis de terceros para ayudarnos a comprender cómo los usuarios interactúan con nuestro Servicio y para mejorar la experiencia del usuario. Estos servicios pueden recopilar datos anónimos sobre su uso del Servicio.",
-                "googleAnalytics": {
-                    "title": "Google Analytics",
-                    "content": "Utilizamos Google Analytics, un servicio de análisis web proporcionado por Google, Inc. Google Analytics utiliza cookies para analizar cómo los usuarios usan nuestro Servicio. La información generada se transmite y almacena por Google. Para más información sobre cómo Google usa los datos, visite",
-                    "linkText": "la Política de Privacidad de Google"
-                },
-                "microsoftClarity": {
-                    "title": "Microsoft Clarity",
-                    "content": "Utilizamos Microsoft Clarity, una herramienta de análisis de comportamiento del usuario proporcionada por Microsoft. Clarity captura cómo los usuarios interactúan con nuestro Servicio a través de grabaciones de sesiones y mapas de calor. Clarity enmascara automáticamente el contenido sensible para proteger la privacidad del usuario. Para más información, visite",
-                    "linkText": "la Declaración de Privacidad de Microsoft"
-                },
-                "optingOut": {
-                    "title": "Exclusión",
-                    "content": "Puede optar por no participar en el seguimiento de análisis ajustando la configuración de su navegador para bloquear cookies o utilizando extensiones de navegador diseñadas para bloquear scripts de seguimiento."
-                }
-            },
-            "googleUserData": {
-                "title": "6. Datos de Usuario de Google",
-                "intro": "TrySchedule utiliza Google OAuth para permitirle conectar su cuenta de Google y sincronizar su horario local con Google Calendar.",
-                "infoAccess": {
-                    "title": "Información a la que Accedemos",
-                    "intro": "Cuando conecta su cuenta de Google, solicitamos los siguientes permisos:",
-                    "items": [
-                        "Ver la configuración de su calendario: Usamos esto para detectar la zona horaria de su Google Calendar principal, asegurando que los eventos sincronizados aparezcan a la hora correcta.",
-                        "Ver y editar eventos en sus calendarios: Usamos esto para crear, actualizar y gestionar los eventos de horario que elija sincronizar desde TrySchedule a su Google Calendar."
-                    ]
-                },
-                "howWeUseData": {
-                    "title": "Cómo Usamos Estos Datos",
-                    "content": "Nuestro uso de la información recibida de las APIs de Google se limita estrictamente a proporcionar y mejorar la función de Sincronización de Calendario. No almacenamos los datos de su Google Calendar en nuestros servidores, ni los usamos para publicidad ni los compartimos con terceros excepto cuando sea necesario para proporcionar el servicio."
-                },
-                "limitedUse": {
-                    "title": "Política de Uso Limitado de API de Google",
-                    "content": "El uso y transferencia de TrySchedule a cualquier otra aplicación de la información recibida de las APIs de Google se adherirá a la",
-                    "linkText": "Política de Datos de Usuario de Servicios de API de Google",
-                    "suffix": ", incluyendo los requisitos de Uso Limitado."
-                }
-            },
-            "dataSecurity": {
-                "title": "7. Seguridad de Datos",
-                "content": "Implementamos medidas de seguridad estándar de la industria para proteger sus datos, incluyendo cifrado, servidores seguros y evaluaciones de seguridad regulares. Sin embargo, ningún método de transmisión por Internet es 100% seguro."
-            },
-            "yourRights": {
-                "title": "8. Sus Derechos",
-                "intro": "Dependiendo de su ubicación, puede tener derecho a:",
-                "items": [
-                    "Acceder a sus datos personales",
-                    "Corregir datos inexactos",
-                    "Solicitar la eliminación de sus datos",
-                    "Oponerse o restringir el procesamiento",
-                    "Portabilidad de datos",
-                    "Retirar el consentimiento en cualquier momento"
-                ]
-            },
-            "cookies": {
-                "title": "9. Cookies",
-                "content": "Utilizamos cookies y tecnologías similares para mejorar su experiencia, analizar el uso y ofrecer contenido personalizado. Puede controlar las preferencias de cookies a través de la configuración de su navegador."
-            },
-            "childrenPrivacy": {
-                "title": "10. Privacidad de los Niños",
-                "content": "Nuestro Servicio no está destinado a niños menores de 13 años. No recopilamos conscientemente información personal de niños menores de 13 años. Si cree que hemos recopilado dicha información, contáctenos inmediatamente."
-            },
-            "changes": {
-                "title": "11. Cambios en Esta Política",
-                "content": "Podemos actualizar esta Política de Privacidad de vez en cuando. Le notificaremos cualquier cambio publicando la nueva Política de Privacidad en esta página y actualizando la fecha de \"Última actualización\"."
-            },
-            "contact": {
-                "title": "12. Contáctenos",
-                "content": "Si tiene preguntas sobre esta Política de Privacidad, contáctenos en"
-            }
-        }
-    },
-    "Contact": {
-        "metaTitle": "Contáctenos | TrySchedule",
-        "metaDescription": "Contacte a TrySchedule - Nos encantaría saber de usted. Envíenos un mensaje sobre preguntas, comentarios o soporte.",
-        "breadcrumb": {
-            "home": "Inicio",
-            "contact": "Contacto"
-        },
-        "header": {
-            "title": "Contáctenos",
-            "subtitle": "¿Tiene preguntas o comentarios? Nos encantaría saber de usted. Envíenos un mensaje y responderemos lo antes posible."
-        },
-        "infoCards": {
-            "email": {
-                "title": "Correo Electrónico",
-                "description": "Para consultas generales"
-            },
-            "office": {
-                "title": "Oficina",
-                "address1": "123 Tech Street",
-                "address2": "San Francisco, CA 94102",
-                "address3": "Estados Unidos"
-            },
-            "hours": {
-                "title": "Horario de Atención",
-                "line1": "Lunes - Viernes",
-                "line2": "9:00 AM - 6:00 PM (PST)",
-                "line3": "Fin de semana: Cerrado"
-            }
-        },
-        "form": {
-            "name": {
-                "label": "Nombre",
-                "placeholder": "Su nombre"
-            },
-            "email": {
-                "label": "Correo Electrónico",
-                "placeholder": "su@email.com"
-            },
-            "subject": {
-                "label": "Asunto",
-                "placeholder": "¿Cómo podemos ayudarle?"
-            },
-            "message": {
-                "label": "Mensaje",
-                "placeholder": "Cuéntenos más sobre su consulta..."
-            },
-            "submit": "Enviar Mensaje",
-            "submitting": "Enviando..."
-        },
-        "success": {
-            "title": "¡Mensaje Enviado!",
-            "message": "Gracias por contactarnos. Le responderemos dentro de 24-48 horas.",
-            "sendAnother": "Enviar Otro Mensaje"
-        },
-        "errors": {
-            "sendFailed": "Error al enviar, por favor intente más tarde"
-        }
-    },
-    "Pricing": {
-        "metaTitle": "Programación Accesible | Planes de Precios - TrySchedule Pro",
-        "metaDescription": "Comience gratis o desbloquee exportación PDF y programación con IA con TrySchedule Pro. Compare planes desde $4.9/semana.",
-        "breadcrumb": {
-            "home": "Inicio",
-            "pricing": "Precios"
-        },
-        "hero": {
-            "title": "Herramientas Profesionales de Programación",
-            "subtitle": "Comience con nuestro creador de horarios gratuito para siempre, o actualice a Pro para automatizar su flujo de trabajo con IA y exportar PDFs de alta resolución.",
-            "trust": "Confiado por más de 5000 estudiantes y gerentes en todo el mundo."
-        },
-        "successBanner": "🎉 ¡Pago exitoso! Sus funciones Pro ya están activas.",
-        "promo": {
-            "placeholder": "Ingrese código promocional",
-            "apply": "Aplicar",
-            "remove": "Eliminar",
-            "applied": "Código promocional:"
-        },
-        "plans": {
-            "starter": {
-                "title": "Inicial",
-                "priceDetail": "/ para siempre",
-                "description": "Para estudiantes y uso personal",
-                "features": [
-                    "Edición web ilimitada",
-                    "Plantillas básicas (Semanal/Diario)",
-                    "Descargar como imagen (JPG/PNG)",
-                    "Almacenamiento en navegador (Sin inicio de sesión)"
-                ],
-                "buttonText": "Comenzar Gratis"
-            },
-            "sevenDay": {
-                "title": "Pase de 7 Días",
-                "priceDetail": "/ semana",
-                "description": "Perfecto para programación única.",
-                "features": [
-                    "Todas las funciones Iniciales",
-                    "Programador Automático con IA",
-                    "Exportación Alta Resolución (PDF y Vector)",
-                    "Sincronización con Google Calendar",
-                    "Guardado en la Nube (Acceso desde cualquier dispositivo)",
-                    "Sin marcas de agua en exportaciones"
-                ],
-                "buttonText": "Elegir Pase"
-            },
-            "monthly": {
-                "title": "Mensual",
-                "priceDetail": "/ mes",
-                "description": "Ideal para gerentes, RRHH, programadores frecuentes.",
-                "features": [
-                    "Todas las funciones Iniciales",
-                    "Programador Automático con IA",
-                    "Exportación Alta Resolución (PDF y Vector)",
-                    "Sincronización con Google Calendar",
-                    "Guardado en la Nube (Acceso desde cualquier dispositivo)",
-                    "Sin marcas de agua en exportaciones",
-                    "Soporte por Email Prioritario"
-                ],
-                "buttonText": "Actualizar a Pro"
-            },
-            "lifetime": {
-                "title": "De por Vida",
-                "priceDetail": "/ pago único",
-                "description": "Pague una vez y obtenga todas las funciones pro para siempre.",
-                "features": [
-                    "Todas las funciones anteriores",
-                    "Pago único con uso de por vida",
-                    "Soporte por Email Prioritario"
-                ],
-                "buttonText": "Comprar Una Vez"
-            }
-        },
-        "comparison": {
-            "title": "Comparar Planes y Características",
-            "headers": {
-                "feature": "Característica",
-                "starter": "Inicial",
-                "sevenDay": "Pase 7 Días",
-                "monthly": "Mensual",
-                "lifetime": "De por Vida"
-            },
-            "categories": {
-                "coreTools": "Herramientas Principales",
-                "exportSharing": "Exportación y Compartir",
-                "advancedPower": "Funciones Avanzadas"
-            },
-            "features": {
-                "dragDrop": "Constructor Arrastrar y Soltar",
-                "visualBuilder": "Constructor Visual de Horarios",
-                "mobileEditor": "Editor Compatible con Móviles",
-                "downloadImage": "Descargar Como Imagen",
-                "pdfExport": "Exportación PDF Imprimible",
-                "excelExport": "Exportar a Excel / CSV",
-                "googleSync": "Sincronizar con Google Calendar",
-                "aiBuilder": "Constructor de Horarios con IA",
-                "unlimitedTemplates": "Plantillas Ilimitadas",
-                "cloudStorage": "Almacenamiento en la Nube",
-                "noWatermarks": "Sin Marcas de Agua",
-                "prioritySupport": "Soporte por Email Prioritario"
-            },
-            "yes": "Sí",
-            "no": "No"
-        },
-        "faq": {
-            "title": "Preguntas Frecuentes",
-            "items": [
-                {
-                    "question": "¿El creador de horarios es realmente gratis?",
-                    "answer": "¡Sí! Nuestro creador de horarios en línea gratuito le permite crear, editar y descargar horarios como imágenes sin pagar nada. Solo paga si necesita funciones avanzadas como exportación PDF o automatización con IA."
-                },
-                {
-                    "question": "¿Cómo funciona el creador de horarios con IA?",
-                    "answer": "Nuestro programador con IA analiza su entrada (tareas, empleados, franjas horarias) y genera automáticamente un horario optimizado, ahorrándole horas de planificación manual."
-                },
-                {
-                    "question": "¿Puedo usar esto para programar turnos de empleados?",
-                    "answer": "Absolutamente. El plan Pro está diseñado para gerentes. Puede crear horarios de turnos de trabajo, manejar rotaciones y exportar el horario final a Excel para nóminas fácilmente."
-                },
-                {
-                    "question": "¿Puedo cancelar mi suscripción en cualquier momento?",
-                    "answer": "Sí, puede cancelar su suscripción mensual instantáneamente desde su panel de control. Sin preguntas. Garantía de devolución de dinero de 30 días."
-                }
-            ]
-        }
-    },
-    "Blog": {
-        "metaTitle": "Blog | TrySchedule - Consejos de Programación y Guías de Productividad",
-        "metaDescription": "Descubra consejos de programación, guías de productividad y mejores prácticas. Aprenda a optimizar su tiempo con TrySchedule.",
-        "breadcrumb": {
-            "home": "Inicio",
-            "blog": "Blog"
-        },
-        "hero": {
-            "title": "Nuestro Blog",
-            "description": "Conocimientos sobre productividad, programación y gestión de equipos."
-        },
-        "list": {
-            "noArticles": "No se encontraron artículos en esta categoría.",
-            "previousPage": "Página anterior",
-            "nextPage": "Página siguiente"
-        },
-        "detail": {
-            "share": "Compartir",
-            "relatedArticles": "Artículos Relacionados",
-            "postNotFound": "Publicación No Encontrada | TrySchedule Blog"
-        },
-        "categories": {
-            "all": "Todos",
-            "productivity tips": "Consejos de Productividad",
-            "case studies": "Estudios de Caso",
-            "product updates": "Actualizaciones del Producto"
-        },
-        "featuredArticle": "Artículo Destacado",
-        "metaKeywords": "consejos de programación, blog de productividad, gestión del tiempo, consejos del creador de horarios, guía de programación de empleados",
-        "readTime": "{minutes} min de lectura"
-    },
-    "Templates": {
-        "metaTitle": "Plantillas de Horarios Gratis | TrySchedule",
-        "metaDescription": "Comienza rápidamente con plantillas de horarios diseñadas profesionalmente. Elige la que mejor se adapte a tus necesidades y personalízala gratis.",
-        "breadcrumb": {
-            "home": "Inicio",
-            "templates": "Plantillas"
-        },
-        "hero": {
-            "title": "Plantillas de Horarios",
-            "description": "Comienza rápidamente con plantillas diseñadas profesionalmente. Elige la que mejor se adapte a tus necesidades."
-        },
-        "search": {
-            "placeholder": "Buscar plantillas por palabra clave...",
-            "clear": "Limpiar búsqueda"
-        },
-        "list": {
-            "noTemplates": "No se encontraron plantillas en esta categoría.",
-            "previousPage": "Página anterior",
-            "nextPage": "Página siguiente"
-        },
-        "detail": {
-            "useTemplate": "Usar Esta Plantilla",
-            "preview": "Vista Previa",
-            "features": "Características",
-            "backToTemplates": "Volver a Plantillas",
-            "notFound": "Plantilla No Encontrada | TrySchedule",
-            "whatsIncluded": "Qué Incluye",
-            "aboutTemplate": "Sobre Esta Plantilla",
-            "previewNote": "Esta vista previa muestra eventos de ejemplo. Cuando uses esta plantilla, los eventos se programarán para la semana actual.",
-            "previewNoteAI": "Esta vista previa muestra el lienzo del generador de IA. Cuando uses esta plantilla, nuestro asistente de IA te ayudará a construir tu horario personalizado.",
-            "featurePreConfigured": "Eventos Preconfigurados",
-            "featurePreConfiguredDesc": "{count} eventos de ejemplo con colores y tiempos apropiados",
-            "featureAIGeneration": "Generación Inteligente con IA",
-            "featureAIGenerationDesc": "Acceso al asistente de Autocompletado con IA para crear tu rutina desde cero",
-            "featureSettings": "Configuración Optimizada",
-            "featureSettingsDesc": "Formato de hora y horario de trabajo configurados para este caso de uso",
-            "featureCustomizable": "Totalmente Personalizable",
-            "featureCustomizableDesc": "Edita, añade o elimina eventos después de aplicar la plantilla",
-            "loading": "Cargando...",
-            "reviews": {
-                "sarah": "El mejor constructor de horarios gratuito que he encontrado. ¡El arrastrar y soltar es muy intuitivo!",
-                "mike": "Perfecto para crear mi horario semanal de clases. Me encanta la exportación instantánea a PNG."
-            },
-            "resetConfirm": {
-                "title": "Restablecer Todo",
-                "description": "Esto borrará todas las funciones de plantilla de la barra lateral, restaurará tus ajustes a los valores predeterminados y eliminará todos los eventos del calendario. Esta acción no se puede deshacer.",
-                "button": "Sí, Restablecer"
-            }
-        },
-        "categories": {
-            "all": "Todos",
-            "business": "Negocios",
-            "personal": "Personal",
-            "education": "Educación",
-            "ai": "IA"
-        },
-        "faqs": {
-            "title": "Preguntas Frecuentes",
-            "items": [
-                {
-                    "question": "¿Estas plantillas son realmente gratis?",
-                    "answer": "La mayoría de nuestras plantillas de horarios son de uso gratuito; puede previsualizar, personalizar y exportar su horario gratis. Algunas plantillas, como las generadas por IA, requieren una suscripción profesional."
-                },
-                {
-                    "question": "¿Cómo uso una plantilla?",
-                    "answer": "Simplemente haga clic en cualquier plantilla para previsualizarla, luego haga clic en 'Usar Esta Plantilla' para cargarla en el editor. Desde allí, puede personalizar colores, horarios, etiquetas y agregar o eliminar eventos según sus necesidades."
-                },
-                {
-                    "question": "¿Puedo personalizar las plantillas?",
-                    "answer": "¡Absolutamente! Una vez que cargue una plantilla en el editor, tiene control total para modificar cada aspecto: cambiar horarios de eventos, colores, títulos, agregar nuevos eventos o eliminar los existentes. Las plantillas son solo puntos de partida."
-                },
-                {
-                    "question": "¿Qué formatos de exportación están disponibles?",
-                    "answer": "Los usuarios gratuitos pueden exportar horarios como imágenes PNG o JPG (con marca de agua). Los usuarios Pro tienen acceso a exportaciones sin marca de agua, formato PDF para impresión de alta calidad y formato CSV para análisis de datos."
-                },
-                {
-                    "question": "¿Se guardará mi horario?",
-                    "answer": "Su horario se guarda automáticamente en el almacenamiento local de su navegador. Los usuarios Pro también obtienen sincronización en la nube, lo que les permite acceder a sus horarios desde cualquier dispositivo."
-                }
-            ]
-        },
-        "badge": {
-            "pro": "PRO",
-            "featured": "Destacado"
-        },
-        "preview": {
-            "aiTitle": "Deja que la IA cree tu horario perfecto",
-            "aiSubtitle": "Haz clic en 'Usar Esta Plantilla' para comenzar",
-            "sampleEvent": "Evento de Ejemplo"
-        }
-    },
-    "Common": {
-        "nav": {
-            "home": "Inicio",
-            "templates": "Plantillas",
-            "pricing": "Precios",
-            "blog": "Blog",
-            "viewAllTemplates": "Ver Todas las Plantillas",
-            "language": "Idioma",
-            "openMenu": "Abrir menú"
-        },
-        "footer": {
-            "rights": "Todos los derechos reservados.",
-            "terms": "Términos",
-            "privacy": "Privacidad",
-            "contact": "Contacto",
-            "tagline": "<brand>Try</brand>Schedule es el <highlight>creador de horarios en línea gratuito</highlight> más fácil para estudiantes, gerentes y equipos.",
-            "taglineSimple": "es el creador de horarios en línea gratuito más fácil para estudiantes, gerentes y equipos."
-        },
-        "auth": {
-            "signIn": "Iniciar Sesión",
-            "signUp": "Registrarse",
-            "mySubscription": "Mi Suscripción",
-            "yourAccount": "Tu Cuenta"
-        },
-        "sidebar": {
-            "cloudSave": "Guardar en la Nube",
-            "calendarSync": "Sincronizar Calendario",
-            "exportDownload": "Exportar/Descargar",
-            "helpFaq": "Ayuda y Preguntas",
-            "settings": "Configuración",
-            "aiAutofill": "Autocompletar con IA",
-            "reset": "Reiniciar"
-        },
-        "featureComingSoon": {
-            "calendarSync": {
-                "name": "Sincronización de Calendario",
-                "description": "Esta función está incluida en la versión Pro y estará disponible pronto. Ingresa tu correo para ser el primero en saber cuando se lance."
-            }
-        },
-        "upgradeModal": {
-            "title": "Actualizar a Pro",
-            "description": "{feature} está disponible en los planes Pro. Actualiza ahora para desbloquear todas las funciones premium.",
-            "benefits": {
-                "pdf": "Exportaciones PDF de alta resolución sin marcas de agua",
-                "ai": "Sugerencias de programación con IA",
-                "cloud": "Guardado en la nube y sincronización entre dispositivos"
-            },
-            "viewPlans": "Ver Planes",
-            "maybeLater": "Quizás después",
-            "priceNote": "Desde solo $4.9 por un pase de 7 días"
-        },
-        "viewMode": {
-            "day": "Día",
-            "week": "Semana"
-        },
-        "eventDialog": {
-            "addTitle": "Añadir evento",
-            "editTitle": "Editar evento",
-            "form": {
-                "title": "Título",
-                "titlePlaceholder": "Título del evento",
-                "color": "Color",
-                "day": "Día",
-                "days": "Día(s)",
-                "start": "Inicio",
-                "end": "Fin",
-                "description": "Descripción",
-                "descriptionPlaceholder": "Descripción del evento (opcional)",
-                "dayLabels": {
-                    "sun": "Dom",
-                    "mon": "Lun",
-                    "tue": "Mar",
-                    "wed": "Mié",
-                    "thu": "Jue",
-                    "fri": "Vie",
-                    "sat": "Sáb"
-                },
-                "colors": {
-                    "blue": "Azul",
-                    "green": "Verde",
-                    "red": "Rojo",
-                    "yellow": "Amarillo",
-                    "purple": "Púrpura",
-                    "pink": "Rosa",
-                    "orange": "Naranja",
-                    "teal": "Turquesa"
-                },
-                "icons": {
-                    "none": "Ninguno",
-                    "Tag": "General",
-                    "Briefcase": "Trabajo",
-                    "User": "Personal",
-                    "Utensils": "Comida",
-                    "Coffee": "Descanso",
-                    "ChefHat": "Cocina",
-                    "Dumbbell": "Gimnasio",
-                    "ShoppingCart": "Compras",
-                    "PenTool": "Creativo",
-                    "Calculator": "Finanzas",
-                    "FlaskConical": "Ciencia",
-                    "Zap": "Energía",
-                    "Activity": "Actividad",
-                    "WashingMachine": "Tareas",
-                    "Bed": "Sueño",
-                    "Bath": "Cuidado personal",
-                    "Sparkles": "Ocio",
-                    "FolderOpen": "Productividad",
-                    "Smile": "Diversión",
-                    "Heart": "Salud",
-                    "Star": "Prioridad",
-                    "CheckCircle2": "Tarea",
-                    "HelpCircle": "Pregunta",
-                    "Plane": "Viaje",
-                    "Car": "Transporte",
-                    "Bike": "Ejercicio",
-                    "Music": "Hobby",
-                    "Gamepad": "Juegos",
-                    "Tv": "Entretenimiento",
-                    "Film": "Películas",
-                    "Camera": "Foto",
-                    "Moon": "Noche",
-                    "Sun": "Día",
-                    "Cloud": "Tiempo",
-                    "PalmTree": "Vacaciones",
-                    "Flower": "Naturaleza",
-                    "Leaf": "Relajación",
-                    "Apple": "Nutrición",
-                    "Stethoscope": "Médico",
-                    "Brain": "Mentalidad",
-                    "GraduationCap": "Educación",
-                    "Book": "Estudio",
-                    "Laptop": "Tecnología",
-                    "Mail": "Comunicación",
-                    "ClipboardList": "Lista de tareas",
-                    "ShoppingBag": "Mandado",
-                    "Gift": "Regalo",
-                    "PartyPopper": "Celebración",
-                    "Trophy": "Logro",
-                    "PawPrint": "Mascotas",
-                    "Globe": "Web",
-                    "Wifi": "Internet",
-                    "Lock": "Seguridad",
-                    "MapPin": "Ubicación",
-                    "Calendar": "Planificación",
-                    "Bell": "Recordatorio"
-                }
-            },
-            "buttons": {
-                "add": "Añadir",
-                "copy": "Copiar",
-                "save": "Guardar Cambios",
-                "cancel": "Cancelar"
-            }
-        },
-        "reset": {
-            "title": "Reiniciar Todo",
-            "description": "Esto eliminará todas las características de la plantilla de la barra lateral, restaurará la configuración predeterminada y eliminará todos los eventos del calendario. Esta acción no se puede deshacer.",
-            "confirm": "Sí, Reiniciar",
-            "cancel": "Cancelar"
-        },
-        "calendar": {
-            "days": {
-                "sun": "DOM",
-                "mon": "LUN",
-                "tue": "MAR",
-                "wed": "MIÉ",
-                "thu": "JUE",
-                "fri": "VIE",
-                "sat": "SÁB"
-            },
-            "daysShort": {
-                "sun": "Dom",
-                "mon": "Lun",
-                "tue": "Mar",
-                "wed": "Mié",
-                "thu": "Jue",
-                "fri": "Vie",
-                "sat": "Sáb"
-            },
-            "previousWeek": "Ir a la semana anterior",
-            "nextWeek": "Ir a la semana siguiente",
-            "previousDay": "Ir al día anterior",
-            "nextDay": "Ir al día siguiente",
-            "today": "Ir a Hoy",
-            "newEvent": "Nuevo Evento",
-            "time": {
-                "am": "AM",
-                "pm": "PM"
-            }
-        },
-        "brand": {
-            "alt": "TrySchedule - Creador de Horarios en Línea Gratuito"
-        },
-        "calendarPicker": {
-            "weekLabel": "Sem"
-        },
-        "moreOptions": "Más Opciones",
-        "export": "Exportar",
-        "cloud": "Nube",
-        "more": "Más",
-        "sync": "Sincronizar",
-        "aiFill": "IA",
-        "faq": "FAQ",
-        "badge": {
-            "pro": "PRO"
-        },
-        "seo": {
-            "h1": "Constructor Gratuito de Horarios en Línea",
-            "faqTitle": "Preguntas Frecuentes sobre TrySchedule",
-            "faqSubtitle": "Todo lo que necesitas saber sobre nuestro constructor de horarios gratuito.",
-            "faqs": {
-                "q1": {
-                    "question": "¿Por qué TrySchedule es el mejor constructor de horarios en línea gratuito?",
-                    "answer": "TrySchedule destaca por tres razones clave:\n\n• Sin Fricción – no se requiere inicio de sesión ni registro, solo comienza a crear de inmediato.\n• Exportación Instantánea – descarga tu horario como PNG o PDF de alta calidad con un solo clic.\n• Visual e Intuitivo – la interfaz de arrastrar y soltar con hermosos bloques codificados por colores hace que la programación sea sencilla.\n\nEstas características hacen de TrySchedule la forma más rápida de crear un horario semanal profesional en línea."
-                },
-                "q2": {
-                    "question": "¿Cómo creo un horario semanal en 3 sencillos pasos?",
-                    "answer": "Paso 1: Arrastra y suelta en la cuadrícula del calendario para crear bloques de tiempo para tus actividades.\n\nPaso 2: Personaliza cada bloque con muchos colores vibrantes para categorizar trabajo, estudio, ejercicio o tiempo personal.\n\nPaso 3: Haz clic en 'Exportar' para descargar tu horario terminado como PNG, JPG o PDF – listo para imprimir o compartir.\n\nTodo el proceso toma menos de 5 minutos, no se necesitan habilidades de diseño."
-                },
-                "q3": {
-                    "question": "¿Quién necesita un constructor de horarios como TrySchedule?",
-                    "answer": "TrySchedule está diseñado para todos los que valoran su tiempo:\n\n• Estudiantes – organizando horarios de clases y sesiones de estudio\n• Gerentes de Turnos – creando rotaciones de trabajo para empleados\n• Deportistas – planificando rutinas de ejercicio semanales\n• Freelancers – equilibrando múltiples proyectos de clientes y plazos\n\nYa sea que necesites un planificador diario simple o un horario semanal complejo, nuestro constructor visual se adapta a tus necesidades."
-                },
-                "q4": {
-                    "question": "¿Este constructor de horarios es completamente gratuito?",
-                    "answer": "¡Sí, TrySchedule es 100% gratuito para las funciones principales!\n\nCrea horarios ilimitados, usa todos los colores, exporta como PNG o JPG, y guarda tu trabajo localmente – todo sin pagar un centavo ni crear una cuenta.\n\nLas funciones Pro como exportación a PDF, sugerencias de programación con IA y sincronización en la nube entre dispositivos están disponibles para usuarios avanzados que desean capacidades adicionales."
-                },
-                "q5": {
-                    "question": "¿Puedo imprimir mi horario después de crearlo?",
-                    "answer": "¡Por supuesto! TrySchedule está diseñado para ser fácil de imprimir.\n\nExporta tu horario como PNG o PDF de alta resolución, luego imprímelo directamente en tamaños de papel estándar. El diseño limpio y minimalista asegura que tu horario impreso se vea profesional y sea fácil de leer.\n\nPerfecto para colgar en tu pared, refrigerador o tablón de anuncios de la oficina."
-                },
-                "q6": {
-                    "question": "¿Mis datos de horario son privados y seguros?",
-                    "answer": "Tu privacidad es nuestra prioridad.\n\nPor defecto, todos los datos del horario permanecen en el almacenamiento local de tu navegador – nada sale de tu dispositivo a menos que elijas lo contrario.\n\nTus horarios permanecen completamente privados a menos que elijas explícitamente habilitar la sincronización en la nube con una cuenta Pro. Tienes control total sobre tus datos en todo momento."
-                }
-            }
-        },
-        "buttons": {
-            "cancel": "Cancelar"
-        }
-    },
-    "AuthModal": {
-        "title": "Autenticación",
-        "welcomeBack": "¡Bienvenido de nuevo!",
-        "join": "Únete a TrySchedule",
-        "signInDescription": "Retomemos donde lo dejaste y sigue programando de manera más inteligente",
-        "signUpDescription": "Comienza a crear hermosos horarios en minutos, sin curva de aprendizaje",
-        "features": {
-            "dragDrop": "Simplicidad de arrastrar y soltar",
-            "themes": "Hermosos temas de color",
-            "devices": "Funciona en cualquier dispositivo"
-        }
-    },
-    "Auth": {
-        "common": {
-            "email": "Correo electrónico",
-            "password": "Contraseña",
-            "or": "O",
-            "continue": "Continuar",
-            "backToSignIn": "← Volver a iniciar sesión",
-            "backToSignUp": "← Volver a registrarse",
-            "emailAddress": "Dirección de correo",
-            "optional": "(Opcional)"
-        },
-        "signIn": {
-            "title": "Iniciar Sesión",
-            "emailPlaceholder": "Ingresa tu correo",
-            "passwordPlaceholder": "Ingresa tu contraseña",
-            "forgotPassword": "¿Olvidaste tu contraseña?",
-            "googleButton": "Iniciar sesión con Google",
-            "submit": "Iniciar Sesión"
-        },
-        "signUp": {
-            "title": "Registrarse",
-            "firstName": "Nombre",
-            "firstNamePlaceholder": "Nombre",
-            "lastName": "Apellido",
-            "lastNamePlaceholder": "Apellido",
-            "passwordPlaceholder": "Crea una contraseña",
-            "googleButton": "Registrarse con Google",
-            "submit": "Continuar"
-        },
-        "forgotPassword": {
-            "title": "Restablecer tu contraseña",
-            "instruction": "Ingresa tu correo y te enviaremos un código de verificación",
-            "submitEmail": "Enviar Código",
-            "checkEmail": "Revisa tu correo",
-            "codeSentTo": "Enviamos un código de 6 dígitos a",
-            "verificationCode": "Código de verificación",
-            "codePlaceholder": "Ingresa el código",
-            "verifyCode": "Verificar Código",
-            "setNewPassword": "Crear nueva contraseña",
-            "setNewPasswordInstruction": "Ingresa tu nueva contraseña abajo",
-            "newPassword": "Nueva contraseña",
-            "newPasswordPlaceholder": "Ingresa nueva contraseña",
-            "confirmPassword": "Confirmar contraseña",
-            "confirmPasswordPlaceholder": "Confirma nueva contraseña",
-            "resetPassword": "Restablecer Contraseña",
-            "success": "¡Contraseña restablecida!",
-            "successMessage": "Tu contraseña ha sido restablecida y ya has iniciado sesión."
-        },
-        "verification": {
-            "title": "Revisa tu correo",
-            "codeSentTo": "Enviamos un código de verificación a",
-            "codeLabel": "Código de Verificación",
-            "submit": "Verificar Correo"
-        },
-        "errors": {
-            "signInError": "Ocurrió un error al iniciar sesión",
-            "googleSignInError": "Error al iniciar sesión con Google",
-            "googleSignUpError": "Error al registrarse con Google",
-            "resetEmailError": "Error al enviar correo de restablecimiento",
-            "codeError": "Código de verificación inválido",
-            "verificationFailed": "Verificación fallida",
-            "signUpError": "Ocurrió un error al registrarse",
-            "passwordMismatch": "Las contraseñas no coinciden",
-            "passwordLength": "La contraseña debe tener al menos 8 caracteres",
-            "resetError": "Error al restablecer la contraseña"
-        }
-    },
-    "Settings": {
-        "title": "Configuración",
-        "weekStart": {
-            "label": "Semana comienza en domingo",
-            "description": "EE.UU. usa domingo, estándar ISO usa lunes"
-        },
-        "timeFormat": {
-            "label": "Formato 12 horas (AM/PM)",
-            "description": "Desactivar para formato 24 horas"
-        },
-        "showDates": {
-            "label": "Mostrar fechas",
-            "description": "Mostrar números de fecha en los encabezados del calendario"
-        },
-        "timeIncrement": {
-            "label": "Incremento de tiempo",
-            "minutes": "{count} minutos"
-        },
-        "workingHours": {
-            "label": "Horario de trabajo",
-            "to": "a"
-        }
-    },
-    "Export": {
-        "title": "Exportar Horario",
-        "description": "Elige un formato para descargar tu horario.",
-        "format": "Formato",
-        "formats": {
-            "png": {
-                "description": "Imagen de alta calidad con transparencia"
-            },
-            "jpg": {
-                "description": "Imagen comprimida, tamaño de archivo más pequeño"
-            },
-            "pdf": {
-                "description": "Formato vectorial, perfecto para imprimir"
-            },
-            "csv": {
-                "description": "Formato de hoja de cálculo para análisis de datos"
-            }
-        },
-        "upgradePrompt": {
-            "title": "Actualizar a Pro",
-            "description": "Desbloquea exportaciones PDF y CSV, además elimina marcas de agua de las imágenes.",
-            "button": "Ver Planes"
-        },
-        "buttons": {
-            "cancel": "Cancelar",
-            "exporting": "Exportando...",
-            "download": "Descargar {format}"
-        }
-    },
-    "CalendarSync": {
-        "title": "Sincronización con Google Calendar",
-        "description": "Sincroniza tu horario con Google Calendar para acceder fácilmente desde todos tus dispositivos.",
-        "notConnected": {
-            "title": "Conecta tu cuenta de Google",
-            "description": "Vincula tu cuenta de Google para sincronizar eventos con tu calendario.",
-            "button": "Conectar cuenta de Google"
-        },
-        "connected": {
-            "status": "Conectado",
-            "syncComplete": "Sincronización completa",
-            "syncFailed": "Sincronización fallida",
-            "eventsSynced": "{count} evento(s) sincronizado(s)",
-            "eventsFailed": ", {count} fallido(s)",
-            "syncing": "Sincronizando...",
-            "syncButton": "Sincronizar con Google Calendar",
-            "openCalendar": "Abrir Google Calendar"
-        }
-    },
-    "FeatureComingSoon": {
-        "title": "{feature} - ¡Próximamente!",
-        "description": "Esta función Pro está actualmente en desarrollo. Sé el primero en saber cuando se lance y obtén un <discount>50% de descuento</discount> exclusivo.",
-        "emailPlaceholder": "Ingresa tu correo electrónico",
-        "submitButton": "Notificarme y obtener 50% Off",
-        "submitting": "Registrando...",
-        "maybeLater": "Quizás después",
-        "noSpam": "Sin spam, cancela cuando quieras.",
-        "success": {
-            "title": "¡Estás en la lista! 🎉",
-            "subtitle": "Te notificaremos cuando esté listo."
-        },
-        "error": "Envío fallido, por favor intenta de nuevo más tarde",
-        "features": {
-            "calendarSync": {
-                "name": "Sincronización de Calendario",
-                "description": "Esta función está incluida en la versión Pro y estará disponible pronto. Ingresa tu correo para ser el primero en saber cuando se lance."
-            }
-        }
-    },
-    "CloudSave": {
-        "title": "Guardar en la Nube",
-        "description": "Guarda tu horario en la nube o carga una plantilla guardada.",
-        "templatesUsed": "{count}/{max} plantillas usadas",
-        "saveButton": "Guardar Actual",
-        "templateName": "Nombre de Plantilla",
-        "templatePlaceholder": "Mi Horario",
-        "noTemplates": "Sin plantillas guardadas aún",
-        "noTemplatesHint": "¡Guarda tu primer horario en la nube!",
-        "eventsCount": "{count} eventos",
-        "updated": "Actualizado {date}",
-        "pagination": "Página {page} de {total}",
-        "sort": {
-            "updated": "Actualizado",
-            "created": "Creado",
-            "name": "Nombre"
-        },
-        "buttons": {
-            "load": "Cargar plantilla",
-            "rename": "Renombrar",
-            "delete": "Eliminar"
-        },
-        "errors": {
-            "fetchFailed": "Error al cargar las plantillas",
-            "saveFailed": "Error al guardar",
-            "loadFailed": "Error al cargar la plantilla",
-            "renameFailed": "Error al renombrar",
-            "deleteFailed": "Error al eliminar la plantilla",
-            "overwriteFailed": "Error al sobrescribir la plantilla",
-            "enterName": "Por favor ingresa un nombre",
-            "nameTooLong": "El nombre debe tener 50 caracteres o menos"
-        },
-        "deleteConfirm": {
-            "title": "Eliminar Plantilla",
-            "description": "¿Estás seguro de que quieres eliminar \"{name}\"? Esta acción no se puede deshacer.",
-            "button": "Eliminar"
-        },
-        "loadConfirm": {
-            "title": "Cargar Plantilla",
-            "description": "Tu horario actual será reemplazado por esta plantilla. Esta acción no se puede deshacer.",
-            "button": "Cargar Plantilla"
-        },
-        "overwriteConfirm": {
-            "title": "La Plantilla Ya Existe",
-            "description": "Ya existe una plantilla llamada \"{name}\". ¿Quieres sobrescribirla con tu horario actual?",
-            "button": "Sobrescribir"
-        }
-    },
-    "TemplateComponents": {
-        "common": {
-            "on": "Activo",
-            "off": "Inactivo"
-        },
-        "AIQuickActions": {
-            "title": "Acciones Rápidas con IA",
-            "regenerate": "Regenerar con IA",
-            "clear": "Limpiar Horario"
-        },
-        "PriorityModeToggle": {
-            "title": "Alternar Modo Prioridad",
-            "label": "Modo Prioridad"
-        },
-        "TaskModeToggle": {
-            "title": "Alternar Modo Tarea",
-            "label": "Modo Tarea"
-        },
-        "ProjectDashboard": {
-            "title": "Panel del Proyecto",
-            "phase": "FASE DE CONSTRUCCIÓN",
-            "onTrack": "Al Día",
-            "completion": "Progreso",
-            "milestones": "Hitos Clave",
-            "clickToUpdate": "Clic para actualizar",
-            "active": "Activo",
-            "weatherAlert": "Alerta Meteorológica:",
-            "siteStatus": "Estado del Sitio:",
-            "checkingForecast": "Consultando pronóstico...",
-            "updateLocation": "Actualizar Ubicación del Sitio",
-            "locationDenied": "Acceso a la ubicación denegado",
-            "locationPrompt": "Por favor, permite el acceso a la ubicación para obtener el clima local del sitio.",
-            "weatherError": "Datos meteorológicos no disponibles.",
-            "siteAlertToday": "Alerta: Se espera lluvia/nieve HOY. Cubre los materiales sensibles.",
-            "forecastAlert": "Pronóstico: Mal tiempo esperado en {days} días. Planifica tareas de interior.",
-            "forecastClear": "Pronóstico Despejado: Condiciones óptimas para trabajo exterior.",
-            "milestoneData": {
-                "sitePrep": "Preparación y Excavación",
-                "foundation": "Vertido de Cimientos",
-                "framing": "Estructura y Techo",
-                "hvac": "HVAC y Electricidad",
-                "week": "Semana {num}",
-                "weekRange": "Semana {range}"
-            }
-        }
-    },
-    "Metadata": {
-        "title": "TrySchedule | Creador de Horarios en Línea Gratuito (Sin Registro)",
-        "description": "El creador de horarios en línea gratuito más fácil. Interfaz de arrastrar y soltar, exportación instantánea a PNG. No es necesario registrarse. Herramientas PDF e IA disponibles para usuarios Pro.",
-        "organizationDescription": "El creador de horarios en línea gratuito más fácil para estudiantes, gerentes y gimnasios."
-    },
-    "NotFound": {
-        "title": "404 - Página No Encontrada",
-        "description": "La página que estás buscando no existe o ha sido movida.",
-        "hint": "Intenta buscar plantillas o vuelve a la página de inicio.",
-        "backHome": "Volver al Inicio",
-        "browseTemplates": "Ver Plantillas"
-    },
-    "AIAutofill": {
-        "title": "Autocompletar con IA",
-        "usageRemaining": "{remaining} / {limit} usos mensuales restantes",
-        "trialRemaining": "{remaining} usos de prueba restantes",
-        "inputLabel": "Describe tus necesidades de horario",
-        "inputPlaceholder": "Ej: Soy estudiante universitario. Necesito estudiar 3 horas por la mañana, almorzar al mediodía e ir al gimnasio por la tarde los días de semana...",
-        "tipsTitle": "Consejos para mejores resultados:",
-        "tips": {
-            "durations": "Menciona actividades específicas y sus duraciones",
-            "days": "Especifica qué días de la semana",
-            "ranges": "Incluye rangos de tiempo preferidos"
-        },
-        "generateButton": "Generar Horario",
-        "generatingButton": "Generando...",
-        "previewTitle": "{count} eventos generados",
-        "noEvents": "No se generaron eventos. Intenta una descripción más detallada.",
-        "addButton": "Añadir {count} Eventos",
-        "backButton": "Atrás",
-        "closeButton": "Cerrar",
-        "cancelButton": "Cancelar",
-        "trialLimitReachedTitle": "Límite de Prueba Alcanzado",
-        "trialLimitReachedDescription": "Has usado tus 3 generaciones gratuitas con IA. ¡Actualiza a Pro para tener 100 usos cada mes!",
-        "upgradeToPro": "Actualizar a Pro",
-        "startFreshTitle": "¿Empezar de Cero?",
-        "startFreshDescription": "Esto reiniciará tu calendario y borrará todos los eventos existentes. Tu configuración también se restaurará a los valores predeterminados.",
-        "startFreshConfirm": "Sí, Empezar de Cero",
-        "errors": {
-            "usageLimitExceededPro": "Has alcanzado el límite mensual de {limit} generaciones con IA. El límite se reinicia el próximo mes.",
-            "usageLimitExceededFree": "Límite de prueba alcanzado. Por favor, actualiza a Pro para más generaciones con IA.",
-            "generationFailed": "Error al generar el horario",
-            "connectionError": "Error al conectar con el servicio de IA. Por favor, inténtalo de nuevo."
-        }
-    },
-    "EventConflict": {
-        "title": "Conflicto de Tiempo Detectado",
-        "description": "\"{title}\" tiene conflictos con eventos existentes.",
-        "listTitle": "Eventos en conflicto:",
-        "buttons": {
-            "cancel": "Cancelar",
-            "modify": "Modificar Nuevo Evento",
-            "delete": "Eliminar Existentes ({count})"
-        }
+    "sections": {
+      "acceptance": {
+        "title": "1. Aceptación de los Términos",
+        "content": "Al acceder y utilizar TrySchedule (\"el Servicio\"), usted acepta y se compromete a cumplir con los términos y disposiciones de este acuerdo. Si no está de acuerdo con estos términos, por favor no utilice el Servicio."
+      },
+      "description": {
+        "title": "2. Descripción del Servicio",
+        "content": "TrySchedule es una herramienta de planificación y programación basada en la web que permite a los usuarios crear, gestionar y compartir horarios. Ofrecemos varios niveles de suscripción, incluyendo opciones gratuitas y de pago con diferentes conjuntos de funciones."
+      },
+      "userAccounts": {
+        "title": "3. Cuentas de Usuario",
+        "intro": "Para utilizar ciertas funciones del Servicio, debe registrarse para obtener una cuenta. Usted acepta:",
+        "items": [
+          "Proporcionar información precisa y completa durante el registro",
+          "Mantener la seguridad de su contraseña y cuenta",
+          "Notificarnos inmediatamente sobre cualquier uso no autorizado de su cuenta",
+          "Aceptar la responsabilidad de todas las actividades que ocurran bajo su cuenta"
+        ]
+      },
+      "payment": {
+        "title": "4. Términos de Pago",
+        "content": "Para las suscripciones de pago, usted acepta pagar todas las tarifas asociadas con el plan elegido. Los pagos se procesan a través de nuestro proveedor de pago externo. Las suscripciones se renuevan automáticamente a menos que se cancelen antes de la fecha de renovación."
+      },
+      "acceptableUse": {
+        "title": "5. Uso Aceptable",
+        "intro": "Usted acepta no:",
+        "items": [
+          "Usar el Servicio para cualquier propósito ilegal",
+          "Intentar obtener acceso no autorizado a cualquier parte del Servicio",
+          "Interferir o interrumpir el Servicio o los servidores",
+          "Cargar código o contenido malicioso",
+          "Revender o redistribuir el Servicio sin autorización"
+        ]
+      },
+      "thirdParty": {
+        "title": "6. Servicios de Terceros",
+        "content1": "Nuestro Servicio le permite conectarse con servicios de terceros, como Google Calendar, para mejorar su experiencia de programación. Al utilizar estas integraciones, usted acepta cumplir con los términos y políticas de privacidad de esos servicios de terceros.",
+        "content2": "No somos responsables del contenido, políticas de privacidad o prácticas de ningún servicio de terceros. Le recomendamos revisar los términos y políticas de privacidad de cualquier servicio de terceros antes de conectarlo a TrySchedule."
+      },
+      "intellectualProperty": {
+        "title": "7. Propiedad Intelectual",
+        "content": "El Servicio y su contenido original, características y funcionalidad son propiedad de TrySchedule y están protegidos por leyes internacionales de derechos de autor, marcas registradas y otras leyes de propiedad intelectual."
+      },
+      "liability": {
+        "title": "8. Limitación de Responsabilidad",
+        "content": "En ningún caso TrySchedule será responsable de daños indirectos, incidentales, especiales, consecuentes o punitivos resultantes de su uso o incapacidad de usar el Servicio."
+      },
+      "changes": {
+        "title": "9. Cambios en los Términos",
+        "content": "Nos reservamos el derecho de modificar estos términos en cualquier momento. Notificaremos a los usuarios sobre cambios significativos por correo electrónico o a través del Servicio. El uso continuado del Servicio después de los cambios constituye la aceptación de los nuevos términos."
+      },
+      "contact": {
+        "title": "10. Información de Contacto",
+        "content": "Si tiene alguna pregunta sobre estos Términos, contáctenos en"
+      }
     }
+  },
+  "Privacy": {
+    "title": "Política de Privacidad",
+    "metaTitle": "Política de Privacidad | TrySchedule",
+    "metaDescription": "Política de Privacidad de TrySchedule - Creador de Horarios en Línea Gratuito.",
+    "lastUpdated": "Última actualización: 1 de enero de 2026",
+    "breadcrumb": {
+      "home": "Inicio",
+      "privacy": "Privacidad"
+    },
+    "sections": {
+      "introduction": {
+        "title": "1. Introducción",
+        "content": "TrySchedule (\"nosotros\", \"nuestro\" o \"nos\") se compromete a proteger su privacidad. Esta Política de Privacidad explica cómo recopilamos, usamos, divulgamos y protegemos su información cuando utiliza nuestro servicio TrySchedule."
+      },
+      "informationCollect": {
+        "title": "2. Información que Recopilamos",
+        "personalInfo": {
+          "title": "Información Personal",
+          "intro": "Cuando se registra para obtener una cuenta, podemos recopilar:",
+          "items": [
+            "Nombre y dirección de correo electrónico",
+            "Información de perfil que elija proporcionar",
+            "Información de pago (procesada de forma segura por nuestro proveedor de pagos)"
+          ]
+        },
+        "usageInfo": {
+          "title": "Información de Uso",
+          "intro": "Recopilamos automáticamente:",
+          "items": [
+            "Información del dispositivo y navegador",
+            "Dirección IP y datos de ubicación",
+            "Patrones de uso e interacciones con funciones",
+            "Cookies y tecnologías de seguimiento similares"
+          ]
+        }
+      },
+      "howWeUse": {
+        "title": "3. Cómo Usamos Su Información",
+        "intro": "Usamos su información para:",
+        "items": [
+          "Proporcionar y mantener nuestro Servicio",
+          "Procesar sus transacciones y gestionar su suscripción",
+          "Enviarle actualizaciones, alertas de seguridad y mensajes de soporte",
+          "Mejorar y personalizar su experiencia",
+          "Analizar patrones de uso para mejorar nuestro Servicio",
+          "Cumplir con obligaciones legales"
+        ]
+      },
+      "informationSharing": {
+        "title": "4. Compartir Información",
+        "intro": "No vendemos su información personal. Podemos compartir su información con:",
+        "items": [
+          "Proveedores de servicios que ayudan a operar nuestro Servicio",
+          "Socios comerciales con su consentimiento",
+          "Autoridades legales cuando lo requiera la ley"
+        ]
+      },
+      "analytics": {
+        "title": "5. Análisis y Herramientas de Terceros",
+        "intro": "Utilizamos servicios de análisis de terceros para ayudarnos a comprender cómo los usuarios interactúan con nuestro Servicio y para mejorar la experiencia del usuario. Estos servicios pueden recopilar datos anónimos sobre su uso del Servicio.",
+        "googleAnalytics": {
+          "title": "Google Analytics",
+          "content": "Utilizamos Google Analytics, un servicio de análisis web proporcionado por Google, Inc. Google Analytics utiliza cookies para analizar cómo los usuarios usan nuestro Servicio. La información generada se transmite y almacena por Google. Para más información sobre cómo Google usa los datos, visite",
+          "linkText": "la Política de Privacidad de Google"
+        },
+        "microsoftClarity": {
+          "title": "Microsoft Clarity",
+          "content": "Utilizamos Microsoft Clarity, una herramienta de análisis de comportamiento del usuario proporcionada por Microsoft. Clarity captura cómo los usuarios interactúan con nuestro Servicio a través de grabaciones de sesiones y mapas de calor. Clarity enmascara automáticamente el contenido sensible para proteger la privacidad del usuario. Para más información, visite",
+          "linkText": "la Declaración de Privacidad de Microsoft"
+        },
+        "optingOut": {
+          "title": "Exclusión",
+          "content": "Puede optar por no participar en el seguimiento de análisis ajustando la configuración de su navegador para bloquear cookies o utilizando extensiones de navegador diseñadas para bloquear scripts de seguimiento."
+        }
+      },
+      "googleUserData": {
+        "title": "6. Datos de Usuario de Google",
+        "intro": "TrySchedule utiliza Google OAuth para permitirle conectar su cuenta de Google y sincronizar su horario local con Google Calendar.",
+        "infoAccess": {
+          "title": "Información a la que Accedemos",
+          "intro": "Cuando conecta su cuenta de Google, solicitamos los siguientes permisos:",
+          "items": [
+            "Ver la configuración de su calendario: Usamos esto para detectar la zona horaria de su Google Calendar principal, asegurando que los eventos sincronizados aparezcan a la hora correcta.",
+            "Ver y editar eventos en sus calendarios: Usamos esto para crear, actualizar y gestionar los eventos de horario que elija sincronizar desde TrySchedule a su Google Calendar."
+          ]
+        },
+        "howWeUseData": {
+          "title": "Cómo Usamos Estos Datos",
+          "content": "Nuestro uso de la información recibida de las APIs de Google se limita estrictamente a proporcionar y mejorar la función de Sincronización de Calendario. No almacenamos los datos de su Google Calendar en nuestros servidores, ni los usamos para publicidad ni los compartimos con terceros excepto cuando sea necesario para proporcionar el servicio."
+        },
+        "limitedUse": {
+          "title": "Política de Uso Limitado de API de Google",
+          "content": "El uso y transferencia de TrySchedule a cualquier otra aplicación de la información recibida de las APIs de Google se adherirá a la",
+          "linkText": "Política de Datos de Usuario de Servicios de API de Google",
+          "suffix": ", incluyendo los requisitos de Uso Limitado."
+        }
+      },
+      "dataSecurity": {
+        "title": "7. Seguridad de Datos",
+        "content": "Implementamos medidas de seguridad estándar de la industria para proteger sus datos, incluyendo cifrado, servidores seguros y evaluaciones de seguridad regulares. Sin embargo, ningún método de transmisión por Internet es 100% seguro."
+      },
+      "yourRights": {
+        "title": "8. Sus Derechos",
+        "intro": "Dependiendo de su ubicación, puede tener derecho a:",
+        "items": [
+          "Acceder a sus datos personales",
+          "Corregir datos inexactos",
+          "Solicitar la eliminación de sus datos",
+          "Oponerse o restringir el procesamiento",
+          "Portabilidad de datos",
+          "Retirar el consentimiento en cualquier momento"
+        ]
+      },
+      "cookies": {
+        "title": "9. Cookies",
+        "content": "Utilizamos cookies y tecnologías similares para mejorar su experiencia, analizar el uso y ofrecer contenido personalizado. Puede controlar las preferencias de cookies a través de la configuración de su navegador."
+      },
+      "childrenPrivacy": {
+        "title": "10. Privacidad de los Niños",
+        "content": "Nuestro Servicio no está destinado a niños menores de 13 años. No recopilamos conscientemente información personal de niños menores de 13 años. Si cree que hemos recopilado dicha información, contáctenos inmediatamente."
+      },
+      "changes": {
+        "title": "11. Cambios en Esta Política",
+        "content": "Podemos actualizar esta Política de Privacidad de vez en cuando. Le notificaremos cualquier cambio publicando la nueva Política de Privacidad en esta página y actualizando la fecha de \"Última actualización\"."
+      },
+      "contact": {
+        "title": "12. Contáctenos",
+        "content": "Si tiene preguntas sobre esta Política de Privacidad, contáctenos en"
+      }
+    }
+  },
+  "Contact": {
+    "metaTitle": "Contáctenos | TrySchedule",
+    "metaDescription": "Contacte a TrySchedule - Nos encantaría saber de usted. Envíenos un mensaje sobre preguntas, comentarios o soporte.",
+    "breadcrumb": {
+      "home": "Inicio",
+      "contact": "Contacto"
+    },
+    "header": {
+      "title": "Contáctenos",
+      "subtitle": "¿Tiene preguntas o comentarios? Nos encantaría saber de usted. Envíenos un mensaje y responderemos lo antes posible."
+    },
+    "infoCards": {
+      "email": {
+        "title": "Correo Electrónico",
+        "description": "Para consultas generales"
+      },
+      "office": {
+        "title": "Oficina",
+        "address1": "123 Tech Street",
+        "address2": "San Francisco, CA 94102",
+        "address3": "Estados Unidos"
+      },
+      "hours": {
+        "title": "Horario de Atención",
+        "line1": "Lunes - Viernes",
+        "line2": "9:00 AM - 6:00 PM (PST)",
+        "line3": "Fin de semana: Cerrado"
+      }
+    },
+    "form": {
+      "name": {
+        "label": "Nombre",
+        "placeholder": "Su nombre"
+      },
+      "email": {
+        "label": "Correo Electrónico",
+        "placeholder": "su@email.com"
+      },
+      "subject": {
+        "label": "Asunto",
+        "placeholder": "¿Cómo podemos ayudarle?"
+      },
+      "message": {
+        "label": "Mensaje",
+        "placeholder": "Cuéntenos más sobre su consulta..."
+      },
+      "submit": "Enviar Mensaje",
+      "submitting": "Enviando..."
+    },
+    "success": {
+      "title": "¡Mensaje Enviado!",
+      "message": "Gracias por contactarnos. Le responderemos dentro de 24-48 horas.",
+      "sendAnother": "Enviar Otro Mensaje"
+    },
+    "errors": {
+      "sendFailed": "Error al enviar, por favor intente más tarde"
+    }
+  },
+  "Pricing": {
+    "metaTitle": "Programación Accesible | Planes de Precios - TrySchedule Pro",
+    "metaDescription": "Comience gratis o desbloquee exportación PDF y programación con IA con TrySchedule Pro. Compare planes desde $4.9/semana.",
+    "breadcrumb": {
+      "home": "Inicio",
+      "pricing": "Precios"
+    },
+    "hero": {
+      "title": "Herramientas Profesionales de Programación",
+      "subtitle": "Comience con nuestro creador de horarios gratuito para siempre, o actualice a Pro para automatizar su flujo de trabajo con IA y exportar PDFs de alta resolución.",
+      "trust": "Confiado por más de 5000 estudiantes y gerentes en todo el mundo."
+    },
+    "successBanner": "🎉 ¡Pago exitoso! Sus funciones Pro ya están activas.",
+    "promo": {
+      "placeholder": "Ingrese código promocional",
+      "apply": "Aplicar",
+      "remove": "Eliminar",
+      "applied": "Código promocional:"
+    },
+    "plans": {
+      "starter": {
+        "title": "Inicial",
+        "priceDetail": "/ para siempre",
+        "description": "Para estudiantes y uso personal",
+        "features": [
+          "Edición web ilimitada",
+          "Plantillas básicas (Semanal/Diario)",
+          "Descargar como imagen (JPG/PNG)",
+          "Almacenamiento en navegador (Sin inicio de sesión)"
+        ],
+        "buttonText": "Comenzar Gratis"
+      },
+      "sevenDay": {
+        "title": "Pase de 7 Días",
+        "priceDetail": "/ semana",
+        "description": "Perfecto para programación única.",
+        "features": [
+          "Todas las funciones Iniciales",
+          "Programador Automático con IA",
+          "Exportación Alta Resolución (PDF y Vector)",
+          "Sincronización con Google Calendar",
+          "Guardado en la Nube (Acceso desde cualquier dispositivo)",
+          "Sin marcas de agua en exportaciones"
+        ],
+        "buttonText": "Elegir Pase"
+      },
+      "monthly": {
+        "title": "Mensual",
+        "priceDetail": "/ mes",
+        "description": "Ideal para gerentes, RRHH, programadores frecuentes.",
+        "features": [
+          "Todas las funciones Iniciales",
+          "Programador Automático con IA",
+          "Exportación Alta Resolución (PDF y Vector)",
+          "Sincronización con Google Calendar",
+          "Guardado en la Nube (Acceso desde cualquier dispositivo)",
+          "Sin marcas de agua en exportaciones",
+          "Soporte por Email Prioritario"
+        ],
+        "buttonText": "Actualizar a Pro"
+      },
+      "lifetime": {
+        "title": "De por Vida",
+        "priceDetail": "/ pago único",
+        "description": "Pague una vez y obtenga todas las funciones pro para siempre.",
+        "features": [
+          "Todas las funciones anteriores",
+          "Pago único con uso de por vida",
+          "Soporte por Email Prioritario"
+        ],
+        "buttonText": "Comprar Una Vez"
+      }
+    },
+    "comparison": {
+      "title": "Comparar Planes y Características",
+      "headers": {
+        "feature": "Característica",
+        "starter": "Inicial",
+        "sevenDay": "Pase 7 Días",
+        "monthly": "Mensual",
+        "lifetime": "De por Vida"
+      },
+      "categories": {
+        "coreTools": "Herramientas Principales",
+        "exportSharing": "Exportación y Compartir",
+        "advancedPower": "Funciones Avanzadas"
+      },
+      "features": {
+        "dragDrop": "Constructor Arrastrar y Soltar",
+        "visualBuilder": "Constructor Visual de Horarios",
+        "mobileEditor": "Editor Compatible con Móviles",
+        "downloadImage": "Descargar Como Imagen",
+        "pdfExport": "Exportación PDF Imprimible",
+        "excelExport": "Exportar a Excel / CSV",
+        "googleSync": "Sincronizar con Google Calendar",
+        "aiBuilder": "Constructor de Horarios con IA",
+        "unlimitedTemplates": "Plantillas Ilimitadas",
+        "cloudStorage": "Almacenamiento en la Nube",
+        "noWatermarks": "Sin Marcas de Agua",
+        "prioritySupport": "Soporte por Email Prioritario"
+      },
+      "yes": "Sí",
+      "no": "No"
+    },
+    "faq": {
+      "title": "Preguntas Frecuentes",
+      "items": [
+        {
+          "question": "¿El creador de horarios es realmente gratis?",
+          "answer": "¡Sí! Nuestro creador de horarios en línea gratuito le permite crear, editar y descargar horarios como imágenes sin pagar nada. Solo paga si necesita funciones avanzadas como exportación PDF o automatización con IA."
+        },
+        {
+          "question": "¿Cómo funciona el creador de horarios con IA?",
+          "answer": "Nuestro programador con IA analiza su entrada (tareas, empleados, franjas horarias) y genera automáticamente un horario optimizado, ahorrándole horas de planificación manual."
+        },
+        {
+          "question": "¿Puedo usar esto para programar turnos de empleados?",
+          "answer": "Absolutamente. El plan Pro está diseñado para gerentes. Puede crear horarios de turnos de trabajo, manejar rotaciones y exportar el horario final a Excel para nóminas fácilmente."
+        },
+        {
+          "question": "¿Puedo cancelar mi suscripción en cualquier momento?",
+          "answer": "Sí, puede cancelar su suscripción mensual instantáneamente desde su panel de control. Sin preguntas. Garantía de devolución de dinero de 30 días."
+        }
+      ]
+    }
+  },
+  "Blog": {
+    "metaTitle": "Blog | TrySchedule - Consejos de Programación y Guías de Productividad",
+    "metaDescription": "Descubra consejos de programación, guías de productividad y mejores prácticas. Aprenda a optimizar su tiempo con TrySchedule.",
+    "breadcrumb": {
+      "home": "Inicio",
+      "blog": "Blog"
+    },
+    "hero": {
+      "title": "Nuestro Blog",
+      "description": "Conocimientos sobre productividad, programación y gestión de equipos."
+    },
+    "list": {
+      "noArticles": "No se encontraron artículos en esta categoría.",
+      "previousPage": "Página anterior",
+      "nextPage": "Página siguiente"
+    },
+    "detail": {
+      "share": "Compartir",
+      "relatedArticles": "Artículos Relacionados",
+      "postNotFound": "Publicación No Encontrada | TrySchedule Blog"
+    },
+    "categories": {
+      "all": "Todos",
+      "productivity tips": "Consejos de Productividad",
+      "case studies": "Estudios de Caso",
+      "product updates": "Actualizaciones del Producto"
+    },
+    "featuredArticle": "Artículo Destacado",
+    "metaKeywords": "consejos de programación, blog de productividad, gestión del tiempo, consejos del creador de horarios, guía de programación de empleados",
+    "readTime": "{minutes} min de lectura"
+  },
+  "Templates": {
+    "metaTitle": "Plantillas de Horarios Gratis | TrySchedule",
+    "metaDescription": "Comienza rápidamente con plantillas de horarios diseñadas profesionalmente. Elige la que mejor se adapte a tus necesidades y personalízala gratis.",
+    "breadcrumb": {
+      "home": "Inicio",
+      "templates": "Plantillas"
+    },
+    "hero": {
+      "title": "Plantillas de Horarios",
+      "description": "Comienza rápidamente con plantillas diseñadas profesionalmente. Elige la que mejor se adapte a tus necesidades."
+    },
+    "search": {
+      "placeholder": "Buscar plantillas por palabra clave...",
+      "clear": "Limpiar búsqueda"
+    },
+    "list": {
+      "noTemplates": "No se encontraron plantillas en esta categoría.",
+      "previousPage": "Página anterior",
+      "nextPage": "Página siguiente"
+    },
+    "detail": {
+      "useTemplate": "Usar Esta Plantilla",
+      "preview": "Vista Previa",
+      "features": "Características",
+      "backToTemplates": "Volver a Plantillas",
+      "notFound": "Plantilla No Encontrada | TrySchedule",
+      "whatsIncluded": "Qué Incluye",
+      "aboutTemplate": "Sobre Esta Plantilla",
+      "previewNote": "Esta vista previa muestra eventos de ejemplo. Cuando uses esta plantilla, los eventos se programarán para la semana actual.",
+      "previewNoteAI": "Esta vista previa muestra el lienzo del generador de IA. Cuando uses esta plantilla, nuestro asistente de IA te ayudará a construir tu horario personalizado.",
+      "featurePreConfigured": "Eventos Preconfigurados",
+      "featurePreConfiguredDesc": "{count} eventos de ejemplo con colores y tiempos apropiados",
+      "featureAIGeneration": "Generación Inteligente con IA",
+      "featureAIGenerationDesc": "Acceso al asistente de Autocompletado con IA para crear tu rutina desde cero",
+      "featureSettings": "Configuración Optimizada",
+      "featureSettingsDesc": "Formato de hora y horario de trabajo configurados para este caso de uso",
+      "featureCustomizable": "Totalmente Personalizable",
+      "featureCustomizableDesc": "Edita, añade o elimina eventos después de aplicar la plantilla",
+      "loading": "Cargando...",
+      "reviews": {
+        "sarah": "El mejor constructor de horarios gratuito que he encontrado. ¡El arrastrar y soltar es muy intuitivo!",
+        "mike": "Perfecto para crear mi horario semanal de clases. Me encanta la exportación instantánea a PNG."
+      },
+      "resetConfirm": {
+        "title": "Restablecer Todo",
+        "description": "Esto borrará todas las funciones de plantilla de la barra lateral, restaurará tus ajustes a los valores predeterminados y eliminará todos los eventos del calendario. Esta acción no se puede deshacer.",
+        "button": "Sí, Restablecer"
+      }
+    },
+    "categories": {
+      "all": "Todos",
+      "business": "Negocios",
+      "personal": "Personal",
+      "education": "Educación",
+      "ai": "IA"
+    },
+    "faqs": {
+      "title": "Preguntas Frecuentes",
+      "items": [
+        {
+          "question": "¿Estas plantillas son realmente gratis?",
+          "answer": "La mayoría de nuestras plantillas de horarios son de uso gratuito; puede previsualizar, personalizar y exportar su horario gratis. Algunas plantillas, como las generadas por IA, requieren una suscripción profesional."
+        },
+        {
+          "question": "¿Cómo uso una plantilla?",
+          "answer": "Simplemente haga clic en cualquier plantilla para previsualizarla, luego haga clic en 'Usar Esta Plantilla' para cargarla en el editor. Desde allí, puede personalizar colores, horarios, etiquetas y agregar o eliminar eventos según sus necesidades."
+        },
+        {
+          "question": "¿Puedo personalizar las plantillas?",
+          "answer": "¡Absolutamente! Una vez que cargue una plantilla en el editor, tiene control total para modificar cada aspecto: cambiar horarios de eventos, colores, títulos, agregar nuevos eventos o eliminar los existentes. Las plantillas son solo puntos de partida."
+        },
+        {
+          "question": "¿Qué formatos de exportación están disponibles?",
+          "answer": "Los usuarios gratuitos pueden exportar horarios como imágenes PNG o JPG (con marca de agua). Los usuarios Pro tienen acceso a exportaciones sin marca de agua, formato PDF para impresión de alta calidad y formato CSV para análisis de datos."
+        },
+        {
+          "question": "¿Se guardará mi horario?",
+          "answer": "Su horario se guarda automáticamente en el almacenamiento local de su navegador. Los usuarios Pro también obtienen sincronización en la nube, lo que les permite acceder a sus horarios desde cualquier dispositivo."
+        }
+      ]
+    },
+    "badge": {
+      "pro": "PRO",
+      "featured": "Destacado"
+    },
+    "preview": {
+      "aiTitle": "Deja que la IA cree tu horario perfecto",
+      "aiSubtitle": "Haz clic en 'Usar Esta Plantilla' para comenzar",
+      "sampleEvent": "Evento de Ejemplo"
+    }
+  },
+  "Common": {
+    "nav": {
+      "home": "Inicio",
+      "templates": "Plantillas",
+      "pricing": "Precios",
+      "blog": "Blog",
+      "viewAllTemplates": "Ver Todas las Plantillas",
+      "language": "Idioma",
+      "openMenu": "Abrir menú"
+    },
+    "footer": {
+      "rights": "Todos los derechos reservados.",
+      "terms": "Términos",
+      "privacy": "Privacidad",
+      "contact": "Contacto",
+      "tagline": "<brand>Try</brand>Schedule es el <highlight>creador de horarios en línea gratuito</highlight> más fácil para estudiantes, gerentes y equipos.",
+      "taglineSimple": "es el creador de horarios en línea gratuito más fácil para estudiantes, gerentes y equipos."
+    },
+    "auth": {
+      "signIn": "Iniciar Sesión",
+      "signUp": "Registrarse",
+      "mySubscription": "Mi Suscripción",
+      "yourAccount": "Tu Cuenta"
+    },
+    "sidebar": {
+      "cloudSave": "Guardar en la Nube",
+      "calendarSync": "Sincronizar Calendario",
+      "exportDownload": "Exportar/Descargar",
+      "helpFaq": "Ayuda y Preguntas",
+      "settings": "Configuración",
+      "aiAutofill": "Autocompletar con IA",
+      "reset": "Reiniciar"
+    },
+    "featureComingSoon": {
+      "calendarSync": {
+        "name": "Sincronización de Calendario",
+        "description": "Esta función está incluida en la versión Pro y estará disponible pronto. Ingresa tu correo para ser el primero en saber cuando se lance."
+      }
+    },
+    "upgradeModal": {
+      "title": "Actualizar a Pro",
+      "description": "{feature} está disponible en los planes Pro. Actualiza ahora para desbloquear todas las funciones premium.",
+      "benefits": {
+        "pdf": "Exportaciones PDF de alta resolución sin marcas de agua",
+        "ai": "Sugerencias de programación con IA",
+        "cloud": "Guardado en la nube y sincronización entre dispositivos"
+      },
+      "viewPlans": "Ver Planes",
+      "maybeLater": "Quizás después",
+      "priceNote": "Desde solo $4.9 por un pase de 7 días"
+    },
+    "viewMode": {
+      "day": "Día",
+      "week": "Semana"
+    },
+    "eventDialog": {
+      "addTitle": "Añadir evento",
+      "editTitle": "Editar evento",
+      "form": {
+        "title": "Título",
+        "titlePlaceholder": "Título del evento",
+        "color": "Color",
+        "day": "Día",
+        "days": "Día(s)",
+        "start": "Inicio",
+        "end": "Fin",
+        "description": "Descripción",
+        "descriptionPlaceholder": "Descripción del evento (opcional)",
+        "dayLabels": {
+          "sun": "Dom",
+          "mon": "Lun",
+          "tue": "Mar",
+          "wed": "Mié",
+          "thu": "Jue",
+          "fri": "Vie",
+          "sat": "Sáb"
+        },
+        "colors": {
+          "blue": "Azul",
+          "green": "Verde",
+          "red": "Rojo",
+          "yellow": "Amarillo",
+          "purple": "Púrpura",
+          "pink": "Rosa",
+          "orange": "Naranja",
+          "teal": "Turquesa"
+        },
+        "icons": {
+          "none": "Ninguno",
+          "Tag": "General",
+          "Briefcase": "Trabajo",
+          "User": "Personal",
+          "Utensils": "Comida",
+          "Coffee": "Descanso",
+          "ChefHat": "Cocina",
+          "Dumbbell": "Gimnasio",
+          "ShoppingCart": "Compras",
+          "PenTool": "Creativo",
+          "Calculator": "Finanzas",
+          "FlaskConical": "Ciencia",
+          "Zap": "Energía",
+          "Activity": "Actividad",
+          "WashingMachine": "Tareas",
+          "Bed": "Sueño",
+          "Bath": "Cuidado personal",
+          "Sparkles": "Ocio",
+          "FolderOpen": "Productividad",
+          "Smile": "Diversión",
+          "Heart": "Salud",
+          "Star": "Prioridad",
+          "CheckCircle2": "Tarea",
+          "HelpCircle": "Pregunta",
+          "Plane": "Viaje",
+          "Car": "Transporte",
+          "Bike": "Ejercicio",
+          "Music": "Hobby",
+          "Gamepad": "Juegos",
+          "Tv": "Entretenimiento",
+          "Film": "Películas",
+          "Camera": "Foto",
+          "Moon": "Noche",
+          "Sun": "Día",
+          "Cloud": "Tiempo",
+          "PalmTree": "Vacaciones",
+          "Flower": "Naturaleza",
+          "Leaf": "Relajación",
+          "Apple": "Nutrición",
+          "Stethoscope": "Médico",
+          "Brain": "Mentalidad",
+          "GraduationCap": "Educación",
+          "Book": "Estudio",
+          "Laptop": "Tecnología",
+          "Mail": "Comunicación",
+          "ClipboardList": "Lista de tareas",
+          "ShoppingBag": "Mandado",
+          "Gift": "Regalo",
+          "PartyPopper": "Celebración",
+          "Trophy": "Logro",
+          "PawPrint": "Mascotas",
+          "Globe": "Web",
+          "Wifi": "Internet",
+          "Lock": "Seguridad",
+          "MapPin": "Ubicación",
+          "Calendar": "Planificación",
+          "Bell": "Recordatorio"
+        }
+      },
+      "buttons": {
+        "add": "Añadir",
+        "copy": "Copiar",
+        "save": "Guardar Cambios",
+        "cancel": "Cancelar"
+      }
+    },
+    "reset": {
+      "title": "Reiniciar Todo",
+      "description": "Esto eliminará todas las características de la plantilla de la barra lateral, restaurará la configuración predeterminada y eliminará todos los eventos del calendario. Esta acción no se puede deshacer.",
+      "confirm": "Sí, Reiniciar",
+      "cancel": "Cancelar"
+    },
+    "calendar": {
+      "days": {
+        "sun": "DOM",
+        "mon": "LUN",
+        "tue": "MAR",
+        "wed": "MIÉ",
+        "thu": "JUE",
+        "fri": "VIE",
+        "sat": "SÁB"
+      },
+      "daysShort": {
+        "sun": "Dom",
+        "mon": "Lun",
+        "tue": "Mar",
+        "wed": "Mié",
+        "thu": "Jue",
+        "fri": "Vie",
+        "sat": "Sáb"
+      },
+      "previousWeek": "Ir a la semana anterior",
+      "nextWeek": "Ir a la semana siguiente",
+      "previousDay": "Ir al día anterior",
+      "nextDay": "Ir al día siguiente",
+      "today": "Ir a Hoy",
+      "newEvent": "Nuevo Evento",
+      "time": {
+        "am": "AM",
+        "pm": "PM"
+      }
+    },
+    "brand": {
+      "alt": "TrySchedule - Creador de Horarios en Línea Gratuito"
+    },
+    "calendarPicker": {
+      "weekLabel": "Sem"
+    },
+    "moreOptions": "Más Opciones",
+    "export": "Exportar",
+    "cloud": "Nube",
+    "more": "Más",
+    "sync": "Sincronizar",
+    "aiFill": "IA",
+    "faq": "FAQ",
+    "badge": {
+      "pro": "PRO"
+    },
+    "seo": {
+      "h1": "Constructor Gratuito de Horarios en Línea",
+      "faqTitle": "Preguntas Frecuentes sobre TrySchedule",
+      "faqSubtitle": "Todo lo que necesitas saber sobre nuestro constructor de horarios gratuito.",
+      "faqs": {
+        "q1": {
+          "question": "¿Por qué TrySchedule es el mejor constructor de horarios en línea gratuito?",
+          "answer": "TrySchedule destaca por tres razones clave:\n\n• Sin Fricción – no se requiere inicio de sesión ni registro, solo comienza a crear de inmediato.\n• Exportación Instantánea – descarga tu horario como PNG o PDF de alta calidad con un solo clic.\n• Visual e Intuitivo – la interfaz de arrastrar y soltar con hermosos bloques codificados por colores hace que la programación sea sencilla.\n\nEstas características hacen de TrySchedule la forma más rápida de crear un horario semanal profesional en línea."
+        },
+        "q2": {
+          "question": "¿Cómo creo un horario semanal en 3 sencillos pasos?",
+          "answer": "Paso 1: Arrastra y suelta en la cuadrícula del calendario para crear bloques de tiempo para tus actividades.\n\nPaso 2: Personaliza cada bloque con muchos colores vibrantes para categorizar trabajo, estudio, ejercicio o tiempo personal.\n\nPaso 3: Haz clic en 'Exportar' para descargar tu horario terminado como PNG, JPG o PDF – listo para imprimir o compartir.\n\nTodo el proceso toma menos de 5 minutos, no se necesitan habilidades de diseño."
+        },
+        "q3": {
+          "question": "¿Quién necesita un constructor de horarios como TrySchedule?",
+          "answer": "TrySchedule está diseñado para todos los que valoran su tiempo:\n\n• Estudiantes – organizando horarios de clases y sesiones de estudio\n• Gerentes de Turnos – creando rotaciones de trabajo para empleados\n• Deportistas – planificando rutinas de ejercicio semanales\n• Freelancers – equilibrando múltiples proyectos de clientes y plazos\n\nYa sea que necesites un planificador diario simple o un horario semanal complejo, nuestro constructor visual se adapta a tus necesidades."
+        },
+        "q4": {
+          "question": "¿Este constructor de horarios es completamente gratuito?",
+          "answer": "¡Sí, TrySchedule es 100% gratuito para las funciones principales!\n\nCrea horarios ilimitados, usa todos los colores, exporta como PNG o JPG, y guarda tu trabajo localmente – todo sin pagar un centavo ni crear una cuenta.\n\nLas funciones Pro como exportación a PDF, sugerencias de programación con IA y sincronización en la nube entre dispositivos están disponibles para usuarios avanzados que desean capacidades adicionales."
+        },
+        "q5": {
+          "question": "¿Puedo imprimir mi horario después de crearlo?",
+          "answer": "¡Por supuesto! TrySchedule está diseñado para ser fácil de imprimir.\n\nExporta tu horario como PNG o PDF de alta resolución, luego imprímelo directamente en tamaños de papel estándar. El diseño limpio y minimalista asegura que tu horario impreso se vea profesional y sea fácil de leer.\n\nPerfecto para colgar en tu pared, refrigerador o tablón de anuncios de la oficina."
+        },
+        "q6": {
+          "question": "¿Mis datos de horario son privados y seguros?",
+          "answer": "Tu privacidad es nuestra prioridad.\n\nPor defecto, todos los datos del horario permanecen en el almacenamiento local de tu navegador – nada sale de tu dispositivo a menos que elijas lo contrario.\n\nTus horarios permanecen completamente privados a menos que elijas explícitamente habilitar la sincronización en la nube con una cuenta Pro. Tienes control total sobre tus datos en todo momento."
+        }
+      }
+    },
+    "buttons": {
+      "cancel": "Cancelar"
+    }
+  },
+  "AuthModal": {
+    "title": "Autenticación",
+    "welcomeBack": "¡Bienvenido de nuevo!",
+    "join": "Únete a TrySchedule",
+    "signInDescription": "Retomemos donde lo dejaste y sigue programando de manera más inteligente",
+    "signUpDescription": "Comienza a crear hermosos horarios en minutos, sin curva de aprendizaje",
+    "features": {
+      "dragDrop": "Simplicidad de arrastrar y soltar",
+      "themes": "Hermosos temas de color",
+      "devices": "Funciona en cualquier dispositivo"
+    }
+  },
+  "Auth": {
+    "common": {
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "or": "O",
+      "continue": "Continuar",
+      "backToSignIn": "← Volver a iniciar sesión",
+      "backToSignUp": "← Volver a registrarse",
+      "emailAddress": "Dirección de correo",
+      "optional": "(Opcional)"
+    },
+    "signIn": {
+      "title": "Iniciar Sesión",
+      "emailPlaceholder": "Ingresa tu correo",
+      "passwordPlaceholder": "Ingresa tu contraseña",
+      "forgotPassword": "¿Olvidaste tu contraseña?",
+      "googleButton": "Iniciar sesión con Google",
+      "submit": "Iniciar Sesión"
+    },
+    "signUp": {
+      "title": "Registrarse",
+      "firstName": "Nombre",
+      "firstNamePlaceholder": "Nombre",
+      "lastName": "Apellido",
+      "lastNamePlaceholder": "Apellido",
+      "passwordPlaceholder": "Crea una contraseña",
+      "googleButton": "Registrarse con Google",
+      "submit": "Continuar"
+    },
+    "forgotPassword": {
+      "title": "Restablecer tu contraseña",
+      "instruction": "Ingresa tu correo y te enviaremos un código de verificación",
+      "submitEmail": "Enviar Código",
+      "checkEmail": "Revisa tu correo",
+      "codeSentTo": "Enviamos un código de 6 dígitos a",
+      "verificationCode": "Código de verificación",
+      "codePlaceholder": "Ingresa el código",
+      "verifyCode": "Verificar Código",
+      "setNewPassword": "Crear nueva contraseña",
+      "setNewPasswordInstruction": "Ingresa tu nueva contraseña abajo",
+      "newPassword": "Nueva contraseña",
+      "newPasswordPlaceholder": "Ingresa nueva contraseña",
+      "confirmPassword": "Confirmar contraseña",
+      "confirmPasswordPlaceholder": "Confirma nueva contraseña",
+      "resetPassword": "Restablecer Contraseña",
+      "success": "¡Contraseña restablecida!",
+      "successMessage": "Tu contraseña ha sido restablecida y ya has iniciado sesión."
+    },
+    "verification": {
+      "title": "Revisa tu correo",
+      "codeSentTo": "Enviamos un código de verificación a",
+      "codeLabel": "Código de Verificación",
+      "submit": "Verificar Correo"
+    },
+    "errors": {
+      "signInError": "Ocurrió un error al iniciar sesión",
+      "googleSignInError": "Error al iniciar sesión con Google",
+      "googleSignUpError": "Error al registrarse con Google",
+      "resetEmailError": "Error al enviar correo de restablecimiento",
+      "codeError": "Código de verificación inválido",
+      "verificationFailed": "Verificación fallida",
+      "signUpError": "Ocurrió un error al registrarse",
+      "passwordMismatch": "Las contraseñas no coinciden",
+      "passwordLength": "La contraseña debe tener al menos 8 caracteres",
+      "resetError": "Error al restablecer la contraseña"
+    }
+  },
+  "Settings": {
+    "title": "Configuración",
+    "weekStart": {
+      "label": "Semana comienza en domingo",
+      "description": "EE.UU. usa domingo, estándar ISO usa lunes"
+    },
+    "timeFormat": {
+      "label": "Formato 12 horas (AM/PM)",
+      "description": "Desactivar para formato 24 horas"
+    },
+    "showDates": {
+      "label": "Mostrar fechas",
+      "description": "Mostrar números de fecha en los encabezados del calendario"
+    },
+    "timeIncrement": {
+      "label": "Incremento de tiempo",
+      "minutes": "{count} minutos"
+    },
+    "workingHours": {
+      "label": "Horario de trabajo",
+      "to": "a"
+    }
+  },
+  "Export": {
+    "title": "Exportar Horario",
+    "description": "Elige un formato para descargar tu horario.",
+    "format": "Formato",
+    "formats": {
+      "png": {
+        "description": "Imagen de alta calidad con transparencia"
+      },
+      "jpg": {
+        "description": "Imagen comprimida, tamaño de archivo más pequeño"
+      },
+      "pdf": {
+        "description": "Formato vectorial, perfecto para imprimir"
+      },
+      "csv": {
+        "description": "Formato de hoja de cálculo para análisis de datos"
+      }
+    },
+    "upgradePrompt": {
+      "title": "Actualizar a Pro",
+      "description": "Desbloquea exportaciones PDF y CSV, además elimina marcas de agua de las imágenes.",
+      "button": "Ver Planes"
+    },
+    "buttons": {
+      "cancel": "Cancelar",
+      "exporting": "Exportando...",
+      "download": "Descargar {format}"
+    }
+  },
+  "CalendarSync": {
+    "title": "Sincronización con Google Calendar",
+    "description": "Sincroniza tu horario con Google Calendar para acceder fácilmente desde todos tus dispositivos.",
+    "notConnected": {
+      "title": "Conecta tu cuenta de Google",
+      "description": "Vincula tu cuenta de Google para sincronizar eventos con tu calendario.",
+      "button": "Conectar cuenta de Google"
+    },
+    "connected": {
+      "status": "Conectado",
+      "syncComplete": "Sincronización completa",
+      "syncFailed": "Sincronización fallida",
+      "eventsSynced": "{count} evento(s) sincronizado(s)",
+      "eventsFailed": ", {count} fallido(s)",
+      "syncing": "Sincronizando...",
+      "syncButton": "Sincronizar con Google Calendar",
+      "openCalendar": "Abrir Google Calendar"
+    }
+  },
+  "FeatureComingSoon": {
+    "title": "{feature} - ¡Próximamente!",
+    "description": "Esta función Pro está actualmente en desarrollo. Sé el primero en saber cuando se lance y obtén un <discount>50% de descuento</discount> exclusivo.",
+    "emailPlaceholder": "Ingresa tu correo electrónico",
+    "submitButton": "Notificarme y obtener 50% Off",
+    "submitting": "Registrando...",
+    "maybeLater": "Quizás después",
+    "noSpam": "Sin spam, cancela cuando quieras.",
+    "success": {
+      "title": "¡Estás en la lista! 🎉",
+      "subtitle": "Te notificaremos cuando esté listo."
+    },
+    "error": "Envío fallido, por favor intenta de nuevo más tarde",
+    "features": {
+      "calendarSync": {
+        "name": "Sincronización de Calendario",
+        "description": "Esta función está incluida en la versión Pro y estará disponible pronto. Ingresa tu correo para ser el primero en saber cuando se lance."
+      }
+    }
+  },
+  "CloudSave": {
+    "title": "Guardar en la Nube",
+    "description": "Guarda tu horario en la nube o carga una plantilla guardada.",
+    "templatesUsed": "{count}/{max} plantillas usadas",
+    "saveButton": "Guardar Actual",
+    "templateName": "Nombre de Plantilla",
+    "templatePlaceholder": "Mi Horario",
+    "noTemplates": "Sin plantillas guardadas aún",
+    "noTemplatesHint": "¡Guarda tu primer horario en la nube!",
+    "eventsCount": "{count} eventos",
+    "updated": "Actualizado {date}",
+    "pagination": "Página {page} de {total}",
+    "sort": {
+      "updated": "Actualizado",
+      "created": "Creado",
+      "name": "Nombre"
+    },
+    "buttons": {
+      "load": "Cargar plantilla",
+      "rename": "Renombrar",
+      "delete": "Eliminar"
+    },
+    "errors": {
+      "fetchFailed": "Error al cargar las plantillas",
+      "saveFailed": "Error al guardar",
+      "loadFailed": "Error al cargar la plantilla",
+      "renameFailed": "Error al renombrar",
+      "deleteFailed": "Error al eliminar la plantilla",
+      "overwriteFailed": "Error al sobrescribir la plantilla",
+      "enterName": "Por favor ingresa un nombre",
+      "nameTooLong": "El nombre debe tener 50 caracteres o menos"
+    },
+    "deleteConfirm": {
+      "title": "Eliminar Plantilla",
+      "description": "¿Estás seguro de que quieres eliminar \"{name}\"? Esta acción no se puede deshacer.",
+      "button": "Eliminar"
+    },
+    "loadConfirm": {
+      "title": "Cargar Plantilla",
+      "description": "Tu horario actual será reemplazado por esta plantilla. Esta acción no se puede deshacer.",
+      "button": "Cargar Plantilla"
+    },
+    "overwriteConfirm": {
+      "title": "La Plantilla Ya Existe",
+      "description": "Ya existe una plantilla llamada \"{name}\". ¿Quieres sobrescribirla con tu horario actual?",
+      "button": "Sobrescribir"
+    }
+  },
+  "TemplateComponents": {
+    "common": {
+      "on": "Activo",
+      "off": "Inactivo"
+    },
+    "AIQuickActions": {
+      "title": "Acciones Rápidas con IA",
+      "regenerate": "Regenerar con IA",
+      "clear": "Limpiar Horario"
+    },
+    "PriorityModeToggle": {
+      "title": "Alternar Modo Prioridad",
+      "label": "Modo Prioridad"
+    },
+    "TaskModeToggle": {
+      "title": "Alternar Modo Tarea",
+      "label": "Modo Tarea"
+    },
+    "ProjectDashboard": {
+      "title": "Panel del Proyecto",
+      "phase": "FASE DE CONSTRUCCIÓN",
+      "onTrack": "Al Día",
+      "completion": "Progreso",
+      "milestones": "Hitos Clave",
+      "clickToUpdate": "Clic para actualizar",
+      "active": "Activo",
+      "weatherAlert": "Alerta Meteorológica:",
+      "siteStatus": "Estado del Sitio:",
+      "checkingForecast": "Consultando pronóstico...",
+      "updateLocation": "Actualizar Ubicación del Sitio",
+      "locationDenied": "Acceso a la ubicación denegado",
+      "locationPrompt": "Por favor, permite el acceso a la ubicación para obtener el clima local del sitio.",
+      "weatherError": "Datos meteorológicos no disponibles.",
+      "siteAlertToday": "Alerta: Se espera lluvia/nieve HOY. Cubre los materiales sensibles.",
+      "forecastAlert": "Pronóstico: Mal tiempo esperado en {days} días. Planifica tareas de interior.",
+      "forecastClear": "Pronóstico Despejado: Condiciones óptimas para trabajo exterior.",
+      "milestoneData": {
+        "sitePrep": "Preparación y Excavación",
+        "foundation": "Vertido de Cimientos",
+        "framing": "Estructura y Techo",
+        "hvac": "HVAC y Electricidad",
+        "week": "Semana {num}",
+        "weekRange": "Semana {range}"
+      }
+    }
+  },
+  "Metadata": {
+    "title": "TrySchedule | Creador de Horarios en Línea Gratuito (Sin Registro)",
+    "description": "El creador de horarios en línea gratuito más fácil. Interfaz de arrastrar y soltar, exportación instantánea a PNG. No es necesario registrarse. Herramientas PDF e IA disponibles para usuarios Pro.",
+    "organizationDescription": "El creador de horarios en línea gratuito más fácil para estudiantes, gerentes y gimnasios."
+  },
+  "NotFound": {
+    "title": "404 - Página No Encontrada",
+    "description": "La página que estás buscando no existe o ha sido movida.",
+    "hint": "Intenta buscar plantillas o vuelve a la página de inicio.",
+    "backHome": "Volver al Inicio",
+    "browseTemplates": "Ver Plantillas"
+  },
+  "AIAutofill": {
+    "title": "Autocompletar con IA",
+    "usageRemaining": "{remaining} / {limit} usos mensuales restantes",
+    "trialRemaining": "{remaining} usos de prueba restantes",
+    "inputLabel": "Describe tus necesidades de horario",
+    "inputPlaceholder": "Ej: Soy estudiante universitario. Necesito estudiar 3 horas por la mañana, almorzar al mediodía e ir al gimnasio por la tarde los días de semana...",
+    "tipsTitle": "Consejos para mejores resultados:",
+    "tips": {
+      "durations": "Menciona actividades específicas y sus duraciones",
+      "days": "Especifica qué días de la semana",
+      "ranges": "Incluye rangos de tiempo preferidos"
+    },
+    "generateButton": "Generar Horario",
+    "generatingButton": "Generando...",
+    "previewTitle": "{count} eventos generados",
+    "noEvents": "No se generaron eventos. Intenta una descripción más detallada.",
+    "addButton": "Añadir {count} Eventos",
+    "backButton": "Atrás",
+    "closeButton": "Cerrar",
+    "cancelButton": "Cancelar",
+    "trialLimitReachedTitle": "Límite de Prueba Alcanzado",
+    "trialLimitReachedDescription": "Has usado tus 3 generaciones gratuitas con IA. ¡Actualiza a Pro para tener 100 usos cada mes!",
+    "upgradeToPro": "Actualizar a Pro",
+    "startFreshTitle": "¿Empezar de Cero?",
+    "startFreshDescription": "Esto reiniciará tu calendario y borrará todos los eventos existentes. Tu configuración también se restaurará a los valores predeterminados.",
+    "startFreshConfirm": "Sí, Empezar de Cero",
+    "errors": {
+      "usageLimitExceededPro": "Has alcanzado el límite mensual de {limit} generaciones con IA. El límite se reinicia el próximo mes.",
+      "usageLimitExceededFree": "Límite de prueba alcanzado. Por favor, actualiza a Pro para más generaciones con IA.",
+      "generationFailed": "Error al generar el horario",
+      "connectionError": "Error al conectar con el servicio de IA. Por favor, inténtalo de nuevo."
+    }
+  },
+  "EventConflict": {
+    "title": "Conflicto de Tiempo Detectado",
+    "description": "\"{title}\" tiene conflictos con eventos existentes.",
+    "listTitle": "Eventos en conflicto:",
+    "buttons": {
+      "cancel": "Cancelar",
+      "modify": "Modificar Nuevo Evento",
+      "delete": "Eliminar Existentes ({count})"
+    }
+  }
 }

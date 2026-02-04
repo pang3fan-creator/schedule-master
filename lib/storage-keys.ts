@@ -1,7 +1,9 @@
-export const EVENTS_STORAGE_KEY = "schedule-builder-events"
-export const SETTINGS_STORAGE_KEY = "schedule-builder-settings"
-export const VIEW_MODE_STORAGE_KEY = "schedule-builder-view-mode"
-export const SELECTED_DATE_STORAGE_KEY = "schedule-builder-selected-date"
-export const SHOULD_OPEN_SETTINGS_KEY = "schedule-builder-should-open-settings"
-export const SHOULD_OPEN_AI_AUTOFILL_KEY = "schedule-builder-should-open-ai-autofill"
-export const CALENDAR_SYNC_MAPPINGS_KEY = "schedule-builder-calendar-sync-mappings"
+export const EVENTS_STORAGE_KEY = "schedule-builder-events";
+export const SETTINGS_STORAGE_KEY = "schedule-builder-settings";
+export const VIEW_MODE_STORAGE_KEY = "schedule-builder-view-mode";
+export const SELECTED_DATE_STORAGE_KEY = "schedule-builder-selected-date";
+export const SHOULD_OPEN_SETTINGS_KEY = "schedule-builder-should-open-settings";
+export const SHOULD_OPEN_AI_AUTOFILL_KEY =
+  "schedule-builder-should-open-ai-autofill";
+export const CALENDAR_SYNC_MAPPINGS_KEY =
+  "schedule-builder-calendar-sync-mappings";

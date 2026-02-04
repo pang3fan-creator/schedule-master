@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server"
+import { NextRequest, NextResponse } from "next/server";
 
 /**
  * 联系表单 API 路由
@@ -6,39 +6,38 @@ import { NextRequest, NextResponse } from "next/server"
  */
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json()
-    const { name, email, subject, message } = body
+    const body = await request.json();
+    const { name, email, subject, message } = body;
 
     // 验证必填字段
     if (!name || !email || !subject || !message) {
       return NextResponse.json(
         { error: "所有字段都是必填的" },
-        { status: 400 }
-      )
+        { status: 400 },
+      );
     }
 
     // 验证邮箱格式
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      return NextResponse.json(
-        { error: "邮箱格式无效" },
-        { status: 400 }
-      )
+      return NextResponse.json({ error: "邮箱格式无效" }, { status: 400 });
     }
 
     // 获取站长邮箱（从环境变量）
-    const adminEmail = process.env.ADMIN_EMAIL || "support@tryschedule.com"
-    
+    const adminEmail = process.env.ADMIN_EMAIL || "support@tryschedule.com";
+
     // 如果配置了 Resend API Key，使用 Resend 发送邮件
     if (process.env.RESEND_API_KEY) {
       const resendResponse = await fetch("https://api.resend.com/emails", {
         method: "POST",
         headers: {
-          "Authorization": `Bearer ${process.env.RESEND_API_KEY}`,
+          Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          from: process.env.RESEND_FROM_EMAIL || "TrySchedule <noreply@tryschedule.com>",
+          from:
+            process.env.RESEND_FROM_EMAIL ||
+            "TrySchedule <noreply@tryschedule.com>",
           to: [adminEmail],
           reply_to: email,
           subject: `[联系表单] ${subject}`,
@@ -80,60 +79,59 @@ ${message}
 回复此邮件将直接发送给用户：${email}
           `.trim(),
         }),
-      })
+      });
 
       if (!resendResponse.ok) {
-        const errorData = await resendResponse.text()
-        console.error("Resend API error:", errorData)
-        throw new Error(`Resend API error: ${resendResponse.status}`)
+        const errorData = await resendResponse.text();
+        console.error("Resend API error:", errorData);
+        throw new Error(`Resend API error: ${resendResponse.status}`);
       }
 
-      const resendData = await resendResponse.json()
-      console.log("Email sent via Resend:", resendData.id)
-      
+      const resendData = await resendResponse.json();
+      console.log("Email sent via Resend:", resendData.id);
+
       return NextResponse.json(
-        { 
-          success: true, 
+        {
+          success: true,
           message: "消息已成功发送",
-          emailId: resendData.id 
+          emailId: resendData.id,
         },
-        { status: 200 }
-      )
+        { status: 200 },
+      );
     }
 
     // 如果没有配置 Resend，使用 mailto 链接（仅用于开发环境）
     // 生产环境应该配置 Resend 或其他邮件服务
     if (process.env.NODE_ENV === "development") {
-      console.log("=== 联系表单提交（开发模式）===")
-      console.log("姓名:", name)
-      console.log("邮箱:", email)
-      console.log("主题:", subject)
-      console.log("消息:", message)
-      console.log("应该发送到:", adminEmail)
-      console.log("================================")
-      
+      console.log("=== 联系表单提交（开发模式）===");
+      console.log("姓名:", name);
+      console.log("邮箱:", email);
+      console.log("主题:", subject);
+      console.log("消息:", message);
+      console.log("应该发送到:", adminEmail);
+      console.log("================================");
+
       return NextResponse.json(
-        { 
-          success: true, 
+        {
+          success: true,
           message: "消息已记录（开发模式）",
-          note: "生产环境请配置 RESEND_API_KEY 环境变量以启用邮件发送"
+          note: "生产环境请配置 RESEND_API_KEY 环境变量以启用邮件发送",
         },
-        { status: 200 }
-      )
+        { status: 200 },
+      );
     }
 
     // 生产环境但没有配置邮件服务
     return NextResponse.json(
       { error: "邮件服务未配置，请联系管理员" },
-      { status: 500 }
-    )
-
+      { status: 500 },
+    );
   } catch (error) {
-    console.error("联系表单提交错误:", error)
+    console.error("联系表单提交错误:", error);
     return NextResponse.json(
       { error: "发送消息时出错，请稍后重试" },
-      { status: 500 }
-    )
+      { status: 500 },
+    );
   }
 }
 
@@ -147,6 +145,6 @@ function escapeHtml(text: string): string {
     ">": "&gt;",
     '"': "&quot;",
     "'": "&#039;",
-  }
-  return text.replace(/[&<>"']/g, (m) => map[m])
+  };
+  return text.replace(/[&<>"']/g, (m) => map[m]);
 }

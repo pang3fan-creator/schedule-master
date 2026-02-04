@@ -1,1066 +1,1066 @@
 {
-    "Terms": {
-        "title": "Terms of Service",
-        "metaTitle": "Terms of Service | TrySchedule",
-        "metaDescription": "Terms of Service for TrySchedule - Free Online Schedule Builder.",
-        "lastUpdated": "Last updated: January 1, 2026",
-        "breadcrumb": {
-            "home": "Home",
-            "terms": "Terms"
-        },
-        "sections": {
-            "acceptance": {
-                "title": "1. Acceptance of Terms",
-                "content": "By accessing and using TrySchedule (\"the Service\"), you accept and agree to be bound by the terms and provisions of this agreement. If you do not agree to abide by these terms, please do not use the Service."
-            },
-            "description": {
-                "title": "2. Description of Service",
-                "content": "TrySchedule is a web-based scheduling and planning tool that allows users to create, manage, and share schedules. We provide various subscription tiers including free and paid options with different feature sets."
-            },
-            "userAccounts": {
-                "title": "3. User Accounts",
-                "intro": "To use certain features of the Service, you must register for an account. You agree to:",
-                "items": [
-                    "Provide accurate and complete information during registration",
-                    "Maintain the security of your password and account",
-                    "Notify us immediately of any unauthorized use of your account",
-                    "Accept responsibility for all activities that occur under your account"
-                ]
-            },
-            "payment": {
-                "title": "4. Payment Terms",
-                "content": "For paid subscriptions, you agree to pay all fees associated with your chosen plan. Payments are processed through our third-party payment provider. Subscriptions automatically renew unless cancelled before the renewal date."
-            },
-            "acceptableUse": {
-                "title": "5. Acceptable Use",
-                "intro": "You agree not to:",
-                "items": [
-                    "Use the Service for any unlawful purpose",
-                    "Attempt to gain unauthorized access to any portion of the Service",
-                    "Interfere with or disrupt the Service or servers",
-                    "Upload malicious code or content",
-                    "Resell or redistribute the Service without authorization"
-                ]
-            },
-            "thirdParty": {
-                "title": "6. Third-Party Services",
-                "content1": "Our Service allows you to connect with third-party services, such as Google Calendar, to enhance your scheduling experience. By using these integrations, you agree to comply with the terms and privacy policies of those third-party services.",
-                "content2": "We are not responsible for the content, privacy policies, or practices of any third-party services. We encourage you to review the terms and privacy policies of any third-party service before connecting it to TrySchedule."
-            },
-            "intellectualProperty": {
-                "title": "7. Intellectual Property",
-                "content": "The Service and its original content, features, and functionality are owned by TrySchedule and are protected by international copyright, trademark, and other intellectual property laws."
-            },
-            "liability": {
-                "title": "8. Limitation of Liability",
-                "content": "In no event shall TrySchedule be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use of or inability to use the Service."
-            },
-            "changes": {
-                "title": "9. Changes to Terms",
-                "content": "We reserve the right to modify these terms at any time. We will notify users of significant changes via email or through the Service. Continued use of the Service after changes constitutes acceptance of the new terms."
-            },
-            "contact": {
-                "title": "10. Contact Information",
-                "content": "If you have any questions about these Terms, please contact us at"
-            }
-        }
+  "Terms": {
+    "title": "Terms of Service",
+    "metaTitle": "Terms of Service | TrySchedule",
+    "metaDescription": "Terms of Service for TrySchedule - Free Online Schedule Builder.",
+    "lastUpdated": "Last updated: January 1, 2026",
+    "breadcrumb": {
+      "home": "Home",
+      "terms": "Terms"
     },
-    "Privacy": {
-        "title": "Privacy Policy",
-        "metaTitle": "Privacy Policy | TrySchedule",
-        "metaDescription": "Privacy Policy for TrySchedule - Free Online Schedule Builder.",
-        "lastUpdated": "Last updated: January 1, 2026",
-        "breadcrumb": {
-            "home": "Home",
-            "privacy": "Privacy"
-        },
-        "sections": {
-            "introduction": {
-                "title": "1. Introduction",
-                "content": "TrySchedule (\"we\", \"our\", or \"us\") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our TrySchedule service."
-            },
-            "informationCollect": {
-                "title": "2. Information We Collect",
-                "personalInfo": {
-                    "title": "Personal Information",
-                    "intro": "When you register for an account, we may collect:",
-                    "items": [
-                        "Name and email address",
-                        "Profile information you choose to provide",
-                        "Payment information (processed securely by our payment provider)"
-                    ]
-                },
-                "usageInfo": {
-                    "title": "Usage Information",
-                    "intro": "We automatically collect:",
-                    "items": [
-                        "Device and browser information",
-                        "IP address and location data",
-                        "Usage patterns and feature interactions",
-                        "Cookies and similar tracking technologies"
-                    ]
-                }
-            },
-            "howWeUse": {
-                "title": "3. How We Use Your Information",
-                "intro": "We use your information to:",
-                "items": [
-                    "Provide and maintain our Service",
-                    "Process your transactions and manage your subscription",
-                    "Send you updates, security alerts, and support messages",
-                    "Improve and personalize your experience",
-                    "Analyze usage patterns to enhance our Service",
-                    "Comply with legal obligations"
-                ]
-            },
-            "informationSharing": {
-                "title": "4. Information Sharing",
-                "intro": "We do not sell your personal information. We may share your information with:",
-                "items": [
-                    "Service providers who assist in operating our Service",
-                    "Business partners with your consent",
-                    "Legal authorities when required by law"
-                ]
-            },
-            "analytics": {
-                "title": "5. Analytics and Third-Party Tools",
-                "intro": "We use third-party analytics services to help us understand how users interact with our Service and to improve user experience. These services may collect anonymous data about your usage of the Service.",
-                "googleAnalytics": {
-                    "title": "Google Analytics",
-                    "content": "We use Google Analytics, a web analytics service provided by Google, Inc. Google Analytics uses cookies to analyze how users use our Service. The information generated is transmitted to and stored by Google. For more information on how Google uses data, please visit",
-                    "linkText": "Google's Privacy Policy"
-                },
-                "microsoftClarity": {
-                    "title": "Microsoft Clarity",
-                    "content": "We use Microsoft Clarity, a user behavior analytics tool provided by Microsoft. Clarity captures how users interact with our Service through session recordings and heatmaps. Clarity automatically masks sensitive content to protect user privacy. For more information, please visit",
-                    "linkText": "Microsoft's Privacy Statement"
-                },
-                "optingOut": {
-                    "title": "Opting Out",
-                    "content": "You can opt out of analytics tracking by adjusting your browser settings to block cookies or by using browser extensions designed to block tracking scripts."
-                }
-            },
-            "googleUserData": {
-                "title": "6. Google User Data",
-                "intro": "TrySchedule uses Google OAuth to allow you to connect your Google account and sync your local schedule with Google Calendar.",
-                "infoAccess": {
-                    "title": "Information We Access",
-                    "intro": "When you connect your Google account, we request the following permissions:",
-                    "items": [
-                        "View your calendar settings: We use this to detect your primary Google Calendar timezone, ensuring synchronized events appear at the correct time.",
-                        "View and edit events on your calendars: We use this to create, update, and manage the schedule events you choose to sync from TrySchedule to your Google Calendar."
-                    ]
-                },
-                "howWeUseData": {
-                    "title": "How We Use This Data",
-                    "content": "Our use of information received from Google APIs is strictly limited to providing and improving the Calendar Sync feature. We do not store your Google Calendar data on our servers, nor do we use it for advertising or share it with any third parties except as necessary to provide the service."
-                },
-                "limitedUse": {
-                    "title": "Google API Limited Use Policy",
-                    "content": "TrySchedule's use and transfer to any other app of information received from Google APIs will adhere to the",
-                    "linkText": "Google API Services User Data Policy",
-                    "suffix": ", including the Limited Use requirements."
-                }
-            },
-            "dataSecurity": {
-                "title": "7. Data Security",
-                "content": "We implement industry-standard security measures to protect your data, including encryption, secure servers, and regular security assessments. However, no method of transmission over the Internet is 100% secure."
-            },
-            "yourRights": {
-                "title": "8. Your Rights",
-                "intro": "Depending on your location, you may have the right to:",
-                "items": [
-                    "Access your personal data",
-                    "Correct inaccurate data",
-                    "Request deletion of your data",
-                    "Object to or restrict processing",
-                    "Data portability",
-                    "Withdraw consent at any time"
-                ]
-            },
-            "cookies": {
-                "title": "9. Cookies",
-                "content": "We use cookies and similar technologies to enhance your experience, analyze usage, and deliver personalized content. You can control cookie preferences through your browser settings."
-            },
-            "childrenPrivacy": {
-                "title": "10. Children's Privacy",
-                "content": "Our Service is not intended for children under 13. We do not knowingly collect personal information from children under 13. If you believe we have collected such information, please contact us immediately."
-            },
-            "changes": {
-                "title": "11. Changes to This Policy",
-                "content": "We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the \"Last updated\" date."
-            },
-            "contact": {
-                "title": "12. Contact Us",
-                "content": "If you have questions about this Privacy Policy, please contact us at"
-            }
-        }
-    },
-    "Contact": {
-        "metaTitle": "Contact Us | TrySchedule",
-        "metaDescription": "Contact TrySchedule - We'd love to hear from you. Send us a message about questions, feedback, or support.",
-        "breadcrumb": {
-            "home": "Home",
-            "contact": "Contact"
-        },
-        "header": {
-            "title": "Contact Us",
-            "subtitle": "Have questions or feedback? We'd love to hear from you. Send us a message and we'll respond as soon as possible."
-        },
-        "infoCards": {
-            "email": {
-                "title": "Email",
-                "description": "For general inquiries"
-            },
-            "office": {
-                "title": "Office",
-                "address1": "123 Tech Street",
-                "address2": "San Francisco, CA 94102",
-                "address3": "United States"
-            },
-            "hours": {
-                "title": "Business Hours",
-                "line1": "Monday - Friday",
-                "line2": "9:00 AM - 6:00 PM (PST)",
-                "line3": "Weekend: Closed"
-            }
-        },
-        "form": {
-            "name": {
-                "label": "Name",
-                "placeholder": "Your name"
-            },
-            "email": {
-                "label": "Email",
-                "placeholder": "your@email.com"
-            },
-            "subject": {
-                "label": "Subject",
-                "placeholder": "How can we help?"
-            },
-            "message": {
-                "label": "Message",
-                "placeholder": "Tell us more about your inquiry..."
-            },
-            "submit": "Send Message",
-            "submitting": "Sending..."
-        },
-        "success": {
-            "title": "Message Sent!",
-            "message": "Thank you for reaching out. We'll get back to you within 24-48 hours.",
-            "sendAnother": "Send Another Message"
-        },
-        "errors": {
-            "sendFailed": "Failed to send, please try again later"
-        }
-    },
-    "Pricing": {
-        "metaTitle": "Affordable Scheduling | Pricing Plans - TrySchedule Pro",
-        "metaDescription": "Start for free or unlock PDF export and AI scheduling with TrySchedule Pro. Compare plans starting from $4.9/week.",
-        "breadcrumb": {
-            "home": "Home",
-            "pricing": "Pricing"
-        },
-        "hero": {
-            "title": "Professional Scheduling Tools",
-            "subtitle": "Start with our free schedule builder forever, or upgrade to Pro to automate your workflow with AI, export high-res PDFs.",
-            "trust": "Trusted by 5000+ students and managers worldwide."
-        },
-        "successBanner": "🎉 Payment successful! Your Pro features are now active.",
-        "promo": {
-            "placeholder": "Enter promo code",
-            "apply": "Apply",
-            "remove": "Remove",
-            "applied": "Promo code:"
-        },
-        "plans": {
-            "starter": {
-                "title": "Starter",
-                "priceDetail": "/ forever",
-                "description": "For students & personal use",
-                "features": [
-                    "Unlimited web editing",
-                    "Basic templates (Weekly/Daily)",
-                    "Download as image (JPG/PNG)",
-                    "Browser-based storage (No login needed)"
-                ],
-                "buttonText": "Start Building for Free"
-            },
-            "sevenDay": {
-                "title": "7-Day Pass",
-                "priceDetail": "/ week",
-                "description": "Perfect for one-time scheduling.",
-                "features": [
-                    "All Starter features",
-                    "AI Auto-Scheduler",
-                    "High-Res Export (PDF & Vector)",
-                    "Google Calendar Sync",
-                    "Cloud Save (Access from any device)",
-                    "No Watermarks on exports"
-                ],
-                "buttonText": "Choose Pass"
-            },
-            "monthly": {
-                "title": "Monthly",
-                "priceDetail": "/ month",
-                "description": "Ideal for managers, HR, frequent schedulers.",
-                "features": [
-                    "All Starter features",
-                    "AI Auto-Scheduler",
-                    "High-Res Export (PDF & Vector)",
-                    "Google Calendar Sync",
-                    "Cloud Save (Access from any device)",
-                    "No Watermarks on exports",
-                    "Priority Email Support"
-                ],
-                "buttonText": "Upgrade to Pro"
-            },
-            "lifetime": {
-                "title": "Lifetime",
-                "priceDetail": "/ one-time",
-                "description": "Pay once and get all pro features forever.",
-                "features": [
-                    "All previous features",
-                    "One-time payment with lifetime use",
-                    "Priority Email Support"
-                ],
-                "buttonText": "Buy Once"
-            }
-        },
-        "comparison": {
-            "title": "Compare Plans & Features",
-            "headers": {
-                "feature": "Feature",
-                "starter": "Starter",
-                "sevenDay": "7-Day Pass",
-                "monthly": "Monthly",
-                "lifetime": "Lifetime"
-            },
-            "categories": {
-                "coreTools": "Core Tools",
-                "exportSharing": "Export & Sharing",
-                "advancedPower": "Advanced Power"
-            },
-            "features": {
-                "dragDrop": "Drag-and-drop Builder",
-                "visualBuilder": "Visual Schedule Builder",
-                "mobileEditor": "Mobile-Friendly Editor",
-                "downloadImage": "Download As Image",
-                "pdfExport": "Printable PDF Export",
-                "excelExport": "Export to Excel / CSV",
-                "googleSync": "Sync to Google Calendar",
-                "aiBuilder": "AI Schedule Builder",
-                "unlimitedTemplates": "Unlimited Templates",
-                "cloudStorage": "Cloud Storage",
-                "noWatermarks": "No Watermarks",
-                "prioritySupport": "Priority Email Support"
-            },
-            "yes": "Yes",
-            "no": "No"
-        },
-        "faq": {
-            "title": "Frequently Asked Questions",
-            "items": [
-                {
-                    "question": "Is the schedule builder really free?",
-                    "answer": "Yes! Our free online schedule builder allows you to create, edit, and download schedules as images without paying a dime. You only pay if you need advanced features like PDF export or AI automation."
-                },
-                {
-                    "question": "How does the AI schedule builder work?",
-                    "answer": "Our AI scheduler analyzes your input (tasks, employees, time slots) and automatically generates an optimized roster, saving you hours of manual planning."
-                },
-                {
-                    "question": "Can I use this for employee shift scheduling?",
-                    "answer": "Absolutely. The Pro plan is designed for managers. You can build work shift schedules, handle rotations, and export the final roster to Excel for payroll easily."
-                },
-                {
-                    "question": "Can I cancel my subscription anytime?",
-                    "answer": "Yes, you can cancel your monthly subscription instantly from your dashboard. No questions asked. 30-day money-back guarantee."
-                }
-            ]
-        }
-    },
-    "Blog": {
-        "metaTitle": "Blog | TrySchedule - Scheduling Tips & Productivity Guides",
-        "metaDescription": "Discover scheduling tips, productivity guides, and best practices. Learn how to optimize your time with TrySchedule.",
-        "breadcrumb": {
-            "home": "Home",
-            "blog": "Blog"
-        },
-        "hero": {
-            "title": "Our Blog",
-            "description": "Insights on productivity, scheduling, and team management."
-        },
-        "list": {
-            "noArticles": "No articles found in this category.",
-            "previousPage": "Previous page",
-            "nextPage": "Next page"
-        },
-        "detail": {
-            "share": "Share",
-            "relatedArticles": "Related Articles",
-            "postNotFound": "Post Not Found | TrySchedule Blog"
-        },
-        "categories": {
-            "all": "All",
-            "productivity tips": "Productivity Tips",
-            "case studies": "Case Studies",
-            "product updates": "Product Updates"
-        },
-        "featuredArticle": "Featured Article",
-        "metaKeywords": "scheduling tips, productivity blog, time management, schedule builder tips, employee scheduling guide",
-        "readTime": "{minutes} min read"
-    },
-    "Templates": {
-        "metaTitle": "Free Schedule Templates | TrySchedule",
-        "metaDescription": "Get started quickly with professionally designed schedule templates. Choose one that fits your needs and customize it for free.",
-        "breadcrumb": {
-            "home": "Home",
-            "templates": "Templates"
-        },
-        "hero": {
-            "title": "Schedule Templates",
-            "description": "Get started quickly with professionally designed templates. Choose one that fits your needs."
-        },
-        "search": {
-            "placeholder": "Search templates by keyword...",
-            "clear": "Clear search"
-        },
-        "list": {
-            "noTemplates": "No templates found in this category.",
-            "previousPage": "Previous page",
-            "nextPage": "Next page"
-        },
-        "detail": {
-            "useTemplate": "Use This Template",
-            "preview": "Preview",
-            "features": "Features",
-            "backToTemplates": "Back to Templates",
-            "notFound": "Template Not Found | TrySchedule",
-            "whatsIncluded": "What's Included",
-            "aboutTemplate": "About This Template",
-            "previewNote": "This preview shows sample events. When you use this template, events will be scheduled for the current week.",
-            "previewNoteAI": "This preview shows the AI generator canvas. When you use this template, our AI assistant will help you build your personalized schedule.",
-            "featurePreConfigured": "Pre-configured Events",
-            "featurePreConfiguredDesc": "{count} sample events with appropriate colors and timing",
-            "featureAIGeneration": "Smart AI Generation",
-            "featureAIGenerationDesc": "Access to the AI Autofill assistant to build your routine from scratch",
-            "featureSettings": "Optimized Settings",
-            "featureSettingsDesc": "Time format and working hours configured for this use case",
-            "featureCustomizable": "Fully Customizable",
-            "featureCustomizableDesc": "Edit, add, or remove events after applying the template",
-            "loading": "Loading...",
-            "reviews": {
-                "sarah": "Best free schedule builder I've found. The drag-and-drop is so intuitive!",
-                "mike": "Perfect for creating my weekly class schedule. Love the instant PNG export."
-            },
-            "resetConfirm": {
-                "title": "Reset Everything",
-                "description": "This will clear all sidebar template features, restore your settings to default, and delete all events from the calendar. This action cannot be undone.",
-                "button": "Yes, Reset"
-            }
-        },
-        "categories": {
-            "all": "All",
-            "business": "Business",
-            "personal": "Personal",
-            "education": "Education",
-            "ai": "AI"
-        },
-        "faqs": {
-            "title": "Frequently Asked Questions",
-            "items": [
-                {
-                    "question": "Are these templates really free?",
-                    "answer": "Most of our schedule templates are free to use; you can preview, customize, and export your schedule for free. A few schedule templates, such as those generated by AI, require a professional subscription."
-                },
-                {
-                    "question": "How do I use a template?",
-                    "answer": "Simply click on any template to preview it, then click 'Use This Template' to load it into the editor. From there, you can customize colors, times, labels, and add or remove events to match your needs."
-                },
-                {
-                    "question": "Can I customize the templates?",
-                    "answer": "Absolutely! Once you load a template into the editor, you have full control to modify every aspect - change event times, colors, titles, add new events, or delete existing ones. The templates are just starting points."
-                },
-                {
-                    "question": "What export formats are available?",
-                    "answer": "Free users can export schedules as PNG or JPG images (with watermark). Pro users get access to watermark-free exports, PDF format for high-quality printing, and CSV format for data analysis."
-                },
-                {
-                    "question": "Will my schedule be saved?",
-                    "answer": "Your schedule is automatically saved in your browser's local storage. Pro users also get cloud sync, which allows you to access your schedules from any device."
-                }
-            ]
-        },
-        "badge": {
-            "pro": "PRO",
-            "featured": "Featured"
-        },
-        "preview": {
-            "aiTitle": "Let AI create your perfect schedule",
-            "aiSubtitle": "Click 'Use This Template' to get started",
-            "sampleEvent": "Sample Event"
-        }
-    },
-    "Common": {
-        "nav": {
-            "home": "Home",
-            "templates": "Templates",
-            "pricing": "Pricing",
-            "blog": "Blog",
-            "viewAllTemplates": "View All Templates",
-            "language": "Language",
-            "openMenu": "Open menu"
-        },
-        "footer": {
-            "rights": "All rights reserved.",
-            "terms": "Terms",
-            "privacy": "Privacy",
-            "contact": "Contact",
-            "tagline": "<brand>Try</brand>Schedule is the easiest <highlight>free online schedule builder</highlight> for students, managers, and teams.",
-            "taglineSimple": "is the easiest free online schedule builder for students, managers, and teams."
-        },
-        "auth": {
-            "signIn": "Sign In",
-            "signUp": "Sign Up",
-            "mySubscription": "My Subscription",
-            "yourAccount": "Your Account"
-        },
-        "sidebar": {
-            "cloudSave": "Cloud Save",
-            "calendarSync": "Calendar Sync",
-            "exportDownload": "Export/Download",
-            "helpFaq": "Help & FAQ",
-            "settings": "Settings",
-            "aiAutofill": "AI Autofill",
-            "reset": "Reset"
-        },
-        "featureComingSoon": {
-            "calendarSync": {
-                "name": "Calendar Sync",
-                "description": "This feature is included in the Pro version and will be available soon! Enter your email to get notified first when it launches."
-            }
-        },
-        "upgradeModal": {
-            "title": "Upgrade to Pro",
-            "description": "{feature} is available on Pro plans. Upgrade now to unlock all premium features.",
-            "benefits": {
-                "pdf": "High-res PDF exports without watermarks",
-                "ai": "AI-powered scheduling suggestions",
-                "cloud": "Cloud save & sync across devices"
-            },
-            "viewPlans": "View Plans",
-            "maybeLater": "Maybe Later",
-            "priceNote": "Starting at just $4.9 for a 7-day pass"
-        },
-        "viewMode": {
-            "day": "Day",
-            "week": "Week"
-        },
-        "eventDialog": {
-            "addTitle": "Add event",
-            "editTitle": "Edit event",
-            "form": {
-                "title": "Title",
-                "titlePlaceholder": "Event title",
-                "color": "Color",
-                "day": "Day",
-                "days": "Day(s)",
-                "start": "Start",
-                "end": "End",
-                "description": "Description",
-                "descriptionPlaceholder": "Event description (optional)",
-                "dayLabels": {
-                    "sun": "Sun",
-                    "mon": "Mon",
-                    "tue": "Tue",
-                    "wed": "Wed",
-                    "thu": "Thu",
-                    "fri": "Fri",
-                    "sat": "Sat"
-                },
-                "colors": {
-                    "blue": "Blue",
-                    "green": "Green",
-                    "red": "Red",
-                    "yellow": "Yellow",
-                    "purple": "Purple",
-                    "pink": "Pink",
-                    "orange": "Orange",
-                    "teal": "Teal"
-                },
-                "icons": {
-                    "none": "None",
-                    "Tag": "General",
-                    "Briefcase": "Work",
-                    "User": "Personal",
-                    "Utensils": "Food",
-                    "Coffee": "Break",
-                    "ChefHat": "Cooking",
-                    "Dumbbell": "Gym",
-                    "ShoppingCart": "Shopping",
-                    "PenTool": "Creative",
-                    "Calculator": "Finance",
-                    "FlaskConical": "Science",
-                    "Zap": "Energy",
-                    "Activity": "Activity",
-                    "WashingMachine": "Chore",
-                    "Bed": "Sleep",
-                    "Bath": "Self-care",
-                    "Sparkles": "Leisure",
-                    "FolderOpen": "Productivity",
-                    "Smile": "Fun",
-                    "Heart": "Health",
-                    "Star": "Priority",
-                    "CheckCircle2": "Task",
-                    "HelpCircle": "Question",
-                    "Plane": "Travel",
-                    "Car": "Commute",
-                    "Bike": "Exercise",
-                    "Music": "Hobby",
-                    "Gamepad": "Gaming",
-                    "Tv": "Entertainment",
-                    "Film": "Movies",
-                    "Camera": "Photo",
-                    "Moon": "Night",
-                    "Sun": "Day",
-                    "Cloud": "Weather",
-                    "PalmTree": "Vacation",
-                    "Flower": "Nature",
-                    "Leaf": "Relax",
-                    "Apple": "Nutrition",
-                    "Stethoscope": "Medical",
-                    "Brain": "Mindset",
-                    "GraduationCap": "Education",
-                    "Book": "Study",
-                    "Laptop": "Tech",
-                    "Mail": "Communication",
-                    "ClipboardList": "To-do",
-                    "ShoppingBag": "Groceries",
-                    "Gift": "Gift",
-                    "PartyPopper": "Celebration",
-                    "Trophy": "Achievement",
-                    "PawPrint": "Pets",
-                    "Globe": "Web",
-                    "Wifi": "Internet",
-                    "Lock": "Security",
-                    "MapPin": "Location",
-                    "Calendar": "Planning",
-                    "Bell": "Reminder"
-                }
-            },
-            "buttons": {
-                "add": "Add",
-                "copy": "Copy",
-                "save": "Save Changes",
-                "cancel": "Cancel"
-            }
-        },
-        "reset": {
-            "title": "Reset Everything",
-            "description": "This will clear all sidebar template features, restore your settings to default, and delete all events from the calendar. This action cannot be undone.",
-            "confirm": "Yes, Reset",
-            "cancel": "Cancel"
-        },
-        "calendar": {
-            "days": {
-                "sun": "SUN",
-                "mon": "MON",
-                "tue": "TUE",
-                "wed": "WED",
-                "thu": "THU",
-                "fri": "FRI",
-                "sat": "SAT"
-            },
-            "daysShort": {
-                "sun": "Sun",
-                "mon": "Mon",
-                "tue": "Tue",
-                "wed": "Wed",
-                "thu": "Thu",
-                "fri": "Fri",
-                "sat": "Sat"
-            },
-            "previousWeek": "Go to previous week",
-            "nextWeek": "Go to next week",
-            "previousDay": "Go to previous day",
-            "nextDay": "Go to next day",
-            "today": "Go to Today",
-            "newEvent": "New Event",
-            "time": {
-                "am": "AM",
-                "pm": "PM"
-            }
-        },
-        "brand": {
-            "alt": "TrySchedule - Free Online Schedule Builder"
-        },
-        "calendarPicker": {
-            "weekLabel": "Wk"
-        },
-        "moreOptions": "More Options",
-        "export": "Export",
-        "cloud": "Cloud",
-        "more": "More",
-        "sync": "Sync",
-        "aiFill": "AI Fill",
-        "faq": "FAQ",
-        "badge": {
-            "pro": "PRO"
-        },
-        "seo": {
-            "h1": "Free Online Schedule Builder",
-            "faqTitle": "Frequently Asked Questions about TrySchedule",
-            "faqSubtitle": "Everything you need to know about our free schedule builder.",
-            "faqs": {
-                "q1": {
-                    "question": "Why is TrySchedule the best free online schedule builder?",
-                    "answer": "TrySchedule stands out for three key reasons:\n\n• Zero Friction – no login or signup required, just start creating immediately.\n• Instant Export – download your schedule as high-quality PNG or PDF with one click.\n• Visual & Intuitive – drag-and-drop interface with beautiful color-coded blocks makes scheduling effortless.\n\nThese features make TrySchedule the fastest way to build a professional weekly schedule online."
-                },
-                "q2": {
-                    "question": "How do I create a weekly schedule in 3 easy steps?",
-                    "answer": "Step 1: Drag and drop on the calendar grid to create time blocks for your activities.\n\nStep 2: Customize each block with many vibrant colors to categorize work, study, fitness, or personal time.\n\nStep 3: Click 'Export' to download your finished schedule as PNG, JPG, or PDF – ready to print or share.\n\nThe entire process takes less than 5 minutes, no design skills needed."
-                },
-                "q3": {
-                    "question": "Who needs a schedule builder like TrySchedule?",
-                    "answer": "TrySchedule is designed for everyone who values their time:\n\n• Students – organizing class timetables and study sessions\n• Shift Managers – creating employee work rotations\n• Gym Goers – planning weekly workout routines\n• Freelancers – balancing multiple client projects and deadlines\n\nWhether you need a simple daily planner or a complex weekly schedule, our visual builder adapts to your needs."
-                },
-                "q4": {
-                    "question": "Is this schedule builder completely free to use?",
-                    "answer": "Yes, TrySchedule is 100% free for core features!\n\nCreate unlimited schedules, use all colors, export as PNG or JPG, and save your work locally – all without paying a cent or creating an account.\n\nPro features like PDF export, AI-powered scheduling suggestions, and cross-device cloud sync are available for power users who want advanced capabilities."
-                },
-                "q5": {
-                    "question": "Can I print my schedule after creating it?",
-                    "answer": "Absolutely! TrySchedule is designed to be printable-friendly.\n\nExport your schedule as a high-resolution PNG or PDF, then print it directly on standard paper sizes. The clean, minimalist design ensures your printed schedule looks professional and is easy to read.\n\nPerfect for posting on your wall, refrigerator, or office bulletin board."
-                },
-                "q6": {
-                    "question": "Is my schedule data private and secure?",
-                    "answer": "Your privacy is our priority.\n\nBy default, all schedule data stays in your browser's local storage – nothing leaves your device unless you choose otherwise.\n\nYour schedules remain completely private unless you explicitly choose to enable cloud sync with a Pro account. You have full control over your data at all times."
-                }
-            }
-        },
-        "buttons": {
-            "cancel": "Cancel"
-        }
-    },
-    "AuthModal": {
-        "title": "Authentication",
-        "welcomeBack": "Welcome back!",
-        "join": "Join TrySchedule",
-        "signInDescription": "Let's pick up where you left off and keep scheduling smarter",
-        "signUpDescription": "Start building beautiful schedules in minutes, no learning curve required",
-        "features": {
-            "dragDrop": "Drag & drop simplicity",
-            "themes": "Beautiful color themes",
-            "devices": "Works on any device"
-        }
-    },
-    "Auth": {
-        "common": {
-            "email": "Email",
-            "password": "Password",
-            "or": "OR",
-            "continue": "Continue",
-            "backToSignIn": "← Back to sign in",
-            "backToSignUp": "← Back to sign up",
-            "emailAddress": "Email address",
-            "optional": "(Optional)"
-        },
-        "signIn": {
-            "title": "Sign In",
-            "emailPlaceholder": "Enter your email",
-            "passwordPlaceholder": "Enter your password",
-            "forgotPassword": "Forgot your password?",
-            "googleButton": "Sign in with Google",
-            "submit": "Sign In"
-        },
-        "signUp": {
-            "title": "Sign Up",
-            "firstName": "First name",
-            "firstNamePlaceholder": "First name",
-            "lastName": "Last name",
-            "lastNamePlaceholder": "Last name",
-            "passwordPlaceholder": "Create a password",
-            "googleButton": "Sign up with Google",
-            "submit": "Continue"
-        },
-        "forgotPassword": {
-            "title": "Reset your password",
-            "instruction": "Enter your email and we'll send you a verification code",
-            "submitEmail": "Send Verification Code",
-            "checkEmail": "Check your email",
-            "codeSentTo": "We sent a 6-digit code to",
-            "verificationCode": "Verification code",
-            "codePlaceholder": "Enter 6-digit code",
-            "verifyCode": "Verify Code",
-            "setNewPassword": "Set new password",
-            "setNewPasswordInstruction": "Enter your new password below",
-            "newPassword": "New password",
-            "newPasswordPlaceholder": "Enter new password",
-            "confirmPassword": "Confirm password",
-            "confirmPasswordPlaceholder": "Confirm new password",
-            "resetPassword": "Reset Password",
-            "success": "Password reset successful!",
-            "successMessage": "Your password has been reset and you are now signed in."
-        },
-        "verification": {
-            "title": "Check your email",
-            "codeSentTo": "We sent a verification code to",
-            "codeLabel": "Verification Code",
-            "submit": "Verify Email"
-        },
-        "errors": {
-            "signInError": "An error occurred during sign in",
-            "googleSignInError": "Failed to sign in with Google",
-            "googleSignUpError": "Failed to sign up with Google",
-            "resetEmailError": "Failed to send reset email",
-            "codeError": "Invalid verification code",
-            "verificationFailed": "Verification failed",
-            "signUpError": "An error occurred during sign up",
-            "passwordMismatch": "Passwords do not match",
-            "passwordLength": "Password must be at least 8 characters",
-            "resetError": "Failed to reset password"
-        }
-    },
-    "Settings": {
-        "title": "Settings",
-        "weekStart": {
-            "label": "Start week on Sunday",
-            "description": "US standard is Sunday, ISO standard is Monday"
-        },
-        "timeFormat": {
-            "label": "12-hour format (AM/PM)",
-            "description": "Toggle off for 24-hour format"
-        },
-        "showDates": {
-            "label": "Show dates",
-            "description": "Display date numbers in calendar headers"
-        },
-        "timeIncrement": {
-            "label": "Time increment",
-            "minutes": "{count} minutes"
-        },
-        "workingHours": {
-            "label": "Working hours",
-            "to": "to"
-        }
-    },
-    "Export": {
-        "title": "Export Schedule",
-        "description": "Choose a format to download your schedule.",
-        "format": "Format",
-        "formats": {
-            "png": {
-                "description": "High quality image with transparency"
-            },
-            "jpg": {
-                "description": "Compressed image, smaller file size"
-            },
-            "pdf": {
-                "description": "Vector format, perfect for printing"
-            },
-            "csv": {
-                "description": "Spreadsheet format for data analysis"
-            }
-        },
-        "upgradePrompt": {
-            "title": "Upgrade to Pro",
-            "description": "Unlock PDF and CSV exports, plus remove watermarks from images.",
-            "button": "View Plans"
-        },
-        "buttons": {
-            "cancel": "Cancel",
-            "exporting": "Exporting...",
-            "download": "Download {format}"
-        }
-    },
-    "CalendarSync": {
-        "title": "Google Calendar Sync",
-        "description": "Sync your schedule to Google Calendar for easy access on all devices.",
-        "notConnected": {
-            "title": "Connect Your Google Account",
-            "description": "Link your Google account to sync events to your calendar.",
-            "button": "Connect Google Account"
-        },
-        "connected": {
-            "status": "Connected",
-            "syncComplete": "Sync Complete",
-            "syncFailed": "Sync Failed",
-            "eventsSynced": "{count} event(s) synced",
-            "eventsFailed": ", {count} failed",
-            "syncing": "Syncing...",
-            "syncButton": "Sync to Google Calendar",
-            "openCalendar": "Open Google Calendar"
-        }
-    },
-    "FeatureComingSoon": {
-        "title": "{feature} - Coming Soon!",
-        "description": "This Pro feature is currently in development. Be the first to know when it launches and get an exclusive <discount>50% discount</discount>!",
-        "emailPlaceholder": "Enter your email address",
-        "submitButton": "Notify Me & Get 50% Off",
-        "submitting": "Signing up...",
-        "maybeLater": "Maybe Later",
-        "noSpam": "No spam, unsubscribe anytime.",
-        "success": {
-            "title": "You're on the list! 🎉",
-            "subtitle": "We'll notify you when it's ready."
-        },
-        "error": "Submission failed, please try again later",
-        "features": {
-            "calendarSync": {
-                "name": "Calendar Sync",
-                "description": "This feature is included in the Pro version and will be available soon! Enter your email to get notified first when it launches."
-            }
-        }
-    },
-    "CloudSave": {
-        "title": "Cloud Save",
-        "description": "Save your schedule to the cloud or load a saved template.",
-        "templatesUsed": "{count}/{max} templates used",
-        "saveButton": "Save Current",
-        "templateName": "Template Name",
-        "templatePlaceholder": "My Schedule",
-        "noTemplates": "No saved templates yet",
-        "noTemplatesHint": "Save your first schedule to the cloud!",
-        "eventsCount": "{count} events",
-        "updated": "Updated {date}",
-        "pagination": "Page {page} of {total}",
-        "sort": {
-            "updated": "Updated",
-            "created": "Created",
-            "name": "Name"
-        },
-        "buttons": {
-            "load": "Load template",
-            "rename": "Rename",
-            "delete": "Delete"
-        },
-        "errors": {
-            "fetchFailed": "Failed to load templates",
-            "saveFailed": "Failed to save",
-            "loadFailed": "Failed to load template",
-            "renameFailed": "Failed to rename",
-            "deleteFailed": "Failed to delete template",
-            "overwriteFailed": "Failed to overwrite template",
-            "enterName": "Please enter a name",
-            "nameTooLong": "Name must be 50 characters or less"
-        },
-        "deleteConfirm": {
-            "title": "Delete Template",
-            "description": "Are you sure you want to delete \"{name}\"? This action cannot be undone.",
-            "button": "Delete"
-        },
-        "loadConfirm": {
-            "title": "Load Template",
-            "description": "Your current schedule will be replaced with this template. This action cannot be undone.",
-            "button": "Load Template"
-        },
-        "overwriteConfirm": {
-            "title": "Template Already Exists",
-            "description": "A template named \"{name}\" already exists. Do you want to overwrite it with your current schedule?",
-            "button": "Overwrite"
-        }
-    },
-    "TemplateComponents": {
-        "common": {
-            "on": "On",
-            "off": "Off"
-        },
-        "AIQuickActions": {
-            "title": "AI Quick Actions",
-            "regenerate": "Regenerate with AI",
-            "clear": "Clear Schedule"
-        },
-        "PriorityModeToggle": {
-            "title": "Toggle Priority Mode",
-            "label": "Priority Mode"
-        },
-        "TaskModeToggle": {
-            "title": "Toggle Task Mode",
-            "label": "Task Mode"
-        },
-        "ProjectDashboard": {
-            "title": "Project Dashboard",
-            "phase": "CONSTRUCTION PHASE",
-            "onTrack": "On Track",
-            "completion": "Completion",
-            "milestones": "Key Milestones",
-            "clickToUpdate": "Click to update",
-            "active": "Active",
-            "weatherAlert": "Weather Alert:",
-            "siteStatus": "Site Status:",
-            "checkingForecast": "Checking forecast...",
-            "updateLocation": "Update Site Location",
-            "locationDenied": "Location access denied",
-            "locationPrompt": "Please enable location access to get local site weather.",
-            "weatherError": "Weather Data Unavailable.",
-            "siteAlertToday": "Site Alert: Rain/Snow expected TODAY. Cover sensitive materials.",
-            "forecastAlert": "Forecast: Bad weather expected in {days} days. Plan indoor tasks.",
-            "forecastClear": "Forecast Clear: Optimal conditions for outdoor site work.",
-            "milestoneData": {
-                "sitePrep": "Site Prep & Excavation",
-                "foundation": "Foundation Pouring",
-                "framing": "Framing & Roofing",
-                "hvac": "HVAC & Electrical",
-                "interior": "Interior Finishing"
-            },
-            "week": "Week {num}",
-            "weekRange": "Week {range}"
-        }
-    },
-    "Metadata": {
-        "title": "TrySchedule | Free Online Schedule Builder (No Login Required)",
-        "description": "The easiest free online schedule builder. Drag-and-drop interface, instant PNG export. No signup needed. PDF & AI tools available for Pro users.",
-        "organizationDescription": "The easiest free online schedule builder for students, managers, and gyms."
-    },
-    "NotFound": {
-        "title": "404 - Page Not Found",
-        "description": "The page you are looking for does not exist or has been moved.",
-        "hint": "Try searching for templates or go back to the homepage.",
-        "backHome": "Back to Home",
-        "browseTemplates": "Browse Templates"
-    },
-    "AIAutofill": {
-        "title": "AI Autofill",
-        "usageRemaining": "{remaining} / {limit} monthly uses remaining",
-        "trialRemaining": "{remaining} trial uses remaining",
-        "inputLabel": "Describe your schedule needs",
-        "inputPlaceholder": "E.g., I'm a college student. I need to study for 3 hours in the morning, have lunch at noon, and go to the gym in the evening on weekdays...",
-        "tipsTitle": "Tips for better results:",
-        "tips": {
-            "durations": "Mention specific activities and their durations",
-            "days": "Specify which days of the week",
-            "ranges": "Include preferred time ranges"
-        },
-        "generateButton": "Generate Schedule",
-        "generatingButton": "Generating...",
-        "previewTitle": "Generated {count} events",
-        "noEvents": "No events generated. Try a more detailed description.",
-        "addButton": "Add {count} Events",
-        "backButton": "Back",
-        "closeButton": "Close",
-        "cancelButton": "Cancel",
-        "trialLimitReachedTitle": "Trial Limit Reached",
-        "trialLimitReachedDescription": "You've used all 3 free AI generations. Upgrade to Pro for 100 uses every month!",
-        "upgradeToPro": "Upgrade to Pro",
-        "startFreshTitle": "Start Fresh?",
-        "startFreshDescription": "This will reset your calendar and clear all existing events. Your settings will also be restored to defaults.",
-        "startFreshConfirm": "Yes, Start Fresh",
-        "errors": {
-            "usageLimitExceededPro": "You've reached the monthly limit of {limit} AI generations. Limit resets next month.",
-            "usageLimitExceededFree": "Trial limit reached. Please upgrade to Pro for more AI generations.",
-            "generationFailed": "Failed to generate schedule",
-            "connectionError": "Failed to connect to AI service. Please try again."
-        }
-    },
-    "EventConflict": {
-        "title": "Time Conflict Detected",
-        "description": "\"{title}\" conflicts with existing events.",
-        "listTitle": "Conflicting events:",
-        "buttons": {
-            "cancel": "Cancel",
-            "modify": "Modify New Event",
-            "delete": "Delete Existing ({count})"
-        }
+    "sections": {
+      "acceptance": {
+        "title": "1. Acceptance of Terms",
+        "content": "By accessing and using TrySchedule (\"the Service\"), you accept and agree to be bound by the terms and provisions of this agreement. If you do not agree to abide by these terms, please do not use the Service."
+      },
+      "description": {
+        "title": "2. Description of Service",
+        "content": "TrySchedule is a web-based scheduling and planning tool that allows users to create, manage, and share schedules. We provide various subscription tiers including free and paid options with different feature sets."
+      },
+      "userAccounts": {
+        "title": "3. User Accounts",
+        "intro": "To use certain features of the Service, you must register for an account. You agree to:",
+        "items": [
+          "Provide accurate and complete information during registration",
+          "Maintain the security of your password and account",
+          "Notify us immediately of any unauthorized use of your account",
+          "Accept responsibility for all activities that occur under your account"
+        ]
+      },
+      "payment": {
+        "title": "4. Payment Terms",
+        "content": "For paid subscriptions, you agree to pay all fees associated with your chosen plan. Payments are processed through our third-party payment provider. Subscriptions automatically renew unless cancelled before the renewal date."
+      },
+      "acceptableUse": {
+        "title": "5. Acceptable Use",
+        "intro": "You agree not to:",
+        "items": [
+          "Use the Service for any unlawful purpose",
+          "Attempt to gain unauthorized access to any portion of the Service",
+          "Interfere with or disrupt the Service or servers",
+          "Upload malicious code or content",
+          "Resell or redistribute the Service without authorization"
+        ]
+      },
+      "thirdParty": {
+        "title": "6. Third-Party Services",
+        "content1": "Our Service allows you to connect with third-party services, such as Google Calendar, to enhance your scheduling experience. By using these integrations, you agree to comply with the terms and privacy policies of those third-party services.",
+        "content2": "We are not responsible for the content, privacy policies, or practices of any third-party services. We encourage you to review the terms and privacy policies of any third-party service before connecting it to TrySchedule."
+      },
+      "intellectualProperty": {
+        "title": "7. Intellectual Property",
+        "content": "The Service and its original content, features, and functionality are owned by TrySchedule and are protected by international copyright, trademark, and other intellectual property laws."
+      },
+      "liability": {
+        "title": "8. Limitation of Liability",
+        "content": "In no event shall TrySchedule be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use of or inability to use the Service."
+      },
+      "changes": {
+        "title": "9. Changes to Terms",
+        "content": "We reserve the right to modify these terms at any time. We will notify users of significant changes via email or through the Service. Continued use of the Service after changes constitutes acceptance of the new terms."
+      },
+      "contact": {
+        "title": "10. Contact Information",
+        "content": "If you have any questions about these Terms, please contact us at"
+      }
     }
+  },
+  "Privacy": {
+    "title": "Privacy Policy",
+    "metaTitle": "Privacy Policy | TrySchedule",
+    "metaDescription": "Privacy Policy for TrySchedule - Free Online Schedule Builder.",
+    "lastUpdated": "Last updated: January 1, 2026",
+    "breadcrumb": {
+      "home": "Home",
+      "privacy": "Privacy"
+    },
+    "sections": {
+      "introduction": {
+        "title": "1. Introduction",
+        "content": "TrySchedule (\"we\", \"our\", or \"us\") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our TrySchedule service."
+      },
+      "informationCollect": {
+        "title": "2. Information We Collect",
+        "personalInfo": {
+          "title": "Personal Information",
+          "intro": "When you register for an account, we may collect:",
+          "items": [
+            "Name and email address",
+            "Profile information you choose to provide",
+            "Payment information (processed securely by our payment provider)"
+          ]
+        },
+        "usageInfo": {
+          "title": "Usage Information",
+          "intro": "We automatically collect:",
+          "items": [
+            "Device and browser information",
+            "IP address and location data",
+            "Usage patterns and feature interactions",
+            "Cookies and similar tracking technologies"
+          ]
+        }
+      },
+      "howWeUse": {
+        "title": "3. How We Use Your Information",
+        "intro": "We use your information to:",
+        "items": [
+          "Provide and maintain our Service",
+          "Process your transactions and manage your subscription",
+          "Send you updates, security alerts, and support messages",
+          "Improve and personalize your experience",
+          "Analyze usage patterns to enhance our Service",
+          "Comply with legal obligations"
+        ]
+      },
+      "informationSharing": {
+        "title": "4. Information Sharing",
+        "intro": "We do not sell your personal information. We may share your information with:",
+        "items": [
+          "Service providers who assist in operating our Service",
+          "Business partners with your consent",
+          "Legal authorities when required by law"
+        ]
+      },
+      "analytics": {
+        "title": "5. Analytics and Third-Party Tools",
+        "intro": "We use third-party analytics services to help us understand how users interact with our Service and to improve user experience. These services may collect anonymous data about your usage of the Service.",
+        "googleAnalytics": {
+          "title": "Google Analytics",
+          "content": "We use Google Analytics, a web analytics service provided by Google, Inc. Google Analytics uses cookies to analyze how users use our Service. The information generated is transmitted to and stored by Google. For more information on how Google uses data, please visit",
+          "linkText": "Google's Privacy Policy"
+        },
+        "microsoftClarity": {
+          "title": "Microsoft Clarity",
+          "content": "We use Microsoft Clarity, a user behavior analytics tool provided by Microsoft. Clarity captures how users interact with our Service through session recordings and heatmaps. Clarity automatically masks sensitive content to protect user privacy. For more information, please visit",
+          "linkText": "Microsoft's Privacy Statement"
+        },
+        "optingOut": {
+          "title": "Opting Out",
+          "content": "You can opt out of analytics tracking by adjusting your browser settings to block cookies or by using browser extensions designed to block tracking scripts."
+        }
+      },
+      "googleUserData": {
+        "title": "6. Google User Data",
+        "intro": "TrySchedule uses Google OAuth to allow you to connect your Google account and sync your local schedule with Google Calendar.",
+        "infoAccess": {
+          "title": "Information We Access",
+          "intro": "When you connect your Google account, we request the following permissions:",
+          "items": [
+            "View your calendar settings: We use this to detect your primary Google Calendar timezone, ensuring synchronized events appear at the correct time.",
+            "View and edit events on your calendars: We use this to create, update, and manage the schedule events you choose to sync from TrySchedule to your Google Calendar."
+          ]
+        },
+        "howWeUseData": {
+          "title": "How We Use This Data",
+          "content": "Our use of information received from Google APIs is strictly limited to providing and improving the Calendar Sync feature. We do not store your Google Calendar data on our servers, nor do we use it for advertising or share it with any third parties except as necessary to provide the service."
+        },
+        "limitedUse": {
+          "title": "Google API Limited Use Policy",
+          "content": "TrySchedule's use and transfer to any other app of information received from Google APIs will adhere to the",
+          "linkText": "Google API Services User Data Policy",
+          "suffix": ", including the Limited Use requirements."
+        }
+      },
+      "dataSecurity": {
+        "title": "7. Data Security",
+        "content": "We implement industry-standard security measures to protect your data, including encryption, secure servers, and regular security assessments. However, no method of transmission over the Internet is 100% secure."
+      },
+      "yourRights": {
+        "title": "8. Your Rights",
+        "intro": "Depending on your location, you may have the right to:",
+        "items": [
+          "Access your personal data",
+          "Correct inaccurate data",
+          "Request deletion of your data",
+          "Object to or restrict processing",
+          "Data portability",
+          "Withdraw consent at any time"
+        ]
+      },
+      "cookies": {
+        "title": "9. Cookies",
+        "content": "We use cookies and similar technologies to enhance your experience, analyze usage, and deliver personalized content. You can control cookie preferences through your browser settings."
+      },
+      "childrenPrivacy": {
+        "title": "10. Children's Privacy",
+        "content": "Our Service is not intended for children under 13. We do not knowingly collect personal information from children under 13. If you believe we have collected such information, please contact us immediately."
+      },
+      "changes": {
+        "title": "11. Changes to This Policy",
+        "content": "We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the \"Last updated\" date."
+      },
+      "contact": {
+        "title": "12. Contact Us",
+        "content": "If you have questions about this Privacy Policy, please contact us at"
+      }
+    }
+  },
+  "Contact": {
+    "metaTitle": "Contact Us | TrySchedule",
+    "metaDescription": "Contact TrySchedule - We'd love to hear from you. Send us a message about questions, feedback, or support.",
+    "breadcrumb": {
+      "home": "Home",
+      "contact": "Contact"
+    },
+    "header": {
+      "title": "Contact Us",
+      "subtitle": "Have questions or feedback? We'd love to hear from you. Send us a message and we'll respond as soon as possible."
+    },
+    "infoCards": {
+      "email": {
+        "title": "Email",
+        "description": "For general inquiries"
+      },
+      "office": {
+        "title": "Office",
+        "address1": "123 Tech Street",
+        "address2": "San Francisco, CA 94102",
+        "address3": "United States"
+      },
+      "hours": {
+        "title": "Business Hours",
+        "line1": "Monday - Friday",
+        "line2": "9:00 AM - 6:00 PM (PST)",
+        "line3": "Weekend: Closed"
+      }
+    },
+    "form": {
+      "name": {
+        "label": "Name",
+        "placeholder": "Your name"
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "your@email.com"
+      },
+      "subject": {
+        "label": "Subject",
+        "placeholder": "How can we help?"
+      },
+      "message": {
+        "label": "Message",
+        "placeholder": "Tell us more about your inquiry..."
+      },
+      "submit": "Send Message",
+      "submitting": "Sending..."
+    },
+    "success": {
+      "title": "Message Sent!",
+      "message": "Thank you for reaching out. We'll get back to you within 24-48 hours.",
+      "sendAnother": "Send Another Message"
+    },
+    "errors": {
+      "sendFailed": "Failed to send, please try again later"
+    }
+  },
+  "Pricing": {
+    "metaTitle": "Affordable Scheduling | Pricing Plans - TrySchedule Pro",
+    "metaDescription": "Start for free or unlock PDF export and AI scheduling with TrySchedule Pro. Compare plans starting from $4.9/week.",
+    "breadcrumb": {
+      "home": "Home",
+      "pricing": "Pricing"
+    },
+    "hero": {
+      "title": "Professional Scheduling Tools",
+      "subtitle": "Start with our free schedule builder forever, or upgrade to Pro to automate your workflow with AI, export high-res PDFs.",
+      "trust": "Trusted by 5000+ students and managers worldwide."
+    },
+    "successBanner": "🎉 Payment successful! Your Pro features are now active.",
+    "promo": {
+      "placeholder": "Enter promo code",
+      "apply": "Apply",
+      "remove": "Remove",
+      "applied": "Promo code:"
+    },
+    "plans": {
+      "starter": {
+        "title": "Starter",
+        "priceDetail": "/ forever",
+        "description": "For students & personal use",
+        "features": [
+          "Unlimited web editing",
+          "Basic templates (Weekly/Daily)",
+          "Download as image (JPG/PNG)",
+          "Browser-based storage (No login needed)"
+        ],
+        "buttonText": "Start Building for Free"
+      },
+      "sevenDay": {
+        "title": "7-Day Pass",
+        "priceDetail": "/ week",
+        "description": "Perfect for one-time scheduling.",
+        "features": [
+          "All Starter features",
+          "AI Auto-Scheduler",
+          "High-Res Export (PDF & Vector)",
+          "Google Calendar Sync",
+          "Cloud Save (Access from any device)",
+          "No Watermarks on exports"
+        ],
+        "buttonText": "Choose Pass"
+      },
+      "monthly": {
+        "title": "Monthly",
+        "priceDetail": "/ month",
+        "description": "Ideal for managers, HR, frequent schedulers.",
+        "features": [
+          "All Starter features",
+          "AI Auto-Scheduler",
+          "High-Res Export (PDF & Vector)",
+          "Google Calendar Sync",
+          "Cloud Save (Access from any device)",
+          "No Watermarks on exports",
+          "Priority Email Support"
+        ],
+        "buttonText": "Upgrade to Pro"
+      },
+      "lifetime": {
+        "title": "Lifetime",
+        "priceDetail": "/ one-time",
+        "description": "Pay once and get all pro features forever.",
+        "features": [
+          "All previous features",
+          "One-time payment with lifetime use",
+          "Priority Email Support"
+        ],
+        "buttonText": "Buy Once"
+      }
+    },
+    "comparison": {
+      "title": "Compare Plans & Features",
+      "headers": {
+        "feature": "Feature",
+        "starter": "Starter",
+        "sevenDay": "7-Day Pass",
+        "monthly": "Monthly",
+        "lifetime": "Lifetime"
+      },
+      "categories": {
+        "coreTools": "Core Tools",
+        "exportSharing": "Export & Sharing",
+        "advancedPower": "Advanced Power"
+      },
+      "features": {
+        "dragDrop": "Drag-and-drop Builder",
+        "visualBuilder": "Visual Schedule Builder",
+        "mobileEditor": "Mobile-Friendly Editor",
+        "downloadImage": "Download As Image",
+        "pdfExport": "Printable PDF Export",
+        "excelExport": "Export to Excel / CSV",
+        "googleSync": "Sync to Google Calendar",
+        "aiBuilder": "AI Schedule Builder",
+        "unlimitedTemplates": "Unlimited Templates",
+        "cloudStorage": "Cloud Storage",
+        "noWatermarks": "No Watermarks",
+        "prioritySupport": "Priority Email Support"
+      },
+      "yes": "Yes",
+      "no": "No"
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "items": [
+        {
+          "question": "Is the schedule builder really free?",
+          "answer": "Yes! Our free online schedule builder allows you to create, edit, and download schedules as images without paying a dime. You only pay if you need advanced features like PDF export or AI automation."
+        },
+        {
+          "question": "How does the AI schedule builder work?",
+          "answer": "Our AI scheduler analyzes your input (tasks, employees, time slots) and automatically generates an optimized roster, saving you hours of manual planning."
+        },
+        {
+          "question": "Can I use this for employee shift scheduling?",
+          "answer": "Absolutely. The Pro plan is designed for managers. You can build work shift schedules, handle rotations, and export the final roster to Excel for payroll easily."
+        },
+        {
+          "question": "Can I cancel my subscription anytime?",
+          "answer": "Yes, you can cancel your monthly subscription instantly from your dashboard. No questions asked. 30-day money-back guarantee."
+        }
+      ]
+    }
+  },
+  "Blog": {
+    "metaTitle": "Blog | TrySchedule - Scheduling Tips & Productivity Guides",
+    "metaDescription": "Discover scheduling tips, productivity guides, and best practices. Learn how to optimize your time with TrySchedule.",
+    "breadcrumb": {
+      "home": "Home",
+      "blog": "Blog"
+    },
+    "hero": {
+      "title": "Our Blog",
+      "description": "Insights on productivity, scheduling, and team management."
+    },
+    "list": {
+      "noArticles": "No articles found in this category.",
+      "previousPage": "Previous page",
+      "nextPage": "Next page"
+    },
+    "detail": {
+      "share": "Share",
+      "relatedArticles": "Related Articles",
+      "postNotFound": "Post Not Found | TrySchedule Blog"
+    },
+    "categories": {
+      "all": "All",
+      "productivity tips": "Productivity Tips",
+      "case studies": "Case Studies",
+      "product updates": "Product Updates"
+    },
+    "featuredArticle": "Featured Article",
+    "metaKeywords": "scheduling tips, productivity blog, time management, schedule builder tips, employee scheduling guide",
+    "readTime": "{minutes} min read"
+  },
+  "Templates": {
+    "metaTitle": "Free Schedule Templates | TrySchedule",
+    "metaDescription": "Get started quickly with professionally designed schedule templates. Choose one that fits your needs and customize it for free.",
+    "breadcrumb": {
+      "home": "Home",
+      "templates": "Templates"
+    },
+    "hero": {
+      "title": "Schedule Templates",
+      "description": "Get started quickly with professionally designed templates. Choose one that fits your needs."
+    },
+    "search": {
+      "placeholder": "Search templates by keyword...",
+      "clear": "Clear search"
+    },
+    "list": {
+      "noTemplates": "No templates found in this category.",
+      "previousPage": "Previous page",
+      "nextPage": "Next page"
+    },
+    "detail": {
+      "useTemplate": "Use This Template",
+      "preview": "Preview",
+      "features": "Features",
+      "backToTemplates": "Back to Templates",
+      "notFound": "Template Not Found | TrySchedule",
+      "whatsIncluded": "What's Included",
+      "aboutTemplate": "About This Template",
+      "previewNote": "This preview shows sample events. When you use this template, events will be scheduled for the current week.",
+      "previewNoteAI": "This preview shows the AI generator canvas. When you use this template, our AI assistant will help you build your personalized schedule.",
+      "featurePreConfigured": "Pre-configured Events",
+      "featurePreConfiguredDesc": "{count} sample events with appropriate colors and timing",
+      "featureAIGeneration": "Smart AI Generation",
+      "featureAIGenerationDesc": "Access to the AI Autofill assistant to build your routine from scratch",
+      "featureSettings": "Optimized Settings",
+      "featureSettingsDesc": "Time format and working hours configured for this use case",
+      "featureCustomizable": "Fully Customizable",
+      "featureCustomizableDesc": "Edit, add, or remove events after applying the template",
+      "loading": "Loading...",
+      "reviews": {
+        "sarah": "Best free schedule builder I've found. The drag-and-drop is so intuitive!",
+        "mike": "Perfect for creating my weekly class schedule. Love the instant PNG export."
+      },
+      "resetConfirm": {
+        "title": "Reset Everything",
+        "description": "This will clear all sidebar template features, restore your settings to default, and delete all events from the calendar. This action cannot be undone.",
+        "button": "Yes, Reset"
+      }
+    },
+    "categories": {
+      "all": "All",
+      "business": "Business",
+      "personal": "Personal",
+      "education": "Education",
+      "ai": "AI"
+    },
+    "faqs": {
+      "title": "Frequently Asked Questions",
+      "items": [
+        {
+          "question": "Are these templates really free?",
+          "answer": "Most of our schedule templates are free to use; you can preview, customize, and export your schedule for free. A few schedule templates, such as those generated by AI, require a professional subscription."
+        },
+        {
+          "question": "How do I use a template?",
+          "answer": "Simply click on any template to preview it, then click 'Use This Template' to load it into the editor. From there, you can customize colors, times, labels, and add or remove events to match your needs."
+        },
+        {
+          "question": "Can I customize the templates?",
+          "answer": "Absolutely! Once you load a template into the editor, you have full control to modify every aspect - change event times, colors, titles, add new events, or delete existing ones. The templates are just starting points."
+        },
+        {
+          "question": "What export formats are available?",
+          "answer": "Free users can export schedules as PNG or JPG images (with watermark). Pro users get access to watermark-free exports, PDF format for high-quality printing, and CSV format for data analysis."
+        },
+        {
+          "question": "Will my schedule be saved?",
+          "answer": "Your schedule is automatically saved in your browser's local storage. Pro users also get cloud sync, which allows you to access your schedules from any device."
+        }
+      ]
+    },
+    "badge": {
+      "pro": "PRO",
+      "featured": "Featured"
+    },
+    "preview": {
+      "aiTitle": "Let AI create your perfect schedule",
+      "aiSubtitle": "Click 'Use This Template' to get started",
+      "sampleEvent": "Sample Event"
+    }
+  },
+  "Common": {
+    "nav": {
+      "home": "Home",
+      "templates": "Templates",
+      "pricing": "Pricing",
+      "blog": "Blog",
+      "viewAllTemplates": "View All Templates",
+      "language": "Language",
+      "openMenu": "Open menu"
+    },
+    "footer": {
+      "rights": "All rights reserved.",
+      "terms": "Terms",
+      "privacy": "Privacy",
+      "contact": "Contact",
+      "tagline": "<brand>Try</brand>Schedule is the easiest <highlight>free online schedule builder</highlight> for students, managers, and teams.",
+      "taglineSimple": "is the easiest free online schedule builder for students, managers, and teams."
+    },
+    "auth": {
+      "signIn": "Sign In",
+      "signUp": "Sign Up",
+      "mySubscription": "My Subscription",
+      "yourAccount": "Your Account"
+    },
+    "sidebar": {
+      "cloudSave": "Cloud Save",
+      "calendarSync": "Calendar Sync",
+      "exportDownload": "Export/Download",
+      "helpFaq": "Help & FAQ",
+      "settings": "Settings",
+      "aiAutofill": "AI Autofill",
+      "reset": "Reset"
+    },
+    "featureComingSoon": {
+      "calendarSync": {
+        "name": "Calendar Sync",
+        "description": "This feature is included in the Pro version and will be available soon! Enter your email to get notified first when it launches."
+      }
+    },
+    "upgradeModal": {
+      "title": "Upgrade to Pro",
+      "description": "{feature} is available on Pro plans. Upgrade now to unlock all premium features.",
+      "benefits": {
+        "pdf": "High-res PDF exports without watermarks",
+        "ai": "AI-powered scheduling suggestions",
+        "cloud": "Cloud save & sync across devices"
+      },
+      "viewPlans": "View Plans",
+      "maybeLater": "Maybe Later",
+      "priceNote": "Starting at just $4.9 for a 7-day pass"
+    },
+    "viewMode": {
+      "day": "Day",
+      "week": "Week"
+    },
+    "eventDialog": {
+      "addTitle": "Add event",
+      "editTitle": "Edit event",
+      "form": {
+        "title": "Title",
+        "titlePlaceholder": "Event title",
+        "color": "Color",
+        "day": "Day",
+        "days": "Day(s)",
+        "start": "Start",
+        "end": "End",
+        "description": "Description",
+        "descriptionPlaceholder": "Event description (optional)",
+        "dayLabels": {
+          "sun": "Sun",
+          "mon": "Mon",
+          "tue": "Tue",
+          "wed": "Wed",
+          "thu": "Thu",
+          "fri": "Fri",
+          "sat": "Sat"
+        },
+        "colors": {
+          "blue": "Blue",
+          "green": "Green",
+          "red": "Red",
+          "yellow": "Yellow",
+          "purple": "Purple",
+          "pink": "Pink",
+          "orange": "Orange",
+          "teal": "Teal"
+        },
+        "icons": {
+          "none": "None",
+          "Tag": "General",
+          "Briefcase": "Work",
+          "User": "Personal",
+          "Utensils": "Food",
+          "Coffee": "Break",
+          "ChefHat": "Cooking",
+          "Dumbbell": "Gym",
+          "ShoppingCart": "Shopping",
+          "PenTool": "Creative",
+          "Calculator": "Finance",
+          "FlaskConical": "Science",
+          "Zap": "Energy",
+          "Activity": "Activity",
+          "WashingMachine": "Chore",
+          "Bed": "Sleep",
+          "Bath": "Self-care",
+          "Sparkles": "Leisure",
+          "FolderOpen": "Productivity",
+          "Smile": "Fun",
+          "Heart": "Health",
+          "Star": "Priority",
+          "CheckCircle2": "Task",
+          "HelpCircle": "Question",
+          "Plane": "Travel",
+          "Car": "Commute",
+          "Bike": "Exercise",
+          "Music": "Hobby",
+          "Gamepad": "Gaming",
+          "Tv": "Entertainment",
+          "Film": "Movies",
+          "Camera": "Photo",
+          "Moon": "Night",
+          "Sun": "Day",
+          "Cloud": "Weather",
+          "PalmTree": "Vacation",
+          "Flower": "Nature",
+          "Leaf": "Relax",
+          "Apple": "Nutrition",
+          "Stethoscope": "Medical",
+          "Brain": "Mindset",
+          "GraduationCap": "Education",
+          "Book": "Study",
+          "Laptop": "Tech",
+          "Mail": "Communication",
+          "ClipboardList": "To-do",
+          "ShoppingBag": "Groceries",
+          "Gift": "Gift",
+          "PartyPopper": "Celebration",
+          "Trophy": "Achievement",
+          "PawPrint": "Pets",
+          "Globe": "Web",
+          "Wifi": "Internet",
+          "Lock": "Security",
+          "MapPin": "Location",
+          "Calendar": "Planning",
+          "Bell": "Reminder"
+        }
+      },
+      "buttons": {
+        "add": "Add",
+        "copy": "Copy",
+        "save": "Save Changes",
+        "cancel": "Cancel"
+      }
+    },
+    "reset": {
+      "title": "Reset Everything",
+      "description": "This will clear all sidebar template features, restore your settings to default, and delete all events from the calendar. This action cannot be undone.",
+      "confirm": "Yes, Reset",
+      "cancel": "Cancel"
+    },
+    "calendar": {
+      "days": {
+        "sun": "SUN",
+        "mon": "MON",
+        "tue": "TUE",
+        "wed": "WED",
+        "thu": "THU",
+        "fri": "FRI",
+        "sat": "SAT"
+      },
+      "daysShort": {
+        "sun": "Sun",
+        "mon": "Mon",
+        "tue": "Tue",
+        "wed": "Wed",
+        "thu": "Thu",
+        "fri": "Fri",
+        "sat": "Sat"
+      },
+      "previousWeek": "Go to previous week",
+      "nextWeek": "Go to next week",
+      "previousDay": "Go to previous day",
+      "nextDay": "Go to next day",
+      "today": "Go to Today",
+      "newEvent": "New Event",
+      "time": {
+        "am": "AM",
+        "pm": "PM"
+      }
+    },
+    "brand": {
+      "alt": "TrySchedule - Free Online Schedule Builder"
+    },
+    "calendarPicker": {
+      "weekLabel": "Wk"
+    },
+    "moreOptions": "More Options",
+    "export": "Export",
+    "cloud": "Cloud",
+    "more": "More",
+    "sync": "Sync",
+    "aiFill": "AI Fill",
+    "faq": "FAQ",
+    "badge": {
+      "pro": "PRO"
+    },
+    "seo": {
+      "h1": "Free Online Schedule Builder",
+      "faqTitle": "Frequently Asked Questions about TrySchedule",
+      "faqSubtitle": "Everything you need to know about our free schedule builder.",
+      "faqs": {
+        "q1": {
+          "question": "Why is TrySchedule the best free online schedule builder?",
+          "answer": "TrySchedule stands out for three key reasons:\n\n• Zero Friction – no login or signup required, just start creating immediately.\n• Instant Export – download your schedule as high-quality PNG or PDF with one click.\n• Visual & Intuitive – drag-and-drop interface with beautiful color-coded blocks makes scheduling effortless.\n\nThese features make TrySchedule the fastest way to build a professional weekly schedule online."
+        },
+        "q2": {
+          "question": "How do I create a weekly schedule in 3 easy steps?",
+          "answer": "Step 1: Drag and drop on the calendar grid to create time blocks for your activities.\n\nStep 2: Customize each block with many vibrant colors to categorize work, study, fitness, or personal time.\n\nStep 3: Click 'Export' to download your finished schedule as PNG, JPG, or PDF – ready to print or share.\n\nThe entire process takes less than 5 minutes, no design skills needed."
+        },
+        "q3": {
+          "question": "Who needs a schedule builder like TrySchedule?",
+          "answer": "TrySchedule is designed for everyone who values their time:\n\n• Students – organizing class timetables and study sessions\n• Shift Managers – creating employee work rotations\n• Gym Goers – planning weekly workout routines\n• Freelancers – balancing multiple client projects and deadlines\n\nWhether you need a simple daily planner or a complex weekly schedule, our visual builder adapts to your needs."
+        },
+        "q4": {
+          "question": "Is this schedule builder completely free to use?",
+          "answer": "Yes, TrySchedule is 100% free for core features!\n\nCreate unlimited schedules, use all colors, export as PNG or JPG, and save your work locally – all without paying a cent or creating an account.\n\nPro features like PDF export, AI-powered scheduling suggestions, and cross-device cloud sync are available for power users who want advanced capabilities."
+        },
+        "q5": {
+          "question": "Can I print my schedule after creating it?",
+          "answer": "Absolutely! TrySchedule is designed to be printable-friendly.\n\nExport your schedule as a high-resolution PNG or PDF, then print it directly on standard paper sizes. The clean, minimalist design ensures your printed schedule looks professional and is easy to read.\n\nPerfect for posting on your wall, refrigerator, or office bulletin board."
+        },
+        "q6": {
+          "question": "Is my schedule data private and secure?",
+          "answer": "Your privacy is our priority.\n\nBy default, all schedule data stays in your browser's local storage – nothing leaves your device unless you choose otherwise.\n\nYour schedules remain completely private unless you explicitly choose to enable cloud sync with a Pro account. You have full control over your data at all times."
+        }
+      }
+    },
+    "buttons": {
+      "cancel": "Cancel"
+    }
+  },
+  "AuthModal": {
+    "title": "Authentication",
+    "welcomeBack": "Welcome back!",
+    "join": "Join TrySchedule",
+    "signInDescription": "Let's pick up where you left off and keep scheduling smarter",
+    "signUpDescription": "Start building beautiful schedules in minutes, no learning curve required",
+    "features": {
+      "dragDrop": "Drag & drop simplicity",
+      "themes": "Beautiful color themes",
+      "devices": "Works on any device"
+    }
+  },
+  "Auth": {
+    "common": {
+      "email": "Email",
+      "password": "Password",
+      "or": "OR",
+      "continue": "Continue",
+      "backToSignIn": "← Back to sign in",
+      "backToSignUp": "← Back to sign up",
+      "emailAddress": "Email address",
+      "optional": "(Optional)"
+    },
+    "signIn": {
+      "title": "Sign In",
+      "emailPlaceholder": "Enter your email",
+      "passwordPlaceholder": "Enter your password",
+      "forgotPassword": "Forgot your password?",
+      "googleButton": "Sign in with Google",
+      "submit": "Sign In"
+    },
+    "signUp": {
+      "title": "Sign Up",
+      "firstName": "First name",
+      "firstNamePlaceholder": "First name",
+      "lastName": "Last name",
+      "lastNamePlaceholder": "Last name",
+      "passwordPlaceholder": "Create a password",
+      "googleButton": "Sign up with Google",
+      "submit": "Continue"
+    },
+    "forgotPassword": {
+      "title": "Reset your password",
+      "instruction": "Enter your email and we'll send you a verification code",
+      "submitEmail": "Send Verification Code",
+      "checkEmail": "Check your email",
+      "codeSentTo": "We sent a 6-digit code to",
+      "verificationCode": "Verification code",
+      "codePlaceholder": "Enter 6-digit code",
+      "verifyCode": "Verify Code",
+      "setNewPassword": "Set new password",
+      "setNewPasswordInstruction": "Enter your new password below",
+      "newPassword": "New password",
+      "newPasswordPlaceholder": "Enter new password",
+      "confirmPassword": "Confirm password",
+      "confirmPasswordPlaceholder": "Confirm new password",
+      "resetPassword": "Reset Password",
+      "success": "Password reset successful!",
+      "successMessage": "Your password has been reset and you are now signed in."
+    },
+    "verification": {
+      "title": "Check your email",
+      "codeSentTo": "We sent a verification code to",
+      "codeLabel": "Verification Code",
+      "submit": "Verify Email"
+    },
+    "errors": {
+      "signInError": "An error occurred during sign in",
+      "googleSignInError": "Failed to sign in with Google",
+      "googleSignUpError": "Failed to sign up with Google",
+      "resetEmailError": "Failed to send reset email",
+      "codeError": "Invalid verification code",
+      "verificationFailed": "Verification failed",
+      "signUpError": "An error occurred during sign up",
+      "passwordMismatch": "Passwords do not match",
+      "passwordLength": "Password must be at least 8 characters",
+      "resetError": "Failed to reset password"
+    }
+  },
+  "Settings": {
+    "title": "Settings",
+    "weekStart": {
+      "label": "Start week on Sunday",
+      "description": "US standard is Sunday, ISO standard is Monday"
+    },
+    "timeFormat": {
+      "label": "12-hour format (AM/PM)",
+      "description": "Toggle off for 24-hour format"
+    },
+    "showDates": {
+      "label": "Show dates",
+      "description": "Display date numbers in calendar headers"
+    },
+    "timeIncrement": {
+      "label": "Time increment",
+      "minutes": "{count} minutes"
+    },
+    "workingHours": {
+      "label": "Working hours",
+      "to": "to"
+    }
+  },
+  "Export": {
+    "title": "Export Schedule",
+    "description": "Choose a format to download your schedule.",
+    "format": "Format",
+    "formats": {
+      "png": {
+        "description": "High quality image with transparency"
+      },
+      "jpg": {
+        "description": "Compressed image, smaller file size"
+      },
+      "pdf": {
+        "description": "Vector format, perfect for printing"
+      },
+      "csv": {
+        "description": "Spreadsheet format for data analysis"
+      }
+    },
+    "upgradePrompt": {
+      "title": "Upgrade to Pro",
+      "description": "Unlock PDF and CSV exports, plus remove watermarks from images.",
+      "button": "View Plans"
+    },
+    "buttons": {
+      "cancel": "Cancel",
+      "exporting": "Exporting...",
+      "download": "Download {format}"
+    }
+  },
+  "CalendarSync": {
+    "title": "Google Calendar Sync",
+    "description": "Sync your schedule to Google Calendar for easy access on all devices.",
+    "notConnected": {
+      "title": "Connect Your Google Account",
+      "description": "Link your Google account to sync events to your calendar.",
+      "button": "Connect Google Account"
+    },
+    "connected": {
+      "status": "Connected",
+      "syncComplete": "Sync Complete",
+      "syncFailed": "Sync Failed",
+      "eventsSynced": "{count} event(s) synced",
+      "eventsFailed": ", {count} failed",
+      "syncing": "Syncing...",
+      "syncButton": "Sync to Google Calendar",
+      "openCalendar": "Open Google Calendar"
+    }
+  },
+  "FeatureComingSoon": {
+    "title": "{feature} - Coming Soon!",
+    "description": "This Pro feature is currently in development. Be the first to know when it launches and get an exclusive <discount>50% discount</discount>!",
+    "emailPlaceholder": "Enter your email address",
+    "submitButton": "Notify Me & Get 50% Off",
+    "submitting": "Signing up...",
+    "maybeLater": "Maybe Later",
+    "noSpam": "No spam, unsubscribe anytime.",
+    "success": {
+      "title": "You're on the list! 🎉",
+      "subtitle": "We'll notify you when it's ready."
+    },
+    "error": "Submission failed, please try again later",
+    "features": {
+      "calendarSync": {
+        "name": "Calendar Sync",
+        "description": "This feature is included in the Pro version and will be available soon! Enter your email to get notified first when it launches."
+      }
+    }
+  },
+  "CloudSave": {
+    "title": "Cloud Save",
+    "description": "Save your schedule to the cloud or load a saved template.",
+    "templatesUsed": "{count}/{max} templates used",
+    "saveButton": "Save Current",
+    "templateName": "Template Name",
+    "templatePlaceholder": "My Schedule",
+    "noTemplates": "No saved templates yet",
+    "noTemplatesHint": "Save your first schedule to the cloud!",
+    "eventsCount": "{count} events",
+    "updated": "Updated {date}",
+    "pagination": "Page {page} of {total}",
+    "sort": {
+      "updated": "Updated",
+      "created": "Created",
+      "name": "Name"
+    },
+    "buttons": {
+      "load": "Load template",
+      "rename": "Rename",
+      "delete": "Delete"
+    },
+    "errors": {
+      "fetchFailed": "Failed to load templates",
+      "saveFailed": "Failed to save",
+      "loadFailed": "Failed to load template",
+      "renameFailed": "Failed to rename",
+      "deleteFailed": "Failed to delete template",
+      "overwriteFailed": "Failed to overwrite template",
+      "enterName": "Please enter a name",
+      "nameTooLong": "Name must be 50 characters or less"
+    },
+    "deleteConfirm": {
+      "title": "Delete Template",
+      "description": "Are you sure you want to delete \"{name}\"? This action cannot be undone.",
+      "button": "Delete"
+    },
+    "loadConfirm": {
+      "title": "Load Template",
+      "description": "Your current schedule will be replaced with this template. This action cannot be undone.",
+      "button": "Load Template"
+    },
+    "overwriteConfirm": {
+      "title": "Template Already Exists",
+      "description": "A template named \"{name}\" already exists. Do you want to overwrite it with your current schedule?",
+      "button": "Overwrite"
+    }
+  },
+  "TemplateComponents": {
+    "common": {
+      "on": "On",
+      "off": "Off"
+    },
+    "AIQuickActions": {
+      "title": "AI Quick Actions",
+      "regenerate": "Regenerate with AI",
+      "clear": "Clear Schedule"
+    },
+    "PriorityModeToggle": {
+      "title": "Toggle Priority Mode",
+      "label": "Priority Mode"
+    },
+    "TaskModeToggle": {
+      "title": "Toggle Task Mode",
+      "label": "Task Mode"
+    },
+    "ProjectDashboard": {
+      "title": "Project Dashboard",
+      "phase": "CONSTRUCTION PHASE",
+      "onTrack": "On Track",
+      "completion": "Completion",
+      "milestones": "Key Milestones",
+      "clickToUpdate": "Click to update",
+      "active": "Active",
+      "weatherAlert": "Weather Alert:",
+      "siteStatus": "Site Status:",
+      "checkingForecast": "Checking forecast...",
+      "updateLocation": "Update Site Location",
+      "locationDenied": "Location access denied",
+      "locationPrompt": "Please enable location access to get local site weather.",
+      "weatherError": "Weather Data Unavailable.",
+      "siteAlertToday": "Site Alert: Rain/Snow expected TODAY. Cover sensitive materials.",
+      "forecastAlert": "Forecast: Bad weather expected in {days} days. Plan indoor tasks.",
+      "forecastClear": "Forecast Clear: Optimal conditions for outdoor site work.",
+      "milestoneData": {
+        "sitePrep": "Site Prep & Excavation",
+        "foundation": "Foundation Pouring",
+        "framing": "Framing & Roofing",
+        "hvac": "HVAC & Electrical",
+        "interior": "Interior Finishing"
+      },
+      "week": "Week {num}",
+      "weekRange": "Week {range}"
+    }
+  },
+  "Metadata": {
+    "title": "TrySchedule | Free Online Schedule Builder (No Login Required)",
+    "description": "The easiest free online schedule builder. Drag-and-drop interface, instant PNG export. No signup needed. PDF & AI tools available for Pro users.",
+    "organizationDescription": "The easiest free online schedule builder for students, managers, and gyms."
+  },
+  "NotFound": {
+    "title": "404 - Page Not Found",
+    "description": "The page you are looking for does not exist or has been moved.",
+    "hint": "Try searching for templates or go back to the homepage.",
+    "backHome": "Back to Home",
+    "browseTemplates": "Browse Templates"
+  },
+  "AIAutofill": {
+    "title": "AI Autofill",
+    "usageRemaining": "{remaining} / {limit} monthly uses remaining",
+    "trialRemaining": "{remaining} trial uses remaining",
+    "inputLabel": "Describe your schedule needs",
+    "inputPlaceholder": "E.g., I'm a college student. I need to study for 3 hours in the morning, have lunch at noon, and go to the gym in the evening on weekdays...",
+    "tipsTitle": "Tips for better results:",
+    "tips": {
+      "durations": "Mention specific activities and their durations",
+      "days": "Specify which days of the week",
+      "ranges": "Include preferred time ranges"
+    },
+    "generateButton": "Generate Schedule",
+    "generatingButton": "Generating...",
+    "previewTitle": "Generated {count} events",
+    "noEvents": "No events generated. Try a more detailed description.",
+    "addButton": "Add {count} Events",
+    "backButton": "Back",
+    "closeButton": "Close",
+    "cancelButton": "Cancel",
+    "trialLimitReachedTitle": "Trial Limit Reached",
+    "trialLimitReachedDescription": "You've used all 3 free AI generations. Upgrade to Pro for 100 uses every month!",
+    "upgradeToPro": "Upgrade to Pro",
+    "startFreshTitle": "Start Fresh?",
+    "startFreshDescription": "This will reset your calendar and clear all existing events. Your settings will also be restored to defaults.",
+    "startFreshConfirm": "Yes, Start Fresh",
+    "errors": {
+      "usageLimitExceededPro": "You've reached the monthly limit of {limit} AI generations. Limit resets next month.",
+      "usageLimitExceededFree": "Trial limit reached. Please upgrade to Pro for more AI generations.",
+      "generationFailed": "Failed to generate schedule",
+      "connectionError": "Failed to connect to AI service. Please try again."
+    }
+  },
+  "EventConflict": {
+    "title": "Time Conflict Detected",
+    "description": "\"{title}\" conflicts with existing events.",
+    "listTitle": "Conflicting events:",
+    "buttons": {
+      "cancel": "Cancel",
+      "modify": "Modify New Event",
+      "delete": "Delete Existing ({count})"
+    }
+  }
 }
