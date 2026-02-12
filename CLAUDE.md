@@ -1,421 +1,161 @@
-# ScheduleMaster - 项目配置文档
+# 二、产品核心策略 (The Strategy)
 
-## 📋 项目概述
+## 1 核心价值主张
 
-**项目名称**: ScheduleMaster
-**类型**: 日程管理系统
-**技术栈**: Next.js 16 + TypeScript + Supabase + Clerk
-**样式**: Tailwind CSS + shadcn/ui
+"Zero Friction, Niche Specific."
 
-### 核心功能
+与竞品 (schedulebuilder.org) 相比，我们不仅要做到“无登录即用”，还要做到“场景化适配”。用户搜索“健身计划”进来，看到的就是健身模板，而不是通用表格。
 
-- 📅 多视图日历（周视图、日视图）
-- ✏️ 事件创建、编辑、删除
-- 🎨 事件分类和颜色标记
-- 📱 响应式设计（桌面端 + 移动端）
-- 👤 用户认证（Clerk）
-- 💾 云端同步（Supabase）
-- 📝 博客系统
-- 💰 订阅和定价管理
+## 2 SEO 架构策略 (Programmatic SEO)
 
----
+利用 Next.js 的动态路由 (Dynamic Routes) 构建流量矩阵。
 
-## 🏗️ 项目架构
+### 2.1 首页 (Home):
 
-### 目录结构
+针对主词 `schedule builder`。
 
-```
-ScheduleMaster/
-├── app/                    # Next.js App Router
-│   ├── api/               # API 路由
-│   ├── blog/              # 博客页面
-│   ├── checkout/          # 支付流程
-│   ├── pricing/           # 定价页面
-│   └── page.tsx           # 首页
-├── components/            # React 组件
-│   ├── ui/               # shadcn/ui 基础组件
-│   ├── calendar/         # 日历相关组件
-│   ├── DailyCalendar.tsx # 日视图
-│   └── WeeklyCalendar.tsx# 周视图
-├── lib/                  # 工具函数
-│   ├── types.ts         # TypeScript 类型定义
-│   ├── utils.ts         # 通用工具
-│   └── time-utils.ts    # 时间处理工具
-├── hooks/               # 自定义 Hooks
-│   ├── useEventDrag.ts  # 拖拽事件
-│   ├── useDragToCreate.ts # 拖拽创建
-│   └── useMediaQuery.ts # 响应式检测
-└── 1-Project_Log/       # 项目文档和笔记
-```
+### 2.2 落地页矩阵 (`/templates/[slug]`):针对`4+`个长尾词。
 
----
+*技术实现：* 只有一套代码，根据 URL 参数加载不同的预设 JSON 数据（标题、列名、默认任务）
 
-## 🎯 开发规范
+长尾关键词：
 
-### 代码规范
+- | **关键词 (Keyword)**             | **用户意图分析**   | **落地页差异化建议 (Dev Tip)**            |
+  | -------------------------------- | ------------------ | ----------------------------------------- |
+  | **1. Employee schedule builder** | 寻找排班软件的经理 | 默认模板设置为“员工姓名+早/中/晚班”格式。 |
+  
+- | **关键词 (Keyword)**                  | **用户意图分析** | **落地页差异化建议 (Dev Tip)**               |
+  | ------------------------------------- | ---------------- | -------------------------------------------- |
+  | **2. College class schedule builder** | 大学生规划选课   | 预设周一至周五视图，时间粒度细化到 15 分钟。 |
+  
+- | **关键词 (Keyword)**            | **用户意图分析** | **落地页差异化建议 (Dev Tip)**                 |
+  | ------------------------------- | ---------------- | ---------------------------------------------- |
+  | **3. Workout schedule builder** | 健身人群         | 预设“胸肌、背部、有氧”等标签，移动端要极好用。 |
+  
+- | **关键词 (Keyword)**           | **用户意图分析**      | **落地页差异化建议 (Dev Tip)**                     |
+  | ------------------------------ | --------------------- | -------------------------------------------------- |
+  | **4. Visual schedule builder** | 需要可视化/图片化     | 强调图标 (Icons) 和颜色编码功能。                  |
+  | **5. AI schedule generator**   | **(蓝海)** 追逐新技术 | 哪怕只是简单的规则生成，加上“AI”标签点击率会翻倍。 |
 
-#### TypeScript
+### 2.3 定价页 (`/pricing`):
 
-- ✅ 使用 **严格模式**（strict: true）
-- ✅ 所有组件必须有类型定义
-- ✅ 使用接口定义 Props 类型
-- ✅ 避免使用 `any` 类型
+承接转化，包含高商业价值关键词。
 
-#### 组件规范
+### 2.4 博客页 (`/blog/[slug]`)：
 
-```typescript
-// ✅ 组件命名：PascalCase
-EventForm.tsx;
-WeeklyCalendar.tsx;
+#### 2.4.1 战略定位
 
-// ❌ 避免：
-eventForm.tsx;
-weekly - calendar.tsx;
-```
+在 MVP 阶段，博客不应拖累开发进度，但必须存在。它的作用是：
 
-#### 文件命名
+- **承接信息型流量：** 针对 "How to create a work schedule" 这类搜索意图。
+- **内链中枢：** 在文章中自然插入“Use our free tool”的链接，向工具页输送权重。
 
-- 组件文件：`PascalCase.tsx`
-- 工具文件：`kebab-case.ts`
-- 类型文件：`kebab-case.ts`
-- Hook 文件：`useSomething.ts`
+#### 2.4.2 技术实现方案 (Next.js 专属)
 
-### 样式规范
+- **架构：** 直接使用 **MDX (Markdown + JSX)** 。
+- **路径：** `/blog` (列表页) 和 `/blog/[slug]` (文章页)。
+- **内容管理：** 所有文章以 `.md` 或 `.mdx` 文件形式存储在项目的 `posts` 文件夹中。Git 提交代码即发布文章。
+- **功能要求：**
+  - 支持 H1-H6, 列表, 图片。
+  - **关键：** 必须支持在文章中插入 React 组件（例如：在文章中间直接插入一个简化版的“排班工具 Demo”）。
 
-#### Tailwind CSS
+### 2.5 全局语言与本地化规范 (Localization & Language)
 
-- ✅ 优先使用 Tailwind 工具类
-- ✅ 复杂组件使用 `cn()` 工具函数合并类名
-- ✅ 响应式设计：`md:` 前缀表示桌面端
+#### 2.5.1 默认语言设置
 
-#### shadcn/ui 组件
+- **Target Locale:** `en-US` (美式英语)。
+- **HTML Tag:** 必须设置 `<html lang="en">`，确保浏览器翻译插件和 Google 爬虫正确识别。
 
-```typescript
-// ✅ 使用 shadcn/ui 组件
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
-import { Popover } from "@/components/ui/popover";
-```
+#### 2.5.2 格式规范 (硬性要求)
 
-#### 颜色系统
+- **日期格式:** 默认使用美式格式 `MM/DD/YYYY` (例如: 12/31/2024)。
+- **周起始日:** 美国习惯周日 (Sunday) 为第一天，但在 ISO 标准中是周一。
+  - *功能点：* 编辑器需提供一个 Toggle 开关：`"Start week on Sunday"` vs `"Start week on Monday"` (默认设为 Sunday，符合美国习惯)。
+- **时间格式:** 默认使用 12小时制 (AM/PM)，提供 24小时制切换选项。
+- **拼写检查:** 所有 UI 文案（Color **not** Colour, Center **not** Centre, Schedule **not** Programme）。
 
-- 使用 Tailwind 的颜色变量
-- 保持一致的视觉风格
-- 支持深色模式（next-themes）
+# 三、功能需求说明 (Functional Requirements)
 
----
+## 1 核心编辑器 (The Builder) - 免费版 (MVP 重点)
 
-## 🎨 UI/UX 指南
+**优先级：P0 (最高)**
 
-### 响应式设计
+- **交互模式：** 拖拽式 (Drag & Drop) 日历视图。
+- **无需登录：** 用户打开网页直接操作，数据存储在浏览器 `localStorage`。
+- **视图切换：** 支持“日视图 (Daily)”和“周视图 (Weekly)”。
+- **基础编辑：** 添加任务块、修改颜色、修改时间段。
+- **导出功能 (Free)：** 导出为 JPG/PNG 图片（**带水印**：水印内容建议直接写域名）。
 
-#### 移动端 vs 桌面端
+## 2 场景化模版引擎 (The Template Engine)
 
-```typescript
-// ✅ 使用 useIsMobile hook
-import { useIsMobile } from "@/hooks/useMediaQuery"
+**优先级：P0**
 
-const isMobile = useIsMobile()
+- 系统需根据 URL 自动初始化编辑器状态。
+  - *Case A:* 访问 `/tools/college-schedule` -> 初始化为：周一至周五，时间 8:00-18:00，预设“Math, History”等课程块。
+  - *Case B:* 访问 `/tools/employee-shift` -> 初始化为：人员名单 (Row) x 日期 (Column)，预设“早班、晚班”块。
 
-// 条件渲染
-{isMobile ? <MobileView /> : <DesktopView />}
-```
+## 3 会员与支付系统 (The Gate)
 
-#### Tailwind 断点
+**优先级：P1**
 
-```typescript
-// 移动端默认
-<div className="p-2">
+- **付费墙触发点 (Triggers):**
+  - 点击“导出 PDF (高清/矢量)”。
+  - 点击“保存到云端”。
+  - 点击“AI 自动生成” (MVP 阶段可做成“假门测试”)。
+  - 点击“去除水印”。
+- **用户账户：** 支持 Google 一键登录 (Clerk)。
+- **支付流程：** 集成 Stripe Checkout，支持月付订阅和终身买断。
 
-// 桌面端（md 断点以上）
-<div className="p-2 md:p-6">
-```
+## 4 AI 功能 (MVP 阶段策略)
 
----
+**优先级：P2 (或作为营销噱头)**
 
-## 🗄️ 数据层
+- **MVP 方案：** 这里不需要真正接入昂贵的 LLM API。
+- **实现：** 做一个基于规则的“Smart Fill”。用户输入“User A, User B”，点击“Auto Fill”，系统随机或按简单逻辑填满表格即可。
+- **目的：** 为了 SEO (覆盖 AI 关键词) 和测试用户对“自动化”的付费意愿。
 
-### Supabase 集成
+# 四、 用户体验流程图 (User Flow)
 
-#### 表结构（参考 migrations/）
+为了确保低跳出率，必须严格遵守此流程：
 
-- `events` - 事件表
-- `profiles` - 用户资料
-- `subscriptions` - 订阅信息
-
-#### 查询规范
-
-```typescript
-// ✅ 使用 SSR 客户端
-import { createServerClient } from "@supabase/ssr";
-
-// ✅ 错误处理
-const { data, error } = await supabase.from("events").select("*");
-
-if (error) {
-  console.error("Error fetching events:", error);
-  return [];
-}
+```代码段
+graph TD
+    A[用户搜索关键词 (例如 'workout schedule builder')] --> B(垂直落地页 /tools/workout)
+    B --> C{加载预设模板}
+    C --> D[用户直接拖拽编辑 (无登录)]
+    D --> E[用户感到满意]
+    E --> F{点击导出/保存}
+    F -->|选择 JPG (带水印)| G[直接下载 (留存 LocalStorage)]
+    F -->|选择 PDF / 云端保存| H[弹出 Pricing Modal]
+    H -->|放弃| G
+    H -->|支付| I[注册/登录 -> 支付成功]
+    I --> J[解锁 Pro 功能 (PDF/Cloud Save)]
 ```
 
-### Clerk 认证
+# 五、页面结构与 SEO 规范 (Site Architecture)
 
-#### 中间件使用
+## 1 通用组件要求
 
-```typescript
-// middleware.ts
-import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+- **Header:** Logo, Templates (Dropdown), Pricing, Login.
+- **Main Tool Area:** 占据屏幕 80% 空间，确保首屏可见 (Above the fold)。
+- **SEO Content Area:** 位于工具下方。
+  - 包含 H2/H3 标签。
+  - 包含 FAQ 组件 (Schema 标记)。
+  - Next.js 需要使用 SSR (Server Side Rendering) 渲染这部分文本，确保 Google 能抓取。
 
-const isProtectedRoute = createRouteMatcher(["/dashboard(.*)"]);
+## 2 性能指标 (Core Web Vitals)
 
-export default clerkMiddleware((auth, req) => {
-  if (isProtectedRoute(req)) auth().protect();
-});
-```
+鉴于这是工具类网站，性能直接决定排名：
 
----
+- **LCP (最大内容渲染):** < 1.2 秒
+- **FID (首次输入延迟):** < 100 毫秒 (点击编辑器必须瞬间响应)
+- **CLS (累积布局偏移):** 0 (工具界面不能乱跳)
+- **Mobile:** 必须完美适配手机竖屏操作（或者在手机端提示“建议横屏使用”）。
 
-## 📝 Claude 工作指南
+# 六、 数据埋点与分析 (Analytics)
 
-### ✅ 推荐做法
+在 MVP 阶段，我们需要收集以下数据来验证假设：
 
-#### 1. 修改代码前
-
-```typescript
-// ✅ 说明变更范围
-"我将修改 WeeklyCalendar.tsx 的移动端日历弹窗逻辑";
-
-// ✅ 说明影响范围
-"这个修改只影响移动端，桌面端不受影响";
-```
-
-#### 2. 实现功能时
-
-```typescript
-// ✅ 使用现有组件
-"使用 shadcn/ui 的 Dialog 组件实现弹窗";
-
-// ✅ 遵循现有模式
-"参考 EditEventDialog 的实现方式";
-
-// ✅ 添加类型定义
-"先在 lib/types.ts 中定义新类型";
-```
-
-#### 3. 处理响应式
-
-```typescript
-// ✅ 同时考虑移动端和桌面端
-"实现移动端和桌面端的不同布局";
-"使用 useIsMobile hook 检测设备";
-```
-
-#### 4. 错误处理
-
-```typescript
-// ✅ 添加错误边界
-"添加 try-catch 处理 Supabase 查询错误";
-
-// ✅ 用户友好提示
-"使用 sonner 显示错误消息";
-```
-
-### ❌ 避免做法
-
-```typescript
-// ❌ 不要使用 any 类型
-const data: any = ...
-
-// ❌ 不要跳过类型检查
-// @ts-ignore
-
-// ❌ 不要硬编码值
-const width = 375  // 应该使用动态计算
-
-// ❌ 不要忽略错误
-try { ... } catch { }  // 至少要 console.error
-
-// ❌ 不要直接修改状态
-// 应该使用 useState 的 setter 函数
-```
-
----
-
-## 🔐 安全注意事项
-
-### 敏感信息
-
-- ⚠️ **不要**在代码中硬编码 API 密钥
-- ⚠️ **不要**提交 `.env.local` 文件到 Git
-- ✅ 使用环境变量：`process.env.NEXT_PUBLIC_SUPABASE_URL`
-
-### 用户数据
-
-- ✅ 所有数据访问需要通过 Clerk 认证
-- ✅ 使用 RLS（Row Level Security）保护 Supabase 数据
-- ✅ 验证用户权限后再操作数据
-
-### API 路由
-
-```typescript
-// ✅ 验证用户身份
-import { auth } from "@clerk/nextjs/server";
-
-export async function POST(req: Request) {
-  const { userId } = auth();
-  if (!userId) {
-    return new Response("Unauthorized", { status: 401 });
-  }
-  // ... 处理请求
-}
-```
-
----
-
-## 🎯 优先级指南
-
-### 高优先级
-
-1. 🔴 **用户体验问题**：影响核心功能的使用
-2. 🔴 **安全漏洞**：数据泄露、未授权访问
-3. 🔴 **数据丢失风险**：可能导致用户数据丢失的 bug
-
-### 中优先级
-
-1. 🟡 **性能优化**：提升加载速度、响应速度
-2. 🟡 **UI 改进**：视觉优化、交互改进
-3. 🟡 **代码质量**：重构、代码清理
-
-### 低优先级
-
-1. 🟢 **文档更新**：代码注释、使用说明
-2. 🟢 **小功能**：锦上添花的功能
-3. 🟢 **代码风格**：不影响功能的格式调整
-
----
-
-## 📦 常用依赖速查
-
-### UI 组件
-
-```typescript
-// shadcn/ui (Radix UI)
-@radix-ui/react-dialog
-@radix-ui/react-popover
-@radix-ui/react-dropdown-menu
-
-// 数据展示
-recharts         // 图表
-react-day-picker // 日历
-sonner          // Toast 通知
-```
-
-### 状态管理
-
-```typescript
-// 本项目使用 React Context + Hooks
-components / SettingsContext.tsx;
-```
-
-### 工具库
-
-```typescript
-date-fns              // 日期处理
-zod                  // 数据验证
-react-hook-form      // 表单管理
-@hookform/resolvers  // 表单验证集成
-```
-
----
-
-## 🚀 性能优化建议
-
-### 已实施的优化
-
-- ✅ 使用 `useMemo` 缓存计算结果
-- ✅ 使用 `useCallback` 缓存事件处理器
-- ✅ 动态导入（Next.js 自动代码分割）
-- ✅ 图片优化（next/image）
-
-### 可优化的地方
-
-- 📊 虚拟滚动（长列表）
-- 📊 React.memo（减少不必要的重渲染）
-- 📊 懒加载组件
-- 📊 Service Worker（离线支持）
-
----
-
-## 📚 相关资源
-
-### 外部文档
-
-- [Next.js 文档](https://nextjs.org/docs)
-- [Supabase 文档](https://supabase.com/docs)
-- [Clerk 文档](https://clerk.com/docs)
-- [shadcn/ui 文档](https://ui.shadcn.com)
-- [Tailwind CSS 文档](https://tailwindcss.com/docs)
-
----
-
-## 🔄 版本历史
-
-### v0.1.0 (当前)
-
-- ✅ 核心日历功能（周视图、日视图）
-- ✅ 事件 CRUD 操作
-- ✅ 拖拽创建和移动事件
-- ✅ 响应式设计（桌面端 + 移动端）
-- ✅ 用户认证（Clerk）
-- ✅ 云端同步（Supabase）
-- ✅ 博客系统
-- ✅ 定价和订阅页面
-
----
-
-## 💡 开发提示
-
-### 快速定位组件
-
-```bash
-# 查找组件
-grep -r "WeeklyCalendar" components/
-
-# 查找类型定义
-grep -r "interface Event" lib/
-```
-
-### 调试技巧
-
-```typescript
-// 使用 console.log 调试
-console.log("Event data:", event);
-
-// 使用 React DevTools
-// 检查组件状态和 props
-
-// 使用浏览器网络面板
-// 检查 API 请求
-```
-
-### 常用工具函数
-
-```typescript
-// 时间工具（lib/time-utils.ts）
-formatTime(hour, minute, use12HourFormat);
-formatDateString(date);
-getWeekDates(startDate);
-
-// 通用工具（lib/utils.ts）
-cn(...classes); // 合并 Tailwind 类名
-```
-
----
-
-**文档版本**: 1.0
-**最后更新**: 2025-12-31
-**维护者**: ScheduleMaster 开发团队
-
----
-
-> 💡 **提示**: 这份文档会随着项目发展持续更新。如有疑问，请参考相关文档或联系团队。
+1. **转化漏斗：** 访客 -> 编辑操作 -> 点击导出 -> 点击付费 -> 支付成功。
+2. **模板热度：** 哪一个长尾词落地页的流量最大？停留时间最长？
+3. **功能需求：** 统计点击 "AI 生成" 和 "PDF 导出" 的次数，决定后续开发优先级。

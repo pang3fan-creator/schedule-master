@@ -10,9 +10,10 @@ const intlMiddleware = createMiddleware({
 });
 
 const isApiRoute = createRouteMatcher(["/(api|trpc)(.*)"]);
+const isCheckoutOrPortal = createRouteMatcher(["/checkout", "/portal"]);
 
 export default clerkMiddleware(async (auth, req) => {
-  if (isApiRoute(req)) {
+  if (isApiRoute(req) || isCheckoutOrPortal(req)) {
     return NextResponse.next();
   }
 
