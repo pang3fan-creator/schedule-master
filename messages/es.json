@@ -943,7 +943,9 @@
       "deleteFailed": "Error al eliminar la plantilla",
       "overwriteFailed": "Error al sobrescribir la plantilla",
       "enterName": "Por favor ingresa un nombre",
-      "nameTooLong": "El nombre debe tener 50 caracteres o menos"
+      "nameTooLong": "El nombre debe tener 50 caracteres o menos",
+      "loginRequired": "Por favor inicia sesión para usar el guardado en la nube",
+      "proRequired": "El guardado en la nube requiere una suscripción Pro"
     },
     "deleteConfirm": {
       "title": "Eliminar Plantilla",

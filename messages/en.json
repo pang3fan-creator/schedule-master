@@ -943,7 +943,9 @@
       "deleteFailed": "Failed to delete template",
       "overwriteFailed": "Failed to overwrite template",
       "enterName": "Please enter a name",
-      "nameTooLong": "Name must be 50 characters or less"
+      "nameTooLong": "Name must be 50 characters or less",
+      "loginRequired": "Please sign in to use cloud save",
+      "proRequired": "Cloud save requires a Pro subscription"
     },
     "deleteConfirm": {
       "title": "Delete Template",

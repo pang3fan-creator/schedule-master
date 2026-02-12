@@ -111,7 +111,14 @@ export function CloudSaveDialog({
           `/api/schedules?page=${pageNum}&pageSize=${pageSize}&sortBy=${sort}&sortOrder=${sortOrder}`,
         );
         if (!res.ok) {
-          throw new Error("Failed to fetch schedules");
+          const data = await res.json().catch(() => ({}));
+          // 根据状态码显示不同的错误提示
+          if (res.status === 401) {
+            throw new Error("UNAUTHORIZED");
+          } else if (res.status === 403) {
+            throw new Error("PRO_REQUIRED");
+          }
+          throw new Error(data.error || "Failed to fetch schedules");
         }
         const data = await res.json();
         setSchedules(data.schedules || []);
@@ -121,12 +128,21 @@ export function CloudSaveDialog({
         setMaxTemplates(data.maxTemplates || 50);
       } catch (err) {
         console.error("Error fetching schedules:", err);
-        setError(t("errors.fetchFailed"));
+        // 根据错误类型显示不同的提示
+        const errorMessage =
+          err instanceof Error
+            ? err.message === "UNAUTHORIZED"
+              ? t("errors.loginRequired")
+              : err.message === "PRO_REQUIRED"
+                ? t("errors.proRequired")
+                : err.message
+            : t("errors.fetchFailed");
+        setError(errorMessage);
       } finally {
         setIsLoading(false);
       }
     },
-    [sortBy],
+    [sortBy, t],
   );
 
   useEffect(() => {
