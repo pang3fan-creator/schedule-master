@@ -90,6 +90,7 @@
     "@types/react-dom": "^19",
     "@vitejs/plugin-react": "^5.1.2",
     "@vitest/coverage-v8": "^4.0.16",
+    "baseline-browser-mapping": "^2.9.19",
     "jsdom": "^27.3.0",
     "postcss": "^8.5",
     "sharp": "^0.34.5",
