@@ -9,7 +9,13 @@
       "Bash(PORT=3005 npm run dev:*)",
       "Bash(curl:*)",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(npx eslint:*)",
+      "Bash(npm run test)",
+      "Bash(npm run lint:*)",
+      "Bash(test:*)",
+      "Bash(npm test:*)",
+      "Bash(npx vitest run:*)"
     ]
   }
 }

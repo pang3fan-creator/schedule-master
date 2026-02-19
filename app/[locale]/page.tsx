@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import { Navbar } from "@/components/Navbar";
 import { Sidebar } from "@/components/Sidebar";
 import { WeeklyCalendar } from "@/components/WeeklyCalendar";
+import { AdSenseUnit } from "@/components/AdSenseUnit";
 import { type Event } from "@/lib/types";
 import { DailyCalendar } from "@/components/DailyCalendar";
 import { EventContextMenu } from "@/components/EventContextMenu";
@@ -639,6 +640,13 @@ export default function ScheduleBuilderPage() {
             )}
           </main>
         </div>
+
+        {/* AdSense 广告单元 */}
+        {!isExporting && (
+          <div className="max-w-4xl mx-auto px-4 py-6">
+            <AdSenseUnit adSlot="4997547205" />
+          </div>
+        )}
 
         {/* SEO Content - hidden from users but accessible to crawlers */}
         {!isExporting && (

@@ -125,6 +125,14 @@ export default async function RootLayout({
               `,
           }}
         />
+
+        {/* Google AdSense - loaded after interactive */}
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6636417287024414"
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
       </head>
       <body className="antialiased">
         {children}
