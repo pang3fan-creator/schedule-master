@@ -17,6 +17,7 @@ import { ConfirmDialog } from "@/components/ConfirmDialog";
 import { hasDataToResetFromStorage } from "@/components/ResetButton";
 import { EVENTS_STORAGE_KEY, SETTINGS_STORAGE_KEY } from "@/lib/storage-keys";
 import { useSettings, DEFAULT_SETTINGS } from "@/components/SettingsContext";
+import { AdSenseUnit } from "@/components/AdSenseUnit";
 
 // Get the date of a specific day of the week for the current week
 function getDateForDayOfWeek(dayOfWeek: number): Date {
@@ -415,6 +416,11 @@ export function TemplateDetailClient({
             </div>
           </div>
         </section>
+
+        {/* AdSense 广告单元 */}
+        <div className="container mx-auto px-4 py-12 max-w-4xl">
+          <AdSenseUnit adSlot="4997547205" />
+        </div>
       </PageLayout>
 
       <UpgradeModal

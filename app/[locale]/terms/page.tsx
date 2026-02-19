@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { PageLayout } from "@/components/PageLayout";
 import { Breadcrumb } from "@/components/Breadcrumb";
+import { AdSenseUnit } from "@/components/AdSenseUnit";
 import { Metadata } from "next";
 import { locales } from "@/i18n/request";
 
@@ -139,6 +140,11 @@ export default async function TermsPage({ params }: Props) {
               {t("sections.intellectualProperty.content")}
             </p>
           </section>
+
+          {/* AdSense 广告单元 */}
+          <div className="my-12 max-w-4xl mx-auto px-4">
+            <AdSenseUnit adSlot="4997547205" />
+          </div>
 
           <section className="mb-8">
             <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">

@@ -7,6 +7,7 @@ import { formatDate } from "@/lib/date-format";
 import { PageLayout } from "@/components/PageLayout";
 import { BlogCard } from "@/components/BlogCard";
 import { Breadcrumb } from "@/components/Breadcrumb";
+import { AdSenseUnit } from "@/components/AdSenseUnit";
 import type { Metadata } from "next";
 import { locales } from "@/i18n/request";
 
@@ -535,6 +536,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               </div>
             </div>
           )}
+
+          {/* AdSense 广告单元 */}
+          <div className="mt-12 max-w-4xl mx-auto px-4">
+            <AdSenseUnit adSlot="4997547205" />
+          </div>
         </article>
       </PageLayout>
     </>

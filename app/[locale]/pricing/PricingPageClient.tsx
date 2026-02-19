@@ -9,6 +9,7 @@ import { Suspense, Fragment as ReactFragment, useState } from "react";
 
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { Button } from "@/components/ui/button";
+import { AdSenseUnit } from "@/components/AdSenseUnit";
 
 // Creem Product IDs
 const PRODUCT_IDS = {
@@ -338,6 +339,11 @@ export function PricingPageClient({ productSchemas }: PricingPageClientProps) {
               </tbody>
             </table>
           </div>
+        </div>
+
+        {/* AdSense 广告单元 */}
+        <div className="container mx-auto px-4 py-12 max-w-4xl">
+          <AdSenseUnit adSlot="4997547205" />
         </div>
 
         {/* FAQ Section */}

@@ -8,6 +8,7 @@ import { CategoryFilter } from "@/components/CategoryFilter";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { PageHero } from "@/components/PageHero";
 import { Breadcrumb } from "@/components/Breadcrumb";
+import { AdSenseUnit } from "@/components/AdSenseUnit";
 
 interface Post {
   slug: string;
@@ -126,6 +127,11 @@ export function BlogPageClient({
           <BlogCard {...featuredPost} featured locale={locale} />
         </div>
       )}
+
+      {/* AdSense 广告单元 */}
+      <div className="container mx-auto px-4 mb-12 max-w-4xl">
+        <AdSenseUnit adSlot="4997547205" />
+      </div>
 
       {/* Article Grid */}
       <div className="container mx-auto px-4 max-w-6xl">

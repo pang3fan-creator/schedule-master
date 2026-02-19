@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Mail, MapPin, Clock, Send, CheckCircle } from "lucide-react";
 import { Breadcrumb } from "@/components/Breadcrumb";
+import { AdSenseUnit } from "@/components/AdSenseUnit";
 
 export default function ContactPageClient() {
   const t = useTranslations("Contact");
@@ -248,6 +249,11 @@ export default function ContactPageClient() {
               </Button>
             </form>
           )}
+        </div>
+
+        {/* AdSense 广告单元 */}
+        <div className="mt-12 max-w-4xl mx-auto px-4">
+          <AdSenseUnit adSlot="4997547205" />
         </div>
       </div>
     </PageLayout>

@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { PageLayout } from "@/components/PageLayout";
 import { Breadcrumb } from "@/components/Breadcrumb";
+import { AdSenseUnit } from "@/components/AdSenseUnit";
 import { Metadata } from "next";
 import { locales } from "@/i18n/request";
 
@@ -267,6 +268,11 @@ export default async function PrivacyPage({ params }: Props) {
               )}
             </ul>
           </section>
+
+          {/* AdSense 广告单元 */}
+          <div className="my-12 max-w-4xl mx-auto px-4">
+            <AdSenseUnit adSlot="4997547205" />
+          </div>
 
           {/* Section 9: Cookies */}
           <section className="mb-8">

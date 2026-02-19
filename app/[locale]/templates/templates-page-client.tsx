@@ -26,6 +26,7 @@ import { FAQSection } from "@/components/FAQSection";
 import { PageHero } from "@/components/PageHero";
 import { Input } from "@/components/ui/input";
 import { Breadcrumb } from "@/components/Breadcrumb";
+import { AdSenseUnit } from "@/components/AdSenseUnit";
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Briefcase,
@@ -304,6 +305,13 @@ export function TemplatesPageClient({ locale }: TemplatesPageClientProps) {
               </button>
             </div>
           )}
+        </div>
+
+        {/* AdSense 广告单元 */}
+        <div className="mt-12 mb-12">
+          <div className="max-w-4xl mx-auto px-4">
+            <AdSenseUnit adSlot="4997547205" />
+          </div>
         </div>
 
         {/* FAQ Section - using unified FAQSection component */}
