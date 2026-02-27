@@ -1,11 +1,11 @@
-import { Metadata } from "next";
+import { Metadata, Viewport } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import {
   getMessages,
   setRequestLocale,
   getTranslations,
 } from "next-intl/server";
-import { locales } from "@/i18n/request";
+import { locales, isRtl } from "@/i18n/request";
 
 type Props = {
   children: React.ReactNode;
@@ -14,6 +14,15 @@ type Props = {
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
+}
+
+export function generateViewport({ params }: Props) {
+  return {
+    themeColor: [
+      { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+      { media: "(prefers-color-scheme: dark)", color: "#0f172a" },
+    ],
+  };
 }
 
 export async function generateMetadata({
@@ -30,6 +39,7 @@ export async function generateMetadata({
       languages: {
         en: "/",
         es: "/es",
+        ar: "/ar",
         "x-default": "/",
       },
     },
@@ -47,6 +57,9 @@ const baseUrl =
 export default async function LocaleLayout({ children, params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
+
+  // Determine text direction for RTL languages
+  const dir = isRtl(locale) ? "rtl" : "ltr";
 
   // Providing all messages to the client
   // side is the easiest way to get started

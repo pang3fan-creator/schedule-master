@@ -230,12 +230,12 @@ function parseMarkdown(content: string) {
       const [, alt, src] = imageMatch;
       elements.push(
         <figure key={key++} className="my-8">
-          <div className="rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 shadow-sm">
+          <div className="rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 shadow-sm aspect-video">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={src}
               alt={alt || "Blog image"}
-              className="w-full h-auto object-cover"
+              className="w-full h-full object-cover"
               loading="lazy"
             />
           </div>

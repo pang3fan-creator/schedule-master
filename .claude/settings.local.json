@@ -15,7 +15,28 @@
       "Bash(npm run lint:*)",
       "Bash(test:*)",
       "Bash(npm test:*)",
-      "Bash(npx vitest run:*)"
+      "Bash(npx vitest run:*)",
+      "Bash(npx prettier --write \"i18n/request.ts\" \"app/layout.tsx\" \"app/[locale]/layout.tsx\" \"components/LanguageSwitcher.tsx\")",
+      "Bash(npm run build)",
+      "Bash(node -e \"const data = require\\(''./messages/en.json''\\); console.log\\(JSON.stringify\\(Object.keys\\(data\\), null, 2\\)\\)\")",
+      "Bash(node -e \":*)",
+      "Bash(node translate_common.js)",
+      "Bash(node translate_full.js)",
+      "Bash(node -e \"console.log\\(JSON.stringify\\(require\\(''./messages/en.json''\\).AuthModal, null, 2\\)\\)\")",
+      "Bash(node -e \"console.log\\(JSON.stringify\\(require\\(''./messages/en.json''\\).FeatureComingSoon, null, 2\\)\\)\")",
+      "Bash(node -e \"console.log\\(JSON.stringify\\(require\\(''./messages/en.json''\\).CloudSave, null, 2\\)\\)\")",
+      "Bash(node -e \"console.log\\(JSON.stringify\\(require\\(''./messages/en.json''\\).Settings, null, 2\\)\\)\")",
+      "Bash(node -e \"console.log\\(JSON.stringify\\(require\\(''./messages/en.json''\\).Pricing.plans, null, 2\\)\\)\")",
+      "Bash(node -e \"console.log\\(JSON.stringify\\(require\\(''./messages/en.json''\\).Pricing.comparison, null, 2\\)\\)\")",
+      "Bash(node -e \"console.log\\(JSON.stringify\\(require\\(''./messages/en.json''\\).AIAutofill, null, 2\\)\\)\")",
+      "Bash(node -e \"console.log\\(JSON.stringify\\(require\\(''./messages/en.json''\\).Pricing.hero, null, 2\\)\\)\")",
+      "Bash(node -e \"console.log\\(JSON.stringify\\(require\\(''./messages/en.json''\\).Auth.signUp, null, 2\\)\\)\")",
+      "Bash(node -e \"console.log\\(JSON.stringify\\(require\\(''./messages/en.json''\\).Auth.signIn, null, 2\\)\\)\")",
+      "Bash(node -e \"console.log\\(JSON.stringify\\(require\\(''./messages/en.json''\\).Auth, null, 2\\)\\)\")",
+      "Bash(node -e \"console.log\\(JSON.stringify\\(require\\(''./messages/ar.json''\\).Auth.signIn, null, 2\\)\\)\")",
+      "Bash(powershell -Command \"& \"$env:USERPROFILE.claudescriptssave-session.ps1\" -Topic ''ScheduleMaster-Arabic-i18n''\")",
+      "Bash(node -e \"console.log\\(JSON.stringify\\(require\\(''./messages/ar.json''\\).Blog.categories, null, 2\\)\\)\")",
+      "WebFetch(domain:raw.githubusercontent.com)"
     ]
   }
 }

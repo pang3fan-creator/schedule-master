@@ -229,6 +229,17 @@ body[data-scroll-locked] {
     }
   }
 
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
   /* Safe area padding for iPhone notch */
   .safe-area-pb {
     padding-bottom: env(safe-area-inset-bottom, 0px);

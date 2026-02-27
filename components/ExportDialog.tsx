@@ -188,6 +188,7 @@ export function ExportDialog({
             <Button
               variant="ghost"
               size="icon"
+              aria-label={t("buttons.cancel")}
               className="size-8 sm:size-9 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 hover:text-gray-700 dark:hover:text-gray-200"
               onClick={() => onOpenChange(false)}
             >
@@ -206,9 +207,10 @@ export function ExportDialog({
             </Label>
             <div className="space-y-2">
               {formatOptions.map((option) => (
-                <div
+                <button
+                  type="button"
                   key={option.format}
-                  className={`flex items-center gap-3 rounded-lg border p-3 transition-colors cursor-pointer ${
+                  className={`flex items-center gap-3 rounded-lg border p-3 transition-colors cursor-pointer w-full text-left ${
                     selectedFormat === option.format
                       ? "border-blue-500 bg-blue-50 dark:bg-blue-900/30"
                       : "border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600"
@@ -244,7 +246,7 @@ export function ExportDialog({
                       {option.description}
                     </span>
                   </div>
-                </div>
+                </button>
               ))}
             </div>
 

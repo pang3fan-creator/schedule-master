@@ -1,8 +1,15 @@
 import { getRequestConfig } from "next-intl/server";
 
 // Can be imported from a shared config
-export const locales = ["en", "es"] as const;
+export const locales = ["en", "es", "ar"] as const;
 export const defaultLocale = "en" as const;
+
+// RTL languages that require right-to-left layout
+export const rtlLocales = ["ar"] as const;
+
+export const isRtl = (locale: string): boolean => {
+  return rtlLocales.includes(locale as (typeof rtlLocales)[number]);
+};
 
 export type Locale = (typeof locales)[number];
 

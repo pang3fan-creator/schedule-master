@@ -3,6 +3,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import Script from "next/script";
 import { headers } from "next/headers";
+import { isRtl } from "@/i18n/request";
 import "./globals.css";
 
 const baseUrl =
@@ -15,6 +16,7 @@ export const metadata: Metadata = {
     languages: {
       en: "/",
       es: "/es",
+      ar: "/ar",
       "x-default": "/",
     },
   },
@@ -101,9 +103,10 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const locale = await getLocaleFromHeaders();
+  const dir = isRtl(locale) ? "rtl" : "ltr";
 
   return (
-    <html lang={locale} suppressHydrationWarning>
+    <html lang={locale} dir={dir} suppressHydrationWarning style={{ colorScheme: "light dark" }}>
       <head>
         {/* Preconnect hints for critical third-party domains */}
         <link rel="preconnect" href="https://clerk.tryschedule.com" />

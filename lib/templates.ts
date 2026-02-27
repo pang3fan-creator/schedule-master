@@ -1398,7 +1398,7 @@ Perfect for establishing cleaning routines, teaching kids responsibility, coordi
   },
 };
 
-import { TEMPLATE_TRANSLATIONS_ES } from "./templates-translations";
+import { TEMPLATE_TRANSLATIONS_ES, TEMPLATE_TRANSLATIONS_AR } from "./templates-translations";
 
 export function getTemplate(
   slug: string,
@@ -1409,6 +1409,23 @@ export function getTemplate(
 
   if (locale === "es") {
     const translation = TEMPLATE_TRANSLATIONS_ES[slug];
+    if (translation) {
+      const { events: transEvents, ...restTrans } = translation;
+      const merged = { ...template, ...restTrans };
+
+      // Merge events if translated events exist
+      if (transEvents && template.events) {
+        merged.events = template.events.map((evt, i) => {
+          const transEvt = transEvents[i];
+          return transEvt ? { ...evt, ...transEvt } : evt;
+        });
+      }
+      return merged;
+    }
+  }
+
+  if (locale === "ar") {
+    const translation = TEMPLATE_TRANSLATIONS_AR[slug];
     if (translation) {
       const { events: transEvents, ...restTrans } = translation;
       const merged = { ...template, ...restTrans };

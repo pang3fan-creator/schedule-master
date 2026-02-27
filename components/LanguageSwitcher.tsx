@@ -34,6 +34,8 @@ export function LanguageSwitcher({ className }: { className?: string }) {
     // Note: Since we want explicit /es for Spanish and / for English (default)
     if (newLocale === "es") {
       router.push(`/es${path}`);
+    } else if (newLocale === "ar") {
+      router.push(`/ar${path}`);
     } else {
       // For english, we use root path
       router.push(path || "/");
@@ -71,6 +73,12 @@ export function LanguageSwitcher({ className }: { className?: string }) {
           className={locale === "es" ? "bg-accent" : ""}
         >
           Español
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => handleLanguageChange("ar")}
+          className={locale === "ar" ? "bg-accent" : ""}
+        >
+          العربية
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
