@@ -36,7 +36,9 @@
       "Bash(node -e \"console.log\\(JSON.stringify\\(require\\(''./messages/ar.json''\\).Auth.signIn, null, 2\\)\\)\")",
       "Bash(powershell -Command \"& \"$env:USERPROFILE.claudescriptssave-session.ps1\" -Topic ''ScheduleMaster-Arabic-i18n''\")",
       "Bash(node -e \"console.log\\(JSON.stringify\\(require\\(''./messages/ar.json''\\).Blog.categories, null, 2\\)\\)\")",
-      "WebFetch(domain:raw.githubusercontent.com)"
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(yarn build)",
+      "Bash(npx next build)"
     ]
   }
 }

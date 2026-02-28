@@ -12,6 +12,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     languages: {
       en: `${baseUrl}${path}`,
       es: `${baseUrl}/es${path}`,
+      ar: `${baseUrl}/ar${path}`,
       "x-default": `${baseUrl}${path}`,
     },
   });
@@ -34,6 +35,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 1,
       alternates: createAlternates("/"),
     },
+    // Homepage - Arabic
+    {
+      url: `${baseUrl}/ar`,
+      lastModified: new Date(),
+      changeFrequency: "daily" as const,
+      priority: 1,
+      alternates: createAlternates("/"),
+    },
     // Blog - English
     {
       url: `${baseUrl}/blog`,
@@ -45,6 +54,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Blog - Spanish
     {
       url: `${baseUrl}/es/blog`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.8,
+      alternates: createAlternates("/blog"),
+    },
+    // Blog - Arabic
+    {
+      url: `${baseUrl}/ar/blog`,
       lastModified: new Date(),
       changeFrequency: "weekly" as const,
       priority: 0.8,
@@ -66,6 +83,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
       alternates: createAlternates("/pricing"),
     },
+    // Pricing - Arabic
+    {
+      url: `${baseUrl}/ar/pricing`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.8,
+      alternates: createAlternates("/pricing"),
+    },
     // Contact - English
     {
       url: `${baseUrl}/contact`,
@@ -77,6 +102,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Contact - Spanish
     {
       url: `${baseUrl}/es/contact`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.5,
+      alternates: createAlternates("/contact"),
+    },
+    // Contact - Arabic
+    {
+      url: `${baseUrl}/ar/contact`,
       lastModified: new Date(),
       changeFrequency: "monthly" as const,
       priority: 0.5,
@@ -98,6 +131,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.3,
       alternates: createAlternates("/terms"),
     },
+    // Terms - Arabic
+    {
+      url: `${baseUrl}/ar/terms`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.3,
+      alternates: createAlternates("/terms"),
+    },
     // Privacy - English
     {
       url: `${baseUrl}/privacy`,
@@ -109,6 +150,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Privacy - Spanish
     {
       url: `${baseUrl}/es/privacy`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.3,
+      alternates: createAlternates("/privacy"),
+    },
+    // Privacy - Arabic
+    {
+      url: `${baseUrl}/ar/privacy`,
       lastModified: new Date(),
       changeFrequency: "monthly" as const,
       priority: 0.3,
@@ -129,6 +178,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Spanish
     {
       url: `${baseUrl}/es/templates`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.8,
+      alternates: createAlternates("/templates"),
+    },
+    // Arabic
+    {
+      url: `${baseUrl}/ar/templates`,
       lastModified: new Date(),
       changeFrequency: "weekly" as const,
       priority: 0.8,
@@ -155,6 +212,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.7,
       alternates: createAlternates(`/templates/${slug}`),
     },
+    // Arabic version
+    {
+      url: `${baseUrl}/ar/templates/${slug}`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+      alternates: createAlternates(`/templates/${slug}`),
+    },
   ]);
 
   // Blog post pages - with multilingual alternates
@@ -171,6 +236,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Spanish version
     {
       url: `${baseUrl}/es/blog/${post.slug}`,
+      lastModified: post.date ? new Date(post.date) : new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+      alternates: createAlternates(`/blog/${post.slug}`),
+    },
+    // Arabic version
+    {
+      url: `${baseUrl}/ar/blog/${post.slug}`,
       lastModified: post.date ? new Date(post.date) : new Date(),
       changeFrequency: "monthly" as const,
       priority: 0.6,
