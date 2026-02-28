@@ -41,6 +41,42 @@ export function FAQDialog({ open, onOpenChange }: FAQDialogProps) {
   const getLocalizedUrl = (path: string) =>
     locale === "en" ? path : `/${locale}${path}`;
 
+  // Template links - /templates first
+  const templateLinks = [
+    { href: "/templates", label: t("nav.allTemplates") },
+    { href: "/templates/work-shift-schedule-builder", label: t("nav.workShiftSchedule") },
+    { href: "/templates/employee-schedule-builder", label: t("nav.employeeSchedule") },
+    { href: "/templates/college-class-schedule-builder", label: t("nav.collegeClassSchedule") },
+    { href: "/templates/visual-schedule-builder", label: t("nav.visualScheduleBuilder") },
+    { href: "/templates/ai-schedule-builder", label: t("nav.aiScheduleBuilder") },
+    { href: "/templates/homeschool-schedule-builder", label: t("nav.homeschoolSchedule") },
+    { href: "/templates/construction-schedule-builder", label: t("nav.constructionSchedule") },
+    { href: "/templates/cleaning-schedule-builder", label: t("nav.cleaningSchedule") },
+  ];
+
+  // Blog links - /blog first
+  const blogLinks = [
+    { href: "/blog", label: t("nav.blog") },
+    { href: "/blog/top-10-free-roster-makers-2025", label: t("nav.freeRosterMakers") },
+  ];
+
+  // Company links
+  const companyLinks = [
+    { href: "/pricing", label: t("nav.pricing") },
+    { href: "/terms", label: t("footer.terms") },
+    { href: "/privacy", label: t("footer.privacy") },
+    { href: "/contact", label: t("footer.contact") },
+  ];
+
+  const LinkItem = ({ href, label }: { href: string; label: string }) => (
+    <Link
+      href={getLocalizedUrl(href)}
+      className="block text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+    >
+      {label}
+    </Link>
+  );
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
@@ -80,64 +116,87 @@ export function FAQDialog({ open, onOpenChange }: FAQDialogProps) {
             ))}
           </div>
 
-          {/* Footer Section */}
-          <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-800 flex flex-col items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
-            {/* Row 1: Logo + Brand + Copyright */}
-            <div className="flex items-center gap-2 flex-wrap justify-center">
-              <Link
-                href={getLocalizedUrl("/")}
-                className="flex items-center gap-1.5 hover:opacity-80 transition-opacity"
-              >
-                <Image
-                  src="/icon.svg"
-                  alt="TrySchedule - Free Online Schedule Builder"
-                  width={18}
-                  height={18}
-                  className="object-contain"
-                />
-                <span className="text-blue-600 dark:text-blue-400">
-                  <span className="font-bold">Try</span>
-                  <span className="font-normal">Schedule</span>
+          {/* Footer Section - 3 column layout */}
+          <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-800">
+            {/* Links - 3 columns */}
+            <div className="grid grid-cols-3 gap-4 mb-4">
+              {/* Column 1: Templates */}
+              <div className="flex flex-col gap-1">
+                <h4 className="text-xs font-semibold text-gray-900 dark:text-gray-100 uppercase tracking-wide mb-1">
+                  {t("nav.categoryTemplates")}
+                </h4>
+                <div className="flex flex-col gap-0.5 text-xs text-gray-600 dark:text-gray-400">
+                  {templateLinks.slice(0, 5).map((link) => (
+                    <LinkItem key={link.href} href={link.href} label={link.label} />
+                  ))}
+                </div>
+              </div>
+
+              {/* Column 2: Templates Part 2 */}
+              <div className="flex flex-col gap-1">
+                <h4 className="text-xs font-semibold text-gray-900 dark:text-gray-100 uppercase tracking-wide mb-1 invisible">
+                  {t("nav.categoryTemplates")}
+                </h4>
+                <div className="flex flex-col gap-0.5 text-xs text-gray-600 dark:text-gray-400">
+                  {templateLinks.slice(5).map((link) => (
+                    <LinkItem key={link.href} href={link.href} label={link.label} />
+                  ))}
+                </div>
+              </div>
+
+              {/* Column 3: Blog + Company */}
+              <div className="flex flex-col gap-3">
+                <div>
+                  <h4 className="text-xs font-semibold text-gray-900 dark:text-gray-100 uppercase tracking-wide mb-1">
+                    {t("nav.categoryBlog")}
+                  </h4>
+                  <div className="flex flex-col gap-0.5 text-xs text-gray-600 dark:text-gray-400">
+                    {blogLinks.map((link) => (
+                      <LinkItem key={link.href} href={link.href} label={link.label} />
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <h4 className="text-xs font-semibold text-gray-900 dark:text-gray-100 uppercase tracking-wide mb-1">
+                    {t("nav.categoryCompany")}
+                  </h4>
+                  <div className="flex flex-col gap-0.5 text-xs text-gray-600 dark:text-gray-400">
+                    {companyLinks.map((link) => (
+                      <LinkItem key={link.href} href={link.href} label={link.label} />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Brand Section */}
+            <div className="flex flex-col items-center gap-1 pt-3 border-t border-gray-200 dark:border-gray-800">
+              <div className="flex items-center gap-1.5 flex-wrap justify-center">
+                <Link
+                  href={getLocalizedUrl("/")}
+                  className="flex items-center gap-1 hover:opacity-80 transition-opacity"
+                >
+                  <Image
+                    src="/icon.svg"
+                    alt="TrySchedule - Free Online Schedule Builder"
+                    width={14}
+                    height={14}
+                    className="object-contain"
+                  />
+                  <span className="text-blue-600 dark:text-blue-400 text-xs">
+                    <span className="font-bold">Try</span>
+                    <span className="font-normal">Schedule</span>
+                  </span>
+                </Link>
+                <span className="text-gray-400 dark:text-gray-500 text-xs">
+                  © 2025 TrySchedule. {t("footer.rights")}
                 </span>
-              </Link>
-              <span className="text-gray-400 dark:text-gray-500">
-                © 2025 TrySchedule. {t("footer.rights")}
-              </span>
+              </div>
+              <p className="text-xs text-gray-400 dark:text-gray-500 italic text-center">
+                <span className="font-medium">Try</span>Schedule{" "}
+                {t("footer.taglineSimple")}
+              </p>
             </div>
-
-            {/* Row 2: Navigation Links */}
-            <div className="flex flex-wrap justify-center gap-6">
-              <Link
-                href={getLocalizedUrl("/pricing")}
-                className="hover:text-violet-600 dark:hover:text-violet-400 transition-colors"
-              >
-                {t("nav.pricing")}
-              </Link>
-              <Link
-                href={getLocalizedUrl("/terms")}
-                className="hover:text-violet-600 dark:hover:text-violet-400 transition-colors"
-              >
-                {t("footer.terms")}
-              </Link>
-              <Link
-                href={getLocalizedUrl("/privacy")}
-                className="hover:text-violet-600 dark:hover:text-violet-400 transition-colors"
-              >
-                {t("footer.privacy")}
-              </Link>
-              <Link
-                href={getLocalizedUrl("/contact")}
-                className="hover:text-violet-600 dark:hover:text-violet-400 transition-colors"
-              >
-                {t("footer.contact")}
-              </Link>
-            </div>
-
-            {/* Row 3: Tagline */}
-            <p className="text-xs text-gray-400 dark:text-gray-500 italic text-center">
-              <span className="font-medium">Try</span>Schedule{" "}
-              {t("footer.taglineSimple")}
-            </p>
           </div>
         </div>
       </DialogContent>
